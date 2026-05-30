@@ -1,0 +1,23 @@
+.pageHeader {
+  margin-bottom: 24px;
+}
+
+.greeting {
+  margin: 0 0 4px;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--admin-text);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: var(--admin-text-secondary);
+}
+
+@media (max-width: 640px) {
+  .greeting {
+    font-size: 22px;
+  }
+}

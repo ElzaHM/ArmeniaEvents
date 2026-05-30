@@ -1,0 +1,42 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.bottomRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 340px;
+  gap: 16px;
+}
+
+@media (max-width: 1400px) {
+  .bottomRow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bottomRow > :last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .bottomRow {
+    grid-template-columns: 1fr;
+  }
+
+  .bottomRow > :last-child {
+    grid-column: auto;
+  }
+}

@@ -1,0 +1,40 @@
+.tableWrap {
+  overflow-x: auto;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.thumbnail {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.eventCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.statusPublished {
+  color: var(--admin-success);
+  background: var(--admin-success-bg);
+  border: none;
+}
+
+.statusDraft {
+  color: var(--admin-warning);
+  background: var(--admin-warning-bg);
+  border: none;
+}
+
+.statusArchived {
+  color: var(--admin-text-muted);
+  background: var(--admin-gold-light);
+  border: none;
+}
