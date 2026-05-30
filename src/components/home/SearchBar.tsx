@@ -1,47 +1,37 @@
-import { useState } from 'react';
-import { Button, Input, Select, Space } from 'antd';
-import { EnvironmentOutlined, SearchOutlined } from '@ant-design/icons';
-
-import { LOCATIONS } from './mockData';
-
+import { Input, Select, Button } from 'antd';
+import { SearchOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import styles from './SearchBar.module.css';
 
-interface SearchBarProps {
-  onSearch?: (query: string, location: string) => void;
-}
-
-export default function SearchBar({ onSearch }: SearchBarProps) {
-  const [query, setQuery] = useState('');
-  const [location, setLocation] = useState('yerevan');
-
-  const handleSearch = () => {
-    onSearch?.(query, location);
-  };
-
+export default function SearchBar() {
   return (
     <div className={styles.searchBar}>
-      <Space.Compact className={styles.compact} block>
-        <Input
-          size="large"
-          placeholder="Search events, categories, or keywords..."
-          prefix={<SearchOutlined />}
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          onPressEnter={handleSearch}
-          className={styles.searchInput}
+      <div className={styles.searchGroup}>
+        <SearchOutlined className={styles.icon} />
+        <Input 
+          placeholder="Search events, categories, or keywords..." 
+          bordered={false} 
+          className={styles.inputField}
         />
-        <Select
-          size="large"
-          value={location}
-          onChange={setLocation}
-          options={LOCATIONS}
-          suffixIcon={<EnvironmentOutlined />}
+      </div>
+
+      <div className={styles.divider}></div>
+
+      <div className={styles.locationGroup}>
+        <EnvironmentOutlined className={styles.icon} />
+        <Select 
+          defaultValue="yerevan" 
+          bordered={false} 
           className={styles.locationSelect}
-        />
-        <Button type="primary" size="large" onClick={handleSearch} className={styles.searchBtn}>
-          Search
-        </Button>
-      </Space.Compact>
+          suffixIcon={null}
+        >
+          <Select.Option value="yerevan">Yerevan, Armenia</Select.Option>
+        </Select>
+      </div>
+
+      <Button type="primary" className={styles.searchBtn}>
+        Search
+      </Button>
     </div>
   );
 }
+

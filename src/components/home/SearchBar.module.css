@@ -1,7 +1,17 @@
 .searchBar {
   width: 100%;
-  max-width: 760px;
-  margin: 0 auto;
+  max-width: 800px !important;
+  /* margin: 0 auto; */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 6px 6px 15px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  margin-left: 0; 
+  margin-right: auto;
 }
 
 .compact {
@@ -20,9 +30,59 @@
 }
 
 .searchBtn {
-  flex: 0 0 auto;
-  min-width: 110px;
-  font-weight: 600;
+  background-color: #c08b46 !important;
+  border: none !important;
+  height: 50px !important;
+  padding: 0 35px !important;
+  border-radius: 12px !important;
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  margin-left: 10px;
+}
+
+.searchGroup, .locationGroup {
+  display: flex;
+  align-items: center;
+  flex: 3;
+}
+.locationGroup {
+  flex: 1;
+}
+
+.icon {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 18px;
+  margin-right: 12px;
+}
+
+.inputField :global(.ant-input) {
+  color: white !important;
+  font-size: 15px;
+}
+
+.inputField :global(.ant-input::placeholder) {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.divider {
+  width: 1px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 0 15px;
+}
+
+.locationSelect {
+  width: 100%;
+}
+
+.locationSelect :global(.ant-select-selection-item) {
+  color: white !important;
+  font-size: 15px;
+}
+
+.searchBtn:hover {
+  background-color: #d4a363 !important;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {

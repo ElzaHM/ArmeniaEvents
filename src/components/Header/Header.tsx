@@ -30,7 +30,7 @@ export default function Header() {
   }, []);
 
   return (
-    <AntHeader className={`custom-header ${scrolled ? 'scrolled' : ''}`}>
+    <AntHeader className={`custom-header ${scrolled ? 'scrolled' : ''} ${mode === 'light' ? 'light-mode' : ''}`}>
       <div className="header-content">
         <Link to="/" className="header-logo">
           <EnvironmentFilled className="logo-icon" />
@@ -58,4 +58,3 @@ export default function Header() {
     </AntHeader>
   );
 }
-

@@ -1,33 +1,20 @@
 .hero {
   position: relative;
-  width: 100%;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  align-items: flex-end;
+  text-align: left; 
   background-size: cover;
   background-position: top;
-  background-repeat: no-repeat;
-  min-height: 650px;
+  padding-left: 10%; 
+  overflow: hidden;
 }
 
 .overlay {
   /* background: var(--home-hero-overlay); */
   padding: 72px 0 64px;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 24px;
-}
-
-.title {
-  margin: 0 !important;
-  max-width: 720px;
-  font-size: clamp(32px, 5vw, 52px) !important;
-  font-weight: 700 !important;
-  line-height: 1.15 !important;
-  letter-spacing: -0.02em !important;
-  color: var(--home-text) !important;
 }
 
 .highlight {
@@ -64,6 +51,67 @@
 .tag:hover {
   border-color: #d48806 !important;
   color: #d48806 !important;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 7800px !important;
+  max-width: 800px !important; 
+  width: 100%;
+}
+
+.highlight {
+  color: #c08b46; 
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important; 
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding: 8px 20px !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  cursor: pointer;
+  transition: all 0.3s ease !important;
+}
+
+.tag:hover {
+  background: rgba(192, 139, 70, 0.2) !important; 
+  border-color: #c08b46 !important;
+  color: white !important;
+  transform: translateY(-2px); 
+}
+
+.tag:active {
+  transform: translateY(0);
+}
+
+.title {
+  color: white !important;
+  font-size: 65px !important; 
+  font-weight: 500 !important;
+  line-height: 1.1 !important;
+  margin-bottom: 24px !important;
+  text-align: left !important;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 18px !important;
+  margin-bottom: 40px !important;
+  max-width: 500px; 
+}
+
+.tags {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-top: 30px;
+  flex-wrap: wrap;
 }
 
 @media (max-width: 768px) {
