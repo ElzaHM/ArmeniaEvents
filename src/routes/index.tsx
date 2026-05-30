@@ -5,6 +5,7 @@ import HomePage from '../pages/HomePage';
 import EventsPage from '../pages/EventsPage';
 import EventDetailsPage from '../pages/EventDetailsPage';
 import SignInPage from '../pages/SignInPage';
+import AdminPage from '../pages/AdminPage';
 import NotFoundPage from '../pages/NotFoundPage';
 
 export const router = createBrowserRouter([
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: 'signin',
         element: <SignInPage />,
+      },
+      {
+        path: 'admin',
+        element: <AdminPage />,
       },
     ],
   },
