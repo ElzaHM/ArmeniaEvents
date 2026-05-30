@@ -1,0 +1,13 @@
+/* AntD Theme Overrides */
+.ant-checkbox-wrapper {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.ant-input-affix-wrapper {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.ant-input-affix-wrapper:hover, .ant-input-affix-wrapper-focused {
+  border-color: #C07D43 !important;
+}

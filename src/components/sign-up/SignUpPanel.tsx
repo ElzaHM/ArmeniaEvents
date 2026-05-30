@@ -1,0 +1,70 @@
+import React from 'react';
+import { MapPin, Heart, Bell, User } from 'lucide-react';
+import { SignUpForm } from './SignUpForm';
+import styles from './SignUpPanel.module.css';
+
+export const SignUpPanel: React.FC = () => {
+  return (
+    <div className={styles.panel}>
+      <div className={styles.leftSection}>
+        <div className={styles.logoBox}>
+          <MapPin size={24} color="#C07D43" fill="#C07D43" />
+        </div>
+        
+        <h1 className={styles.joinHeading}>
+          Join <br />
+          <span className={styles.accentText}>Armenia Events</span>
+        </h1>
+        
+        <p className={styles.desc}>
+          Create an account to discover the best events, save your favorites, 
+          and get personalized recommendations.
+        </p>
+
+        <div className={styles.featureList}>
+          <div className={styles.featureItem}>
+            <div className={styles.iconWrapper}><MapPin size={18} /></div>
+            <div>
+              <div className={styles.featureTitle}>Discover Local Events</div>
+              <div className={styles.featureDesc}>Find events happening near you.</div>
+            </div>
+          </div>
+          <div className={styles.featureItem}>
+            <div className={styles.iconWrapper}><Heart size={18} /></div>
+            <div>
+              <div className={styles.featureTitle}>Save Favorites</div>
+              <div className={styles.featureDesc}>Save events you love and never miss them.</div>
+            </div>
+          </div>
+          <div className={styles.featureItem}>
+            <div className={styles.iconWrapper}><User size={18} /></div>
+            <div>
+              <div className={styles.featureTitle}>Personalized Recommendations</div>
+              <div className={styles.featureDesc}>Get events tailored just for you.</div>
+            </div>
+          </div>
+          <div className={styles.featureItem}>
+            <div className={styles.iconWrapper}><Bell size={18} /></div>
+            <div>
+              <div className={styles.featureTitle}>Smart Notifications</div>
+              <div className={styles.featureDesc}>Get notified about events you care about.</div>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.illustration}>
+           <div className={styles.dotsGrid}>
+             {[...Array(10)].map((_, i) => <div key={i} className={styles.dot} />)}
+           </div>
+           <svg viewBox="0 0 400 100" fill="none" stroke="rgba(192, 125, 67, 0.4)" strokeWidth="1">
+              <path d="M0 80 L30 65 L60 85 L100 40 L140 75 L180 20 L220 75 L260 55 L300 85 L400 85" />
+           </svg>
+        </div>
+      </div>
+
+      <div className={styles.rightSection}>
+        <SignUpForm />
+      </div>
+    </div>
+  );
+};

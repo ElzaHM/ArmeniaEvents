@@ -7,17 +7,17 @@ import {
 } from '@ant-design/icons';
 import { MapPin, Send } from 'lucide-react';
 
-import { SignInPanel } from '../../components/sign-in';
-import '../../components/sign-in/sign-in.css';
-import styles from '../../components/sign-in/SignInPage.module.css';
+import { SignUpPanel } from '../../components/sign-up';
+import '../../components/sign-up/sign-up.css';
+import styles from '../../components/sign-up/SignUpPage.module.css';
 
-const SignInPage: React.FC = () => {
+const SignUpPage: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.arcDecoration} />
 
       <main className={styles.mainContent}>
-        <SignInPanel />
+        <SignUpPanel />
       </main>
 
       <footer className={styles.footer}>
@@ -63,16 +63,12 @@ const SignInPage: React.FC = () => {
 
           <div>
             <div className={styles.footerTitle}>Subscribe to our newsletter</div>
-            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13 }}>
-              Get the latest events straight to your inbox.
-            </p>
             <div className={styles.newsletterInput}>
               <Input placeholder="Enter your email" style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff' }} />
               <Button style={{ background: '#C07D43', border: 'none', color: '#fff' }}>Subscribe</Button>
             </div>
           </div>
         </div>
-
         <div className={styles.bottomBar}>
           <div>© 2024 Armenia Events. All rights reserved.</div>
           <div>Made with ❤️ in Armenia →</div>
@@ -82,4 +78,4 @@ const SignInPage: React.FC = () => {
   );
 };
 
-export default SignInPage;
+export default SignUpPage;

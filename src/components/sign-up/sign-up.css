@@ -1,0 +1,17 @@
+/* AntD Theme Global Overrides for Sign Up */
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #C07D43 !important;
+  border-color: #C07D43 !important;
+}
+
+.ant-input-password-icon {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.ant-input-password-icon:hover {
+  color: #fff !important;
+}
+
+.ant-divider-inner-text {
+  padding: 0 15px !important;
+}

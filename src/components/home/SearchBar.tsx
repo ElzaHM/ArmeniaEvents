@@ -9,7 +9,7 @@ export default function SearchBar() {
         <SearchOutlined className={styles.icon} />
         <Input 
           placeholder="Search events, categories, or keywords..." 
-          bordered={false} 
+            variant="borderless"
           className={styles.inputField}
         />
       </div>
@@ -20,7 +20,7 @@ export default function SearchBar() {
         <EnvironmentOutlined className={styles.icon} />
         <Select 
           defaultValue="yerevan" 
-          bordered={false} 
+          variant="borderless" 
           className={styles.locationSelect}
           suffixIcon={null}
         >
