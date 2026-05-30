@@ -2,12 +2,13 @@
   position: relative;
   width: 100%;
   background-size: cover;
-  background-position: center;
+  background-position: top;
   background-repeat: no-repeat;
+  min-height: 650px;
 }
 
 .overlay {
-  background: var(--home-hero-overlay);
+  /* background: var(--home-hero-overlay); */
   padding: 72px 0 64px;
 }
 
