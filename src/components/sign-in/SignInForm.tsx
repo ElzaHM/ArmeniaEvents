@@ -11,23 +11,23 @@ export const SignInForm: React.FC = () => {
 
       <Form layout="vertical" requiredMark={false}>
         <Form.Item label={<span className={styles.label}>Email Address</span>} name="email">
-          <Input 
-            prefix={<MailOutlined style={{ color: 'rgba(255,255,255,0.4)' }} />} 
-            placeholder="Enter your email" 
+          <Input
+            prefix={<MailOutlined className={styles.inputIcon} />}
+            placeholder="Enter your email"
             className={styles.inputField}
           />
         </Form.Item>
 
         <Form.Item label={<span className={styles.label}>Password</span>} name="password">
-          <Input.Password 
-            prefix={<LockOutlined style={{ color: 'rgba(255,255,255,0.4)' }} />} 
-            placeholder="Enter your password" 
+          <Input.Password
+            prefix={<LockOutlined className={styles.inputIcon} />}
+            placeholder="Enter your password"
             className={styles.inputField}
           />
         </Form.Item>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24 }}>
-          <Checkbox style={{ color: 'rgba(255,255,255,0.7)' }}>Remember me</Checkbox>
+        <div className={styles.formRow}>
+          <Checkbox>Remember me</Checkbox>
           <a href="#" className={styles.forgotPassword}>Forgot Password?</a>
         </div>
 
@@ -40,7 +40,7 @@ export const SignInForm: React.FC = () => {
         <Button className={styles.socialBtn} icon={<FacebookOutlined />}>Continue with Facebook</Button>
 
         <div className={styles.signUpText}>
-          Don't have an account? <a href="#" className={styles.signUpLink}>Sign Up</a>
+          Don&apos;t have an account? <a href="#" className={styles.signUpLink}>Sign Up</a>
         </div>
       </Form>
     </div>

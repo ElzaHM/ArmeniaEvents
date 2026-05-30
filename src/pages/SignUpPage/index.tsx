@@ -8,12 +8,14 @@ import {
 import { MapPin, Send } from 'lucide-react';
 
 import { SignUpPanel } from '../../components/sign-up';
+import '../../components/home/home.css';
+import '../../components/sign-in/sign-in.css';
 import '../../components/sign-up/sign-up.css';
 import styles from '../../components/sign-up/SignUpPage.module.css';
 
 const SignUpPage: React.FC = () => {
   return (
-    <div className={styles.pageWrapper}>
+    <div className={`${styles.pageWrapper} auth-page`}>
       <div className={styles.arcDecoration} />
 
       <main className={styles.mainContent}>
@@ -23,18 +25,18 @@ const SignUpPage: React.FC = () => {
       <footer className={styles.footer}>
         <div className={styles.footerGrid}>
           <div>
-            <div className={styles.logo} style={{ marginBottom: 20 }}>
-              <MapPin size={20} color="#C07D43" />
+            <div className={`${styles.logo} ${styles.logoBrand}`}>
+              <MapPin size={20} className={styles.logoIcon} />
               <span>Armenia Events</span>
             </div>
-            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13, lineHeight: 1.6 }}>
+            <p className={styles.footerDesc}>
               Your guide to the best events in Armenia. Discover, connect, and share amazing experiences.
             </p>
-            <Space size="middle" style={{ marginTop: 20 }}>
-              <FacebookOutlined style={{ fontSize: 18, color: 'rgba(255,255,255,0.6)' }} />
-              <InstagramOutlined style={{ fontSize: 18, color: 'rgba(255,255,255,0.6)' }} />
-              <Send size={18} color="rgba(255,255,255,0.6)" />
-              <XOutlined style={{ fontSize: 18, color: 'rgba(255,255,255,0.6)' }} />
+            <Space size="middle" className={styles.footerSocial}>
+              <FacebookOutlined className={styles.footerSocialIcon} />
+              <InstagramOutlined className={styles.footerSocialIcon} />
+              <Send size={18} className={styles.footerSocialIcon} />
+              <XOutlined className={styles.footerSocialIcon} />
             </Space>
           </div>
 
@@ -64,8 +66,8 @@ const SignUpPage: React.FC = () => {
           <div>
             <div className={styles.footerTitle}>Subscribe to our newsletter</div>
             <div className={styles.newsletterInput}>
-              <Input placeholder="Enter your email" style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff' }} />
-              <Button style={{ background: '#C07D43', border: 'none', color: '#fff' }}>Subscribe</Button>
+              <Input placeholder="Enter your email" className={styles.newsletterField} />
+              <Button className={styles.subscribeBtn}>Subscribe</Button>
             </div>
           </div>
         </div>

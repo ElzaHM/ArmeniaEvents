@@ -8,7 +8,7 @@ export const SignInPanel: React.FC = () => {
     <div className={styles.panel}>
       <div className={styles.leftSection}>
         <div className={styles.logoBox}>
-          <MapPin size={24} color="#C07D43" fill="#C07D43" />
+          <MapPin size={24} />
         </div>
         
         <h1 className={styles.welcomeHeading}>

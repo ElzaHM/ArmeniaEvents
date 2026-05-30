@@ -4,58 +4,68 @@
 
 .title {
   font-size: 28px;
-  color: #fff;
+  color: var(--home-text);
   margin-bottom: 8px;
 }
 
 .subtitle {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--home-text-secondary);
   margin-bottom: 24px;
 }
 
 .label {
-  color: #fff;
+  color: var(--home-text);
   display: block;
   margin-bottom: 8px;
 }
 
+.inputIcon {
+  color: var(--home-text-secondary);
+}
+
 .inputField {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: #fff !important;
+  background: var(--auth-input-bg) !important;
+  border: 1px solid var(--auth-input-border) !important;
+  color: var(--home-text) !important;
   height: 45px;
 }
 
 .inputField :global(.ant-input) {
   background: transparent !important;
-  color: #fff !important;
+  color: var(--home-text) !important;
+}
+
+.formRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
 }
 
 .forgotPassword {
-  color: #C07D43;
+  color: var(--auth-accent);
 }
 
 .submitBtn {
   width: 100%;
   height: 45px;
-  background-color: #C07D43 !important;
+  background-color: var(--auth-accent) !important;
   border: none !important;
   font-weight: 600;
   margin-top: 10px;
 }
 
 .divider {
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.4) !important;
+  border-color: var(--auth-input-border) !important;
+  color: var(--home-text-secondary) !important;
   font-size: 12px;
 }
 
 .socialBtn {
   width: 100%;
   height: 45px;
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: #fff !important;
+  background: var(--auth-social-bg) !important;
+  border: 1px solid var(--auth-social-border) !important;
+  color: var(--home-text) !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,10 +76,10 @@
 .signUpText {
   text-align: center;
   margin-top: 24px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--home-text-secondary);
 }
 
 .signUpLink {
-  color: #C07D43;
+  color: var(--auth-accent);
   font-weight: 600;
 }

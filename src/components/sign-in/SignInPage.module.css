@@ -1,9 +1,10 @@
 .pageWrapper {
   min-height: 100vh;
-  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1562590748-0320b1275997?auto=format&fit=crop&w=1920&q=80');
+  background-image: var(--auth-page-overlay),
+    url('https://images.unsplash.com/photo-1562590748-0320b1275997?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
   background-position: center;
-  color: white;
+  color: var(--home-text);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -15,6 +16,16 @@
   gap: 10px;
   font-weight: bold;
   font-size: 18px;
+  color: var(--home-text);
+}
+
+.logoIcon {
+  color: var(--auth-accent);
+  flex-shrink: 0;
+}
+
+.logoBrand {
+  margin-bottom: 20px;
 }
 
 .mainContent {
@@ -26,23 +37,21 @@
   position: relative;
 }
 
-/* Background arcs */
 .arcDecoration {
   position: absolute;
   top: 10%;
   left: 5%;
   width: 300px;
   height: 500px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--auth-arc-border);
   border-radius: 150px 150px 0 0;
   pointer-events: none;
 }
 
-/* Footer Styles */
 .footer {
-  background: #0d0d0d;
+  background: var(--auth-footer-bg);
   padding: 60px 5% 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--auth-footer-border);
 }
 
 .footerGrid {
@@ -53,9 +62,24 @@
 }
 
 .footerTitle {
-  color: #fff;
+  color: var(--home-text);
   font-weight: 600;
   margin-bottom: 20px;
+}
+
+.footerDesc {
+  color: var(--home-text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footerSocial {
+  margin-top: 20px;
+}
+
+.footerSocialIcon {
+  font-size: 18px;
+  color: var(--home-text-secondary);
 }
 
 .footerList {
@@ -66,7 +90,7 @@
 
 .footerList li {
   margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--home-text-secondary);
   font-size: 14px;
   cursor: pointer;
 }
@@ -77,16 +101,33 @@
   margin-top: 20px;
 }
 
+.newsletterField {
+  background: var(--auth-input-bg) !important;
+  border: 1px solid var(--auth-input-border) !important;
+  color: var(--home-text) !important;
+}
+
+.subscribeBtn {
+  background: var(--auth-accent) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
 .bottomBar {
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--auth-footer-border);
   padding-top: 20px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--home-text-secondary);
   font-size: 12px;
 }
 
 @media (max-width: 768px) {
-  .footerGrid { grid-template-columns: 1fr; }
-  .mainContent { padding: 96px 16px 32px; }
+  .footerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .mainContent {
+    padding: 96px 16px 32px;
+  }
 }

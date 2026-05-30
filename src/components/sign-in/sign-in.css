@@ -1,13 +1,70 @@
-/* AntD Theme Overrides */
-.ant-checkbox-wrapper {
-  color: rgba(255, 255, 255, 0.7) !important;
+[data-theme='light'] {
+  --auth-page-overlay: linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.88));
+  --auth-panel-bg: rgba(255, 255, 255, 0.95);
+  --auth-panel-left-bg: linear-gradient(135deg, rgba(212, 136, 6, 0.06) 0%, rgba(255, 255, 255, 0) 100%);
+  --auth-panel-border: var(--home-border);
+  --auth-panel-divider: var(--home-border);
+  --auth-logo-box-bg: rgba(212, 136, 6, 0.1);
+  --auth-feature-icon-bg: var(--home-surface-muted);
+  --auth-feature-icon-border: var(--home-border);
+  --auth-input-bg: rgba(0, 0, 0, 0.03);
+  --auth-input-border: var(--home-border);
+  --auth-social-bg: var(--home-surface-muted);
+  --auth-social-border: var(--home-border);
+  --auth-arc-border: rgba(0, 0, 0, 0.08);
+  --auth-footer-bg: var(--home-surface-muted);
+  --auth-footer-border: var(--home-border);
+  --auth-illustration-opacity: 0.2;
+  --auth-accent: #d48806;
 }
 
-.ant-input-affix-wrapper {
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+[data-theme='dark'] {
+  --auth-page-overlay: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85));
+  --auth-panel-bg: rgba(28, 28, 30, 0.85);
+  --auth-panel-left-bg: linear-gradient(135deg, rgba(192, 125, 67, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+  --auth-panel-border: rgba(255, 255, 255, 0.08);
+  --auth-panel-divider: rgba(255, 255, 255, 0.05);
+  --auth-logo-box-bg: rgba(192, 125, 67, 0.15);
+  --auth-feature-icon-bg: rgba(255, 255, 255, 0.05);
+  --auth-feature-icon-border: rgba(255, 255, 255, 0.1);
+  --auth-input-bg: rgba(255, 255, 255, 0.05);
+  --auth-input-border: rgba(255, 255, 255, 0.1);
+  --auth-social-bg: rgba(255, 255, 255, 0.03);
+  --auth-social-border: rgba(255, 255, 255, 0.1);
+  --auth-arc-border: rgba(255, 255, 255, 0.1);
+  --auth-footer-bg: #0d0d0d;
+  --auth-footer-border: rgba(255, 255, 255, 0.05);
+  --auth-illustration-opacity: 0.3;
+  --auth-accent: #c07d43;
 }
 
-.ant-input-affix-wrapper:hover, .ant-input-affix-wrapper-focused {
-  border-color: #C07D43 !important;
+.auth-page .ant-checkbox-wrapper {
+  color: var(--home-text-secondary) !important;
+}
+
+.auth-page .ant-input-affix-wrapper {
+  background-color: var(--auth-input-bg) !important;
+  border-color: var(--auth-input-border) !important;
+}
+
+.auth-page .ant-input-affix-wrapper:hover,
+.auth-page .ant-input-affix-wrapper-focused {
+  border-color: var(--auth-accent) !important;
+}
+
+.auth-page .ant-input-password-icon {
+  color: var(--home-text-secondary) !important;
+}
+
+.auth-page .ant-input-password-icon:hover {
+  color: var(--home-text) !important;
+}
+
+.auth-page .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: var(--auth-accent) !important;
+  border-color: var(--auth-accent) !important;
+}
+
+.auth-page .ant-divider-inner-text {
+  padding: 0 15px !important;
 }
