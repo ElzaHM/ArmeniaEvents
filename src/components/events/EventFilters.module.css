@@ -1,0 +1,151 @@
+.filters {
+  padding: 24px;
+  background: var(--home-surface);
+  border: 1px solid var(--home-border);
+  border-radius: 12px;
+  box-shadow: var(--home-card-shadow);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--home-border);
+}
+
+.title {
+  margin: 0 !important;
+  font-size: 16px !important;
+  color: var(--home-text) !important;
+}
+
+.clearAll {
+  border: none;
+  background: none;
+  padding: 0;
+  color: #d48806;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.clearAll:hover {
+  text-decoration: underline;
+}
+
+.group {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--home-border);
+}
+
+.group:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.groupTitle {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--home-text);
+  font-size: 14px;
+}
+
+.dateFields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.datePicker {
+  width: 100%;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.checkboxGroup :global(.ant-checkbox-wrapper) {
+  width: 100%;
+  margin-inline-start: 0;
+}
+
+.checkboxRow {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.checkboxRow :global(.ant-checkbox + span) {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 8px 0;
+}
+
+.checkboxLabel {
+  color: var(--home-text);
+  font-size: 14px;
+}
+
+.count {
+  color: var(--home-text-secondary);
+  font-size: 13px;
+}
+
+.showMore {
+  margin-top: 8px;
+  border: none;
+  background: none;
+  padding: 0;
+  color: #d48806;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.showMore:hover {
+  text-decoration: underline;
+}
+
+.slider {
+  margin: 8px 8px 24px;
+}
+
+.organizerSearch {
+  margin-bottom: 12px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--home-border);
+}
+
+.applyBtn {
+  font-weight: 600;
+}
+
+.resetBtn {
+  color: var(--home-text-secondary) !important;
+}
+
+.resetBtn:hover {
+  color: #d48806 !important;
+}
+
+@media (max-width: 992px) {
+  .filters {
+    padding: 20px;
+  }
+}

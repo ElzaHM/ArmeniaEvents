@@ -1,0 +1,93 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  margin: 0 !important;
+  font-size: 20px !important;
+  color: var(--home-text) !important;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.venueName {
+  margin: 0 !important;
+  font-size: 18px !important;
+  color: var(--home-text) !important;
+}
+
+.address {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--home-text-secondary);
+}
+
+.imageWrap {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 7;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mapBtn {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  min-width: 200px;
+  font-weight: 500;
+  border-color: var(--home-border) !important;
+  background: var(--home-surface) !important;
+  color: var(--home-text) !important;
+  box-shadow: var(--home-card-shadow);
+}
+
+.mapBtn:hover {
+  border-color: #d48806 !important;
+  color: #d48806 !important;
+}
+
+.contacts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contactLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--home-text-secondary);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contactLink:hover {
+  color: #d48806;
+}
+
+@media (max-width: 768px) {
+  .mapBtn {
+    width: calc(100% - 32px);
+    min-width: 0;
+  }
+}

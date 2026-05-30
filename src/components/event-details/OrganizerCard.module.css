@@ -1,0 +1,68 @@
+.card {
+  padding: 24px;
+  background: var(--home-surface);
+  border: 1px solid var(--home-border);
+  border-radius: 12px;
+  box-shadow: var(--home-card-shadow);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name {
+  font-size: 15px !important;
+  color: var(--home-text) !important;
+}
+
+.role {
+  font-size: 13px !important;
+}
+
+.followBtn {
+  margin-bottom: 12px;
+  font-weight: 500;
+  border-color: var(--home-border) !important;
+  color: var(--home-text) !important;
+  background: var(--home-surface-muted) !important;
+}
+
+.followBtn:hover {
+  border-color: #d48806 !important;
+  color: #d48806 !important;
+}
+
+.contactLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #d48806;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.contactLink:hover {
+  text-decoration: underline;
+}

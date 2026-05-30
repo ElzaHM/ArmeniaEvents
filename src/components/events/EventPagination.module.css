@@ -1,0 +1,52 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+  padding-top: 8px;
+}
+
+.pagination :global(.ant-pagination) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.pagination :global(.ant-pagination-item) {
+  border-radius: 8px;
+  border-color: var(--home-border);
+  background: var(--home-surface);
+}
+
+.pagination :global(.ant-pagination-item a) {
+  color: var(--home-text);
+}
+
+.pagination :global(.ant-pagination-item-active) {
+  border-color: #d48806;
+  background: #d48806;
+}
+
+.pagination :global(.ant-pagination-item-active a) {
+  color: #ffffff;
+}
+
+.pagination :global(.ant-pagination-prev .ant-pagination-item-link),
+.pagination :global(.ant-pagination-next .ant-pagination-item-link) {
+  border-radius: 8px;
+  border-color: var(--home-border);
+  background: var(--home-surface);
+  color: var(--home-text);
+}
+
+.pagination :global(.ant-pagination-prev:hover .ant-pagination-item-link),
+.pagination :global(.ant-pagination-next:hover .ant-pagination-item-link) {
+  border-color: #d48806;
+  color: #d48806;
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    margin-top: 24px;
+  }
+}

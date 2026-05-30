@@ -1,0 +1,29 @@
+.card {
+  padding: 24px;
+  background: var(--home-cta-bg);
+  border: 1px solid var(--home-border);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.icon {
+  font-size: 28px;
+  color: #d48806;
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 0 0 8px !important;
+  font-size: 16px !important;
+  color: var(--home-text) !important;
+}
+
+.description {
+  margin: 0 0 16px !important;
+  font-size: 13px !important;
+  color: var(--home-text-secondary) !important;
+}
+
+.saveBtn {
+  font-weight: 600;
+}

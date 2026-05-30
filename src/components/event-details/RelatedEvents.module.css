@@ -1,0 +1,66 @@
+.section {
+  margin-top: 56px;
+  padding-bottom: 8px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.headerRow > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.sectionHeader {
+  margin-bottom: 0 !important;
+}
+
+.navButtons {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.scrollContainer {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 8px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.cardWrap {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 768px) {
+  .section {
+    margin-top: 40px;
+  }
+
+  .headerRow {
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+
+  .navButtons {
+    align-self: flex-end;
+  }
+
+  .cardWrap {
+    flex-basis: 260px;
+  }
+}

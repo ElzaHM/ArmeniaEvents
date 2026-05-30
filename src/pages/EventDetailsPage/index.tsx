@@ -1,3 +1,52 @@
+import { Link, useParams } from 'react-router-dom';
+import { ArrowLeftOutlined } from '@ant-design/icons';
+
+import {
+  EventHero,
+  EventInfo,
+  EventSchedule,
+  EventTabs,
+  EventVenue,
+  getEventDetails,
+  OrganizerCard,
+  RelatedEvents,
+  ReminderCard,
+  TicketPanel,
+} from '../../components/event-details';
+import '../../components/home/home.css';
+import '../../components/event-details/event-details.css';
+
+import pageStyles from '../../components/event-details/EventDetails.module.css';
+
 export default function EventDetailsPage() {
-    return <h1>Event Details Page</h1>;
-  }
+  const { id } = useParams();
+  const event = getEventDetails(id);
+
+  return (
+    <div className={pageStyles.detailsPage}>
+      <Link to="/events" className={pageStyles.backLink}>
+        <ArrowLeftOutlined />
+        Back to Events
+      </Link>
+
+      <EventHero event={event} />
+
+      <div className={pageStyles.main}>
+        <div className={pageStyles.mainContent}>
+          <EventTabs />
+          <EventInfo event={event} />
+          <EventSchedule event={event} />
+          <EventVenue event={event} />
+        </div>
+
+        <aside className={pageStyles.sidebar}>
+          <TicketPanel event={event} />
+          <OrganizerCard event={event} />
+          <ReminderCard />
+        </aside>
+      </div>
+
+      <RelatedEvents />
+    </div>
+  );
+}

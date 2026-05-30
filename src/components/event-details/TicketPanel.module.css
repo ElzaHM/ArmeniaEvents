@@ -1,0 +1,93 @@
+.panel {
+  padding: 24px;
+  background: var(--home-surface);
+  border: 1px solid var(--home-border);
+  border-radius: 12px;
+  box-shadow: var(--home-card-shadow);
+}
+
+.title {
+  margin: 0 0 16px !important;
+  font-size: 16px !important;
+  color: var(--home-text) !important;
+}
+
+.tickets {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticketCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: var(--home-surface-muted);
+  border: 1px solid var(--home-border);
+  border-radius: 10px;
+}
+
+.ticketInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ticketName {
+  font-size: 15px !important;
+  color: var(--home-text) !important;
+}
+
+.ticketDescription {
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+
+.ticketActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ticketPrice {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.priceFree {
+  color: #52c41a;
+}
+
+.pricePaid {
+  color: #d48806;
+}
+
+.getTicketBtn {
+  font-weight: 600;
+}
+
+.viewAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #d48806;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.viewAll:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 992px) {
+  .ticketActions {
+    flex-wrap: wrap;
+  }
+}
