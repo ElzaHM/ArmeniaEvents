@@ -1,0 +1,129 @@
+.section {
+  padding: 56px 0 32px;
+  background: var(--home-surface-muted);
+  border-top: 1px solid var(--home-border);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--home-text);
+}
+
+.logo :global(.anticon) {
+  font-size: 22px;
+  color: #d48806;
+}
+
+.about {
+  margin: 0 !important;
+  max-width: 320px;
+  color: var(--home-text-secondary) !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+.social {
+  display: flex;
+  gap: 12px;
+}
+
+.social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--home-surface);
+  border: 1px solid var(--home-border);
+  color: var(--home-text-secondary);
+  font-size: 16px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.social a:hover {
+  color: #d48806;
+  border-color: #d48806;
+}
+
+.columnTitle {
+  margin: 0 0 16px !important;
+  font-size: 15px !important;
+  color: var(--home-text) !important;
+}
+
+.linkList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.linkList a {
+  color: var(--home-text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.linkList a:hover {
+  color: #d48806;
+}
+
+.newsletterText {
+  margin: 0 0 12px !important;
+  color: var(--home-text-secondary) !important;
+  font-size: 14px !important;
+}
+
+.newsletterForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bottomBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--home-border);
+  flex-wrap: wrap;
+}
+
+.madeWith {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.heart {
+  color: #d48806;
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 40px 0 24px;
+  }
+
+  .bottomBar {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 32px;
+  }
+}

@@ -1,0 +1,38 @@
+.section {
+  padding: 56px 0 72px;
+  background: var(--home-section-bg);
+  border-top: 1px solid var(--home-border);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  height: 100%;
+}
+
+.icon {
+  font-size: 36px;
+  color: #d48806;
+}
+
+.title {
+  margin: 0 !important;
+  font-size: 17px !important;
+  color: var(--home-text) !important;
+}
+
+.description {
+  margin: 0 !important;
+  max-width: 240px;
+  color: var(--home-text-secondary) !important;
+  font-size: 14px !important;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 40px 0 56px;
+  }
+}

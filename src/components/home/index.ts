@@ -1,0 +1,11 @@
+export { default as HeroSection } from './HeroSection';
+export { default as SearchBar } from './SearchBar';
+export { default as PopularCategories } from './PopularCategories';
+export { default as UpcomingEvents } from './UpcomingEvents';
+export { default as OrganizeEventCTA } from './OrganizeEventCTA';
+export { default as TopPicks } from './TopPicks';
+export { default as BenefitsSection } from './BenefitsSection';
+export { default as FooterContent } from './FooterContent';
+export { default as EventCard } from './EventCard';
+export { default as CategoryCard } from './CategoryCard';
+export { default as SectionHeader } from './SectionHeader';

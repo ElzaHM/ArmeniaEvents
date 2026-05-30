@@ -1,0 +1,39 @@
+.searchBar {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.compact {
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  flex: 1 1 280px !important;
+  min-width: 0;
+}
+
+.locationSelect {
+  flex: 0 1 220px !important;
+  min-width: 180px;
+}
+
+.searchBtn {
+  flex: 0 0 auto;
+  min-width: 110px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .compact {
+    flex-direction: column;
+  }
+
+  .searchInput,
+  .locationSelect,
+  .searchBtn {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+}

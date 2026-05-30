@@ -1,0 +1,46 @@
+[data-theme='light'] {
+  --home-section-bg: #ffffff;
+  --home-surface: #ffffff;
+  --home-surface-muted: #fafafa;
+  --home-text: #141414;
+  --home-text-secondary: #6b7280;
+  --home-border: #f0f0f0;
+  --home-hero-overlay: rgba(255, 255, 255, 0.88);
+  --home-cta-bg: #fffbe6;
+  --home-cta-pattern: rgba(212, 136, 6, 0.06);
+  --home-tag-bg: rgba(255, 255, 255, 0.92);
+  --home-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='dark'] {
+  --home-section-bg: #141414;
+  --home-surface: #1f1f1f;
+  --home-surface-muted: #262626;
+  --home-text: #f5f5f5;
+  --home-text-secondary: #a3a3a3;
+  --home-border: #303030;
+  --home-hero-overlay: rgba(20, 20, 20, 0.82);
+  --home-cta-bg: #1a1710;
+  --home-cta-pattern: rgba(212, 136, 6, 0.08);
+  --home-tag-bg: rgba(31, 31, 31, 0.92);
+  --home-card-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.homePage {
+  width: 100%;
+  text-align: left;
+  color: var(--home-text);
+  background: var(--home-section-bg);
+}
+
+.homeSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (max-width: 768px) {
+  .homeSection {
+    padding: 0 16px;
+  }
+}
