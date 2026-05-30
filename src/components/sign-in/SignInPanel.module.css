@@ -1,0 +1,102 @@
+.panel {
+  display: flex;
+  background: rgba(28, 28, 30, 0.85);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  overflow: hidden;
+  max-width: 1000px;
+  width: 95%;
+  margin: 40px auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.leftSection {
+  flex: 1;
+  padding: 60px;
+  background: linear-gradient(135deg, rgba(192, 125, 67, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.rightSection {
+  flex: 1;
+  padding: 60px;
+}
+
+.logoBox {
+  width: 45px;
+  height: 45px;
+  background: rgba(192, 125, 67, 0.15);
+  border: 1px solid #C07D43;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.welcomeHeading {
+  font-size: 36px;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.accentText {
+  color: #C07D43;
+}
+
+.desc {
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.featureList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.featureItem {
+  display: flex;
+  gap: 16px;
+}
+
+.iconWrapper {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C07D43;
+}
+
+.featureTitle {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.featureDesc {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+}
+
+/* Decorative Illustration Placeholder */
+.illustration {
+  margin-top: auto;
+  opacity: 0.3;
+  width: 100%;
+}
+
+@media (max-width: 992px) {
+  .panel { flex-direction: column; }
+  .leftSection { display: none; }
+  .rightSection { padding: 40px 20px; }
+}

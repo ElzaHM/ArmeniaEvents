@@ -1,0 +1,75 @@
+.formContainer {
+  width: 100%;
+}
+
+.title {
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 24px;
+}
+
+.label {
+  color: #fff;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.inputField {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  height: 45px;
+}
+
+.inputField :global(.ant-input) {
+  background: transparent !important;
+  color: #fff !important;
+}
+
+.forgotPassword {
+  color: #C07D43;
+}
+
+.submitBtn {
+  width: 100%;
+  height: 45px;
+  background-color: #C07D43 !important;
+  border: none !important;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.divider {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  font-size: 12px;
+}
+
+.socialBtn {
+  width: 100%;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.signUpText {
+  text-align: center;
+  margin-top: 24px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.signUpLink {
+  color: #C07D43;
+  font-weight: 600;
+}
