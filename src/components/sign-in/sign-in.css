@@ -1,7 +1,7 @@
 [data-theme='light'] {
   --auth-page-overlay: linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.88));
   --auth-panel-bg: rgba(255, 255, 255, 0.95);
-  --auth-panel-left-bg: linear-gradient(135deg, rgba(212, 136, 6, 0.06) 0%, rgba(255, 255, 255, 0) 100%);
+  --auth-panel-left-bg: var(--auth-panel-bg);
   --auth-panel-border: var(--home-border);
   --auth-panel-divider: var(--home-border);
   --auth-logo-box-bg: rgba(212, 136, 6, 0.1);
@@ -14,14 +14,22 @@
   --auth-arc-border: rgba(0, 0, 0, 0.08);
   --auth-footer-bg: var(--home-surface-muted);
   --auth-footer-border: var(--home-border);
-  --auth-illustration-opacity: 0.2;
+  --auth-illustration-opacity: 1.0;
+  --auth-illustration-bg: var(--auth-panel-bg);
+  --auth-illustration-blend: normal;
+  --auth-illustration-image-opacity: 1.0;
+  --auth-illustration-max-height: 240px;
+  --auth-illustration-filter: none;
+  --auth-illustration-scale-x: 1.25;
+  --auth-left-padding-x: 60px;
+  --auth-panel-backdrop: blur(20px);
   --auth-accent: #d48806;
 }
 
 [data-theme='dark'] {
   --auth-page-overlay: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85));
-  --auth-panel-bg: rgba(28, 28, 30, 0.85);
-  --auth-panel-left-bg: linear-gradient(135deg, rgba(192, 125, 67, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+  --auth-panel-bg: #1c1c1e;
+  --auth-panel-left-bg: var(--auth-panel-bg);
   --auth-panel-border: rgba(255, 255, 255, 0.08);
   --auth-panel-divider: rgba(255, 255, 255, 0.05);
   --auth-logo-box-bg: rgba(192, 125, 67, 0.15);
@@ -35,6 +43,15 @@
   --auth-footer-bg: #0d0d0d;
   --auth-footer-border: rgba(255, 255, 255, 0.05);
   --auth-illustration-opacity: 0.3;
+  --auth-illustration-bg: #1c1c1e;
+  --auth-illustration-blend: normal;
+  --auth-illustration-image-opacity: 0.3;
+  --auth-illustration-max-height: 240px;
+  --auth-illustration-filter: grayscale(1) invert(1) sepia(0.5) saturate(3) hue-rotate(358deg)
+    brightness(0.98) contrast(1.1);
+  --auth-illustration-scale-x: 1.25;
+  --auth-left-padding-x: 60px;
+  --auth-panel-backdrop: none;
   --auth-accent: #c07d43;
 }
 

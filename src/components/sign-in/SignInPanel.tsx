@@ -2,6 +2,7 @@ import React from 'react';
 import { MapPin, Heart, Bell, Ticket } from 'lucide-react';
 import { SignInForm } from './SignInForm';
 import styles from './SignInPanel.module.css';
+import signInIllustration from '../../pages/SignInPage/photo_2026-05-31_13-59-21 (2).jpg';
 
 export const SignInPanel: React.FC = () => {
   return (
@@ -46,10 +47,11 @@ export const SignInPanel: React.FC = () => {
         </div>
 
         <div className={styles.illustration}>
-           {/* SVG skyline here */}
-           <svg viewBox="0 0 400 100" fill="none" stroke="rgba(192, 125, 67, 0.5)" strokeWidth="1">
-              <path d="M0 80 L40 60 L80 80 L120 40 L160 70 L200 20 L240 70 L280 50 L320 80 L400 80" />
-           </svg>
+          <img
+            src={signInIllustration}
+            alt="Armenia Events skyline illustration"
+            className={styles.illustrationImage}
+          />
         </div>
       </div>
 

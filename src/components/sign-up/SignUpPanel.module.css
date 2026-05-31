@@ -1,7 +1,7 @@
 .panel {
   display: flex;
   background: var(--auth-panel-bg);
-  backdrop-filter: blur(20px);
+  backdrop-filter: var(--auth-panel-backdrop, blur(20px));
   border-radius: 24px;
   overflow: hidden;
   max-width: 1000px;
@@ -14,7 +14,7 @@
 .leftSection {
   flex: 1;
   padding: 60px;
-  background: var(--auth-panel-left-bg);
+  background: var(--auth-panel-bg);
   border-right: 1px solid var(--auth-panel-divider);
   display: flex;
   flex-direction: column;
@@ -23,6 +23,7 @@
 .rightSection {
   flex: 1;
   padding: 40px 60px;
+  background: var(--auth-panel-bg);
 }
 
 .logoBox {
@@ -91,22 +92,25 @@
 
 .illustration {
   margin-top: auto;
-  padding-top: 40px;
-  opacity: var(--auth-illustration-opacity);
+  margin-left: calc(-1 * var(--auth-left-padding-x));
+  margin-right: calc(-1 * var(--auth-left-padding-x));
+  padding-top: 16px;
+  width: calc(100% + 2 * var(--auth-left-padding-x));
+  overflow: hidden;
+  background-color: var(--auth-illustration-bg, var(--auth-panel-bg));
 }
 
-.dotsGrid {
-  display: grid;
-  grid-template-columns: repeat(5, 6px);
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  background: rgba(212, 136, 6, 0.3);
-  border-radius: 50%;
+.illustrationImage {
+  display: block;
+  width: 100%;
+  max-height: var(--auth-illustration-max-height);
+  object-fit: contain;
+  object-position: bottom left;
+  mix-blend-mode: var(--auth-illustration-blend);
+  opacity: var(--auth-illustration-opacity, var(--auth-illustration-image-opacity, 0.2));
+  filter: var(--auth-illustration-filter, none);
+  transform: scaleX(var(--auth-illustration-scale-x, 1));
+  transform-origin: bottom left;
 }
 
 @media (max-width: 992px) {

@@ -2,6 +2,7 @@ import React from 'react';
 import { MapPin, Heart, Bell, User } from 'lucide-react';
 import { SignUpForm } from './SignUpForm';
 import styles from './SignUpPanel.module.css';
+import signUpIllustration from '../../pages/SignUpPage/photo_2026-05-31_13-59-21.jpg';
 
 export const SignUpPanel: React.FC = () => {
   return (
@@ -53,12 +54,11 @@ export const SignUpPanel: React.FC = () => {
         </div>
 
         <div className={styles.illustration}>
-           <div className={styles.dotsGrid}>
-             {[...Array(10)].map((_, i) => <div key={i} className={styles.dot} />)}
-           </div>
-           <svg viewBox="0 0 400 100" fill="none" stroke="rgba(192, 125, 67, 0.4)" strokeWidth="1">
-              <path d="M0 80 L30 65 L60 85 L100 40 L140 75 L180 20 L220 75 L260 55 L300 85 L400 85" />
-           </svg>
+          <img
+            src={signUpIllustration}
+            alt="Armenia Events skyline illustration"
+            className={styles.illustrationImage}
+          />
         </div>
       </div>
 
