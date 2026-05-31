@@ -76,7 +76,7 @@ export default function UpcomingEventsTable({ events }: UpcomingEventsTableProps
               percent={percent}
               showInfo={false}
               strokeColor="var(--admin-gold)"
-              trailColor="var(--admin-border)"
+              railColor="var(--admin-border)"
               size="small"
             />
           </div>
