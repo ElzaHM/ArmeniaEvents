@@ -42,11 +42,11 @@
   --auth-arc-border: rgba(255, 255, 255, 0.1);
   --auth-footer-bg: #0d0d0d;
   --auth-footer-border: rgba(255, 255, 255, 0.05);
-  --auth-illustration-opacity: 0.3;
+  --auth-illustration-opacity: 1.0;
   --auth-illustration-bg: #1c1c1e;
   --auth-illustration-blend: normal;
-  --auth-illustration-image-opacity: 0.3;
-  --auth-illustration-max-height: 240px;
+  --auth-illustration-image-opacity: 1.0;
+  --auth-illustration-max-height: 200px;
   --auth-illustration-filter: grayscale(1) invert(1) sepia(0.5) saturate(3) hue-rotate(358deg)
     brightness(0.98) contrast(1.1);
   --auth-illustration-scale-x: 1.25;
