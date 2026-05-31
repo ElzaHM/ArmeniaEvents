@@ -1,10 +1,18 @@
 .card {
   background: var(--admin-surface);
-  backdrop-filter: blur(12px);
+
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+
   border: 1px solid var(--admin-border);
   border-radius: 16px;
   box-shadow: var(--admin-shadow);
   overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .header {
@@ -12,7 +20,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 20px 24px 0;
+  padding: 24px 24px 0;
 }
 
 .title {
@@ -20,6 +28,7 @@
   font-size: 16px;
   font-weight: 600;
   color: var(--admin-text);
+  letter-spacing: -0.01em;
 }
 
 .extra {
@@ -27,7 +36,7 @@
 }
 
 .body {
-  padding: 20px 24px 24px;
+  padding: 24px;
 }
 
 .bodyNoHeader {
@@ -38,7 +47,6 @@
   .header {
     padding: 16px 16px 0;
   }
-
   .body,
   .bodyNoHeader {
     padding: 16px;

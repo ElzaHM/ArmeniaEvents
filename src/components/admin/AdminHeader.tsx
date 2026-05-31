@@ -1,18 +1,18 @@
-import { Badge, Button, Input } from 'antd';
+import {useState, useEffect} from "react";
+import {Badge, Button, Input} from "antd";
 import {
   BellOutlined,
-  MenuFoldOutlined,
-  MenuOutlined,
-  MenuUnfoldOutlined,
   MoonOutlined,
   SearchOutlined,
   SunOutlined,
-} from '@ant-design/icons';
+  DownOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+} from "@ant-design/icons";
 
-import { useTheme } from '../../hooks/useTheme';
-import { ADMIN_PROFILE } from './mockData';
-
-import styles from './AdminHeader.module.css';
+import {useTheme} from "../../hooks/useTheme";
+import {ADMIN_PROFILE} from "./mockData";
+import styles from "./AdminHeader.module.css";
 
 interface AdminHeaderProps {
   sidebarCollapsed: boolean;
@@ -20,59 +20,50 @@ interface AdminHeaderProps {
   onOpenMobileMenu: () => void;
 }
 
-export default function AdminHeader({
-  sidebarCollapsed,
-  onToggleSidebar,
-  onOpenMobileMenu,
-}: AdminHeaderProps) {
-  const { mode, toggleTheme } = useTheme();
+export default function AdminHeader({sidebarCollapsed, onToggleSidebar}: AdminHeaderProps) {
+  const {mode, toggleTheme} = useTheme();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className={styles.header}>
-      <Button
-        type="text"
-        className={styles.menuBtn}
-        icon={<MenuOutlined />}
-        onClick={onOpenMobileMenu}
-        aria-label="Open menu"
-      />
+    <header className={`${styles.header} ${isScrolled ? styles.headerScrolled : ""}`}>
       <Button
         type="text"
         icon={sidebarCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         onClick={onToggleSidebar}
+        className={styles.sidebarToggle}
         aria-label="Toggle sidebar"
-        className="admin-desktop-only"
       />
 
       <div className={styles.searchWrap}>
         <Input
-          prefix={<SearchOutlined style={{ color: 'var(--admin-text-muted)' }} />}
-          placeholder="Search events, users..."
-          suffix={
-            <span style={{ color: 'var(--admin-text-muted)', fontSize: 12 }}>⌘ K</span>
-          }
+          prefix={<SearchOutlined className={styles.searchIcon} />}
+          placeholder="Search events, users, bookings..."
+          suffix={<span className={styles.searchShortcut}>⌘ K</span>}
           size="large"
-          style={{
-            background: 'var(--admin-surface-solid)',
-            borderColor: 'var(--admin-border)',
-          }}
+          className={styles.searchInput}
         />
       </div>
 
       <div className={styles.actions}>
         <Button
           type="text"
-          icon={mode === 'light' ? <MoonOutlined /> : <SunOutlined />}
+          icon={mode === "light" ? <MoonOutlined /> : <SunOutlined />}
           onClick={toggleTheme}
-          aria-label="Toggle theme"
+          className={styles.actionBtn}
         />
-        <Badge count={2} size="small" offset={[-2, 2]}>
-          <Button
-            type="text"
-            icon={<BellOutlined />}
-            aria-label="Notifications"
-          />
+
+        <Badge count={3} size="small" offset={[-2, 2]}>
+          <Button type="text" icon={<BellOutlined />} className={styles.actionBtn} />
         </Badge>
+
         <div className={styles.userSnippet}>
           <img
             src={ADMIN_PROFILE.avatarUrl}
@@ -80,6 +71,7 @@ export default function AdminHeader({
             className={styles.userAvatar}
           />
           <span className={styles.userName}>{ADMIN_PROFILE.name}</span>
+          <DownOutlined className={styles.userArrow} />
         </div>
       </div>
     </header>
