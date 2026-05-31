@@ -15,7 +15,7 @@ import styles from '../../components/sign-up/SignUpPage.module.css';
 
 const SignUpPage: React.FC = () => {
   return (
-    <div className={`${styles.pageWrapper} auth-page`}>
+    <div className={`${styles.pageWrapper} auth-page sign-up-page`}>
       <div className={styles.arcDecoration} />
 
       <main className={styles.mainContent}>

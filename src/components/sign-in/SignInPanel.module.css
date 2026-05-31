@@ -110,7 +110,10 @@
   mix-blend-mode: var(--auth-illustration-blend);
   opacity: var(--auth-illustration-opacity, var(--auth-illustration-image-opacity, 0.2));
   filter: var(--auth-illustration-filter, none);
-  transform: scaleX(var(--auth-illustration-scale-x, 1));
+  transform: scale(
+    var(--auth-illustration-scale-x, 1),
+    var(--auth-illustration-scale-y, 1)
+  );
   transform-origin: bottom left;
 }
 

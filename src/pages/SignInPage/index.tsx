@@ -14,7 +14,7 @@ import styles from '../../components/sign-in/SignInPage.module.css';
 
 const SignInPage: React.FC = () => {
   return (
-    <div className={`${styles.pageWrapper} auth-page`}>
+    <div className={`${styles.pageWrapper} auth-page sign-in-page`}>
       <div className={styles.arcDecoration} />
 
       <main className={styles.mainContent}>

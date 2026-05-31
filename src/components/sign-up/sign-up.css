@@ -1,1 +1,3 @@
-/* Sign-up specific Ant Design overrides are handled in sign-in.css under .auth-page */
+.sign-up-page {
+  --auth-illustration-scale-y: 1.25;
+}

@@ -19,9 +19,9 @@
   --auth-illustration-bg: var(--auth-panel-bg);
   --auth-illustration-blend: normal;
   --auth-illustration-image-opacity: 1.0;
-  --auth-illustration-max-height: 280px;
+  --auth-illustration-max-height: 160px;
   --auth-illustration-filter: none;
-  --auth-illustration-scale-x: 1.25;
+  --auth-illustration-scale-x: 1.95;
   --auth-left-padding-x: 60px;
   --auth-panel-backdrop: blur(20px);
   --auth-accent: #d48806;
@@ -44,14 +44,14 @@
   --auth-footer-bg: rgba(13, 13, 13, 0.72);
   --auth-footer-backdrop: blur(16px) saturate(1.8);
   --auth-footer-border: rgba(255, 255, 255, 0.05);
-  --auth-illustration-opacity: 0.2;
+  --auth-illustration-opacity: 0.5;
   --auth-illustration-bg: #1c1c1e;
   --auth-illustration-blend: normal;
-  --auth-illustration-image-opacity: 0.4;
+  --auth-illustration-image-opacity: 0.5;
   --auth-illustration-max-height: 160px;
   --auth-illustration-filter: grayscale(1) invert(1) sepia(0.5) saturate(3) hue-rotate(358deg)
     brightness(0.98) contrast(1.1);
-  --auth-illustration-scale-x: 1.25;
+  --auth-illustration-scale-x: 1.95;
   --auth-left-padding-x: 60px;
   --auth-panel-backdrop: none;
   --auth-accent: #c07d43;
@@ -99,4 +99,8 @@
   display: block;
   width: 100%;
   background-color: #1c1c1e;
+}
+
+.sign-in-page {
+  --auth-illustration-scale-y: 1.25;
 }
