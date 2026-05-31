@@ -1,0 +1,52 @@
+.eventCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.thumbnail {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.eventTitle {
+  font-weight: 500;
+  color: var(--admin-text);
+}
+
+.viewsCell {
+  min-width: 120px;
+}
+
+.viewsMeta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: var(--admin-text-secondary);
+}
+
+.statusPublished {
+  color: var(--admin-success);
+  background: var(--admin-success-bg);
+  border: none;
+}
+
+.statusDraft {
+  color: var(--admin-warning);
+  background: var(--admin-warning-bg);
+  border: none;
+}
+
+.statusArchived {
+  color: var(--admin-text-muted);
+  background: var(--admin-gold-light);
+  border: none;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
