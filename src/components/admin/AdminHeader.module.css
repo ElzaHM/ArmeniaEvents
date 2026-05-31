@@ -1,112 +1,147 @@
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   padding: 20px 24px;
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 100;
   background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s ease;
 }
+
 
 .headerScrolled {
   padding: 12px 24px;
-  background: rgba(15, 15, 18, 0.45);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px) saturate(180%);
 }
 
+[data-theme="dark"] .headerScrolled {
+  background: rgba(15, 15, 18, 0.45);
+}
+
+[data-theme="light"] .headerScrolled {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+
 .sidebarToggle {
-  color: rgba(255, 255, 255, 0.7) !important;
-  font-size: 18px !important;
+  width: 42px !important;
+  height: 42px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  color: var(--admin-text) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-size: 22px !important;
+}
+
+.sidebarToggle:hover {
+  transform: translateY(-0.5px) ;
+  border-color: var(--admin-gold) !important;
+  color: var(--admin-gold) !important;
+  background: rgba(217, 163, 74, 0.08) !important;
+}
+
+.sidebarToggle:active {
+  transform: translateY(0) scale(0.95);
 }
 
 .searchWrap {
   flex: 1;
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
 }
 
-:global(.ant-input-affix-wrapper).searchInput {
-  background-color: rgba(43, 40, 40, 0.12) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+:global(.ant-input-affix-wrapper).searchInput,
+.actionBox,
+.userSnippet {
+  backdrop-filter: blur(15px) !important;
   border-radius: 10px !important;
-  padding: 6px 16px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease !important;
-  box-shadow: none !important;
 }
 
-:global(.ant-input-affix-wrapper).searchInput:hover {
-  background-color: rgba(255, 255, 255, 0.18) !important;
-  border-color: rgba(255, 255, 255, 0.25) !important;
-}
 
-:global(.ant-input-affix-wrapper).searchInput :global(.ant-input) {
-  background: transparent !important;
+[data-theme="dark"] :global(.ant-input-affix-wrapper).searchInput,
+[data-theme="dark"] .actionBox,
+[data-theme="dark"] .userSnippet {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
   color: #ffffff !important;
 }
 
-.searchIcon {
-  color: rgba(255, 255, 255, 0.5) !important;
+
+[data-theme="light"] :global(.ant-input-affix-wrapper).searchInput,
+[data-theme="light"] .actionBox,
+[data-theme="light"] .userSnippet {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  color: #000000 !important;
 }
 
-.searchShortcut {
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 11px;
-  padding: 2px 6px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+
+.actionBox:hover,
+.userSnippet:hover {
+  transform: translateY(-2px);
+  border-color: var(--admin-gold) !important;
 }
 
 .actions {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
 }
 
-.actionBtn {
-  color: rgba(255, 255, 255, 0.6) !important;
+.actionBox {
+  width: 42px !important;
+  height: 42px !important;
+  padding: 0 !important;
+  cursor: pointer;
 }
 
 .userSnippet {
-  display: flex;
-  align-items: center;
+  padding: 0 16px 0 8px;
+  height: 42px;
   gap: 10px;
-  padding: 4px 8px;
   cursor: pointer;
-  border-radius: 8px;
 }
 
 .userAvatar {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  border: 1px solid var(--admin-gold);
+  border: 1.5px solid var(--admin-gold);
+  object-fit: cover;
 }
 
 .userName {
   font-size: 14px;
-  font-weight: 500;
-  color: #ffffff;
-}
-
-.userArrow {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  color: inherit;
 }
 
 @media (max-width: 1024px) {
-  .userName,
-  .userArrow {
+  .userName {
     display: none;
   }
   .searchWrap {
     max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .searchWrap {
+    display: none;
   }
 }

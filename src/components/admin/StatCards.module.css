@@ -7,7 +7,7 @@
 
 .card {
   display: flex;
-  flex-direction: column; /* Теперь карточка растет вниз */
+  flex-direction: column;
   padding: 24px;
   background: var(--admin-surface);
   backdrop-filter: blur(16px) saturate(180%);
@@ -17,12 +17,12 @@
   box-shadow: var(--admin-shadow);
 }
 
-/* Новая обертка для верхней части (Иконка + Заголовок/Цифра) */
+
 .topRow {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 20px; /* Отступ до линии тренда */
+  margin-bottom: 20px;
 }
 
 .iconWrap {
@@ -58,15 +58,15 @@
   line-height: 1.1;
 }
 
-/* Тренд теперь занимает всю ширину под иконкой и текстом */
+
 .trend {
   width: 100%;
   padding-top: 16px;
-  border-top: 1px solid var(--admin-border); /* Легкая разделительная линия как в макете */
+  border-top: 1px solid var(--admin-border);
   font-size: 12px;
   font-weight: 500;
   color: var(--admin-text-muted);
-  text-align: center; /* Центрируем для красоты как на макете */
+  text-align: center;
 }
 
 .trend span {

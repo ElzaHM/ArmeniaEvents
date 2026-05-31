@@ -17,7 +17,6 @@ import styles from "./AdminHeader.module.css";
 interface AdminHeaderProps {
   sidebarCollapsed: boolean;
   onToggleSidebar: () => void;
-  onOpenMobileMenu: () => void;
 }
 
 export default function AdminHeader({sidebarCollapsed, onToggleSidebar}: AdminHeaderProps) {
@@ -39,7 +38,6 @@ export default function AdminHeader({sidebarCollapsed, onToggleSidebar}: AdminHe
         icon={sidebarCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         onClick={onToggleSidebar}
         className={styles.sidebarToggle}
-        aria-label="Toggle sidebar"
       />
 
       <div className={styles.searchWrap}>
@@ -57,12 +55,14 @@ export default function AdminHeader({sidebarCollapsed, onToggleSidebar}: AdminHe
           type="text"
           icon={mode === "light" ? <MoonOutlined /> : <SunOutlined />}
           onClick={toggleTheme}
-          className={styles.actionBtn}
+          className={styles.actionBox}
         />
 
-        <Badge count={3} size="small" offset={[-2, 2]}>
-          <Button type="text" icon={<BellOutlined />} className={styles.actionBtn} />
-        </Badge>
+        <div className={styles.actionBox}>
+          <Badge count={3} size="small" offset={[2, -2]}>
+            <BellOutlined style={{color: "inherit", fontSize: "18px"}} />
+          </Badge>
+        </div>
 
         <div className={styles.userSnippet}>
           <img
