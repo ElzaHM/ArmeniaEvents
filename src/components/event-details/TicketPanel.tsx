@@ -11,7 +11,7 @@ interface TicketPanelProps {
 
 export default function TicketPanel({ event }: TicketPanelProps) {
   return (
-    <aside className={styles.panel}>
+    <aside className={`${styles.panel} detailsGlassCard`}>
       <Typography.Title level={5} className={styles.title}>
         Tickets
       </Typography.Title>

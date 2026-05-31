@@ -2,39 +2,43 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 28px;
 }
 
 .title {
   margin: 0 !important;
   font-size: 20px !important;
+  font-weight: 600 !important;
   color: var(--home-text) !important;
 }
 
 .header {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .venueName {
   margin: 0 !important;
   font-size: 18px !important;
+  font-weight: 600 !important;
   color: var(--home-text) !important;
 }
 
 .address {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-size: 14px;
   color: var(--home-text-secondary);
 }
 
 .imageWrap {
   position: relative;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   aspect-ratio: 16 / 7;
+  border: 1px solid var(--details-glass-border);
 }
 
 .image {
@@ -47,19 +51,22 @@
 .mapBtn {
   position: absolute;
   left: 50%;
-  bottom: 16px;
+  bottom: 20px;
   transform: translateX(-50%);
-  min-width: 200px;
+  min-width: 220px;
+  height: 42px !important;
   font-weight: 500;
-  border-color: var(--home-border) !important;
-  background: var(--home-surface) !important;
+  border-radius: 10px !important;
+  border-color: var(--details-glass-border) !important;
+  background: var(--details-glass-bg) !important;
+  backdrop-filter: blur(12px);
   color: var(--home-text) !important;
   box-shadow: var(--home-card-shadow);
 }
 
 .mapBtn:hover {
-  border-color: #d48806 !important;
-  color: #d48806 !important;
+  border-color: var(--details-accent) !important;
+  color: var(--details-accent) !important;
 }
 
 .contacts {
@@ -68,13 +75,13 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .contactLink {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   color: var(--home-text-secondary);
   font-size: 14px;
   text-decoration: none;
@@ -82,10 +89,14 @@
 }
 
 .contactLink:hover {
-  color: #d48806;
+  color: var(--details-accent);
 }
 
 @media (max-width: 768px) {
+  .section {
+    padding: 20px;
+  }
+
   .mapBtn {
     width: calc(100% - 32px);
     min-width: 0;

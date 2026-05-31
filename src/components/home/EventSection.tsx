@@ -7,7 +7,6 @@ import type { EventItem } from './types';
 import { useTheme } from '../../hooks/useTheme'; 
 import homePageBg from '../../assets/homePageBg.png'; 
 import homePageBgLight from '../../assets/eventPageLigthBg.png';
-import  PopularCategories from './PopularCategories'
 import styles from './EventSection.module.css';
 
 interface EventSectionProps {

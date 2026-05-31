@@ -13,22 +13,26 @@ export default function OrganizerCard({ event }: OrganizerCardProps) {
   const { organizer } = event;
 
   return (
-    <aside className={styles.card}>
-      <div className={styles.profile}>
-        <img src={organizer.avatarUrl} alt={organizer.name} className={styles.avatar} />
-        <div className={styles.info}>
-          <Typography.Text strong className={styles.name}>
-            {organizer.name}
-          </Typography.Text>
-          <Typography.Text type="secondary" className={styles.role}>
-            {organizer.role}
-          </Typography.Text>
-        </div>
-      </div>
+    <aside className={`${styles.card} detailsGlassCard`}>
+      <Typography.Title level={5} className={styles.title}>
+        Organizer
+      </Typography.Title>
 
-      <Button block className={styles.followBtn}>
-        Follow
-      </Button>
+      <div className={styles.profileRow}>
+        <div className={styles.profile}>
+          <img src={organizer.avatarUrl} alt={organizer.name} className={styles.avatar} />
+          <div className={styles.info}>
+            <Typography.Text strong className={styles.name}>
+              {organizer.name}
+            </Typography.Text>
+            <Typography.Text className={styles.role}>
+              {organizer.role}
+            </Typography.Text>
+          </div>
+        </div>
+
+        <Button className={styles.followBtn}>Follow</Button>
+      </div>
 
       <button type="button" className={styles.contactLink}>
         Contact Organizer

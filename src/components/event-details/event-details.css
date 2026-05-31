@@ -1,7 +1,34 @@
+[data-theme='light'] {
+  --details-accent: #d48806;
+  --details-glass-bg: rgba(255, 255, 255, 0.88);
+  --details-glass-muted: rgba(255, 255, 255, 0.72);
+  --details-glass-border: rgba(0, 0, 0, 0.08);
+  --details-inner-bg: rgba(0, 0, 0, 0.03);
+  --details-hero-glow: rgba(212, 136, 6, 0.08);
+}
+
+[data-theme='dark'] {
+  --details-accent: #c08b46;
+  --details-glass-bg: rgba(28, 28, 30, 0.78);
+  --details-glass-muted: rgba(20, 20, 20, 0.65);
+  --details-glass-border: rgba(255, 255, 255, 0.08);
+  --details-inner-bg: rgba(255, 255, 255, 0.04);
+  --details-hero-glow: rgba(192, 139, 70, 0.12);
+}
+
 .detailsSection {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+}
+
+.detailsGlassCard {
+  background: var(--details-glass-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--details-glass-border);
+  border-radius: 16px;
+  box-shadow: var(--home-card-shadow);
 }
 
 @media (max-width: 768px) {

@@ -53,7 +53,7 @@ export const DASHBOARD_STATS: StatMetric[] = [
 export const UPCOMING_ADMIN_EVENTS: AdminEvent[] = [
   {
     id: '1',
-    title: 'Yerevan Wine Days 2024',
+    title: 'Yerevan Wine Days 2026',
     date: '2024-05-24',
     category: 'Festival',
     location: 'Yerevan, Armenia',

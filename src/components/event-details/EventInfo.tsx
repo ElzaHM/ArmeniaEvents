@@ -62,7 +62,7 @@ export default function EventInfo({ event }: EventInfoProps) {
   ];
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} detailsGlassCard`}>
       <Typography.Title level={4} className={styles.title}>
         About This Event
       </Typography.Title>

@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+//import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import {
   EventHero,
@@ -24,16 +24,23 @@ export default function EventDetailsPage() {
 
   return (
     <div className={pageStyles.detailsPage}>
-      <Link to="/events" className={pageStyles.backLink}>
-        <ArrowLeftOutlined />
-        Back to Events
-      </Link>
+      <div className={pageStyles.backBar}>
+        <Link to="/events" className={pageStyles.backLink}>
+         {/*  <ArrowLeftOutlined /> */}
+         
+        </Link>
+      </div>
 
       <EventHero event={event} />
 
-      <div className={pageStyles.main}>
-        <div className={pageStyles.mainContent}>
+      <div className={pageStyles.tabsWrap}>
+        <div className="detailsSection">
           <EventTabs />
+        </div>
+      </div>
+
+      <div className={`detailsSection ${pageStyles.main}`}>
+        <div className={pageStyles.mainContent}>
           <EventInfo event={event} />
           <EventSchedule event={event} />
           <EventVenue event={event} />

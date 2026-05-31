@@ -1,11 +1,13 @@
 import { ALL_EVENTS } from '../events/mockData';
 import { UPCOMING_EVENTS } from '../home/mockData';
+import eventHeroWine from '../../assets/eventHeroWine.png';
+import eventVenueCascade from '../../assets/eventVenueCascade.png';
 import type { EventDetails } from './types';
 
 export const EVENT_DETAILS: Record<string, EventDetails> = {
   '1': {
     id: '1',
-    title: 'Yerevan Wine Days 2024',
+    title: 'Yerevan Wine Days 2026',
     category: 'Festival',
     location: 'Yerevan, Armenia',
     date: '2024-05-24',
@@ -13,8 +15,7 @@ export const EVENT_DETAILS: Record<string, EventDetails> = {
     weekday: 'FRI',
     price: 'Free',
     isFree: true,
-    imageUrl:
-      'https://images.unsplash.com/photo-1510812431400-5745154a390a?auto=format&fit=crop&w=1200&q=80',
+    imageUrl: eventHeroWine,
     interestedCount: 245,
     goingCount: 120,
     description: [
@@ -29,8 +30,7 @@ export const EVENT_DETAILS: Record<string, EventDetails> = {
     venue: {
       name: 'Cascade Complex',
       address: '10 Tamanyan St, Yerevan 0009, Armenia',
-      imageUrl:
-        'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=80',
+      imageUrl: eventVenueCascade,
       website: 'cascade.am',
       phone: '+374 11 123456',
       email: 'info@cascade.am',

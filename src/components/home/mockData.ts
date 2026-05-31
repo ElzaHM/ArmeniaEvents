@@ -23,7 +23,7 @@ export const CATEGORIES: Category[] = [
 export const UPCOMING_EVENTS: EventItem[] = [
   {
     id: '1',
-    title: 'Yerevan Wine Days 2024',
+    title: 'Yerevan Wine Days 2026',
     category: 'Festival',
     location: 'Yerevan, Armenia',
     date: '2024-05-24',

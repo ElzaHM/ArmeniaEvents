@@ -8,8 +8,10 @@ export default function ReminderCard() {
   const [isSaved, setIsSaved] = useState(false);
 
   return (
-    <aside className={styles.card}>
-      <BellOutlined className={styles.icon} />
+    <aside className={`${styles.card} detailsGlassCard`}>
+      <div className={styles.iconWrap}>
+        <BellOutlined className={styles.icon} />
+      </div>
       <Typography.Title level={5} className={styles.title}>
         Don&apos;t Miss Out!
       </Typography.Title>

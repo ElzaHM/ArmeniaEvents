@@ -12,17 +12,15 @@ interface EventCardProps {
 }
 
 export default function EventCard({ event }: EventCardProps) {
-  // Ստուգում ենք՝ արդյոք միջոցառումն անվճար է
-  const isFree = event.price === 'Free' || event.price === 0;
+  const isFree = event.isFree || event.price === 'Free';
 
   return (
     <article className={styles.card}>
-      {/* Նկարի բաժինը */}
       <div className={styles.imageWrapper}>
-        <img 
-          src={event.imageUrl} 
-          alt={event.name} 
-          className={styles.image} 
+        <img
+          src={event.imageUrl}
+          alt={event.title}
+          className={styles.image}
         />
         
         {/* Ամսաթվի նշանը (Date Badge) */}
@@ -40,7 +38,7 @@ export default function EventCard({ event }: EventCardProps) {
       {/* Տեքստային բաժինը */}
       <div className={styles.content}>
         <Typography.Title level={5} className={styles.title}>
-          {event.name}
+          {event.title}
         </Typography.Title>
         
         <p className={styles.category}>{event.category}</p>
@@ -57,7 +55,7 @@ export default function EventCard({ event }: EventCardProps) {
 
         {/* Գինը */}
         <div className={`${styles.price} ${isFree ? styles.freePrice : ''}`}>
-          {isFree ? 'Free' : `$${event.price}`}
+          {event.price}
         </div>
       </div>
     </article>

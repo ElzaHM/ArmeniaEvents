@@ -24,7 +24,7 @@ export default function EventVenue({ event }: EventVenueProps) {
   ];
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} detailsGlassCard`}>
       <Typography.Title level={4} className={styles.title}>
         Venue
       </Typography.Title>

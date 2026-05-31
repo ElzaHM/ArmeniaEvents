@@ -1,16 +1,27 @@
 .card {
   padding: 24px;
-  background: var(--home-surface);
-  border: 1px solid var(--home-border);
-  border-radius: 12px;
-  box-shadow: var(--home-card-shadow);
+}
+
+.title {
+  margin: 0 0 16px !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: var(--home-text) !important;
+}
+
+.profileRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .profile {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 16px;
+  min-width: 0;
 }
 
 .avatar {
@@ -19,6 +30,7 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+  border: 2px solid var(--details-glass-border);
 }
 
 .info {
@@ -35,19 +47,21 @@
 
 .role {
   font-size: 13px !important;
+  color: var(--home-text-secondary) !important;
 }
 
 .followBtn {
-  margin-bottom: 12px;
+  flex-shrink: 0;
   font-weight: 500;
-  border-color: var(--home-border) !important;
+  border-radius: 8px !important;
+  border-color: var(--details-glass-border) !important;
   color: var(--home-text) !important;
-  background: var(--home-surface-muted) !important;
+  background: var(--details-inner-bg) !important;
 }
 
 .followBtn:hover {
-  border-color: #d48806 !important;
-  color: #d48806 !important;
+  border-color: var(--details-accent) !important;
+  color: var(--details-accent) !important;
 }
 
 .contactLink {
@@ -57,7 +71,7 @@
   padding: 0;
   border: none;
   background: none;
-  color: #d48806;
+  color: var(--details-accent);
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
