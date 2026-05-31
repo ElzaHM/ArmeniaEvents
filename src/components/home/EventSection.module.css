@@ -1,38 +1,66 @@
 .section {
-  padding: 56px 0;
-  background: var(--home-section-bg);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  /* background-attachment: fixed; */
+  box-sizing: border-box;
+  position: relative !important;
+  overflow: hidden !important;
+  width: 100%;
+  margin: 0 !important;
+}
+
+.sectionOverlay {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 50px 0 60px;
+  margin: 0 !important;
+  background: color-mix(in srgb, var(--home-hero-overlay), transparent 50%) !important;
+  position: relative;
+  inset: 0 !important;
+  margin: 0 !important;
+  z-index: 1 !important;
+
 }
 
 .headerRow {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-.headerRow > :first-child {
-  flex: 1;
-  min-width: 0;
+.title {
+  color: white;
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0;
 }
 
-.sectionHeader {
-  margin-bottom: 0 !important;
-}
-
-.navButtons {
+.viewAll {
+  color: #c08b46;
+  text-decoration: none;
+  font-size: 15px;
   display: flex;
-  gap: 8px;
-  flex-shrink: 0;
+  align-items: center;
+  transition: opacity 0.2s;
+}
+
+.viewAll:hover {
+  opacity: 0.8;
+}
+
+/* Scroll Container */
+.relativeWrapper {
+  position: relative;
 }
 
 .scrollContainer {
   display: flex;
-  gap: 20px;
+  gap: 20px; 
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding-bottom: 8px;
+  width: 100%;
+  padding-bottom: 10px;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -42,25 +70,46 @@
 }
 
 .cardWrap {
-  flex: 0 0 280px;
-  scroll-snap-align: start;
+  flex: 0 0 calc(20% - 16px); 
+  min-width: 180px;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px !important;
+  height: 44px !important;
+  background: white !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leftBtn {
+  left: -22px;
+}
+
+.rightBtn {
+  right: -22px;
+}
+
+.navButton :global(.anticon) {
+  color: #1a1a1a;
+  font-size: 18px;
+}
+
+@media (max-width: 1200px) {
+  .cardWrap {
+    flex: 0 0 calc(33.33% - 14px); 
+  }
 }
 
 @media (max-width: 768px) {
-  .section {
-    padding: 40px 0;
-  }
-
-  .headerRow {
-    flex-direction: column;
-    margin-bottom: 16px;
-  }
-
-  .navButtons {
-    align-self: flex-end;
-  }
-
   .cardWrap {
-    flex-basis: 260px;
+    flex: 0 0 calc(50% - 10px); 
   }
 }

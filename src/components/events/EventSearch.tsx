@@ -1,12 +1,12 @@
 import { Typography } from 'antd';
-
 import EventSearchBar from './EventSearchBar';
-
 import styles from './EventSearch.module.css';
 
-export default function EventSearch() {
+
+export default function HomePage() {
+
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} >
       <div className={styles.overlay}>
         <div className={`eventsSection ${styles.content}`}>
           <Typography.Title level={1} className={styles.title}>

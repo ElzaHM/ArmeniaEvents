@@ -2,7 +2,7 @@
     background: transparent !important;
     height: 80px;
     line-height: 80px;
-    padding: 0 50px;
+    padding: 0 5%;
     position: fixed; 
     top: 0;
     left: 0;
@@ -10,6 +10,7 @@
     z-index: 1000;
     transition: all 0.3s ease; 
     border: none;
+    box-sizing: border-box;
 }
 
 .custom-header.scrolled {

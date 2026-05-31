@@ -3,9 +3,11 @@ import { Button } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
 import EventCard from './EventCard';
-import SectionHeader from './SectionHeader';
 import type { EventItem } from './types';
-
+import { useTheme } from '../../hooks/useTheme'; 
+import homePageBg from '../../assets/homePageBg.png'; 
+import homePageBgLight from '../../assets/eventPageLigthBg.png';
+import  PopularCategories from './PopularCategories'
 import styles from './EventSection.module.css';
 
 interface EventSectionProps {
@@ -16,6 +18,8 @@ interface EventSectionProps {
 
 export default function EventSection({ title, events, viewAllHref }: EventSectionProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+    const { mode } = useTheme(); 
+   const bgImage = mode === 'light' ? homePageBgLight : homePageBg;
 
   const scroll = (direction: 'left' | 'right') => {
     const container = scrollRef.current;
@@ -28,26 +32,29 @@ export default function EventSection({ title, events, viewAllHref }: EventSectio
     });
   };
 
-  return (
-    <section className={styles.section}>
-      <div className="homeSection">
-        <div className={styles.headerRow}>
-          <SectionHeader title={title} viewAllHref={viewAllHref} className={styles.sectionHeader} />
-          <div className={styles.navButtons}>
-            <Button
-              shape="circle"
-              icon={<LeftOutlined />}
-              aria-label="Scroll left"
-              onClick={() => scroll('left')}
-            />
-            <Button
-              shape="circle"
-              icon={<RightOutlined />}
-              aria-label="Scroll right"
-              onClick={() => scroll('right')}
-            />
-          </div>
-        </div>
+ return (
+    <section className={styles.section} style={{ backgroundImage: `url(${bgImage})` }} >
+    <section className={styles.sectionOverlay}>
+      {/* <div><PopularCategories/></div> */}
+    <div className="homeSection">
+      {/* Header բաժինը */}
+      <div className={styles.headerRow}>
+        <h2 className={styles.title}>{title}</h2>
+        {viewAllHref && (
+          <a href={viewAllHref} className={styles.viewAll}>
+            View all <RightOutlined style={{ fontSize: 12, marginLeft: 6 }} />
+          </a>
+        )}
+      </div>
+
+      <div className={styles.relativeWrapper}>
+        {/* Ձախ կոճակը (հայտնվում է միայն սքրոլ անելիս) */}
+        <Button
+          className={`${styles.navButton} ${styles.leftBtn}`}
+          shape="circle"
+          icon={<LeftOutlined />}
+          onClick={() => scroll('left')}
+        />
 
         <div ref={scrollRef} className={styles.scrollContainer}>
           {events.map((event) => (
@@ -56,7 +63,17 @@ export default function EventSection({ title, events, viewAllHref }: EventSectio
             </div>
           ))}
         </div>
+
+        {/* Աջ կոճակը (այն սպիտակ կլորը, որը նկարում է) */}
+        <Button
+          className={`${styles.navButton} ${styles.rightBtn}`}
+          shape="circle"
+          icon={<RightOutlined />}
+          onClick={() => scroll('right')}
+        />
       </div>
+    </div>
     </section>
-  );
+  </section>
+);
 }

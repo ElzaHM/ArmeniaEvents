@@ -15,7 +15,6 @@ export default function Header() {
   const { mode, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
 
-  // Հետևում ենք սքրոլին
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {

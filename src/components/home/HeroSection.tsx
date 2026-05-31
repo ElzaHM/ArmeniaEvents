@@ -1,21 +1,21 @@
 import { Tag, Typography } from 'antd';
 import SearchBar from './SearchBar';
 import { POPULAR_TAGS } from './mockData';
-import { useTheme } from '../../hooks/useTheme'; 
-import homePageBg from '../../assets/homePageBg.png'; 
-import homePageBgLight from '../../assets/eventPageLigthBg.png'; 
+// import { useTheme } from '../../hooks/useTheme'; 
+// import homePageBg from '../../assets/homePageBg.png'; 
+// import homePageBgLight from '../../assets/eventPageLigthBg.png'; 
 
 import styles from './HeroSection.module.css';
 
 export default function HeroSection() {
-  const { mode } = useTheme(); 
+  // const { mode } = useTheme(); 
 
-  const bgImage = mode === 'light' ? homePageBgLight : homePageBg;
+  // const bgImage = mode === 'light' ? homePageBgLight : homePageBg;
 
   return (
     <section 
       className={styles.hero} 
-      style={{ backgroundImage: `url(${bgImage})` }} 
+      // style={{ backgroundImage: `url(${bgImage})` }} 
     >
       <div className={styles.overlay}>
         <div className={`homeSection ${styles.content}`}>

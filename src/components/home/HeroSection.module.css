@@ -8,13 +8,12 @@
   text-align: left; 
   background-size: cover;
   background-position: top;
-  padding-left: 10%; 
+  padding-left: 4%; 
   overflow: hidden;
 }
 
 .overlay {
-  /* background: var(--home-hero-overlay); */
-  padding: 72px 0 64px;
+  padding-bottom: 40px;
 }
 
 .highlight {
@@ -56,9 +55,8 @@
 .content {
   position: relative;
   z-index: 2;
-  width: 7800px !important;
+  width: 100% !important;
   max-width: 800px !important; 
-  width: 100%;
 }
 
 .highlight {
