@@ -19,7 +19,7 @@
   --auth-illustration-bg: var(--auth-panel-bg);
   --auth-illustration-blend: normal;
   --auth-illustration-image-opacity: 1.0;
-  --auth-illustration-max-height: 240px;
+  --auth-illustration-max-height: 280px;
   --auth-illustration-filter: none;
   --auth-illustration-scale-x: 1.25;
   --auth-left-padding-x: 60px;
@@ -48,7 +48,7 @@
   --auth-illustration-bg: #1c1c1e;
   --auth-illustration-blend: normal;
   --auth-illustration-image-opacity: 0.5;
-  --auth-illustration-max-height: 160px;
+  --auth-illustration-max-height: 260px;
   --auth-illustration-filter: grayscale(1) invert(1) sepia(0.5) saturate(3) hue-rotate(358deg)
     brightness(0.98) contrast(1.1);
   --auth-illustration-scale-x: 1.25;
@@ -93,4 +93,10 @@
 
 .auth-page .ant-divider-inner-text {
   padding: 0 15px !important;
+}
+
+[data-theme='dark'] .auth-page .auth-illustration-image {
+  display: block;
+  width: 100%;
+  background-color: #1c1c1e;
 }

@@ -47,11 +47,13 @@ export const SignInPanel: React.FC = () => {
         </div>
 
         <div className={styles.illustration}>
-          <img
-            src={signInIllustration}
-            alt="Armenia Events skyline illustration"
-            className={styles.illustrationImage}
-          />
+          <div className="auth-illustration-image">
+            <img
+              src={signInIllustration}
+              alt="Armenia Events skyline illustration"
+              className={styles.illustrationImage}
+            />
+          </div>
         </div>
       </div>
 
