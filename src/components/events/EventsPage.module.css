@@ -2,13 +2,18 @@
   width: 100%;
   text-align: left;
   color: var(--home-text);
-  background: var(--home-section-bg);
+  background-image: url(../../assets/homeBg.png);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+ 
 }
 
 .eventsSection {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+  background: color-mix(in srgb, var(--home-hero-overlay), transparent 30%) !important; 
 }
 
 .main {

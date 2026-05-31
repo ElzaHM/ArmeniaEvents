@@ -31,7 +31,7 @@ export const UPCOMING_EVENTS: EventItem[] = [
     price: 'Free',
     isFree: true,
     imageUrl:
-      'https://images.unsplash.com/photo-1510812431400-5745154a390a?auto=format&fit=crop&w=800&q=80',
+      'https://i.pinimg.com/736x/58/b9/eb/58b9eb0817fec75a0da1c5db3207d00e.jpg',
   },
   {
     id: '2',
@@ -55,10 +55,34 @@ export const UPCOMING_EVENTS: EventItem[] = [
     price: '$15',
     isFree: false,
     imageUrl:
-      'https://images.unsplash.com/photo-1415201364774-f6f0ff35a028?auto=format&fit=crop&w=800&q=80',
+      'https://i.pinimg.com/736x/d1/4a/a6/d14aa68e51f7c50967dbc8bcae2d5751.jpg',
   },
   {
     id: '4',
+    title: 'Armenian Startup Summit',
+    category: 'Business',
+    location: 'Gyumri, Armenia',
+    date: '2024-07-08',
+    time: '09:30',
+    price: 'Free',
+    isFree: true,
+    imageUrl:
+      'https://i.pinimg.com/736x/22/5d/c5/225dc5df9df63c7b698fa623f566556d.jpg',
+  },
+  {
+    id: '5',
+    title: 'Armenian Startup Summit',
+    category: 'Business',
+    location: 'Gyumri, Armenia',
+    date: '2024-07-08',
+    time: '09:30',
+    price: 'Free',
+    isFree: true,
+    imageUrl:
+      'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '6',
     title: 'Armenian Startup Summit',
     category: 'Business',
     location: 'Gyumri, Armenia',
@@ -73,7 +97,7 @@ export const UPCOMING_EVENTS: EventItem[] = [
 
 export const TOP_PICKS: EventItem[] = [
   {
-    id: '5',
+    id: '7',
     title: 'Python Community Meetup',
     category: 'Programming',
     location: 'Yerevan, Armenia',
@@ -85,7 +109,7 @@ export const TOP_PICKS: EventItem[] = [
       'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80',
   },
   {
-    id: '6',
+    id: '8',
     title: 'Modern Art Exhibition',
     category: 'Art',
     location: 'Yerevan, Armenia',
@@ -94,10 +118,10 @@ export const TOP_PICKS: EventItem[] = [
     price: '$10',
     isFree: false,
     imageUrl:
-      'https://images.unsplash.com/photo-1531243269054-5ebf6f34067e?auto=format&fit=crop&w=800&q=80',
+      'https://i.pinimg.com/1200x/e9/14/ce/e914ce402761445581e073c0c6a7057a.jpg',
   },
   {
-    id: '7',
+    id: '9',
     title: 'UI/UX Design Workshop',
     category: 'Design',
     location: 'Yerevan, Armenia',
@@ -109,7 +133,31 @@ export const TOP_PICKS: EventItem[] = [
       'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80',
   },
   {
-    id: '8',
+    id: '10',
+    title: 'AI & Machine Learning Talk',
+    category: 'AI & Tech',
+    location: 'Yerevan, Armenia',
+    date: '2024-06-22',
+    time: '17:30',
+    price: 'Free',
+    isFree: true,
+    imageUrl:
+      'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '11',
+    title: 'AI & Machine Learning Talk',
+    category: 'AI & Tech',
+    location: 'Yerevan, Armenia',
+    date: '2024-06-22',
+    time: '17:30',
+    price: 'Free',
+    isFree: true,
+    imageUrl:
+      'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '12',
     title: 'AI & Machine Learning Talk',
     category: 'AI & Tech',
     location: 'Yerevan, Armenia',

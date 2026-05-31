@@ -30,7 +30,11 @@
   width: 100%;
   text-align: left;
   color: var(--home-text);
-  background: var(--home-section-bg);
+  /* background: var(--home-section-bg); */
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  background: transparent;
 }
 
 .homeSection {

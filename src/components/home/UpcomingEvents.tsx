@@ -1,3 +1,5 @@
+
+
 import EventSection from './EventSection';
 import { UPCOMING_EVENTS } from './mockData';
 

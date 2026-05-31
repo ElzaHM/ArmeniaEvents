@@ -1,26 +1,56 @@
 .section {
-  padding: 56px 0;
-  background: var(--home-section-bg);
+  padding: 50px 0 60px 0;
+  background: color-mix(in srgb, var(--home-hero-overlay), transparent 50%) !important;
+  /* height: 100%; */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  color: white;
+  font-size: 28px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.viewAll {
+  color: #c08b46; /* Gold color from design */
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: opacity 0.3s;
+}
+
+.viewAll:hover {
+  opacity: 0.8;
+}
+
+.arrow {
+  margin-left: 8px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 25px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* Responsiveness: reduce columns on smaller screens */
 @media (max-width: 1200px) {
   .grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .section {
-    padding: 40px 0;
-  }
-
   .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 }
