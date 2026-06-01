@@ -1,1 +1,1 @@
-/* Sign-up specific Ant Design overrides are handled in sign-in.css under .auth-page */
+/* Sign-up uses shared auth vars from sign-in.css; page-specific rules live there too. */

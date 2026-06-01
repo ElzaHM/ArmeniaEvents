@@ -1,8 +1,8 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox, Divider } from 'antd';
-import { MailOutlined, LockOutlined, GoogleOutlined, AppleOutlined, FacebookOutlined } from '@ant-design/icons';
+import { MailOutlined, LockOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
 import styles from './SignInForm.module.css';
-
+import { Link } from 'react-router-dom';
 export const SignInForm: React.FC = () => {
   return (
     <div className={styles.formContainer}>
@@ -11,23 +11,23 @@ export const SignInForm: React.FC = () => {
 
       <Form layout="vertical" requiredMark={false}>
         <Form.Item label={<span className={styles.label}>Email Address</span>} name="email">
-          <Input
-            prefix={<MailOutlined className={styles.inputIcon} />}
-            placeholder="Enter your email"
+          <Input 
+            prefix={<MailOutlined style={{ color: 'rgba(255,255,255,0.4)' }} />} 
+            placeholder="Enter your email" 
             className={styles.inputField}
           />
         </Form.Item>
 
         <Form.Item label={<span className={styles.label}>Password</span>} name="password">
-          <Input.Password
-            prefix={<LockOutlined className={styles.inputIcon} />}
-            placeholder="Enter your password"
+          <Input.Password 
+            prefix={<LockOutlined style={{ color: 'rgba(255,255,255,0.4)' }} />} 
+            placeholder="Enter your password" 
             className={styles.inputField}
           />
         </Form.Item>
 
-        <div className={styles.formRow}>
-          <Checkbox>Remember me</Checkbox>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24 }}>
+          <Checkbox style={{ color: 'rgba(255,255,255,0.7)' }}>Remember me</Checkbox>
           <a href="#" className={styles.forgotPassword}>Forgot Password?</a>
         </div>
 
@@ -36,11 +36,10 @@ export const SignInForm: React.FC = () => {
         <Divider className={styles.divider}>or continue with</Divider>
 
         <Button className={styles.socialBtn} icon={<GoogleOutlined />}>Continue with Google</Button>
-        <Button className={styles.socialBtn} icon={<AppleOutlined />}>Continue with Apple</Button>
         <Button className={styles.socialBtn} icon={<FacebookOutlined />}>Continue with Facebook</Button>
 
         <div className={styles.signUpText}>
-          Don&apos;t have an account? <a href="#" className={styles.signUpLink}>Sign Up</a>
+          Don't have an account? <Link to="/signup" className={styles.signUpLink}>Sign Up</Link>
         </div>
       </Form>
     </div>

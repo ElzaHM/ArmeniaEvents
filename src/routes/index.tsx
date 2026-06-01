@@ -36,6 +36,10 @@ export const router = createBrowserRouter([
         path: 'signin',
         element: <SignInPage />,
       },
+      {
+        path: 'signup',
+        element: <SignUpPage />,
+      },
     ],
   },
   {
@@ -45,10 +49,6 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <AdminPage />,
-      },
-      {
-        path: 'signup',
-        element: <SignUpPage />,
       },
       {
         path: 'events',

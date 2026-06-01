@@ -53,12 +53,14 @@ export const SignUpPanel: React.FC = () => {
           </div>
         </div>
 
-        <div className={styles.illustration}>
-          <img
-            src={signUpIllustration}
-            alt="Armenia Events skyline illustration"
-            className={styles.illustrationImage}
-          />
+        <div className={`${styles.illustration} auth-illustration`}>
+          <div className="auth-illustration-image">
+            <img
+              src={signUpIllustration}
+              alt="Armenia Events skyline illustration"
+              className={styles.illustrationImage}
+            />
+          </div>
         </div>
       </div>
 

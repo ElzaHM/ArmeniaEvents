@@ -13,16 +13,17 @@
 
 .leftSection {
   flex: 1;
-  padding: 60px;
+  padding: 24px 60px 48px;
   background: var(--auth-panel-bg);
   border-right: 1px solid var(--auth-panel-divider);
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .rightSection {
   flex: 1;
-  padding: 40px 60px;
+  padding: 60px;
   background: var(--auth-panel-bg);
 }
 
@@ -35,7 +36,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 12px;
   color: var(--auth-accent);
 }
 
@@ -43,7 +44,7 @@
   font-size: 36px;
   line-height: 1.2;
   color: var(--home-text);
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 
 .accentText {
@@ -53,13 +54,13 @@
 .desc {
   color: var(--home-text-secondary);
   line-height: 1.6;
-  margin-bottom: 40px;
+  margin-bottom: 18px;
 }
 
 .featureList {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 14px;
 }
 
 .featureItem {
@@ -97,19 +98,23 @@
   padding-top: 16px;
   width: calc(100% + 2 * var(--auth-left-padding-x));
   overflow: hidden;
-  background-color: var(--auth-illustration-bg, var(--auth-panel-bg));
+  background-color: transparent;
 }
 
 .illustrationImage {
   display: block;
   width: 100%;
+  background-color: transparent;
   max-height: var(--auth-illustration-max-height);
   object-fit: contain;
   object-position: bottom left;
   mix-blend-mode: var(--auth-illustration-blend);
   opacity: var(--auth-illustration-opacity, var(--auth-illustration-image-opacity, 0.2));
   filter: var(--auth-illustration-filter, none);
-  transform: scaleX(var(--auth-illustration-scale-x, 1));
+  transform: scale(
+    var(--auth-illustration-scale-x, 1),
+    var(--auth-illustration-scale-y, 1)
+  );
   transform-origin: bottom left;
 }
 

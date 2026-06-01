@@ -1,5 +1,5 @@
 [data-theme='light'] {
-  --auth-page-overlay: linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.88));
+  --auth-page-overlay: none;
   --auth-panel-bg: rgba(255, 255, 255, 0.95);
   --auth-panel-left-bg: var(--auth-panel-bg);
   --auth-panel-border: var(--home-border);
@@ -12,46 +12,52 @@
   --auth-social-bg: var(--home-surface-muted);
   --auth-social-border: var(--home-border);
   --auth-arc-border: rgba(0, 0, 0, 0.08);
-  --auth-footer-bg: var(--home-surface-muted);
+  --auth-footer-bg: rgba(250, 250, 250, 0.72);
+  --auth-footer-backdrop: blur(16px) saturate(1.4);
   --auth-footer-border: var(--home-border);
-  --auth-illustration-opacity: 1.0;
+  --auth-illustration-opacity: 1;
   --auth-illustration-bg: var(--auth-panel-bg);
   --auth-illustration-blend: normal;
   --auth-illustration-image-opacity: 1.0;
-  --auth-illustration-max-height: 240px;
+  --auth-illustration-max-height: 160px;
   --auth-illustration-filter: none;
-  --auth-illustration-scale-x: 1.25;
+  --auth-illustration-scale-x: 1.95;
   --auth-left-padding-x: 60px;
   --auth-panel-backdrop: blur(20px);
   --auth-accent: #d48806;
 }
 
 [data-theme='dark'] {
-  --auth-page-overlay: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85));
-  --auth-panel-bg: #1c1c1e;
+  --auth-page-overlay: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.22) 0%,
+    rgba(0, 0, 0, 0.28) 50%,
+    rgba(0, 0, 0, 0.36) 100%
+  );
+  --auth-panel-bg: rgba(28, 28, 30, 0.85);
   --auth-panel-left-bg: var(--auth-panel-bg);
   --auth-panel-border: rgba(255, 255, 255, 0.08);
   --auth-panel-divider: rgba(255, 255, 255, 0.05);
-  --auth-logo-box-bg: rgba(192, 125, 67, 0.15);
+  --auth-logo-box-bg: rgba(192, 125, 67, 0.12);
   --auth-feature-icon-bg: rgba(255, 255, 255, 0.05);
-  --auth-feature-icon-border: rgba(255, 255, 255, 0.1);
-  --auth-input-bg: rgba(255, 255, 255, 0.05);
+  --auth-feature-icon-border: rgba(255, 255, 255, 0.08);
+  --auth-input-bg: rgba(255, 255, 255, 0.06);
   --auth-input-border: rgba(255, 255, 255, 0.1);
-  --auth-social-bg: rgba(255, 255, 255, 0.03);
-  --auth-social-border: rgba(255, 255, 255, 0.1);
-  --auth-arc-border: rgba(255, 255, 255, 0.1);
-  --auth-footer-bg: #0d0d0d;
-  --auth-footer-border: rgba(255, 255, 255, 0.05);
-  --auth-illustration-opacity: 0.3;
-  --auth-illustration-bg: #1c1c1e;
-  --auth-illustration-blend: normal;
-  --auth-illustration-image-opacity: 0.3;
-  --auth-illustration-max-height: 240px;
-  --auth-illustration-filter: grayscale(1) invert(1) sepia(0.5) saturate(3) hue-rotate(358deg)
-    brightness(0.98) contrast(1.1);
-  --auth-illustration-scale-x: 1.25;
+  --auth-social-bg: rgba(255, 255, 255, 0.05);
+  --auth-social-border: rgba(255, 255, 255, 0.08);
+  --auth-arc-border: rgba(255, 255, 255, 0.08);
+  --auth-footer-bg: rgba(20, 20, 20, 0.72);
+  --auth-footer-backdrop: blur(16px) saturate(1.4);
+  --auth-footer-border: rgba(255, 255, 255, 0.08);
+  --auth-illustration-opacity: 0.9;
+  --auth-illustration-bg: var(--auth-panel-bg);
+  --auth-illustration-blend: lighten;
+  --auth-illustration-image-opacity: 1.0;
+  --auth-illustration-max-height: 160px;
+  --auth-illustration-filter: grayscale(1) invert(1) sepia(0.5) saturate(3) hue-rotate(8deg);
+  --auth-illustration-scale-x: 1.95;
   --auth-left-padding-x: 60px;
-  --auth-panel-backdrop: none;
+  --auth-panel-backdrop: blur(20px);
   --auth-accent: #c07d43;
 }
 
@@ -84,4 +90,48 @@
 
 .auth-page .ant-divider-inner-text {
   padding: 0 15px !important;
+}
+
+.auth-page .auth-illustration,
+.auth-page .auth-illustration-image {
+  background-color: transparent;
+}
+
+.auth-page .auth-illustration-image {
+  display: block;
+  width: 100%;
+}
+
+.auth-page .auth-illustration-image img {
+  background-color: transparent;
+}
+
+.sign-in-page,
+.sign-up-page {
+  --auth-illustration-scale-y: 1.25;
+}
+
+.sign-in-page .custom-header,
+.sign-up-page .custom-header {
+  background: transparent !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  border-bottom: none;
+}
+
+.sign-in-page .custom-header.scrolled,
+.sign-up-page .custom-header.scrolled {
+  background: rgba(14, 14, 14, 0.45) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='light'] .sign-in-page .custom-header.light-mode.scrolled,
+[data-theme='light'] .sign-up-page .custom-header.light-mode.scrolled {
+  background: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid var(--home-border);
 }

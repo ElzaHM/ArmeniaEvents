@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Button, Layout } from 'antd';
-import { 
-  EnvironmentFilled, 
-  MoonOutlined, 
-  SunOutlined 
+import {
+  EnvironmentFilled,
+  MoonOutlined,
+  SunOutlined,
 } from '@ant-design/icons';
 import { useTheme } from '../../hooks/useTheme';
 import './Header.css';
@@ -17,11 +17,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -37,17 +33,23 @@ export default function Header() {
         </Link>
 
         <nav className="header-nav">
-          <NavLink to="/" className={({ isActive }) => (isActive ? 'nav-item active' : 'nav-item')}>Home</NavLink>
-          <NavLink to="/events" className="nav-item">Events</NavLink>
-          <NavLink to="/about" className="nav-item">About</NavLink>
+          <NavLink to="/" className={({ isActive }) => (isActive ? 'nav-item active' : 'nav-item')}>
+            Home
+          </NavLink>
+          <NavLink to="/events" className="nav-item">
+            Events
+          </NavLink>
+          <NavLink to="/about" className="nav-item">
+            About
+          </NavLink>
         </nav>
 
         <div className="header-actions">
-          <Button 
-            type="text" 
+          <Button
+            type="text"
             className="theme-toggle"
-            icon={mode === 'light' ? <MoonOutlined /> : <SunOutlined />} 
-            onClick={toggleTheme} 
+            icon={mode === 'light' ? <MoonOutlined /> : <SunOutlined />}
+            onClick={toggleTheme}
           />
           <Link to="/signin">
             <Button className="signin-button">Sign In</Button>
