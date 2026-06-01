@@ -1,6 +1,9 @@
 .pageWrapper {
   min-height: 100vh;
-  background: transparent;
+  background-image: var(--auth-page-overlay), url('../../assets/eventPageLigthBg.png');
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
   color: var(--home-text);
   display: flex;
   flex-direction: column;
