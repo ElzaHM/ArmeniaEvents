@@ -23,7 +23,7 @@
 
 .rightSection {
   flex: 1;
-  padding: 40px 60px;
+  padding: 60px;
   background: var(--auth-panel-bg);
 }
 
@@ -98,13 +98,13 @@
   padding-top: 16px;
   width: calc(100% + 2 * var(--auth-left-padding-x));
   overflow: hidden;
-  background-color: var(--auth-panel-bg);
+  background-color: transparent;
 }
 
 .illustrationImage {
   display: block;
   width: 100%;
-  background-color: var(--auth-panel-bg);
+  background-color: transparent;
   max-height: var(--auth-illustration-max-height);
   object-fit: contain;
   object-position: bottom left;

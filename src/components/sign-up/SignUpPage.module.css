@@ -1,6 +1,9 @@
 .pageWrapper {
   min-height: 100vh;
-  background: var(--auth-page-overlay, transparent);
+  background-image: var(--auth-page-overlay), url('../../assets/eventPageLigthBg.png');
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
   color: var(--home-text);
   display: flex;
   flex-direction: column;
@@ -36,12 +39,12 @@
 
 .arcDecoration {
   position: absolute;
-  top: 8%;
+  top: 10%;
   left: 5%;
-  width: 320px;
+  width: 300px;
   height: 500px;
   border: 1px solid var(--auth-arc-border);
-  border-radius: 160px 160px 0 0;
+  border-radius: 150px 150px 0 0;
   pointer-events: none;
 }
 

@@ -1,3 +1,1 @@
-.sign-up-page {
-  --auth-illustration-scale-y: 1.25;
-}
+/* Sign-up uses shared auth vars from sign-in.css; page-specific rules live there too. */
