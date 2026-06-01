@@ -10,6 +10,8 @@ import { router } from './routes';
 import { queryClient } from './providers/query-client';
 import { ThemeProvider } from './providers/theme-provider';
 
+console.log('SUPABASE URL:', import.meta.env.VITE_SUPABASE_URL);
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>

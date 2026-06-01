@@ -17,7 +17,7 @@ export default function TicketPanel({ event }: TicketPanelProps) {
       </Typography.Title>
 
       <div className={styles.tickets}>
-        {event.tickets.map((ticket) => (
+        {(event.tickets ?? []).map((ticket) => (
           <article key={ticket.id} className={styles.ticketCard}>
             <div className={styles.ticketInfo}>
               <Typography.Text strong className={styles.ticketName}>

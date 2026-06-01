@@ -17,6 +17,7 @@ interface EventInfoProps {
 
 function formatFullDate(dateString: string, time: string) {
   const date = new Date(dateString);
+
   const formatted = date.toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
@@ -37,27 +38,27 @@ export default function EventInfo({ event }: EventInfoProps) {
     {
       icon: ClockCircleOutlined,
       label: 'Duration',
-      value: event.duration,
+      value: event.duration ?? 'N/A',
     },
     {
       icon: TeamOutlined,
       label: 'Attendees',
-      value: `${event.interestedCount} interested / ${event.goingCount} going`,
+      value: `${event.interestedCount ?? 0} interested / ${event.goingCount ?? 0} going`,
     },
     {
       icon: GlobalOutlined,
       label: 'Event Type',
-      value: event.eventType,
+      value: event.eventType ?? 'Offline',
     },
     {
       icon: GlobalOutlined,
       label: 'Language',
-      value: event.languages,
+      value: event.languages ?? 'English',
     },
     {
       icon: UserOutlined,
       label: 'Age Range',
-      value: event.ageRange,
+      value: event.ageRange ?? 'All ages',
     },
   ];
 
@@ -67,14 +68,17 @@ export default function EventInfo({ event }: EventInfoProps) {
         About This Event
       </Typography.Title>
 
-      {event.description.map((paragraph) => (
-        <Typography.Paragraph key={paragraph.slice(0, 32)} className={styles.description}>
+      {(event.description ?? []).map((paragraph) => (
+        <Typography.Paragraph
+          key={paragraph.slice(0, 32)}
+          className={styles.description}
+        >
           {paragraph}
         </Typography.Paragraph>
       ))}
 
       <div className={styles.tags}>
-        {event.tags.map((tag) => (
+        {(event.tags ?? []).map((tag) => (
           <Tag key={tag} className={styles.tag}>
             {tag}
           </Tag>
@@ -88,9 +92,16 @@ export default function EventInfo({ event }: EventInfoProps) {
           return (
             <div key={item.label} className={styles.infoItem}>
               <Icon className={styles.infoIcon} />
+
               <div className={styles.infoContent}>
-                <Typography.Text className={styles.infoLabel}>{item.label}</Typography.Text>
-                <Typography.Text className={styles.infoValue}>{item.value}</Typography.Text>
+                <Typography.Text className={styles.infoLabel}>
+                  {item.label}
+                </Typography.Text>
+
+                <Typography.Text className={styles.infoValue}>
+                  {item.value}
+                </Typography.Text>
+
                 {item.extra && (
                   <button type="button" className={styles.infoExtra}>
                     {item.extra}

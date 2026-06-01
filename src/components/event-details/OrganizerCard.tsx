@@ -9,8 +9,15 @@ interface OrganizerCardProps {
   event: EventDetails;
 }
 
+const DEFAULT_ORGANIZER_AVATAR =
+  'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=200&q=80';
+
 export default function OrganizerCard({ event }: OrganizerCardProps) {
-  const { organizer } = event;
+  const organizer = event.organizer ?? {
+    name: 'Armenia Events',
+    role: 'Event Organizer',
+    avatarUrl: DEFAULT_ORGANIZER_AVATAR,
+  };
 
   return (
     <aside className={`${styles.card} detailsGlassCard`}>
