@@ -1,10 +1,5 @@
 [data-theme='light'] {
-  --auth-page-overlay: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0.56) 50%,
-    rgba(255, 255, 255, 0.66) 100%
-  );
+  --auth-page-overlay: none;
   --auth-panel-bg: rgba(255, 255, 255, 0.95);
   --auth-panel-left-bg: var(--auth-panel-bg);
   --auth-panel-border: var(--home-border);
@@ -35,9 +30,9 @@
 [data-theme='dark'] {
   --auth-page-overlay: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0.56) 50%,
-    rgba(255, 255, 255, 0.66) 100%
+    rgba(0, 0, 0, 0.22) 0%,
+    rgba(0, 0, 0, 0.28) 50%,
+    rgba(0, 0, 0, 0.36) 100%
   );
   --auth-panel-bg: rgba(28, 28, 30, 0.85);
   --auth-panel-left-bg: var(--auth-panel-bg);
