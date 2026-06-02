@@ -4,7 +4,6 @@ import {
   LOCATIONS,
   POPULAR_TAGS,
   TOP_PICKS,
-  UPCOMING_EVENTS,
 } from '../components/home/mockData';
 import type { EventItem } from '../components/home/types';
 import {
@@ -125,6 +124,48 @@ function mapEventRowToEventItem(event: EventListRow): EventItem {
   };
 }
 
+const EVENT_LIST_SELECT = `
+  *,
+  categories ( name ),
+  organizers ( name )
+`;
+
+const UPCOMING_EVENTS_LIMIT = 6;
+
+type FetchEventListOptions = {
+  upcomingOnly?: boolean;
+  limit?: number;
+};
+
+async function fetchEventListRows(
+  options: FetchEventListOptions = {}
+): Promise<EventListRow[]> {
+  let query = supabase.from('events').select(EVENT_LIST_SELECT);
+
+  if (options.upcomingOnly) {
+    query = query
+      .not('start_date', 'is', null)
+      .gte('start_date', new Date().toISOString())
+      .order('start_date', { ascending: true });
+  }
+
+  if (options.limit != null) {
+    query = query.limit(options.limit);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    throw error;
+  }
+
+  return (data ?? []) as EventListRow[];
+}
+
+function mapEventListRowsToEventItems(rows: EventListRow[]): EventItem[] {
+  return rows.map((event) => mapEventRowToEventItem(event));
+}
+
 export function mapEventRowToEventDetails(row: EventDetailRow): EventDetails {
   const location = row.address ?? row.venue ?? 'Yerevan, Armenia';
   const imageUrl = row.image_url ?? DEFAULT_EVENT_IMAGE;
@@ -184,18 +225,13 @@ export type EventFiltersData = {
 
 export const eventsService = {
   async getEvents(): Promise<EventItem[]> {
-    const { data, error } = await supabase.from('events').select(`
-        *,
-        categories ( name ),
-        organizers ( name )
-      `);
-
-    if (error) {
+    try {
+      const rows = await fetchEventListRows();
+      return mapEventListRowsToEventItems(rows);
+    } catch (error) {
       console.error('SUPABASE ERROR:', error);
       throw error;
     }
-
-    return (data?.map((event) => mapEventRowToEventItem(event as EventListRow)) ?? []);
   },
 
   async getEventById(id: string | undefined): Promise<EventDetails> {
@@ -224,8 +260,12 @@ export const eventsService = {
     return mapEventRowToEventDetails(data as EventDetailRow);
   },
 
-  getUpcomingEvents(): Promise<EventItem[]> {
-    return simulateRequest([...UPCOMING_EVENTS]);
+  async getUpcomingEvents(): Promise<EventItem[]> {
+    const rows = await fetchEventListRows({
+      upcomingOnly: true,
+      limit: UPCOMING_EVENTS_LIMIT,
+    });
+    return mapEventListRowsToEventItems(rows);
   },
 
   getTopPicks(): Promise<EventItem[]> {
