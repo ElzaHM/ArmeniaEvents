@@ -7,17 +7,18 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './index.css';
 
 import { router } from './routes';
+import { AuthProvider } from './providers/auth-provider';
 import { queryClient } from './providers/query-client';
 import { ThemeProvider } from './providers/theme-provider';
-
-console.log('SUPABASE URL:', import.meta.env.VITE_SUPABASE_URL);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </AuthProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </StrictMode>,
