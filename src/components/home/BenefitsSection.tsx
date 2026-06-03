@@ -21,7 +21,7 @@ export default function BenefitsSection() {
   return (
     <section className={styles.section}>
       <div className="homeSection">
-        <Row gutter={[32, 32]}>
+        <Row gutter={[24, 20]}>
           {BENEFITS.map((benefit) => {
             const Icon = benefitIcons[benefit.icon];
 

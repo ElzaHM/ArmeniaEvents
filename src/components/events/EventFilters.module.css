@@ -1,9 +1,14 @@
 .filters {
+  flex: 1;
+  height: 100%;
+  box-sizing: border-box;
   padding: 24px;
-  background: var(--home-surface);
-  border: 1px solid var(--home-border);
+  border: 1px solid var(--events-panel-border);
   border-radius: 12px;
-  box-shadow: var(--home-card-shadow);
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
+  background-color: var(--events-filters-panel-bg, var(--events-panel-bg));
+  box-shadow: var(--events-panel-shadow);
 }
 
 .header {
@@ -25,7 +30,7 @@
   border: none;
   background: none;
   padding: 0;
-  color: #d48806;
+  color: rgb(192, 139, 70);
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -106,7 +111,7 @@
   border: none;
   background: none;
   padding: 0;
-  color: #d48806;
+  color: rgb(192, 139, 70);
   font-size: 13px;
   cursor: pointer;
 }
@@ -123,6 +128,20 @@
   margin-bottom: 12px;
 }
 
+.organizerGroup .groupTitle {
+  color: var(--home-heading);
+}
+
+.organizerGroup .checkboxLabel {
+  color: var(--home-text);
+  font-weight: 500;
+}
+
+.organizerList .count {
+  color: var(--home-text-secondary);
+  font-weight: 500;
+}
+
 .actions {
   display: flex;
   flex-direction: column;
@@ -133,7 +152,8 @@
 }
 
 .applyBtn {
-  font-weight: 600;
+  height: 44px !important;
+  border-radius: 8px !important;
 }
 
 .resetBtn {
@@ -144,8 +164,81 @@
   color: #d48806 !important;
 }
 
+.desktopFilters {
+  display: block;
+}
+
+.mobileFilters {
+  display: none;
+}
+
 @media (max-width: 992px) {
   .filters {
-    padding: 20px;
+    height: auto;
+    padding: 16px;
+  }
+
+  .desktopFilters {
+    display: none;
+  }
+
+  .mobileFilters {
+    display: block;
+  }
+
+  .mobileGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .mobileField {
+    min-width: 0;
+  }
+
+  .mobileFieldFull {
+    grid-column: 1 / -1;
+  }
+
+  .mobileLabel {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--home-text);
+  }
+
+  .mobileField :global(.ant-select) {
+    width: 100%;
+  }
+
+  .dateFieldsRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .dateFieldsRow .datePicker {
+    width: 100%;
+  }
+
+  .actions {
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+
+  .header {
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 992px) {
+  .mobileGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mobileFieldFull {
+    grid-column: 1 / -1;
   }
 }

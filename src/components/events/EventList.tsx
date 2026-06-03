@@ -1,6 +1,10 @@
 import { useMemo, useState } from 'react';
 import { Button, Select, Typography } from 'antd';
-import { AppstoreOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import {
+  AppstoreOutlined,
+  DownOutlined,
+  UnorderedListOutlined,
+} from '@ant-design/icons';
 
 import EventListItem from './EventListItem';
 import EventPagination from './EventPagination';
@@ -23,31 +27,39 @@ export default function EventList() {
   }, [currentPage]);
 
   return (
-    <section className={styles.listSection}>
+    <section className={`${styles.listSection} eventsListPanel`}>
       <div className={styles.toolbar}>
         <Typography.Text className={styles.resultCount}>
           Found <strong>{TOTAL_EVENTS}</strong> events
         </Typography.Text>
 
         <div className={styles.toolbarActions}>
-          <Select
-            value={sortBy}
-            onChange={setSortBy}
-            options={SORT_OPTIONS}
-            className={styles.sortSelect}
-          />
+          <div className={styles.sortSelectWrap}>
+            <Select
+              size="small"
+              value={sortBy}
+              onChange={setSortBy}
+              options={SORT_OPTIONS}
+              variant="borderless"
+              className={`${styles.sortSelect} eventsSortField`}
+              popupClassName="eventsFieldDropdown"
+              suffixIcon={<DownOutlined />}
+            />
+          </div>
 
-          <div className={styles.viewToggle}>
+          <div className={`${styles.viewToggle} eventsViewToggle`}>
             <Button
               type={viewMode === 'grid' ? 'primary' : 'default'}
               icon={<AppstoreOutlined />}
               aria-label="Grid view"
+              className={viewMode === 'grid' ? 'homeActionBtn' : undefined}
               onClick={() => setViewMode('grid')}
             />
             <Button
               type={viewMode === 'list' ? 'primary' : 'default'}
               icon={<UnorderedListOutlined />}
               aria-label="List view"
+              className={viewMode === 'list' ? 'homeActionBtn' : undefined}
               onClick={() => setViewMode('list')}
             />
           </div>

@@ -17,7 +17,7 @@ export default function FooterContent() {
   return (
     <section className={styles.section}>
       <div className="homeSection">
-        <Row gutter={[32, 40]}>
+        <Row gutter={[24, 24]}>
           <Col xs={24} md={10} lg={8}>
             <div className={styles.brand}>
               <div className={styles.logo}>
@@ -80,7 +80,7 @@ export default function FooterContent() {
             </Typography.Paragraph>
             <div className={styles.newsletterForm}>
               <Input placeholder="Your email address" type="email" size="large" />
-              <Button type="primary" size="large">
+              <Button type="primary" size="large" className="homeActionBtn">
                 Subscribe
               </Button>
             </div>

@@ -1,19 +1,16 @@
 .eventsPage {
   width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   text-align: left;
   color: var(--home-text);
-  background-image: url(../../assets/homeBg.png);
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: cover;
- 
 }
 
 .eventsSection {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
-  background: color-mix(in srgb, var(--home-hero-overlay), transparent 30%) !important; 
+  background: var(--events-section-tint, color-mix(in srgb, var(--home-hero-overlay), transparent 30%)) !important;
 }
 
 .main {
@@ -23,21 +20,33 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 32px 24px 56px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .sidebar {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .content {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 992px) {
   .main {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 16px;
+  }
+
+  .sidebar {
+    order: 1;
+  }
+
+  .content {
+    order: 2;
   }
 }
 

@@ -1,15 +1,39 @@
+@import './homeActionButton.css';
+
 [data-theme='light'] {
-  --home-section-bg: #ffffff;
-  --home-surface: #ffffff;
-  --home-surface-muted: #fafafa;
+  --home-section-bg: rgba(255, 255, 255, 0.75);
+  --home-surface: rgba(255, 255, 255, 0.88);
+  --home-surface-muted: rgba(250, 250, 250, 0.82);
   --home-text: #141414;
   --home-text-secondary: #6b7280;
   --home-border: #f0f0f0;
-  --home-hero-overlay: rgba(255, 255, 255, 0.88);
+  --home-hero-overlay: rgba(255, 255, 255, 0.28);
   --home-cta-bg: #fffbe6;
   --home-cta-pattern: rgba(212, 136, 6, 0.06);
   --home-tag-bg: rgba(255, 255, 255, 0.92);
   --home-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --home-accent: #c08b46;
+  --home-glass-panel-bg: rgba(255, 255, 255, 0.12);
+  --home-glass-bg: rgba(255, 255, 255, 0.2);
+  --home-glass-hover-bg: rgba(255, 255, 255, 0.35);
+  --home-glass-border: rgba(0, 0, 0, 0.08);
+  --home-heading: #141414;
+  --home-section-heading: #5c5348;
+  --home-section-heading-accent: #c08b46;
+  --home-subtitle: #1a1a1a;
+  --home-subtitle-shadow: 0 1px 2px rgba(255, 255, 255, 0.9), 0 2px 8px rgba(255, 255, 255, 0.6);
+  --home-muted-faint: rgba(0, 0, 0, 0.45);
+  --home-icon-muted: rgba(0, 0, 0, 0.35);
+  --home-info-text: #374151;
+  --home-search-bg: rgba(255, 255, 255, 0.12);
+  --home-search-border: rgba(0, 0, 0, 0.08);
+  --home-input-text: #141414;
+  --home-input-placeholder: rgba(0, 0, 0, 0.4);
+  --home-divider: rgba(0, 0, 0, 0.12);
+  --home-tag-hover-bg: rgba(192, 139, 70, 0.14);
+  --home-tag-hover-text: #141414;
+  --home-section-tint: rgba(255, 255, 255, 0.2);
+  --home-dots-pattern: rgba(0, 0, 0, 0.08);
 }
 
 [data-theme='dark'] {
@@ -24,16 +48,34 @@
   --home-cta-pattern: rgba(212, 136, 6, 0.08);
   --home-tag-bg: rgba(31, 31, 31, 0.92);
   --home-card-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  --home-accent: #c08b46;
+  --home-glass-bg: rgba(255, 255, 255, 0.03);
+  --home-glass-hover-bg: rgba(255, 255, 255, 0.07);
+  --home-glass-border: rgba(255, 255, 255, 0.08);
+  --home-heading: #ffffff;
+  --home-subtitle: rgba(255, 255, 255, 0.95);
+  --home-subtitle-shadow: 0 1px 4px rgba(0, 0, 0, 0.5), 0 2px 12px rgba(0, 0, 0, 0.35);
+  --home-muted-faint: rgba(255, 255, 255, 0.4);
+  --home-icon-muted: rgba(255, 255, 255, 0.3);
+  --home-info-text: rgba(255, 255, 255, 0.7);
+  --home-search-bg: rgba(255, 255, 255, 0.08);
+  --home-search-border: rgba(255, 255, 255, 0.1);
+  --home-input-text: #ffffff;
+  --home-input-placeholder: rgba(255, 255, 255, 0.4);
+  --home-divider: rgba(255, 255, 255, 0.2);
+  --home-tag-hover-bg: rgba(192, 139, 70, 0.2);
+  --home-tag-hover-text: #ffffff;
+  --home-section-tint: rgba(20, 20, 20, 0.5);
+  --home-section-dark-overlay: rgba(0, 0, 0, 0.3);
+  --home-dots-pattern: rgba(255, 255, 255, 0.1);
 }
 
 .homePage {
   width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   text-align: left;
   color: var(--home-text);
-  /* background: var(--home-section-bg); */
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: cover;
   background: transparent;
 }
 
@@ -41,10 +83,23 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
+  .homeSection {
+    padding: 0 20px;
+  }
 }
 
 @media (max-width: 768px) {
   .homeSection {
     padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .homeSection {
+    padding: 0 12px;
   }
 }

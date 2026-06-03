@@ -5,8 +5,8 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import EventCard from './EventCard';
 import type { EventItem } from './types';
 import { useTheme } from '../../hooks/useTheme'; 
-import homePageBg from '../../assets/homePageBg.png'; 
-import homePageBgLight from '../../assets/eventPageLigthBg.png';
+// import homePageBg from '../../assets/homePageBzg.png'; 
+// import homePageBgLight from '../../assets/eventPageLigthBg.png';
 import styles from './EventSection.module.css';
 
 interface EventSectionProps {
@@ -17,8 +17,8 @@ interface EventSectionProps {
 
 export default function EventSection({ title, events, viewAllHref }: EventSectionProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-    const { mode } = useTheme(); 
-   const bgImage = mode === 'light' ? homePageBgLight : homePageBg;
+  //   const { mode } = useTheme(); 
+  //  const bgImage = mode === 'light' ? homePageBgLight : homePageBg;
 
   const scroll = (direction: 'left' | 'right') => {
     const container = scrollRef.current;
@@ -32,7 +32,7 @@ export default function EventSection({ title, events, viewAllHref }: EventSectio
   };
 
  return (
-    <section className={styles.section} style={{ backgroundImage: `url(${bgImage})` }} >
+    <section className={styles.section} >
     <section className={styles.sectionOverlay}>
       {/* <div><PopularCategories/></div> */}
     <div className="homeSection">

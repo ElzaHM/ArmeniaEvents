@@ -6,8 +6,6 @@ import styles from './OrganizeEventCTA.module.css';
 export default function OrganizeEventCTA() {
   return (
     <section className={styles.section}>
-      <div className={styles.overlay}></div>
-
       <div className="homeSection">
         <div className={styles.banner}>
           <div className={styles.leftSide}>
@@ -24,7 +22,7 @@ export default function OrganizeEventCTA() {
             </div>
           </div>
 
-          <Button type="primary" size="large" className={styles.button}>
+          <Button type="primary" size="large" className={`homeActionBtn ${styles.button}`}>
             Add Your Event
           </Button>
 

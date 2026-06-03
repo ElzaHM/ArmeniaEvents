@@ -1,5 +1,6 @@
 import { Tag, Typography } from 'antd';
 import SearchBar from './SearchBar';
+import searchBarStyles from './SearchBar.module.css';
 import { POPULAR_TAGS } from './mockData';
 // import { useTheme } from '../../hooks/useTheme'; 
 // import homePageBg from '../../assets/homePageBg.png'; 
@@ -26,14 +27,16 @@ export default function HeroSection() {
             Find the best events, conferences, meetups, concerts and more around you.
           </Typography.Paragraph>
 
-          <SearchBar />
+          <div className={styles.searchAndTags}>
+            <SearchBar className={searchBarStyles.heroSearchBar} />
 
-          <div className={styles.tags}>
-            {POPULAR_TAGS.map((tag) => (
-              <Tag key={tag} className={styles.tag}>
-                {tag}
-              </Tag>
-            ))}
+            <div className={styles.tags}>
+              {POPULAR_TAGS.map((tag) => (
+                <Tag key={tag} className={styles.tag}>
+                  {tag}
+                </Tag>
+              ))}
+            </div>
           </div>
         </div>
       </div>
