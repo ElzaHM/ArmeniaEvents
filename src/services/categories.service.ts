@@ -1,6 +1,7 @@
 import { FILTER_CATEGORIES } from '../components/events/mockData';
 import type { Category, CategoryIconName } from '../components/home/types';
 import axios from 'axios';
+import { supabase } from '../lib/supabase';
 
 const CATEGORY_ICONS: CategoryIconName[] = [
   'code',
@@ -101,6 +102,6 @@ export const categoriesService = {
       return [];
     }
 
-    return data.map((row) => row.name);
+    return (data ?? []).map((row: { name: string }) => row.name);
   },
 };
