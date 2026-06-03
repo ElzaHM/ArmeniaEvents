@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Button, Layout } from 'antd';
 import {
   EnvironmentFilled,
   MoonOutlined,
   SunOutlined,
 } from '@ant-design/icons';
+import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../hooks/useTheme';
 import './Header.css';
 
@@ -13,7 +14,14 @@ const { Header: AntHeader } = Layout;
 
 export default function Header() {
   const { mode, toggleTheme } = useTheme();
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,9 +59,15 @@ export default function Header() {
             icon={mode === 'light' ? <MoonOutlined /> : <SunOutlined />}
             onClick={toggleTheme}
           />
-          <Link to="/signin">
-            <Button className="signin-button">Sign In</Button>
-          </Link>
+          {isAuthenticated ? (
+            <Button className="signin-button" onClick={() => void handleLogout()}>
+              Log Out
+            </Button>
+          ) : (
+            <Link to="/signin">
+              <Button className="signin-button">Sign In</Button>
+            </Link>
+          )}
         </div>
       </div>
     </AntHeader>

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { eventsService } from '../../services/events.service';
 
@@ -18,6 +18,9 @@ export const eventsKeys = {
   interestedAvatars: ['events', 'interested-avatars'] as const,
   tabs: ['events', 'tabs'] as const,
 };
+
+type EventCreatePayload = Parameters<typeof eventsService.createEvent>[0];
+type EventUpdatePayload = Parameters<typeof eventsService.updateEvent>[1];
 
 export function useEvents() {
   return useQuery({
@@ -107,5 +110,39 @@ export function useEventTabs() {
   return useQuery({
     queryKey: eventsKeys.tabs,
     queryFn: () => eventsService.getEventTabs(),
+  });
+}
+
+export function useCreateEvent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: EventCreatePayload) => eventsService.createEvent(payload),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: eventsKeys.all });
+      void queryClient.invalidateQueries({ queryKey: eventsKeys.totalCount });
+    },
+  });
+}
+
+export function useUpdateEvent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, payload }: { id: string; payload: EventUpdatePayload }) =>
+      eventsService.updateEvent(id, payload),
+    onSuccess: (_, variables) => {
+      void queryClient.invalidateQueries({ queryKey: eventsKeys.all });
+      void queryClient.invalidateQueries({ queryKey: eventsKeys.detail(variables.id) });
+    },
+  });
+}
+
+export function useDeleteEvent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => eventsService.deleteEvent(id),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: eventsKeys.all });
+      void queryClient.invalidateQueries({ queryKey: eventsKeys.totalCount });
+    },
   });
 }

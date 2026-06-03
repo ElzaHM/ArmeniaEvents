@@ -1,35 +1,87 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Input, Button, Checkbox, Divider } from 'antd';
+import { Form, Input, Button, Checkbox, Divider, message } from 'antd';
 import { MailOutlined, LockOutlined, UserOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
+import { useAuth } from '../../hooks/useAuth';
 import styles from './SignUpForm.module.css';
 
+type SignUpValues = {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  agree: boolean;
+};
+
 export const SignUpForm: React.FC = () => {
+  const { register } = useAuth();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [loading, setLoading] = React.useState(false);
+
+  const handleSubmit = async (values: SignUpValues) => {
+    setLoading(true);
+    try {
+      await register({
+        fullName: values.fullName,
+        email: values.email,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+      });
+      messageApi.success('Account created successfully');
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Registration failed. Please try again.';
+      messageApi.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.formContainer}>
+      {contextHolder}
       <h2 className={styles.title}>Sign Up</h2>
       <p className={styles.subtitle}>Create your account to get started.</p>
 
-      <Form layout="vertical" requiredMark={false}>
-        <Form.Item label={<span className={styles.label}>Full Name</span>} name="fullName">
+      <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
+        <Form.Item
+          label={<span className={styles.label}>Full Name</span>}
+          name="fullName"
+          rules={[{ required: true, message: 'Full name is required' }]}
+        >
           <Input 
-            prefix={<UserOutlined style={{ color: 'rgba(255,255,255,0.4)' }} />} 
+            prefix={<UserOutlined className={styles.inputIcon} />} 
             placeholder="Enter your full name" 
             className={styles.inputField}
           />
         </Form.Item>
 
-        <Form.Item label={<span className={styles.label}>Email Address</span>} name="email">
+        <Form.Item
+          label={<span className={styles.label}>Email Address</span>}
+          name="email"
+          rules={[
+            { required: true, message: 'Email is required' },
+            { type: 'email', message: 'Invalid email address' },
+          ]}
+        >
           <Input 
-            prefix={<MailOutlined style={{ color: 'rgba(255,255,255,0.4)' }} />} 
+            prefix={<MailOutlined className={styles.inputIcon} />} 
             placeholder="Enter your email" 
             className={styles.inputField}
           />
         </Form.Item>
 
-        <Form.Item label={<span className={styles.label}>Password</span>} name="password" style={{ marginBottom: 8 }}>
+        <Form.Item
+          label={<span className={styles.label}>Password</span>}
+          name="password"
+          style={{ marginBottom: 8 }}
+          rules={[
+            { required: true, message: 'Password is required' },
+            { min: 8, message: 'Password must be at least 8 characters' },
+          ]}
+        >
           <Input.Password 
-            prefix={<LockOutlined style={{ color: 'rgba(255,255,255,0.4)' }} />} 
+            prefix={<LockOutlined className={styles.inputIcon} />} 
             placeholder="Create a password" 
             className={styles.inputField}
           />
@@ -48,21 +100,48 @@ export const SignUpForm: React.FC = () => {
           </div>
         </div>
 
-        <Form.Item label={<span className={styles.label} style={{ marginTop: 16 }}>Confirm Password</span>} name="confirmPassword">
+        <Form.Item
+          label={<span className={styles.label} style={{ marginTop: 16 }}>Confirm Password</span>}
+          name="confirmPassword"
+          dependencies={['password']}
+          rules={[
+            { required: true, message: 'Please confirm your password' },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error('Passwords do not match'));
+              },
+            }),
+          ]}
+        >
           <Input.Password 
-            prefix={<LockOutlined style={{ color: 'rgba(255,255,255,0.4)' }} />} 
+            prefix={<LockOutlined className={styles.inputIcon} />} 
             placeholder="Confirm your password" 
             className={styles.inputField}
           />
         </Form.Item>
 
-        <Form.Item name="agree" valuePropName="checked">
-          <Checkbox style={{ color: 'rgba(255,255,255,0.7)' }}>
+        <Form.Item
+          name="agree"
+          valuePropName="checked"
+          rules={[
+            {
+              validator(_, value) {
+                return value ? Promise.resolve() : Promise.reject(new Error('Please accept terms'));
+              },
+            },
+          ]}
+        >
+          <Checkbox>
             I agree to the <a href="#" className={styles.termsLink}>Terms & Privacy Policy</a>
           </Checkbox>
         </Form.Item>
 
-        <Button type="primary" className={styles.submitBtn}>Create Account</Button>
+        <Button type="primary" className={styles.submitBtn} htmlType="submit" loading={loading}>
+          Create Account
+        </Button>
 
         <Divider className={styles.divider}>or continue with</Divider>
 

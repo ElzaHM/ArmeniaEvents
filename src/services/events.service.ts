@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   BENEFITS,
   FOOTER_QUICK_LINKS,
@@ -37,6 +38,8 @@ type EventListRow = {
   start_date: string;
   categories: { name: string } | null;
   organizers: { name: string } | null;
+  views?: number | null;
+  status?: 'published' | 'draft' | 'archived' | null;
 };
 
 type EventDetailRow = {
@@ -57,7 +60,32 @@ type EventDetailRow = {
     avatar_url?: string | null;
     description?: string | null;
   } | null;
+  views?: number | null;
+  status?: 'published' | 'draft' | 'archived' | null;
 };
+
+type EventCrudPayload = {
+  title: string;
+  description?: string | null;
+  image_url?: string | null;
+  venue?: string | null;
+  address?: string | null;
+  start_date: string;
+  end_date?: string | null;
+  ticket_url?: string | null;
+  category_id?: string | null;
+  organizer_id?: string | null;
+  status?: 'published' | 'draft' | 'archived';
+  views?: number;
+};
+
+const api = axios.create({ baseURL: '/api' });
+const TOKEN_STORAGE_KEY = 'armenia-events-access-token';
+
+function authHeaders() {
+  const token = localStorage.getItem(TOKEN_STORAGE_KEY);
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
 
 async function simulateRequest<T>(data: T): Promise<T> {
   await Promise.resolve();
@@ -225,13 +253,8 @@ export type EventFiltersData = {
 
 export const eventsService = {
   async getEvents(): Promise<EventItem[]> {
-    try {
-      const rows = await fetchEventListRows();
-      return mapEventListRowsToEventItems(rows);
-    } catch (error) {
-      console.error('SUPABASE ERROR:', error);
-      throw error;
-    }
+    const { data } = await api.get<EventListRow[]>('/events');
+    return data.map((event) => mapEventRowToEventItem(event));
   },
 
   async getEventById(id: string | undefined): Promise<EventDetails> {
@@ -239,25 +262,8 @@ export const eventsService = {
       throw new Error('Event id is required');
     }
 
-    const { data, error } = await supabase
-      .from('events')
-      .select(`
-        *,
-        categories ( name ),
-        organizers ( name, avatar_url, description )
-      `)
-      .eq('id', id)
-      .single();
-
-    if (error) {
-      throw error;
-    }
-
-    if (!data) {
-      throw new Error('Event not found');
-    }
-
-    return mapEventRowToEventDetails(data as EventDetailRow);
+    const { data } = await api.get<EventDetailRow>(`/events/${id}`);
+    return mapEventRowToEventDetails(data);
   },
 
   async getUpcomingEvents(): Promise<EventItem[]> {
@@ -277,17 +283,28 @@ export const eventsService = {
   },
 
   async getTotalEventsCount(): Promise<number> {
-    const { count, error } = await supabase.from('events').select('*', {
-      count: 'exact',
-      head: true,
+    const events = await this.getEvents();
+    return events.length;
+  },
+
+  async createEvent(payload: EventCrudPayload): Promise<EventDetailRow> {
+    const { data } = await api.post<EventDetailRow>('/events', payload, {
+      headers: authHeaders(),
     });
+    return data;
+  },
 
-    if (error) {
-      console.error('SUPABASE COUNT ERROR:', error);
-      throw error;
-    }
+  async updateEvent(id: string, payload: Partial<EventCrudPayload>): Promise<EventDetailRow> {
+    const { data } = await api.patch<EventDetailRow>(`/events/${id}`, payload, {
+      headers: authHeaders(),
+    });
+    return data;
+  },
 
-    return count ?? 0;
+  async deleteEvent(id: string): Promise<void> {
+    await api.delete(`/events/${id}`, {
+      headers: authHeaders(),
+    });
   },
 
   getSortOptions(): Promise<SortOption[]> {

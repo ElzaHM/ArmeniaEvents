@@ -71,3 +71,51 @@ export default defineConfig([
   },
 ])
 ```
+
+## Backend API (Express + Supabase)
+
+This project now includes a backend API in `backend/` for auth + events/categories CRUD.
+
+### Required environment variables
+
+Add these to your `.env` file:
+
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY` (required for server-side CRUD routes)
+- `CLIENT_ORIGIN` (optional, defaults to `http://localhost:5173`)
+- `PORT` (optional, defaults to `4000`)
+
+Frontend still uses:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+### Run locally
+
+In separate terminals:
+
+1. `pnpm dev:api` - starts Express API (`http://localhost:4000`)
+2. `pnpm dev` - starts Vite app (`http://localhost:5173`)
+
+Vite proxies `/api/*` to the backend via `vite.config.ts`.
+
+### Implemented API routes
+
+- Auth:
+  - `POST /api/auth/register`
+  - `POST /api/auth/login`
+  - `GET /api/auth/me`
+  - `POST /api/auth/logout`
+- Events:
+  - `GET /api/events`
+  - `GET /api/events/:id`
+  - `POST /api/events` (auth required)
+  - `PATCH /api/events/:id` (auth required)
+  - `DELETE /api/events/:id` (auth required)
+- Categories:
+  - `GET /api/categories`
+  - `GET /api/categories/:id`
+  - `POST /api/categories` (auth required)
+  - `PATCH /api/categories/:id` (auth required)
+  - `DELETE /api/categories/:id` (auth required)
