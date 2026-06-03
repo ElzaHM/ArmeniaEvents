@@ -47,8 +47,14 @@ export default function EventFilters() {
     );
   }
 
-  const { filterCategories, eventTypes, languages, organizers, priceMarks, radiusMarks } =
-    filters;
+  const {
+    filterCategories,
+    eventTypes,
+    languages,
+    organizers,
+    priceMarks,
+    radiusMarks,
+  } = filters;
 
   const visibleCategories = showAllCategories
     ? filterCategories
@@ -107,6 +113,7 @@ export default function EventFilters() {
               </Checkbox>
             ))}
           </Checkbox.Group>
+
           {!showAllCategories && filterCategories.length > 5 && (
             <button
               type="button"
@@ -122,6 +129,7 @@ export default function EventFilters() {
           <Typography.Text strong className={styles.groupTitle}>
             Event Type
           </Typography.Text>
+
           <Checkbox.Group
             value={selectedEventTypes}
             onChange={(values) => setSelectedEventTypes(values as string[])}
@@ -140,6 +148,7 @@ export default function EventFilters() {
           <Typography.Text strong className={styles.groupTitle}>
             Price Range
           </Typography.Text>
+
           <Slider
             min={0}
             max={100}
@@ -154,13 +163,18 @@ export default function EventFilters() {
           <Typography.Text strong className={styles.groupTitle}>
             Language
           </Typography.Text>
+
           <Checkbox.Group
             value={selectedLanguages}
             onChange={(values) => setSelectedLanguages(values as string[])}
             className={styles.checkboxGroup}
           >
             {languages.map((language) => (
-              <Checkbox key={language.label} value={language.label} className={styles.checkboxRow}>
+              <Checkbox
+                key={language.label}
+                value={language.label}
+                className={styles.checkboxRow}
+              >
                 <span className={styles.checkboxLabel}>{language.label}</span>
                 <span className={styles.count}>{language.count}</span>
               </Checkbox>
@@ -172,6 +186,7 @@ export default function EventFilters() {
           <Typography.Text strong className={styles.groupTitle}>
             Organizer
           </Typography.Text>
+
           <Input
             placeholder="Search organizers..."
             prefix={<SearchOutlined />}
@@ -179,13 +194,18 @@ export default function EventFilters() {
             onChange={(event) => setOrganizerQuery(event.target.value)}
             className={styles.organizerSearch}
           />
+
           <Checkbox.Group
             value={selectedOrganizers}
             onChange={(values) => setSelectedOrganizers(values as string[])}
             className={styles.checkboxGroup}
           >
             {filteredOrganizers.map((organizer) => (
-              <Checkbox key={organizer.name} value={organizer.name} className={styles.checkboxRow}>
+              <Checkbox
+                key={organizer.name}
+                value={organizer.name}
+                className={styles.checkboxRow}
+              >
                 <span className={styles.checkboxLabel}>{organizer.name}</span>
                 <span className={styles.count}>{organizer.count}</span>
               </Checkbox>
@@ -197,6 +217,7 @@ export default function EventFilters() {
           <Typography.Text strong className={styles.groupTitle}>
             Location Radius
           </Typography.Text>
+
           <Slider
             min={5}
             max={100}
@@ -212,6 +233,7 @@ export default function EventFilters() {
           <Button type="primary" block size="large" className={styles.applyBtn}>
             Apply Filters
           </Button>
+
           <Button type="text" block className={styles.resetBtn} onClick={handleReset}>
             Reset All
           </Button>

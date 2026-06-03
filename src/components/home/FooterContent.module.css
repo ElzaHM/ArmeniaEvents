@@ -1,5 +1,5 @@
 .section {
-  padding: 56px 0 32px;
+  padding: 36px 0 20px;
   background: var(--home-surface-muted);
   border-top: 1px solid var(--home-border);
 }
@@ -7,7 +7,7 @@
 .brand {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
 .logo {
@@ -57,8 +57,8 @@
 }
 
 .columnTitle {
-  margin: 0 0 16px !important;
-  font-size: 15px !important;
+  margin: 0 0 10px !important;
+  font-size: 14px !important;
   color: var(--home-text) !important;
 }
 
@@ -68,7 +68,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 
 .linkList a {
@@ -116,14 +116,48 @@
   font-size: 12px;
 }
 
+@media (max-width: 992px) {
+  .about {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .section {
-    padding: 40px 0 24px;
+    padding: 28px 0 16px;
+  }
+
+  .brand {
+    margin-bottom: 8px;
+  }
+
+  .newsletterForm :global(.ant-input),
+  .newsletterForm :global(.ant-btn) {
+    width: 100%;
   }
 
   .bottomBar {
     flex-direction: column;
     align-items: flex-start;
-    margin-top: 32px;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 24px 0 14px;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
+
+  .columnTitle {
+    font-size: 14px !important;
+  }
+
+  .bottomBar {
+    gap: 12px;
+    font-size: 13px;
   }
 }

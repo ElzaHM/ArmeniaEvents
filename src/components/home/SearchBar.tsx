@@ -1,15 +1,42 @@
+import { useEffect, useState } from 'react';
 import { Input, Select, Button } from 'antd';
 import { SearchOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import styles from './SearchBar.module.css';
 
-export default function SearchBar() {
+const SEARCH_PLACEHOLDER_DESKTOP = 'Search events, categories, or keywords...';
+const SEARCH_PLACEHOLDER_COMPACT = 'Search events...';
+
+interface SearchBarProps {
+  className?: string;
+}
+
+export default function SearchBar({ className }: SearchBarProps) {
+  const [compact, setCompact] = useState(false);
+  const [narrow, setNarrow] = useState(false);
+
+  useEffect(() => {
+    const compactMedia = window.matchMedia('(max-width: 768px)');
+    const narrowMedia = window.matchMedia('(max-width: 576px)');
+    const update = () => {
+      setCompact(compactMedia.matches);
+      setNarrow(narrowMedia.matches);
+    };
+    update();
+    compactMedia.addEventListener('change', update);
+    narrowMedia.addEventListener('change', update);
+    return () => {
+      compactMedia.removeEventListener('change', update);
+      narrowMedia.removeEventListener('change', update);
+    };
+  }, []);
+
   return (
-    <div className={styles.searchBar}>
+    <div className={[styles.searchBar, className].filter(Boolean).join(' ')}>
       <div className={styles.searchGroup}>
         <SearchOutlined className={styles.icon} />
-        <Input 
-          placeholder="Search events, categories, or keywords..." 
-            variant="borderless"
+        <Input
+          placeholder={compact ? SEARCH_PLACEHOLDER_COMPACT : SEARCH_PLACEHOLDER_DESKTOP}
+          variant="borderless"
           className={styles.inputField}
         />
       </div>
@@ -28,8 +55,13 @@ export default function SearchBar() {
         </Select>
       </div>
 
-      <Button type="primary" className={styles.searchBtn}>
-        Search
+      <Button
+        type="primary"
+        icon={narrow ? <SearchOutlined /> : undefined}
+        aria-label="Search events"
+        className={`homeActionBtn ${styles.searchBtn}${narrow ? ` ${styles.searchBtnIcon}` : ''}`}
+      >
+        {narrow ? null : 'Search'}
       </Button>
     </div>
   );

@@ -9,10 +9,20 @@
   border-radius: 12px;
   box-shadow: var(--home-card-shadow);
   transition: border-color 0.2s ease;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
+  background-color: var(--events-card-bg);
+  border-color: var(--events-card-border) !important;
+  box-shadow: var(--events-card-shadow);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .card:hover {
-  border-color: rgba(212, 136, 6, 0.45);
+  background: var(--home-glass-hover-bg) !important;
+  background-color: var(--home-glass-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--home-card-shadow);
 }
 
 .imageWrap {
@@ -111,20 +121,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
   flex-shrink: 0;
 }
 
 .favoriteBtn {
-  color: var(--home-text-secondary) !important;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  background: rgba(0, 0, 0, 0.35) !important;
+  color: #fff !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .favoriteActive {
-  color: #d48806;
+  color: #fff !important;
 }
 
 .favoriteBtn:hover {
-  color: #d48806 !important;
+  background: rgba(192, 139, 70, 0.75) !important;
+  color: #fff !important;
 }
 
 .detailsLink {
@@ -133,15 +155,9 @@
 
 .detailsBtn {
   min-width: 120px;
-  font-weight: 500;
-  border-color: var(--home-border);
-  color: var(--home-text);
-  background: var(--home-surface-muted);
-}
-
-.detailsBtn:hover {
-  border-color: #d48806 !important;
-  color: #d48806 !important;
+  height: 40px !important;
+  padding: 0 20px !important;
+  border-radius: 8px !important;
 }
 
 @media (max-width: 768px) {
@@ -157,35 +173,98 @@
   }
 
   .actions {
-    flex-direction: row;
-    justify-content: space-between;
     width: 100%;
   }
 
   .detailsBtn {
-    flex: 1;
+    width: 100%;
   }
 }
 
 .cardGrid {
   grid-template-columns: 1fr;
   align-items: stretch;
+  padding: 12px;
+  gap: 12px;
 }
 
 .cardGrid .imageWrap {
   width: 100%;
-  height: 180px;
+  height: 172px;
+}
+
+.cardGrid .dateBadge {
+  top: 8px;
+  left: 8px;
+  min-width: 44px;
+  padding: 4px 6px;
+}
+
+.cardGrid .dateMonth {
+  font-size: 10px;
+}
+
+.cardGrid .dateDay {
+  font-size: 15px;
+}
+
+.cardGrid .favoriteBtn {
+  top: 6px;
+  right: 6px;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+}
+
+.cardGrid .details {
+  gap: 4px;
+}
+
+.cardGrid .title {
+  font-size: 15px !important;
+  line-height: 1.35 !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardGrid .category {
+  font-size: 12px;
+}
+
+.cardGrid .meta {
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.cardGrid .metaItem {
+  font-size: 12px;
+  gap: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardGrid .price {
+  margin-top: 4px;
+  font-size: 14px;
 }
 
 .cardGrid .actions {
-  flex-direction: row;
-  justify-content: space-between;
   width: 100%;
 }
 
+.cardGrid .detailsBtn {
+  width: 100%;
+  min-width: 0;
+  height: 36px !important;
+  padding: 0 14px !important;
+  font-size: 13px !important;
+}
+
 @media (max-width: 480px) {
-  .actions {
-    flex-direction: column;
-    align-items: stretch;
+  .detailsBtn {
+    width: 100%;
   }
 }

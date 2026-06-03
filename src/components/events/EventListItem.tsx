@@ -47,6 +47,14 @@ export default function EventListItem({ event, variant = 'list' }: EventListItem
           <span className={styles.dateMonth}>{month}</span>
           <span className={styles.dateDay}>{day}</span>
         </div>
+        <Button
+          type="text"
+          shape="circle"
+          aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+          icon={isFavorite ? <HeartFilled className={styles.favoriteActive} /> : <HeartOutlined />}
+          className={styles.favoriteBtn}
+          onClick={() => setIsFavorite((current) => !current)}
+        />
       </div>
 
       <div className={styles.details}>
@@ -74,16 +82,10 @@ export default function EventListItem({ event, variant = 'list' }: EventListItem
       </div>
 
       <div className={styles.actions}>
-        <Button
-          type="text"
-          shape="circle"
-          aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-          icon={isFavorite ? <HeartFilled className={styles.favoriteActive} /> : <HeartOutlined />}
-          className={styles.favoriteBtn}
-          onClick={() => setIsFavorite((current) => !current)}
-        />
         <Link to={`/events/${event.id}`} className={styles.detailsLink}>
-          <Button className={styles.detailsBtn}>View Details</Button>
+          <Button type="primary" className={`homeActionBtn ${styles.detailsBtn}`}>
+            View Details
+          </Button>
         </Link>
       </div>
     </article>
