@@ -21,12 +21,12 @@ export default function BenefitsSection() {
   return (
     <section className={styles.section}>
       <div className="homeSection">
-        <Row gutter={[24, 20]}>
+        <Row gutter={[16, 12]}>
           {BENEFITS.map((benefit) => {
             const Icon = benefitIcons[benefit.icon];
 
             return (
-              <Col key={benefit.id} xs={24} sm={12} lg={6}>
+              <Col key={benefit.id} xs={12} sm={12} lg={6}>
                 <article className={styles.item}>
                   <Icon className={styles.icon} />
                   <Typography.Title level={5} className={styles.title}>

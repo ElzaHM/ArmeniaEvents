@@ -137,8 +137,18 @@
 
 @media (max-width: 768px) {
   .heroSearchBar {
+    width: 100%;
     min-width: 0;
     max-width: 100% !important;
+  }
+
+  .heroSearchBar .searchGroup {
+    flex: 1 1 0;
+  }
+
+  .heroSearchBar .locationGroup {
+    flex: 0.85 1 0;
+    min-width: 0;
   }
 }
 
@@ -267,6 +277,10 @@
 }
 
 @media (max-width: 480px) {
+  .heroSearchBar {
+    padding: 3px 3px 3px 6px;
+  }
+
   .searchBar {
     padding: 3px 3px 3px 8px;
     border-radius: 10px;

@@ -17,7 +17,7 @@ export default function FooterContent() {
   return (
     <section className={styles.section}>
       <div className="homeSection">
-        <Row gutter={[24, 24]}>
+        <Row gutter={[16, 12]}>
           <Col xs={24} md={10} lg={8}>
             <div className={styles.brand}>
               <div className={styles.logo}>
@@ -79,8 +79,8 @@ export default function FooterContent() {
               Get the latest events delivered to your inbox.
             </Typography.Paragraph>
             <div className={styles.newsletterForm}>
-              <Input placeholder="Your email address" type="email" size="large" />
-              <Button type="primary" size="large" className="homeActionBtn">
+              <Input placeholder="Your email address" type="email" size="middle" />
+              <Button type="primary" size="middle" className="homeActionBtn">
                 Subscribe
               </Button>
             </div>

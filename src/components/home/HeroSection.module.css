@@ -141,7 +141,14 @@
 
 @media (max-width: 768px) {
   .searchAndTags {
+    width: 70%;
+    max-width: 70%;
+    min-width: 0;
+  }
+
+  .tags {
     width: 100%;
+    max-width: 100%;
   }
 
   .hero {
@@ -174,6 +181,11 @@
 }
 
 @media (max-width: 480px) {
+  .searchAndTags {
+    width: 70%;
+    max-width: 70%;
+  }
+
   .hero {
     min-height: auto;
   }
