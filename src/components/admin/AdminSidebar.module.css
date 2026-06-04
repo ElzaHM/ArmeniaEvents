@@ -8,7 +8,7 @@
   width: 260px;
   height: 100vh;
   background: var(--admin-sidebar);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(25px) saturate(180%);
   border-right: 1px solid var(--admin-border);
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
@@ -21,16 +21,15 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 20px;
+  gap: 14px;
+  padding: 10px;
   text-decoration: none;
-  min-height: 80px;
+  min-height: 40px;
   flex-shrink: 0;
 }
 
 .collapsed .brand {
   justify-content: center;
-  padding: 20px 0;
 }
 
 .brandIcon {
@@ -49,9 +48,7 @@
 .brandText {
   display: flex;
   flex-direction: column;
-  transition:
-    opacity 0.2s,
-    visibility 0.2s;
+  transition: opacity 0.2s;
 }
 
 .brandTitle {
@@ -63,28 +60,32 @@
 
 .brandSubtitle {
   font-size: 9px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   color: var(--admin-text-muted);
   white-space: nowrap;
-}
-
-.collapsed .brandText,
-.collapsed .navLabel,
-.collapsed .profileInfo,
-.collapsed .copyright,
-.collapsed .skylineDecoration {
-  display: none !important;
 }
 
 .scrollArea {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
-.collapsed .scrollArea {
-  padding: 10px 8px;
+.scrollArea::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollArea::-webkit-scrollbar-thumb {
+  background: var(--admin-border);
+  border-radius: 10px;
+}
+
+.nav {
+  padding: 10px 12px;
+  position: relative;
+  z-index: 2; 
 }
 
 .navList {
@@ -100,8 +101,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 16px;
-  border-radius: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
   color: var(--admin-text-secondary);
   text-decoration: none;
   transition: all 0.2s;
@@ -110,7 +111,7 @@
 
 .collapsed .navLink {
   justify-content: center;
-  padding: 10px 0;
+  padding: 12px 0;
 }
 
 .navIcon {
@@ -121,28 +122,52 @@
 .navLinkActive {
   background: var(--admin-gold-light) !important;
   color: var(--admin-gold) !important;
+  font-weight: 600;
 }
 
 .skylineDecoration {
   margin-top: auto;
-  padding: 20px 10px 0;
+  min-height: 140px;
+  width: 100%;
+  pointer-events: none;
+  z-index: 1;
+
+  -webkit-mask-image: url("../../assets/adminPage/yerevan-skyline.svg");
+  mask-image: url("../../assets/adminPage/yerevan-skyline.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: bottom center;
+  mask-position: bottom center;
+
+  transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .skylineDecoration {
+  background-color: var(--admin-gold);
   opacity: 0.25;
 }
 
+[data-theme="light"] .skylineDecoration {
+  background-color: #d9a34a;
+  opacity: 0.35;
+}
+
 .sidebarFooter {
-  padding: 12px 16px 16px;
+  padding: 5px 14px 0px;
   border-top: 1px solid var(--admin-border);
-  background: var(--admin-sidebar);
   flex-shrink: 0;
+  background: var(--admin-sidebar);
 }
 
 .profileCard {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px;
+  gap: 12px;
+  padding: 2px;
   background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
+  border-radius: 14px;
 }
 
 .collapsed .profileCard {
@@ -151,17 +176,24 @@
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 1.5px solid var(--admin-gold);
   object-fit: cover;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.2s;
 }
 
 .profileName {
   font-size: 13px;
   font-weight: 600;
   color: var(--admin-text);
+  line-height: 1.2;
 }
 
 .profileRole {
@@ -170,8 +202,26 @@
 }
 
 .copyright {
-  margin-top: 10px;
   text-align: center;
   font-size: 10px;
   color: var(--admin-text-muted);
+  opacity: 0.5;
+}
+
+.collapsed .brandText,
+.collapsed .navLabel,
+.collapsed .profileInfo,
+.collapsed .copyright,
+.collapsed .skylineDecoration {
+  opacity: 0;
+  visibility: hidden;
+  display: none !important;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
 }
