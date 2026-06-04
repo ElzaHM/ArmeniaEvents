@@ -33,6 +33,7 @@ export default function AnalyticsChart({ data, summary }: AnalyticsChartProps) {
         <Select
           defaultValue="month"
           size="small"
+          popupClassName="admin-select-dropdown"
           options={[
             { value: 'week', label: 'This Week' },
             { value: 'month', label: 'This Month' },

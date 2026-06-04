@@ -1,10 +1,10 @@
 import { Table, Tag } from 'antd';
 import type { TableColumnsType } from 'antd';
 
-import AdminCard from '../../components/admin/AdminCard';
-import AdminPageHeader from '../../components/admin/AdminPageHeader';
-import { getAdminUsers } from '../../components/admin/mockData';
-import type { AdminUser, AdminUserRole, AdminUserStatus } from '../../components/admin/types';
+import AdminCard from '../../../components/admin/AdminCard';
+import AdminPageHeader from '../../../components/admin/AdminPageHeader';
+import { getAdminUsers } from '../../../components/admin/mockData';
+import type { AdminUser, AdminUserRole, AdminUserStatus } from '../../../components/admin/types';
 
 import styles from './AdminUsersPage.module.css';
 

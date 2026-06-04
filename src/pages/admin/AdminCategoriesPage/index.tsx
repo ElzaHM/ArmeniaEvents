@@ -2,15 +2,15 @@ import { Button, Switch, Table, Tag, message } from 'antd';
 import type { TableColumnsType } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import AdminCard from '../../components/admin/AdminCard';
-import AdminPageHeader from '../../components/admin/AdminPageHeader';
-import type { AdminCategory } from '../../components/admin/types';
+import AdminCard from '../../../components/admin/AdminCard';
+import AdminPageHeader from '../../../components/admin/AdminPageHeader';
+import type { AdminCategory } from '../../../components/admin/types';
 import {
   useCategories,
   useCreateCategory,
   useDeleteCategory,
   useUpdateCategory,
-} from '../../hooks/queries/useCategories';
+} from '../../../hooks/queries/useCategories';
 
 import styles from './AdminCategoriesPage.module.css';
 
@@ -85,6 +85,7 @@ export default function AdminCategoriesPage() {
         <Button
           danger
           size="small"
+          className="admin-btn-delete"
           onClick={async () => {
             try {
               await deleteCategory.mutateAsync(record.id);
@@ -126,7 +127,7 @@ export default function AdminCategoriesPage() {
       />
       <AdminCard>
         <div className={styles.toolbar}>
-          <Button type="primary" icon={<PlusOutlined />} onClick={handleCreate} loading={createCategory.isPending}>
+          <Button type="primary" className="admin-btn-add" icon={<PlusOutlined />} onClick={handleCreate} loading={createCategory.isPending}>
             Add Category
           </Button>
         </div>

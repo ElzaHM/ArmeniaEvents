@@ -7,41 +7,629 @@
   --admin-surface: rgba(255, 255, 255, 0.08);
   --admin-surface-solid: #1c1c20;
   --admin-surface-hover: rgba(255, 255, 255, 0.12);
-  --admin-sidebar: rgba(15, 15, 20, 0.5);
+  --admin-card-bg: rgba(22, 22, 26, 0.94);
+  --admin-card-hover-bg: rgba(35, 31, 25, 0.96);
+  --admin-input-bg: rgba(255, 255, 255, 0.08);
+  --admin-table-header-bg: rgba(18, 18, 22, 0.98);
+  --admin-table-row-bg: rgba(26, 26, 32, 0.94);
+  --admin-table-row-alt-bg: rgba(22, 22, 28, 0.94);
+  --admin-table-row-hover: rgba(38, 38, 46, 0.96);
+  --admin-table-text: #f1f5f9;
+  --admin-table-text-secondary: #94a3b8;
+  --admin-table-border: rgba(255, 255, 255, 0.1);
+  --admin-sidebar: rgba(14, 14, 17, 0.55);
   --admin-text: #ffffff;
   --admin-text-secondary: #d1d1d6;
   --admin-text-muted: #8e8e93;
   --admin-border: rgba(255, 255, 255, 0.1);
   --admin-gold: #d9a34a;
+  --admin-gold-strong: #f0b85a;
   --admin-gold-light: rgba(217, 163, 74, 0.15);
+  --admin-gold-hover: rgba(217, 163, 74, 0.18);
+  --admin-gold-border: rgba(217, 163, 74, 0.48);
   --admin-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  --admin-hover-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
   --admin-chart-grid: rgba(255, 255, 255, 0.03);
-  --admin-sidebar: rgba(14, 14, 17, 0.55);
 }
 
 [data-theme="light"] {
-  --admin-bg: #f8fafc;
+  --admin-bg: #eef3f7;
   --admin-bg-image:
     linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
     url("../../assets/adminPage/admin_bg.png");
-  --admin-surface: rgba(255, 255, 255, 0.7);
-  --admin-text: #000000;
-  --admin-border: rgba(0, 0, 0, 0.1);
-  --admin-gold: #d9a34a;
-  --admin-sidebar: rgba(255, 255, 255, 0.95);
-  --admin-text: #1a1a1a;
-  --admin-text-secondary: #4b5563;
-  --admin-text-muted: #6b7280; 
-  --admin-sidebar: rgba(255, 255, 255, 0.98);
+
+  --admin-surface: rgba(34, 36, 42, 0.72);
+  --admin-surface-solid: rgba(28, 30, 36, 0.96);
+  --admin-surface-hover: rgba(42, 44, 52, 0.92);
+  --admin-card-bg: rgba(34, 36, 42, 0.88);
+  --admin-card-hover-bg: rgba(42, 44, 52, 0.94);
+  --admin-input-bg: rgba(34, 36, 42, 0.88);
+  --admin-table-header-bg: rgba(28, 30, 36, 0.96);
+  --admin-table-row-bg: var(--admin-input-bg);
+  --admin-table-row-alt-bg: rgba(34, 36, 42, 0.82);
+  --admin-table-row-hover: var(--admin-surface-hover);
+  --admin-table-text: var(--admin-text);
+  --admin-table-text-secondary: var(--admin-text-secondary);
+  --admin-table-border: var(--admin-border);
+  --admin-text: #ffffff;
+  --admin-text-secondary: rgba(255, 255, 255, 0.82);
+  --admin-text-muted: rgba(255, 255, 255, 0.62);
+  --admin-border: rgba(255, 255, 255, 0.25);
+  --admin-gold: #ffd27a;
+  --admin-gold-strong: #ffd27a;
+  --admin-gold-light: rgba(255, 210, 122, 0.2);
+  --admin-gold-hover: rgba(255, 210, 122, 0.24);
+  --admin-gold-border: rgba(255, 210, 122, 0.52);
+  --admin-sidebar: rgba(34, 36, 42, 0.88);
+  --admin-shadow: 0 16px 42px rgba(15, 23, 42, 0.14);
+  --admin-hover-shadow: 0 20px 48px rgba(15, 23, 42, 0.2);
+  --admin-chart-grid: rgba(255, 255, 255, 0.12);
+}
+
+/* Table controls — always dark-theme look (light & dark mode) */
+.admin-panel {
+  --admin-table-control-gold: #d9a34a;
+  --admin-table-control-gold-strong: #f0b85a;
+  --admin-table-control-gold-bg: rgba(217, 163, 74, 0.15);
+  --admin-table-control-gold-border: rgba(217, 163, 74, 0.48);
+  --admin-table-control-text-muted: #94a3b8;
 }
 
 body {
-  background-image: var(--admin-bg-image);
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center 20%;
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   color: var(--admin-text);
-  transition: background 0.3s ease;
+  transition: color 0.3s ease;
+}
+
+.admin-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.admin-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-main.collapsed-padding {
+  padding-left: 80px;
+}
+
+.admin-main.expanded-padding {
+  padding-left: 260px;
+}
+
+@media (max-width: 1024px) {
+  .admin-main.collapsed-padding,
+  .admin-main.expanded-padding {
+    padding-left: 0;
+  }
+}
+
+/* ── Admin content: tables (header bar untouched) ── */
+.admin-panel .admin-content :global(.ant-table-wrapper),
+.admin-panel .admin-content :global(.ant-table),
+.admin-panel .admin-content :global(.ant-table-container),
+.admin-panel .admin-content :global(.ant-table-content),
+.admin-panel .admin-content :global(.ant-table-body),
+.admin-panel .admin-content :global(.ant-table-header),
+.admin-panel .admin-content :global(.ant-table-wrapper .ant-spin-container),
+.admin-panel .admin-content :global(.ant-table-footer) {
+  background: var(--admin-table-row-bg) !important;
+}
+
+.admin-panel .admin-content :global(.ant-table-wrapper) {
+  border: 1px solid var(--admin-table-border, var(--admin-border));
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.admin-panel .admin-content :global(.ant-table-tbody) {
+  --admin-text: var(--admin-table-text, #ffffff);
+  --admin-text-secondary: var(--admin-table-text-secondary, #d1d1d6);
+  --admin-text-muted: var(--admin-table-text-secondary, #8e8e93);
+}
+
+.admin-panel .admin-content :global(.ant-table-thead > tr > th),
+.admin-panel .admin-content :global(.ant-table-thead > tr > td),
+.admin-panel .admin-content :global(.ant-table-header .ant-table-thead > tr > th) {
+  background: var(--admin-table-header-bg) !important;
+  color: var(--admin-table-text-secondary, var(--admin-text-secondary)) !important;
+  border-bottom: 1px solid var(--admin-table-border, var(--admin-border)) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+
+/* Sticky header — keep dark header bg while scrolling (light theme) */
+.admin-panel .admin-content :global(.ant-table-sticky-holder),
+.admin-panel .admin-content :global(.ant-table-sticky-holder .ant-table-thead > tr > th),
+.admin-panel .admin-content :global(.ant-table-cell-fix-sticky) {
+  background: var(--admin-table-header-bg) !important;
+}
+
+.admin-panel .admin-content :global(.ant-table-sticky-scroll) {
+  background: var(--admin-table-row-bg) !important;
+}
+
+.admin-panel .admin-content :global(.ant-table-tbody > tr > td) {
+  background: var(--admin-table-row-bg) !important;
+  color: var(--admin-table-text, var(--admin-text)) !important;
+  border-bottom: 1px solid var(--admin-table-border, var(--admin-border)) !important;
+}
+
+[data-theme="light"] .admin-panel .admin-content :global(.ant-table-tbody > tr:nth-child(even) > td) {
+  background: var(--admin-table-row-alt-bg) !important;
+}
+
+[data-theme="dark"] .admin-panel .admin-content :global(.ant-table-tbody > tr:nth-child(even) > td) {
+  background: var(--admin-table-row-alt-bg) !important;
+}
+
+.admin-panel .admin-content :global(.ant-table-tbody > tr:hover > td) {
+  background: var(--admin-table-row-hover) !important;
+}
+
+.admin-panel .admin-content :global(.ant-table-placeholder),
+.admin-panel .admin-content :global(.ant-table-placeholder .ant-table-cell) {
+  background: var(--admin-table-row-bg) !important;
+  color: var(--admin-text-muted) !important;
+}
+
+.admin-panel .admin-content :global(.ant-table-pagination),
+.admin-panel .admin-content :global(.ant-table-wrapper + .ant-pagination),
+.admin-panel .admin-content :global(.ant-table-wrapper .ant-table-pagination) {
+  margin: 16px 0 0 !important;
+  padding: 12px 4px 0;
+  border-top: 1px solid var(--admin-table-border, var(--admin-border));
+  background: var(--admin-table-row-bg) !important;
+}
+
+.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item a) {
+  color: var(--admin-table-text-secondary, var(--admin-text-secondary)) !important;
+}
+
+.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item-link) {
+  color: var(--admin-table-text-secondary, var(--admin-text-secondary)) !important;
+  border-color: var(--admin-table-border, var(--admin-border)) !important;
+  background: transparent !important;
+}
+
+.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item) {
+  border-color: var(--admin-table-border, var(--admin-border)) !important;
+  background: transparent !important;
+}
+
+.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item-active) {
+  border-color: var(--admin-gold) !important;
+  background: var(--admin-gold-light) !important;
+}
+
+.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item-active a) {
+  color: var(--admin-gold) !important;
+}
+
+.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item:hover) {
+  border-color: var(--admin-gold-border) !important;
+}
+
+.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item:hover a) {
+  color: var(--admin-gold) !important;
+}
+
+.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item-link:hover) {
+  border-color: var(--admin-gold-border) !important;
+  color: var(--admin-gold) !important;
+}
+
+/* ── Admin content: forms & inputs ── */
+.admin-panel .admin-content :global(.ant-form-item-label > label),
+.admin-panel .admin-content :global(.ant-form-item-label > label.ant-form-item-required::before) {
+  color: var(--admin-text) !important;
+}
+
+.admin-panel .admin-content :global(.ant-input),
+.admin-panel .admin-content :global(.ant-input-number),
+.admin-panel .admin-content :global(.ant-input-affix-wrapper),
+.admin-panel .admin-content :global(.ant-select-selector),
+.admin-panel .admin-content :global(.ant-picker) {
+  background-color: var(--admin-input-bg) !important;
+  border-color: var(--admin-border) !important;
+  color: var(--admin-text) !important;
+}
+
+.admin-panel .admin-content :global(.ant-input::placeholder) {
+  color: var(--admin-text-muted) !important;
+}
+
+.admin-panel .admin-content :global(.ant-select-selection-item),
+.admin-panel .admin-content :global(.ant-select-selection-placeholder) {
+  color: var(--admin-text) !important;
+}
+
+.admin-panel .admin-content :global(.ant-select-arrow),
+.admin-panel .admin-content :global(.ant-select-clear) {
+  color: var(--admin-text-muted) !important;
+}
+
+.admin-panel .admin-content :global(.ant-input:hover),
+.admin-panel .admin-content :global(.ant-input-affix-wrapper:hover),
+.admin-panel .admin-content :global(.ant-select-selector:hover),
+.admin-panel .admin-content :global(.ant-picker:hover) {
+  border-color: var(--admin-gold-border) !important;
+}
+
+.admin-panel .admin-content :global(.ant-input:focus),
+.admin-panel .admin-content :global(.ant-input-affix-wrapper-focused),
+.admin-panel .admin-content :global(.ant-select-focused .ant-select-selector) {
+  border-color: var(--admin-gold) !important;
+  box-shadow: 0 0 0 2px var(--admin-gold-light) !important;
+}
+
+/* ── Admin content: buttons (not in top header) ── */
+.admin-panel .admin-content :global(.ant-btn-primary:not(.admin-btn-edit)) {
+  background: var(--admin-gold) !important;
+  border-color: var(--admin-gold) !important;
+  color: #14161c !important;
+}
+
+.admin-panel .admin-content :global(.ant-btn-primary:not(.admin-btn-edit):hover),
+.admin-panel .admin-content :global(.ant-btn-primary:not(.admin-btn-edit):focus) {
+  background: var(--admin-gold-strong) !important;
+  border-color: var(--admin-gold-strong) !important;
+  color: #14161c !important;
+}
+
+.admin-panel .admin-content :global(.ant-btn-default) {
+  background: var(--admin-input-bg) !important;
+  color: var(--admin-text) !important;
+  border-color: var(--admin-border) !important;
+}
+
+.admin-panel .admin-content :global(.ant-btn-default:hover),
+.admin-panel .admin-content :global(.ant-btn-default:focus) {
+  background: var(--admin-surface-hover) !important;
+  color: var(--admin-gold-strong) !important;
+  border-color: var(--admin-gold-border) !important;
+}
+
+.admin-panel .admin-content :global(.ant-btn-dangerous:not(.admin-btn-delete)) {
+  background: transparent !important;
+}
+
+.admin-panel .admin-content :global(.ant-switch) {
+  background: rgba(255, 255, 255, 0.22) !important;
+}
+
+.admin-panel .admin-content :global(.ant-switch-checked) {
+  background: var(--admin-gold) !important;
+}
+
+/* Section headings inside admin pages */
+.admin-panel .admin-content h4 {
+  color: var(--admin-text);
+}
+
+/* ── Action buttons ── */
+.admin-panel .admin-content :global(.admin-btn-add) {
+  height: 40px !important;
+  padding-inline: 22px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, #f7d060 0%, #e8a828 45%, #c4841a 100%) !important;
+  border: 1px solid rgba(255, 228, 150, 0.55) !important;
+  color: #1a1206 !important;
+  box-shadow:
+    0 4px 16px rgba(228, 168, 40, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+  transition: all 0.2s ease !important;
+}
+
+.admin-panel .admin-content :global(.admin-btn-add:hover),
+.admin-panel .admin-content :global(.admin-btn-add:focus) {
+  background: linear-gradient(135deg, #ffe082 0%, #f0b840 45%, #d4922a 100%) !important;
+  color: #1a1206 !important;
+  border-color: rgba(255, 235, 170, 0.7) !important;
+  box-shadow:
+    0 6px 22px rgba(228, 168, 40, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+  transform: translateY(-1px);
+}
+
+.admin-panel .admin-content :global(.admin-btn-edit),
+.admin-panel .admin-content :global(.admin-btn-edit.ant-btn-primary) {
+  height: 32px !important;
+  padding-inline: 14px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background: rgba(217, 163, 74, 0.14) !important;
+  border: 1.5px solid var(--admin-gold) !important;
+  color: var(--admin-gold-strong) !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.admin-panel .admin-content :global(.admin-btn-edit:hover),
+.admin-panel .admin-content :global(.admin-btn-edit:focus),
+.admin-panel .admin-content :global(.admin-btn-edit.ant-btn-primary:hover),
+.admin-panel .admin-content :global(.admin-btn-edit.ant-btn-primary:focus) {
+  background: rgba(217, 163, 74, 0.28) !important;
+  border-color: var(--admin-gold-strong) !important;
+  color: #fff4d6 !important;
+  box-shadow: 0 2px 10px rgba(217, 163, 74, 0.25) !important;
+}
+
+.admin-panel .admin-content :global(.admin-btn-delete),
+.admin-panel .admin-content :global(.admin-btn-delete.ant-btn-dangerous) {
+  height: 32px !important;
+  padding-inline: 14px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+  border: 1.5px solid rgba(248, 113, 113, 0.55) !important;
+  color: #fca5a5 !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.admin-panel .admin-content :global(.admin-btn-delete:hover),
+.admin-panel .admin-content :global(.admin-btn-delete:focus),
+.admin-panel .admin-content :global(.admin-btn-delete.ant-btn-dangerous:hover),
+.admin-panel .admin-content :global(.admin-btn-delete.ant-btn-dangerous:focus) {
+  background: rgba(239, 68, 68, 0.22) !important;
+  border-color: #f87171 !important;
+  color: #fff1f2 !important;
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.22) !important;
+}
+
+/* Light theme: dropdowns match input field shade */
+[data-theme="light"] :global(.admin-select-dropdown.ant-select-dropdown),
+[data-theme="light"] .admin-panel .admin-content :global(.ant-select-dropdown) {
+  background: var(--admin-input-bg) !important;
+  border: 1px solid var(--admin-border) !important;
+  border-radius: 10px !important;
+  padding: 4px !important;
+  box-shadow: var(--admin-shadow) !important;
+}
+
+[data-theme="light"] :global(.admin-select-dropdown) :global(.ant-select-item),
+[data-theme="light"] .admin-panel .admin-content :global(.ant-select-dropdown .ant-select-item) {
+  color: var(--admin-text) !important;
+  border-radius: 6px !important;
+}
+
+[data-theme="light"] :global(.admin-select-dropdown) :global(.ant-select-item-option-active),
+[data-theme="light"] .admin-panel .admin-content :global(.ant-select-dropdown .ant-select-item-option-active) {
+  background: var(--admin-gold-light) !important;
+}
+
+[data-theme="light"] :global(.admin-select-dropdown) :global(.ant-select-item-option-selected),
+[data-theme="light"] .admin-panel .admin-content :global(.ant-select-dropdown .ant-select-item-option-selected) {
+  background: var(--admin-gold-light) !important;
+  color: var(--admin-gold) !important;
+  font-weight: 600;
+}
+
+[data-theme="light"] :global(.admin-dropdown-menu.ant-dropdown) :global(.ant-dropdown-menu) {
+  background: var(--admin-input-bg) !important;
+  border: 1px solid var(--admin-border) !important;
+  border-radius: 10px !important;
+  padding: 4px !important;
+  box-shadow: var(--admin-shadow) !important;
+}
+
+[data-theme="light"] :global(.admin-dropdown-menu.ant-dropdown) :global(.ant-dropdown-menu-item) {
+  color: var(--admin-text) !important;
+  border-radius: 6px !important;
+}
+
+[data-theme="light"] :global(.admin-dropdown-menu.ant-dropdown) :global(.ant-dropdown-menu-item:hover) {
+  background: var(--admin-gold-light) !important;
+  color: var(--admin-gold) !important;
+}
+
+[data-theme="light"] :global(.admin-dropdown-menu.ant-dropdown) :global(.ant-dropdown-menu-item-danger) {
+  color: #fca5a5 !important;
+}
+
+[data-theme="light"] :global(.admin-dropdown-menu.ant-dropdown) :global(.ant-dropdown-menu-item-danger:hover) {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #fecaca !important;
+}
+
+/* ── Table status / role tags (valid global selectors — no :global() in plain CSS) ── */
+.admin-panel .admin-content .ant-table .ant-tag {
+  margin-inline-end: 0;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  border: none !important;
+  border-radius: 6px !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-tag-success,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-success,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-success,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-success {
+  background-color: #15803d !important;
+  border-color: transparent !important;
+  color: #ecfdf5 !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-tag-warning,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-warning,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-warning,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-warning {
+  background-color: #b45309 !important;
+  border-color: transparent !important;
+  color: #fffbeb !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-tag-error,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-error,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-error,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-error {
+  background-color: #b91c1c !important;
+  border-color: transparent !important;
+  color: #fef2f2 !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-tag-processing,
+.admin-panel .admin-content .ant-table .ant-tag-blue,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-blue,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-processing,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-blue,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-blue {
+  background-color: #1d4ed8 !important;
+  border-color: transparent !important;
+  color: #eff6ff !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-tag-purple,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-purple,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-purple,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-purple {
+  background-color: #7e22ce !important;
+  border-color: transparent !important;
+  color: #faf5ff !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-tag-gold,
+.admin-panel .admin-content .ant-table .ant-tag[class*="gold"],
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-gold,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-gold,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-gold {
+  background-color: #a16207 !important;
+  border-color: transparent !important;
+  color: #fefce8 !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-tag-default,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-default,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-default,
+.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-default {
+  background-color: #374151 !important;
+  border-color: transparent !important;
+  color: #f3f4f6 !important;
+}
+
+/* ── Table controls: edit, delete, switch, pagination (same in both themes) ── */
+.admin-panel .admin-content .ant-table .admin-btn-edit,
+.admin-panel .admin-content .ant-table .admin-btn-edit.ant-btn-primary {
+  height: 32px !important;
+  padding-inline: 14px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background: rgba(217, 163, 74, 0.14) !important;
+  border: 1.5px solid var(--admin-table-control-gold) !important;
+  color: var(--admin-table-control-gold-strong) !important;
+  box-shadow: none !important;
+}
+
+.admin-panel .admin-content .ant-table .admin-btn-edit:hover,
+.admin-panel .admin-content .ant-table .admin-btn-edit:focus,
+.admin-panel .admin-content .ant-table .admin-btn-edit.ant-btn-primary:hover,
+.admin-panel .admin-content .ant-table .admin-btn-edit.ant-btn-primary:focus {
+  background: rgba(217, 163, 74, 0.28) !important;
+  border-color: var(--admin-table-control-gold-strong) !important;
+  color: #fff4d6 !important;
+  box-shadow: 0 2px 10px rgba(217, 163, 74, 0.25) !important;
+}
+
+.admin-panel .admin-content .ant-table .admin-btn-delete,
+.admin-panel .admin-content .ant-table .admin-btn-delete.ant-btn-dangerous,
+.admin-panel .admin-content .ant-table .ant-btn-dangerous.admin-btn-delete {
+  height: 32px !important;
+  padding-inline: 14px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+  border: 1.5px solid rgba(248, 113, 113, 0.55) !important;
+  color: #fca5a5 !important;
+  box-shadow: none !important;
+}
+
+.admin-panel .admin-content .ant-table .admin-btn-delete:hover,
+.admin-panel .admin-content .ant-table .admin-btn-delete:focus,
+.admin-panel .admin-content .ant-table .admin-btn-delete.ant-btn-dangerous:hover,
+.admin-panel .admin-content .ant-table .admin-btn-delete.ant-btn-dangerous:focus,
+.admin-panel .admin-content .ant-table .ant-btn-dangerous.admin-btn-delete:hover,
+.admin-panel .admin-content .ant-table .ant-btn-dangerous.admin-btn-delete:focus {
+  background: rgba(239, 68, 68, 0.22) !important;
+  border-color: #f87171 !important;
+  color: #fff1f2 !important;
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.22) !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-switch {
+  background: rgba(255, 255, 255, 0.22) !important;
+  background-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-switch:hover:not(.ant-switch-disabled) {
+  background: rgba(255, 255, 255, 0.32) !important;
+  background-color: rgba(255, 255, 255, 0.32) !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-switch.ant-switch-checked {
+  background: var(--admin-table-control-gold) !important;
+  background-color: var(--admin-table-control-gold) !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+  background: var(--admin-table-control-gold-strong) !important;
+  background-color: var(--admin-table-control-gold-strong) !important;
+}
+
+.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item a,
+.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item a {
+  color: var(--admin-table-control-text-muted) !important;
+}
+
+.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item-link,
+.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item-link {
+  color: var(--admin-table-control-text-muted) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  background: transparent !important;
+}
+
+.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item,
+.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  background: transparent !important;
+}
+
+.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item-active,
+.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item-active {
+  border-color: var(--admin-table-control-gold) !important;
+  background: var(--admin-table-control-gold-bg) !important;
+}
+
+.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item-active a,
+.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item-active a {
+  color: var(--admin-table-control-gold) !important;
+  font-weight: 600;
+}
+
+.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item:hover,
+.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item:hover {
+  border-color: var(--admin-table-control-gold-border) !important;
+}
+
+.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item:hover a,
+.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item:hover a {
+  color: var(--admin-table-control-gold) !important;
+}
+
+.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item-link:hover,
+.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item-link:hover {
+  border-color: var(--admin-table-control-gold-border) !important;
+  color: var(--admin-table-control-gold) !important;
 }

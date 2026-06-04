@@ -11,20 +11,20 @@
   transition: all 0.4s ease;
 }
 
-
 .headerScrolled {
   padding: 12px 24px;
-  backdrop-filter: blur(25px) saturate(180%);
 }
 
 [data-theme="dark"] .headerScrolled {
+  backdrop-filter: blur(25px) saturate(180%);
   background: rgba(15, 15, 18, 0.45);
 }
 
 [data-theme="light"] .headerScrolled {
-  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(40px) saturate(200%);
+  background: rgba(42, 39, 43, 0.50);
+  color: #1a1a1a;
 }
-
 
 .sidebarToggle {
   width: 42px !important;
@@ -36,16 +36,16 @@
   cursor: pointer;
   border: 1px solid transparent !important;
   background: transparent !important;
-  color: var(--admin-text) !important;
+  color: #ffffff !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   font-size: 22px !important;
 }
 
 .sidebarToggle:hover {
-  transform: translateY(-0.5px) ;
-  border-color: var(--admin-gold) !important;
-  color: var(--admin-gold) !important;
-  background: rgba(217, 163, 74, 0.08) !important;
+  transform: translateY(-0.5px);
+  border-color: var(--admin-gold-border) !important;
+  color: #ffffff !important;
+  background: var(--admin-gold-hover) !important;
 }
 
 .sidebarToggle:active {
@@ -58,7 +58,6 @@
   margin: 0 auto;
 }
 
-
 :global(.ant-input-affix-wrapper).searchInput,
 .actionBox,
 .userSnippet {
@@ -70,7 +69,6 @@
   transition: all 0.3s ease !important;
 }
 
-
 [data-theme="dark"] :global(.ant-input-affix-wrapper).searchInput,
 [data-theme="dark"] .actionBox,
 [data-theme="dark"] .userSnippet {
@@ -78,7 +76,6 @@
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
   color: #ffffff !important;
 }
-
 
 [data-theme="light"] :global(.ant-input-affix-wrapper).searchInput,
 [data-theme="light"] .actionBox,
@@ -88,11 +85,31 @@
   color: #000000 !important;
 }
 
+[data-theme="light"] :global(.ant-input-affix-wrapper).searchInput input,
+[data-theme="light"] :global(.ant-input-affix-wrapper).searchInput input::placeholder,
+[data-theme="light"] .searchIcon,
+[data-theme="light"] .searchShortcut {
+  color: rgba(0, 0, 0, 0.58) !important;
+}
 
 .actionBox:hover,
 .userSnippet:hover {
   transform: translateY(-2px);
-  border-color: var(--admin-gold) !important;
+  background: var(--admin-gold-hover) !important;
+  border-color: var(--admin-gold-border) !important;
+  color: var(--admin-gold-strong) !important;
+}
+
+[data-theme="light"] .sidebarToggle:hover,
+[data-theme="light"] .actionBox:hover,
+[data-theme="light"] .userSnippet:hover {
+  background: rgba(255, 210, 122, 0.24) !important;
+  border-color: rgba(255, 210, 122, 0.52) !important;
+  color: #ffd27a !important;
+}
+
+[data-theme="light"] .sidebarToggle:hover {
+  color: #ffffff !important;
 }
 
 .actions {
@@ -115,6 +132,38 @@
   height: 42px;
   gap: 10px;
   cursor: pointer;
+  border: none;
+  font: inherit;
+  color: inherit;
+}
+
+.userArrow {
+  font-size: 10px;
+  opacity: 0.65;
+  transition: transform 0.2s ease;
+}
+
+.userSnippet:hover .userArrow {
+  opacity: 1;
+}
+
+:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu {
+  min-width: 180px;
+  padding: 6px;
+  border-radius: 12px;
+  background: var(--admin-surface-solid);
+  border: 1px solid var(--admin-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item {
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item:hover {
+  background: var(--admin-gold-hover) !important;
+  color: var(--admin-gold-strong) !important;
 }
 
 .userAvatar {
@@ -132,16 +181,51 @@
 }
 
 @media (max-width: 1024px) {
+  .header {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .headerScrolled {
+    padding: 12px 16px;
+  }
+
   .userName {
     display: none;
   }
+
   .searchWrap {
     max-width: none;
   }
 }
 
 @media (max-width: 640px) {
+  .header {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .headerScrolled {
+    padding: 10px 12px;
+  }
+
   .searchWrap {
     display: none;
+  }
+
+  .sidebarToggle,
+  .actionBox {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .userSnippet {
+    padding: 0 10px 0 6px;
+    height: 38px;
+  }
+
+  .userAvatar {
+    width: 26px;
+    height: 26px;
   }
 }

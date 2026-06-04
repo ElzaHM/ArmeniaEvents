@@ -6,13 +6,14 @@ import HomePage from '../pages/HomePage';
 import EventsPage from '../pages/EventsPage';
 import EventDetailsPage from '../pages/EventDetailsPage';
 import SignInPage from '../pages/SignInPage';
-import AdminPage from '../pages/AdminPage';
 import SignUpPage from '../pages/SignUpPage';
-import AdminEventsPage from '../pages/AdminEventsPage';
-import AdminCategoriesPage from '../pages/AdminCategoriesPage';
-import AdminUsersPage from '../pages/AdminUsersPage';
-import AdminAnalyticsPage from '../pages/AdminAnalyticsPage';
-import AdminSettingsPage from '../pages/AdminSettingsPage';
+import AdminPage from '../pages/admin/AdminPage';
+import AdminEventsPage from '../pages/admin/AdminEventsPage';
+import AdminCategoriesPage from '../pages/admin/AdminCategoriesPage';
+import AdminUsersPage from '../pages/admin/AdminUsersPage';
+import AdminAnalyticsPage from '../pages/admin/AdminAnalyticsPage';
+import AdminSettingsPage from '../pages/admin/AdminSettingsPage';
+import AdminProfilePage from '../pages/admin/AdminProfilePage';
 import NotFoundPage from '../pages/NotFoundPage';
 import { RequireAuth, RequireGuest } from './guards';
 
@@ -78,6 +79,10 @@ export const router = createBrowserRouter([
       {
         path: 'analytics',
         element: <AdminAnalyticsPage />,
+      },
+      {
+        path: 'profile',
+        element: <AdminProfilePage />,
       },
       {
         path: 'settings',
