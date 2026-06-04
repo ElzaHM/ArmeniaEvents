@@ -17,7 +17,7 @@ export default function EventSchedule({ event }: EventScheduleProps) {
       </Typography.Title>
 
       <div className={styles.dayToggles}>
-        {event.scheduleDays.map((day, index) => (
+        {(event.scheduleDays ?? []).map((day, index) => (
           <button
             key={day.date}
             type="button"
@@ -30,7 +30,7 @@ export default function EventSchedule({ event }: EventScheduleProps) {
       </div>
 
       <div className={styles.timeline}>
-        {event.schedule.map((item) => (
+        {(event.schedule ?? []).map((item) => (
           <div key={`${item.time}-${item.title}`} className={styles.timelineItem}>
             <div className={styles.timelineMarker} />
             <div className={styles.timelineContent}>

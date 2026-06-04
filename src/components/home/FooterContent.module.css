@@ -127,6 +127,12 @@
   }
 }
 
+@media (max-width: 992px) {
+  .about {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .section {
     padding: 20px 0 12px;

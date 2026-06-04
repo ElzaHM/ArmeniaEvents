@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Button, Layout } from 'antd';
 import {
   CloseOutlined,
@@ -8,6 +8,7 @@ import {
   MoonOutlined,
   SunOutlined,
 } from '@ant-design/icons';
+import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../hooks/useTheme';
 import './Header.css';
 import '../home/homeActionButton.css';
@@ -17,8 +18,15 @@ const { Header: AntHeader } = Layout;
 export default function Header() {
   const { pathname } = useLocation();
   const { mode, toggleTheme } = useTheme();
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,25 +81,38 @@ export default function Header() {
           />
         )}
 
-        <div className="header-actions">
-          <Button
-            type="text"
-            className="theme-toggle"
-            icon={mode === 'light' ? <MoonOutlined /> : <SunOutlined />}
-            onClick={toggleTheme}
-          />
-          <Link to="/signin" className="header-signin-link">
-            <Button className="signin-button homeActionBtn">Sign In</Button>
-          </Link>
-          <Button
-            type="text"
-            className="menu-toggle"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-            icon={menuOpen ? <CloseOutlined /> : <MenuOutlined />}
-            onClick={() => setMenuOpen((open) => !open)}
-          />
-        </div>
+<div className="header-actions">
+  <Button
+    type="text"
+    className="theme-toggle"
+    icon={mode === 'light' ? <MoonOutlined /> : <SunOutlined />}
+    onClick={toggleTheme}
+  />
+
+  {isAuthenticated ? (
+    <Button
+      className="signin-button homeActionBtn"
+      onClick={() => void handleLogout()}
+    >
+      Log Out
+    </Button>
+  ) : (
+    <Link to="/signin" className="header-signin-link">
+      <Button className="signin-button homeActionBtn">
+        Sign In
+      </Button>
+    </Link>
+  )}
+
+  <Button
+    type="text"
+    className="menu-toggle"
+    aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+    aria-expanded={menuOpen}
+    icon={menuOpen ? <CloseOutlined /> : <MenuOutlined />}
+    onClick={() => setMenuOpen((open) => !open)}
+  />
+</div>
       </div>
     </AntHeader>
   );

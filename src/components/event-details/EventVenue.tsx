@@ -15,13 +15,26 @@ interface EventVenueProps {
 }
 
 export default function EventVenue({ event }: EventVenueProps) {
-  const { venue } = event;
+  const venue = event.venue ?? {
+    name: 'Event Venue',
+    address: event.location,
+    imageUrl: event.imageUrl,
+    website: '',
+    phone: '',
+    email: '',
+  };
 
   const contacts = [
-    { icon: GlobalOutlined, label: venue.website, href: `https://${venue.website}` },
-    { icon: PhoneOutlined, label: venue.phone, href: `tel:${venue.phone}` },
-    { icon: MailOutlined, label: venue.email, href: `mailto:${venue.email}` },
-  ];
+    venue.website
+      ? { icon: GlobalOutlined, label: venue.website, href: `https://${venue.website}` }
+      : null,
+    venue.phone ? { icon: PhoneOutlined, label: venue.phone, href: `tel:${venue.phone}` } : null,
+    venue.email ? { icon: MailOutlined, label: venue.email, href: `mailto:${venue.email}` } : null,
+  ].filter(Boolean) as {
+    icon: typeof GlobalOutlined;
+    label: string;
+    href: string;
+  }[];
 
   return (
     <section className={`${styles.section} detailsGlassCard`}>

@@ -8,5 +8,4 @@ export { default as OrganizerCard } from './OrganizerCard';
 export { default as ReminderCard } from './ReminderCard';
 export { default as RelatedEvents } from './RelatedEvents';
 
-export { getEventDetails } from './mockData';
 export type { EventDetails } from './types';

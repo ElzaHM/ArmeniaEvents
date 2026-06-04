@@ -1,6 +1,13 @@
 import EventSection from './EventSection';
-import { TOP_PICKS } from './mockData';
+import { QueryState } from '../../hooks/queries/query-state';
+import { useTopPicks } from '../../hooks/queries/useEvents';
 
 export default function TopPicks() {
-  return <EventSection title="Top Picks for You" events={TOP_PICKS} />;
+  const { data: events, isLoading, isError, error } = useTopPicks();
+
+  return (
+    <QueryState isLoading={isLoading} isError={isError} error={error}>
+      {events && <EventSection title="Top Picks for You" events={events} />}
+    </QueryState>
+  );
 }
