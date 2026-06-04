@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Header from '../../components/Header/Header';
-import { FooterContent } from '../../components/home';
 import { SignUpPanel } from '../../components/sign-up';
 import '../../components/home/home.css';
 import '../../components/sign-in/sign-in.css';
@@ -14,11 +13,9 @@ const SignUpPage: React.FC = () => {
       <Header />
       <div className={styles.arcDecoration} />
 
-      <main className={styles.mainContent}>
+      <main className={`${styles.mainContent} sign-up-main`}>
         <SignUpPanel />
       </main>
-
-      <FooterContent />
     </div>
   );
 };

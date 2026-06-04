@@ -78,7 +78,7 @@ export default function EventFilters() {
 
   return (
     <QueryState isLoading={isLoading} isError={isError} error={error}>
-      <aside className={styles.filters}>
+      <aside className={`${styles.filters} eventsFilters`}>
         <div className={styles.header}>
           <Typography.Title level={5} className={styles.title}>
             Filters
@@ -93,8 +93,14 @@ export default function EventFilters() {
             Date
           </Typography.Text>
           <div className={styles.dateFields}>
-            <DatePicker placeholder="From Date" className={styles.datePicker} />
-            <DatePicker placeholder="To Date" className={styles.datePicker} />
+            <DatePicker
+              placeholder="From Date"
+              className={`${styles.datePicker} eventsDateField`}
+            />
+            <DatePicker
+              placeholder="To Date"
+              className={`${styles.datePicker} eventsDateField`}
+            />
           </div>
         </div>
 
@@ -193,7 +199,7 @@ export default function EventFilters() {
             prefix={<SearchOutlined />}
             value={organizerQuery}
             onChange={(event) => setOrganizerQuery(event.target.value)}
-            className={styles.organizerSearch}
+            className={`${styles.organizerSearch} eventsOrganizerField`}
           />
 
           <Checkbox.Group

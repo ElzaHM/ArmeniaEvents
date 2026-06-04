@@ -45,21 +45,24 @@ export default function EventList() {
   return (
       <QueryState isLoading={isLoading} isError={isError} error={error}>
         {allEvents && sortOptions && totalEvents !== undefined && (
-          <section className={styles.listSection}>
+          <section className={`${styles.listSection} eventsListPanel`}>
             <div className={styles.toolbar}>
               <Typography.Text className={styles.resultCount}>
                 Found <strong>{totalEvents}</strong> events
               </Typography.Text>
     
               <div className={styles.toolbarActions}>
-                <Select
-                  value={sortBy}
-                  onChange={setSortBy}
-                  options={sortOptions}
-                  className={styles.sortSelect}
-                />
+                <div className={styles.sortSelectWrap}>
+                  <Select
+                    value={sortBy}
+                    onChange={setSortBy}
+                    options={sortOptions}
+                    variant="borderless"
+                    className={`${styles.sortSelect} eventsSortField`}
+                  />
+                </div>
     
-                <div className={styles.viewToggle}>
+                <div className={`${styles.viewToggle} eventsViewToggle`}>
                   <Button
                     type={viewMode === 'grid' ? 'primary' : 'default'}
                     icon={<AppstoreOutlined />}

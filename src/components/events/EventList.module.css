@@ -44,22 +44,26 @@
 .sortSelectWrap {
   min-width: 180px;
   height: 32px;
-  border: 1px solid #ffffff;
+  border: 1px solid var(--events-sort-border, rgba(255, 255, 255, 0.9));
   border-radius: 6px;
-  background: var(--events-field-light-bg);
+  background: var(--events-filter-date-bg, var(--events-field-light-bg));
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .sortSelectWrap:hover,
-.sortSelectWrap:has(:global(.ant-select-open)) {
+.sortSelectWrap:has(:global(.ant-select-open)),
+.sortSelectWrap:has(:global(.ant-select-focused)) {
+  background: var(--events-filter-date-hover-bg, var(--events-field-hover-bg));
   border-color: var(--home-accent);
 }
 
 .sortSelectWrap:has(:global(.ant-select-focused)) {
-  border-color: var(--home-accent);
   box-shadow: 0 0 0 2px rgba(192, 139, 70, 0.15);
 }
 
@@ -152,6 +156,21 @@
   min-width: 32px !important;
   padding: 0 !important;
   cursor: pointer;
+  border-radius: 6px !important;
+}
+
+.viewToggle :global(.ant-btn-default) {
+  background: var(--events-filter-date-bg, var(--events-field-light-bg)) !important;
+  background-color: var(--events-filter-date-bg, var(--events-field-light-bg)) !important;
+  border-color: var(--events-field-border, var(--home-border)) !important;
+  color: var(--home-text) !important;
+}
+
+.viewToggle :global(.ant-btn-default:hover) {
+  background: var(--events-filter-date-hover-bg, var(--events-field-hover-bg)) !important;
+  background-color: var(--events-filter-date-hover-bg, var(--events-field-hover-bg)) !important;
+  border-color: var(--home-accent) !important;
+  color: var(--home-text) !important;
 }
 
 .list {

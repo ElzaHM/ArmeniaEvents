@@ -11,6 +11,7 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ className }: SearchBarProps) {
+  const isEventsSearch = className?.includes('eventsSearchBar');
   const [compact, setCompact] = useState(false);
   const [narrow, setNarrow] = useState(false);
 
@@ -37,7 +38,7 @@ export default function SearchBar({ className }: SearchBarProps) {
         <Input
           placeholder={compact ? SEARCH_PLACEHOLDER_COMPACT : SEARCH_PLACEHOLDER_DESKTOP}
           variant="borderless"
-          className={styles.inputField}
+          className={[styles.inputField, isEventsSearch ? 'eventsHeroSearchInput' : ''].filter(Boolean).join(' ')}
         />
       </div>
 

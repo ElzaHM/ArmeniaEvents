@@ -67,7 +67,7 @@ export const SignInForm: React.FC = () => {
           />
         </Form.Item>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
           <Form.Item name="remember" valuePropName="checked" style={{ marginBottom: 0 }}>
             <Checkbox>Remember me</Checkbox>
           </Form.Item>

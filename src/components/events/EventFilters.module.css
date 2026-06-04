@@ -69,6 +69,29 @@
   width: 100%;
 }
 
+.dateFields :global(.ant-picker) {
+  --ant-color-bg-container: var(--events-filter-date-bg, var(--events-field-light-bg));
+  background: var(--events-filter-date-bg, rgba(255, 255, 255, 1)) !important;
+  background-color: var(--events-filter-date-bg, rgba(255, 255, 255, 1)) !important;
+  border-color: var(--events-field-border) !important;
+}
+
+.dateFields :global(.ant-picker:hover),
+.dateFields :global(.ant-picker-focused) {
+  background: var(--events-filter-date-hover-bg, rgba(255, 255, 255, 1)) !important;
+  background-color: var(--events-filter-date-hover-bg, rgba(255, 255, 255, 1)) !important;
+}
+
+.dateFields :global(.ant-picker-suffix),
+.dateFields :global(.ant-picker-suffix .anticon) {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+:global([data-theme='dark']) .dateFields :global(.ant-picker-suffix),
+:global([data-theme='dark']) .dateFields :global(.ant-picker-suffix .anticon) {
+  color: #ffffff !important;
+}
+
 .checkboxGroup {
   display: flex;
   flex-direction: column;
@@ -126,6 +149,44 @@
 
 .organizerSearch {
   margin-bottom: 12px;
+}
+
+.organizerSearch:global(.ant-input-affix-wrapper) {
+  --ant-color-bg-container: var(--events-filter-date-bg, var(--events-field-light-bg));
+  background: var(--events-filter-date-bg, rgba(255, 255, 255, 1)) !important;
+  background-color: var(--events-filter-date-bg, rgba(255, 255, 255, 1)) !important;
+  border-color: var(--events-field-border) !important;
+}
+
+.organizerSearch:global(.ant-input-affix-wrapper) > :global(input.ant-input) {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.organizerSearch:global(.ant-input-affix-wrapper:hover),
+.organizerSearch:global(.ant-input-affix-wrapper-focused) {
+  background: var(--events-filter-date-hover-bg, rgba(255, 255, 255, 1)) !important;
+  background-color: var(--events-filter-date-hover-bg, rgba(255, 255, 255, 1)) !important;
+}
+
+.organizerSearch :global(.ant-input-prefix .anticon) {
+  color: rgba(0, 0, 0, 0.55) !important;
+  font-size: 15px !important;
+  opacity: 1 !important;
+}
+
+:global([data-theme='dark']) .organizerSearch :global(.ant-input-prefix .anticon) {
+  color: #ffffff !important;
+}
+
+.organizerSearch:global(.ant-input-affix-wrapper:hover) :global(.ant-input-prefix .anticon),
+.organizerSearch:global(.ant-input-affix-wrapper-focused) :global(.ant-input-prefix .anticon) {
+  color: var(--home-accent) !important;
+}
+
+:global([data-theme='dark']) .organizerSearch:global(.ant-input-affix-wrapper:hover) :global(.ant-input-prefix .anticon),
+:global([data-theme='dark']) .organizerSearch:global(.ant-input-affix-wrapper-focused) :global(.ant-input-prefix .anticon) {
+  color: #ffffff !important;
 }
 
 .organizerGroup .groupTitle {

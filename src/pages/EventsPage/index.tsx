@@ -6,7 +6,7 @@ import pageStyles from '../../components/events/EventsPage.module.css';
 
 export default function EventsPage() {
   return (
-    <div className={pageStyles.eventsPage}>
+    <div className={`${pageStyles.eventsPage} eventsPage`}>
       <EventSearch />
       <div className={pageStyles.main}>
         <div className={pageStyles.sidebar}>

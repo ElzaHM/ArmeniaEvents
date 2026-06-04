@@ -74,7 +74,6 @@ export const SignUpForm: React.FC = () => {
         <Form.Item
           label={<span className={styles.label}>Password</span>}
           name="password"
-          style={{ marginBottom: 8 }}
           rules={[
             { required: true, message: 'Password is required' },
             { min: 8, message: 'Password must be at least 8 characters' },
@@ -101,7 +100,7 @@ export const SignUpForm: React.FC = () => {
         </div>
 
         <Form.Item
-          label={<span className={styles.label} style={{ marginTop: 16 }}>Confirm Password</span>}
+          label={<span className={styles.label}>Confirm Password</span>}
           name="confirmPassword"
           dependencies={['password']}
           rules={[
