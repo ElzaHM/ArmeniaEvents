@@ -24,7 +24,6 @@ export default function AdminLayout() {
         <AdminHeader
           sidebarCollapsed={sidebarCollapsed}
           onToggleSidebar={() => setSidebarCollapsed((value) => !value)}
-          onOpenMobileMenu={() => setMobileOpen(true)}
         />
         <main className={styles.content}>
           <Outlet />

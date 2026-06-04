@@ -1,45 +1,45 @@
 .card {
-  background: rgba(255, 255, 255, 0.03); 
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
+  background: var(--home-glass-bg);
+  border: 1px solid var(--home-glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
   overflow: hidden;
   transition: all 0.3s ease;
   height: 100%;
   display: flex;
   flex-direction: column;
+  margin-top: 8px;
+  cursor: pointer;
   box-sizing: border-box;
-  margin-top: 10px;
-  /* background: color-mix(in srgb, var(--home-hero-overlay), transparent 50%) !important; */
-
+  box-shadow: var(--home-card-shadow);
 }
 
 .card:hover {
+  background: var(--home-glass-hover-bg);
+  border-color: var(--home-accent);
   transform: translateY(-6px);
-  border-color: #c08b46; /* Ոսկեգույն եզրագիծ hover-ի ժամանակ */
-  background: rgba(255, 255, 255, 0.05);
 }
 
 .imageWrapper {
   position: relative;
-  height: 180px;
-  padding: 10px; /* Նկարը մի փոքր ներսից է */
+  height: 148px;
+  padding: 8px;
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 14px; /* Նկարի անկյունները ավելի կլոր են */
+  border-radius: 14px;
 }
 
-/* Ամսաթվի սպիտակ բլոկը */
 .dateBadge {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  background: #f3f0ea; /* Դիզայնի բաց գույնը */
-  padding: 6px 12px;
+  top: 14px;
+  left: 14px;
+  background: #f3f0ea;
+  padding: 5px 10px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -63,8 +63,8 @@
 
 .wishlistBtn {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 14px;
+  right: 14px;
   background: rgba(0, 0, 0, 0.3);
   border: none;
   color: white;
@@ -84,160 +84,193 @@
 }
 
 .content {
-  padding: 10px 20px 20px 20px;
-}
-
-.title {
-  color: white !important;
-  font-size: 17px !important;
-  margin: 0 0 4px 0 !important;
-  font-weight: 600 !important;
-}
-
-.category {
-  color: rgba(255, 255, 255, 0.45);
-  font-size: 13px;
-  margin-bottom: 12px;
-}
-
-.infoRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
-}
-
-.icon {
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 14px;
-}
-
-.infoText {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 13px;
-}
-
-.price {
-  margin-top: 15px;
-  font-weight: 600;
-  font-size: 16px;
-  color: #c08b46; /* Ոսկեգույն գների համար */
-}
-
-.freePrice {
-  color: #52c41a; /* Կանաչ գույն Free-ի համար */
-}
-
-
-
-
-
-
-/* .card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  overflow: hidden;
-  transition: transform 0.3s ease;
-  height: 100%;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.imageContainer {
-  position: relative;
-  height: 180px;
-  padding: 10px;
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 14px;
-}
-
-.dateBadge {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: #f3f0ea;
-  padding: 8px 12px;
-  border-radius: 10px;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  line-height: 1.1;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-.month {
-  font-size: 10px;
-  font-weight: 700;
-  color: #1a1a1a;
-  text-transform: uppercase;
-}
-
-.day {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1a1a1a;
-}
-
-.favoriteBtn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.3);
-  border: none;
-  color: white;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  cursor: pointer;
-  backdrop-filter: blur(4px);
-}
-
-.content {
-  padding: 15px 20px 20px;
+  padding: 8px 14px 14px;
 }
 
 .title {
-  color: white !important;
-  margin: 0 0 4px !important;
-  font-size: 17px !important;
+  color: var(--home-heading) !important;
+  font-size: 15px !important;
+  margin: 0 0 2px 0 !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .category {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 13px;
-  margin-bottom: 12px;
+  color: var(--home-muted-faint);
+  font-size: 12px;
+  margin-bottom: 8px;
 }
 
 .infoRow {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 13px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .icon {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--home-icon-muted);
+  font-size: 14px;
+}
+
+.infoText {
+  color: var(--home-info-text);
+  font-size: 13px;
 }
 
 .price {
-  margin-top: 15px;
+  margin-top: auto;
+  padding-top: 8px;
   font-weight: 600;
-  font-size: 16px;
-  color: #c08b46; /* Gold for prices */
-/* }
+  font-size: 14px;
+  color: var(--home-accent);
+}
 
-.free {
-  color: #52c41a; /* Green for Free */
-/* } */
+.freePrice {
+  color: #52c41a;
+}
+
+@media (max-width: 768px) {
+  .card {
+    margin-top: 4px;
+    border-radius: 14px;
+  }
+
+  .imageWrapper {
+    height: 88px;
+    padding: 6px;
+  }
+
+  .image {
+    border-radius: 10px;
+  }
+
+  .dateBadge {
+    top: 10px;
+    left: 10px;
+    padding: 3px 6px;
+    border-radius: 6px;
+  }
+
+  .month {
+    font-size: 7px;
+  }
+
+  .day {
+    font-size: 12px;
+  }
+
+  .wishlistBtn {
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .content {
+    padding: 4px 8px 8px;
+  }
+
+  .title {
+    font-size: 12px !important;
+    margin: 0 0 1px 0 !important;
+    -webkit-line-clamp: 2;
+  }
+
+  .category {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .infoRow {
+    gap: 4px;
+    margin-bottom: 2px;
+  }
+
+  .icon {
+    font-size: 12px;
+  }
+
+  .infoText {
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .price {
+    padding-top: 4px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    margin-top: 4px;
+    border-radius: 12px;
+  }
+
+  .imageWrapper {
+    height: 76px;
+    padding: 5px;
+  }
+
+  .image {
+    border-radius: 8px;
+  }
+
+  .dateBadge {
+    top: 10px;
+    left: 10px;
+    padding: 3px 6px;
+    border-radius: 6px;
+  }
+
+  .month {
+    font-size: 7px;
+  }
+
+  .day {
+    font-size: 12px;
+  }
+
+  .wishlistBtn {
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .content {
+    padding: 3px 7px 7px;
+  }
+
+  .title {
+    font-size: 11px !important;
+  }
+
+  .category {
+    font-size: 9px;
+    margin-bottom: 3px;
+  }
+
+  .infoText {
+    font-size: 10px;
+  }
+
+  .icon {
+    font-size: 11px;
+  }
+
+  .price {
+    padding-top: 3px;
+    font-size: 10px;
+  }
+}

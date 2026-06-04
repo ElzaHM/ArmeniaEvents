@@ -2,11 +2,11 @@ import React from 'react';
 import { MapPin, Heart, Bell, Ticket } from 'lucide-react';
 import { SignInForm } from './SignInForm';
 import styles from './SignInPanel.module.css';
-import signInIllustration from '../../pages/SignInPage/photo_2026-05-31_13-59-21 (2).jpg';
+import signInIllustration from '../../assets/signInImg.png';
 
 export const SignInPanel: React.FC = () => {
   return (
-    <div className={styles.panel}>
+    <div className={`${styles.panel} sign-in-panel`}>
       <div className={styles.leftSection}>
         <div className={styles.logoBox}>
           <MapPin size={24} />
@@ -46,12 +46,14 @@ export const SignInPanel: React.FC = () => {
           </div>
         </div>
 
-        <div className={styles.illustration}>
-          <img
-            src={signInIllustration}
-            alt="Armenia Events skyline illustration"
-            className={styles.illustrationImage}
-          />
+        <div className={`${styles.illustration} auth-illustration`}>
+          <div className="auth-illustration-image">
+            <img
+              src={signInIllustration}
+              alt="Armenia Events skyline illustration"
+              className={styles.illustrationImage}
+            />
+          </div>
         </div>
       </div>
 

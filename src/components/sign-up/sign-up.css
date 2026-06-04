@@ -1,1 +1,67 @@
-/* Sign-up specific Ant Design overrides are handled in sign-in.css under .auth-page */
+.sign-up-page {
+  --auth-illustration-box-width: 100%;
+  --auth-illustration-box-height: 220px;
+}
+
+.sign-up-page .sign-up-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: visible;
+}
+
+.sign-up-page .sign-up-panel {
+  max-width: 760px;
+  width: 82%;
+  max-height: none;
+  height: auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--auth-panel-shadow) !important;
+}
+
+.sign-up-page .auth-illustration {
+  margin-left: auto;
+  margin-right: auto;
+  width: var(--auth-illustration-box-width);
+  height: var(--auth-illustration-box-height);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+.sign-up-page .auth-illustration-image {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+}
+
+.sign-up-page .auth-illustration-image img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  opacity: var(--auth-illustration-image-opacity, 1);
+  object-fit: contain;
+  object-position: top center;
+}
+
+[data-theme='dark'] .sign-up-page .auth-illustration-image img {
+  mix-blend-mode: normal;
+}
+
+.sign-up-page .ant-form-item {
+  margin-bottom: 8px !important;
+}
+
+.sign-up-page .ant-divider {
+  margin: 8px 0 !important;
+}

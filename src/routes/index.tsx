@@ -14,6 +14,7 @@ import AdminUsersPage from '../pages/AdminUsersPage';
 import AdminAnalyticsPage from '../pages/AdminAnalyticsPage';
 import AdminSettingsPage from '../pages/AdminSettingsPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import { RequireAuth, RequireGuest } from './guards';
 
 export const router = createBrowserRouter([
   {
@@ -34,21 +35,33 @@ export const router = createBrowserRouter([
       },
       {
         path: 'signin',
-        element: <SignInPage />,
+        element: (
+          <RequireGuest>
+            <SignInPage />
+          </RequireGuest>
+        ),
+      },
+      {
+        path: 'signup',
+        element: (
+          <RequireGuest>
+            <SignUpPage />
+          </RequireGuest>
+        ),
       },
     ],
   },
   {
     path: '/admin',
-    element: <AdminLayout />,
+    element: (
+      <RequireAuth>
+        <AdminLayout />
+      </RequireAuth>
+    ),
     children: [
       {
         index: true,
         element: <AdminPage />,
-      },
-      {
-        path: 'signup',
-        element: <SignUpPage />,
       },
       {
         path: 'events',

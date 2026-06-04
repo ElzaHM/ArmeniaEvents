@@ -1,5 +1,5 @@
 .section {
-  padding: 56px 0 32px;
+  padding: 24px 0 14px;
   background: var(--home-surface-muted);
   border-top: 1px solid var(--home-border);
 }
@@ -7,47 +7,48 @@
 .brand {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 6px;
 }
 
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 18px;
+  gap: 6px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--home-text);
+  line-height: 1.2;
 }
 
 .logo :global(.anticon) {
-  font-size: 22px;
+  font-size: 20px;
   color: #d48806;
 }
 
 .about {
   margin: 0 !important;
-  max-width: 320px;
+  max-width: 300px;
   color: var(--home-text-secondary) !important;
-  font-size: 14px !important;
-  line-height: 1.6 !important;
+  font-size: 12px !important;
+  line-height: 1.4 !important;
 }
 
 .social {
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }
 
 .social a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: var(--home-surface);
   border: 1px solid var(--home-border);
   color: var(--home-text-secondary);
-  font-size: 16px;
+  font-size: 14px;
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -57,8 +58,9 @@
 }
 
 .columnTitle {
-  margin: 0 0 16px !important;
-  font-size: 15px !important;
+  margin: 0 0 6px !important;
+  font-size: 13px !important;
+  line-height: 1.25 !important;
   color: var(--home-text) !important;
 }
 
@@ -68,13 +70,14 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
 }
 
 .linkList a {
   color: var(--home-text-secondary);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 12px;
+  line-height: 1.35;
   transition: color 0.2s ease;
 }
 
@@ -83,26 +86,28 @@
 }
 
 .newsletterText {
-  margin: 0 0 12px !important;
+  margin: 0 0 8px !important;
   color: var(--home-text-secondary) !important;
-  font-size: 14px !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
 }
 
 .newsletterForm {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .bottomBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-top: 48px;
-  padding-top: 24px;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 14px;
   border-top: 1px solid var(--home-border);
   flex-wrap: wrap;
+  font-size: 12px;
 }
 
 .madeWith {
@@ -113,17 +118,69 @@
 
 .heart {
   color: #d48806;
-  font-size: 12px;
+  font-size: 11px;
+}
+
+@media (max-width: 992px) {
+  .about {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 992px) {
+  .about {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 40px 0 24px;
+    padding: 20px 0 12px;
+  }
+
+  .brand {
+    margin-bottom: 4px;
+  }
+
+  .newsletterForm :global(.ant-input),
+  .newsletterForm :global(.ant-btn) {
+    width: 100%;
   }
 
   .bottomBar {
     flex-direction: column;
     align-items: flex-start;
-    margin-top: 32px;
+    margin-top: 16px;
+    padding-top: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 16px 0 10px;
+  }
+
+  .logo {
+    font-size: 15px;
+  }
+
+  .logo :global(.anticon) {
+    font-size: 18px;
+  }
+
+  .columnTitle {
+    font-size: 12px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .linkList a {
+    font-size: 11px;
+  }
+
+  .bottomBar {
+    gap: 8px;
+    font-size: 11px;
+    margin-top: 14px;
+    padding-top: 10px;
   }
 }

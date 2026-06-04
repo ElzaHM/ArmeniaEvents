@@ -1,0 +1,27 @@
+.homeActionBtn,
+.homeActionBtn.ant-btn-primary {
+  background-color: #c08b46 !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.homeActionBtn:hover,
+.homeActionBtn:focus,
+.homeActionBtn.ant-btn-primary:not(:disabled):hover,
+.homeActionBtn.ant-btn-primary:not(:disabled):focus {
+  background-color: #d4a363 !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(192, 139, 70, 0.4) !important;
+}
+
+.homeActionBtn:active,
+.homeActionBtn.ant-btn-primary:not(:disabled):active {
+  background-color: #c08b46 !important;
+  color: #fff !important;
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 10px rgba(192, 139, 70, 0.2) !important;
+}

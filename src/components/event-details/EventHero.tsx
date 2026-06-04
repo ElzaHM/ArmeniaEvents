@@ -7,7 +7,8 @@ import {
   ShareAltOutlined,
 } from '@ant-design/icons';
 
-import { INTERESTED_AVATARS } from './mockData';
+import { QueryState } from '../../hooks/queries/query-state';
+import { useInterestedAvatars } from '../../hooks/queries/useEvents';
 import type { EventDetails } from './types';
 
 import styles from './EventHero.module.css';
@@ -25,6 +26,7 @@ function formatDateParts(dateString: string) {
 }
 
 export default function EventHero({ event }: EventHeroProps) {
+  const { data: interestedAvatars, isLoading, isError, error } = useInterestedAvatars();
   const [isSaved, setIsSaved] = useState(false);
   const { month, day } = useMemo(() => formatDateParts(event.date), [event.date]);
 
@@ -36,7 +38,7 @@ export default function EventHero({ event }: EventHeroProps) {
             <div className={styles.dateCard}>
               <span className={styles.dateMonth}>{month}</span>
               <span className={styles.dateDay}>{day}</span>
-              <span className={styles.dateWeekday}>{event.weekday}</span>
+              <span className={styles.dateWeekday}>{event.weekday ?? ''}</span>
               <span className={styles.dateTime}>{event.time}</span>
             </div>
 
@@ -51,21 +53,25 @@ export default function EventHero({ event }: EventHeroProps) {
               {event.location}
             </Typography.Text>
 
-            <div className={styles.interested}>
-              <div className={styles.avatars}>
-                {INTERESTED_AVATARS.map((avatar) => (
-                  <img
-                    key={avatar}
-                    src={avatar}
-                    alt=""
-                    className={styles.avatar}
-                  />
-                ))}
-              </div>
-              <Typography.Text className={styles.interestedText}>
-                +128 · {event.interestedCount} people are interested
-              </Typography.Text>
-            </div>
+            <QueryState isLoading={isLoading} isError={isError} error={error} minHeight={48}>
+              {interestedAvatars && (
+                <div className={styles.interested}>
+                  <div className={styles.avatars}>
+                    {interestedAvatars.map((avatar) => (
+                      <img
+                        key={avatar}
+                        src={avatar}
+                        alt=""
+                        className={styles.avatar}
+                      />
+                    ))}
+                  </div>
+                  <Typography.Text className={styles.interestedText}>
+                    +128 · {event.interestedCount ?? 0} people are interested
+                  </Typography.Text>
+                </div>
+              )}
+            </QueryState>
 
             <div className={styles.actions}>
               <Button type="primary" size="large" className={styles.primaryBtn}>

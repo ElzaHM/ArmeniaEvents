@@ -1,98 +1,368 @@
 .searchBar {
   width: 100%;
   max-width: 800px !important;
-  background: rgba(255, 255, 255, 0.08);
+  min-width: 0;
+  overflow: hidden;
+  background: var(--home-search-bg);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--home-search-border);
   padding: 6px 6px 6px 15px;
   border-radius: 16px;
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
-  margin-left: 0; 
+  margin-left: 0;
   margin-right: auto;
-}
-
-.compact {
-  width: 100%;
-  flex-wrap: wrap;
-}
-
-.searchInput {
-  flex: 1 1 280px !important;
-  min-width: 0;
-}
-
-.locationSelect {
-  flex: 0 1 220px !important;
-  min-width: 180px;
+  box-sizing: border-box;
 }
 
 .searchBtn {
-  background-color: #c08b46 !important;
-  border: none !important;
   height: 50px !important;
   padding: 0 35px !important;
   border-radius: 12px !important;
-  color: #1a1a1a !important;
-  font-weight: 600 !important;
   margin-left: 10px;
+  flex: 0 0 auto;
 }
 
-.searchGroup, .locationGroup {
+.searchBtnIcon {
+  width: 44px !important;
+  min-width: 44px !important;
+  padding: 0 !important;
+  margin-left: 6px !important;
+}
+
+.searchBtnIcon :global(.anticon) {
+  margin: 0 !important;
+  font-size: 16px;
+}
+
+.searchGroup,
+.locationGroup {
   display: flex;
   align-items: center;
-  flex: 3;
+  min-width: 0;
+  overflow: hidden;
 }
+
+.searchGroup {
+  flex: 1.4 1 0;
+}
+
 .locationGroup {
-  flex: 1;
+  flex: 1 1 0;
 }
 
 .icon {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--home-icon-muted);
   font-size: 18px;
   margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.inputField {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.inputField :global(.ant-input-affix-wrapper),
+.inputField :global(.ant-input) {
+  min-width: 0 !important;
+  width: 100% !important;
 }
 
 .inputField :global(.ant-input) {
-  color: white !important;
+  color: var(--home-input-text) !important;
   font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .inputField :global(.ant-input::placeholder) {
-  color: rgba(255, 255, 255, 0.4) !important;
+  color: var(--home-input-placeholder) !important;
 }
 
 .divider {
   width: 1px;
   height: 30px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--home-divider);
   margin: 0 15px;
+  flex: 0 0 auto;
 }
 
 .locationSelect {
+  flex: 1;
+  min-width: 0;
   width: 100%;
+  overflow: hidden;
+}
+
+.locationSelect :global(.ant-select) {
+  width: 100%;
+  min-width: 0;
+}
+
+.locationSelect :global(.ant-select-selector) {
+  padding: 0 !important;
+  min-width: 0 !important;
 }
 
 .locationSelect :global(.ant-select-selection-item) {
-  color: white !important;
+  color: var(--home-input-text) !important;
   font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.searchBtn:hover {
-  background-color: #d4a363 !important;
-  transform: translateY(-1px);
+[data-theme='light'] .searchBar {
+  background: var(--home-search-bg) !important;
+  border-color: var(--home-search-border) !important;
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+}
+
+[data-theme='light'] .searchBar .inputField :global(.ant-input),
+[data-theme='light'] .searchBar .locationSelect :global(.ant-select-selector) {
+  background: transparent !important;
+}
+
+.heroSearchBar {
+  width: 100%;
+  min-width: calc(100% + 48px);
+  max-width: none !important;
 }
 
 @media (max-width: 768px) {
-  .compact {
-    flex-direction: column;
+  .heroSearchBar {
+    width: 100%;
+    min-width: 0;
+    max-width: 100% !important;
   }
 
-  .searchInput,
-  .locationSelect,
+  .heroSearchBar .searchGroup {
+    flex: 1 1 0;
+  }
+
+  .heroSearchBar .locationGroup {
+    flex: 0.85 1 0;
+    min-width: 0;
+  }
+}
+
+.eventsSearchBar {
+  width: 100%;
+  max-width: 800px !important;
+  background: var(--events-filters-panel-bg, var(--events-panel-bg, var(--home-search-bg))) !important;
+  border-color: var(--events-filters-panel-border, var(--events-panel-border, var(--home-search-border))) !important;
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: none;
+}
+
+.eventsSearchBar .searchGroup,
+.eventsSearchBar .locationGroup {
+  background: transparent !important;
+  border: none !important;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.eventsSearchBar .inputField :global(.ant-input),
+.eventsSearchBar .inputField :global(.ant-input-affix-wrapper),
+.eventsSearchBar .inputField :global(input.ant-input),
+.eventsSearchBar :global(.eventsHeroSearchInput),
+.eventsSearchBar :global(.eventsHeroSearchInput.ant-input),
+.eventsSearchBar :global(.eventsHeroSearchInput) :global(.ant-input),
+.eventsSearchBar .locationSelect :global(.ant-select),
+.eventsSearchBar .locationSelect :global(.ant-select-selector) {
+  --ant-color-bg-container: transparent;
+  --ant-input-bg: transparent;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.eventsSearchBar .inputField :global(.ant-input:hover),
+.eventsSearchBar .inputField :global(.ant-input:focus),
+.eventsSearchBar .inputField :global(.ant-input-affix-wrapper:hover),
+.eventsSearchBar .inputField :global(.ant-input-affix-wrapper-focused),
+.eventsSearchBar :global(.eventsHeroSearchInput:hover),
+.eventsSearchBar :global(.eventsHeroSearchInput:focus),
+.eventsSearchBar :global(.eventsHeroSearchInput) :global(.ant-input:hover),
+.eventsSearchBar :global(.eventsHeroSearchInput) :global(.ant-input:focus) {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.eventsSearchBar .searchGroup {
+  flex: 1.4 1 0;
+}
+
+.eventsSearchBar .locationGroup {
+  flex: 1 1 0;
+}
+
+.eventsSearchBar .icon {
+  color: var(--home-text-secondary);
+  opacity: 1;
+}
+
+[data-theme='light'] .eventsSearchBar .icon {
+  color: rgba(0, 0, 0, 0.58);
+}
+
+[data-theme='dark'] .eventsSearchBar .icon {
+  color: #ffffff;
+}
+
+@media (max-width: 992px) {
+  .searchBar {
+    max-width: 100%;
+    padding: 4px 4px 4px 10px;
+    border-radius: 12px;
+  }
+
+  .searchGroup {
+    flex: 1 1 0;
+  }
+
+  .locationGroup {
+    flex: 1.05 1 0;
+  }
+
+  .icon {
+    font-size: 15px;
+    margin-right: 6px;
+  }
+
+  .divider {
+    height: 22px;
+    margin: 0 6px;
+  }
+
+  .inputField :global(.ant-input),
+  .locationSelect :global(.ant-select-selection-item) {
+    font-size: 13px !important;
+  }
+
   .searchBtn {
-    width: 100% !important;
-    flex: 1 1 100% !important;
+    height: 40px !important;
+    padding: 0 16px !important;
+    margin-left: 4px !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+  }
+
+  .searchBtnIcon {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 40px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .searchBar {
+    padding: 4px;
+  }
+
+  .searchGroup {
+    flex: 0.95 1 0;
+  }
+
+  .locationGroup {
+    flex: 1.05 1 0;
+  }
+
+  .icon {
+    font-size: 14px;
+    margin-right: 4px;
+  }
+
+  .divider {
+    height: 20px;
+    margin: 0 4px;
+  }
+
+  .inputField :global(.ant-input),
+  .locationSelect :global(.ant-select-selection-item) {
+    font-size: 12px !important;
+  }
+
+  .searchBtn {
+    height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 12px !important;
+  }
+
+  .searchBtnIcon {
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .divider {
+    margin: 0 3px;
+  }
+
+  .searchBtnIcon {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+    margin-left: 3px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroSearchBar {
+    padding: 3px 3px 3px 6px;
+  }
+
+  .searchBar {
+    padding: 3px 3px 3px 8px;
+    border-radius: 10px;
+  }
+
+  .searchGroup {
+    flex: 0.85 1 0;
+  }
+
+  .locationGroup {
+    flex: 1.1 1 0;
+  }
+
+  .icon {
+    font-size: 13px;
+    margin-right: 3px;
+  }
+
+  .divider {
+    height: 18px;
+    margin: 0 3px;
+  }
+
+  .inputField :global(.ant-input),
+  .locationSelect :global(.ant-select-selection-item) {
+    font-size: 11px !important;
+  }
+
+  .searchBtn {
+    height: 32px !important;
+    padding: 0 10px !important;
+    border-radius: 8px !important;
+    font-size: 11px !important;
+  }
+
+  .searchBtnIcon {
+    width: 32px !important;
+    min-width: 32px !important;
+    height: 32px !important;
   }
 }

@@ -4,6 +4,509 @@
   padding: 0 24px;
 }
 
+[data-theme='light'] {
+  --events-field-bg: rgba(255, 255, 255, 0.88);
+  --events-field-light-bg: rgba(255, 255, 255, 0.96);
+  --events-filter-date-bg: rgba(255, 255, 255, 1);
+  --events-filter-date-hover-bg: rgba(255, 255, 255, 1);
+  --events-field-border: rgba(0, 0, 0, 0.14);
+  --events-field-hover-bg: rgba(255, 255, 255, 1);
+  --events-checkbox-bg: rgba(255, 255, 255, 0.96);
+  --events-checkbox-border: rgba(0, 0, 0, 0.2);
+  --events-dropdown-bg: rgba(255, 255, 255, 0.98);
+  --events-sort-border: rgba(255, 255, 255, 0.9);
+  --events-date-placeholder: rgba(0, 0, 0, 0.55);
+  --events-panel-bg: rgba(255, 255, 255, 0.9);
+  --events-panel-border: rgba(0, 0, 0, 0.12);
+  --events-panel-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  --events-list-panel-bg: rgba(255, 255, 255, 0.55);
+  --events-list-panel-border: rgba(0, 0, 0, 0.08);
+  --events-filters-panel-bg: rgba(255, 255, 255, 0.55);
+  --events-filters-panel-border: rgba(0, 0, 0, 0.08);
+  --events-card-bg: rgba(255, 255, 255, 0.94);
+  --events-card-border: rgba(0, 0, 0, 0.1);
+  --events-card-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
+  --events-section-tint: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme='dark'] {
+  --events-field-bg: rgba(255, 255, 255, 0.1);
+  --events-field-light-bg: rgba(255, 255, 255, 0.22);
+  --events-filter-date-bg: rgba(255, 255, 255, 0.38);
+  --events-filter-date-hover-bg: rgba(255, 255, 255, 0.46);
+  --events-field-border: rgba(255, 255, 255, 0.2);
+  --events-field-hover-bg: rgba(255, 255, 255, 0.28);
+  --events-checkbox-bg: rgba(255, 255, 255, 0.22);
+  --events-checkbox-border: rgba(255, 255, 255, 0.28);
+  --events-dropdown-bg: rgba(58, 58, 62, 0.98);
+  --events-sort-border: rgba(255, 255, 255, 0.12);
+  --events-date-placeholder: rgba(255, 255, 255, 0.78);
+  --events-panel-bg: rgba(255, 255, 255, 0.08);
+  --events-panel-border: rgba(255, 255, 255, 0.12);
+  --events-panel-shadow: rgba(0, 0, 0, 0.4) 0 8px 32px 0;
+  --events-card-bg: rgba(255, 255, 255, 0.08);
+  --events-card-border: rgba(255, 255, 255, 0.12);
+  --events-card-shadow: rgba(0, 0, 0, 0.4) 0 8px 32px 0;
+  --events-section-tint: color-mix(in srgb, var(--home-hero-overlay), transparent 30%);
+}
+
+/* Date pickers, selects, inputs on events page (sort field styled separately) */
+.eventsPage .ant-select:not(.eventsSortField) .ant-select-selector,
+.eventsPage .ant-picker,
+.eventsPage .ant-input,
+.eventsPage .ant-input-affix-wrapper {
+  background: var(--events-field-bg) !important;
+  border-color: var(--events-field-border) !important;
+  color: var(--home-text) !important;
+}
+
+.eventsPage .ant-select:not(.eventsSortField):hover .ant-select-selector,
+.eventsPage .ant-picker:hover,
+.eventsPage .ant-input:hover,
+.eventsPage .ant-input-affix-wrapper:hover {
+  background: var(--events-field-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+}
+
+.eventsPage .ant-select:not(.eventsSortField).ant-select-focused .ant-select-selector,
+.eventsPage .ant-picker-focused,
+.eventsPage .ant-input:focus,
+.eventsPage .ant-input-affix-wrapper-focused {
+  background: var(--events-field-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+  box-shadow: 0 0 0 2px rgba(192, 139, 70, 0.15) !important;
+}
+
+.eventsPage .ant-select-selection-item,
+.eventsPage .ant-select-selection-placeholder,
+.eventsPage .ant-picker-input > input {
+  color: var(--home-text) !important;
+}
+
+.eventsPage .ant-picker-input > input::placeholder,
+.eventsPage .ant-input::placeholder {
+  color: var(--home-text-secondary) !important;
+}
+
+.eventsPage .ant-select-arrow,
+.eventsPage .ant-picker-suffix,
+.eventsPage .ant-picker-clear {
+  color: var(--home-text-secondary) !important;
+}
+
+.eventsPage .ant-input-affix-wrapper .anticon {
+  color: var(--home-text-secondary) !important;
+}
+
+/* Filter checkboxes */
+.eventsFilters .ant-checkbox .ant-checkbox-inner {
+  background-color: var(--events-checkbox-bg) !important;
+  border-color: var(--events-checkbox-border) !important;
+}
+
+.eventsFilters .ant-checkbox-wrapper:hover .ant-checkbox-inner,
+.eventsFilters .ant-checkbox:hover .ant-checkbox-inner {
+  border-color: var(--home-accent) !important;
+}
+
+.eventsFilters .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: var(--home-accent) !important;
+  border-color: var(--home-accent) !important;
+}
+
+.eventsFilters .ant-checkbox-checked::after {
+  border-color: var(--home-accent) !important;
+}
+
+/* Filter date fields – lighter than other filter inputs */
+.eventsDateField.ant-picker,
+.eventsFilters .eventsDateField.ant-picker,
+.eventsPage .eventsFilters .eventsDateField.ant-picker {
+  --ant-color-bg-container: var(--events-filter-date-bg);
+  background: var(--events-filter-date-bg) !important;
+  background-color: var(--events-filter-date-bg) !important;
+  border-color: var(--events-field-border) !important;
+}
+
+.eventsDateField.ant-picker:hover,
+.eventsFilters .eventsDateField.ant-picker:hover,
+.eventsPage .eventsFilters .eventsDateField.ant-picker:hover {
+  background: var(--events-filter-date-hover-bg) !important;
+  background-color: var(--events-filter-date-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+}
+
+.eventsDateField.ant-picker-focused,
+.eventsFilters .eventsDateField.ant-picker-focused,
+.eventsPage .eventsFilters .eventsDateField.ant-picker-focused {
+  background: var(--events-filter-date-hover-bg) !important;
+  background-color: var(--events-filter-date-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+  box-shadow: 0 0 0 2px rgba(192, 139, 70, 0.15) !important;
+}
+
+/* Organizer search – same lighter fill as date fields */
+.eventsOrganizerField.ant-input,
+.eventsOrganizerField.ant-input-affix-wrapper,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper,
+.eventsPage .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper {
+  --ant-color-bg-container: var(--events-filter-date-bg);
+  background: var(--events-filter-date-bg) !important;
+  background-color: var(--events-filter-date-bg) !important;
+  border-color: var(--events-field-border) !important;
+}
+
+.eventsOrganizerField.ant-input-affix-wrapper > input.ant-input,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper > input.ant-input {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.eventsOrganizerField.ant-input:hover,
+.eventsOrganizerField.ant-input-affix-wrapper:hover,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper:hover,
+.eventsPage .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper:hover {
+  background: var(--events-filter-date-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+}
+
+.eventsOrganizerField.ant-input:focus,
+.eventsOrganizerField.ant-input-affix-wrapper-focused,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper-focused,
+.eventsPage .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper-focused {
+  background: var(--events-filter-date-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+  box-shadow: 0 0 0 2px rgba(192, 139, 70, 0.15) !important;
+}
+
+/* Filter selects (mobile toolbar, etc.) */
+.eventsFilters .eventsSortField.ant-select .ant-select-selector {
+  background: var(--events-field-light-bg) !important;
+  border-color: var(--events-field-border) !important;
+}
+
+.eventsFilters .eventsSortField.ant-select:hover .ant-select-selector {
+  background: var(--events-field-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+}
+
+.eventsFilters .eventsSortField.ant-select-focused .ant-select-selector {
+  background: var(--events-field-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+  box-shadow: 0 0 0 2px rgba(192, 139, 70, 0.15) !important;
+}
+
+/* Filters sidebar – From Date / To Date visible text */
+.eventsFilters .eventsDateField.ant-picker {
+  --ant-color-text: var(--home-input-text);
+  --ant-color-text-placeholder: var(--events-date-placeholder);
+  color: var(--home-input-text);
+}
+
+.eventsFilters .eventsDateField .ant-picker-input > input,
+.eventsFilters .eventsDateField .ant-picker-input input {
+  color: var(--home-input-text) !important;
+  -webkit-text-fill-color: var(--home-input-text);
+}
+
+.eventsFilters .eventsDateField .ant-picker-input > input::placeholder,
+.eventsFilters .eventsDateField .ant-picker-input input::placeholder {
+  color: var(--events-date-placeholder) !important;
+  opacity: 1 !important;
+}
+
+.eventsFilters .eventsDateField .ant-picker-input-placeholder {
+  color: var(--events-date-placeholder) !important;
+  opacity: 1 !important;
+}
+
+.eventsFilters .eventsDateField .ant-picker-suffix,
+.eventsFilters .eventsDateField .ant-picker-suffix .anticon,
+.eventsPage .eventsFilters .eventsDateField .ant-picker-suffix .anticon {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+[data-theme='dark'] .eventsFilters .eventsDateField .ant-picker-suffix,
+[data-theme='dark'] .eventsFilters .eventsDateField .ant-picker-suffix .anticon,
+[data-theme='dark'] .eventsPage .eventsFilters .eventsDateField .ant-picker-suffix .anticon {
+  color: #ffffff !important;
+}
+
+/* Date (Newest) sort select in event list toolbar */
+.eventsListPanel .eventsSortField.ant-select {
+  --ant-color-bg-container: var(--events-filter-date-bg);
+  --ant-color-bg-elevated: var(--events-dropdown-bg);
+  --ant-select-selector-bg: transparent;
+  --ant-color-border: var(--events-sort-border);
+  --ant-select-hover-border-color: var(--home-accent);
+  --ant-select-active-border-color: var(--home-accent);
+  --ant-select-active-outline-color: transparent;
+}
+
+.eventsPage .eventsListPanel .eventsSortField.ant-select .ant-select-selector,
+.eventsPage .eventsListPanel .eventsSortField.ant-select-outlined .ant-select-selector,
+.eventsPage .eventsListPanel .eventsSortField.ant-select-filled .ant-select-selector,
+.eventsPage .eventsListPanel .eventsSortField .ant-select-selector {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Ant outlined/filled variants paint a dark ring via box-shadow */
+.eventsPage .eventsListPanel .eventsSortField.ant-select-outlined:not(.ant-select-disabled) .ant-select-selector,
+.eventsPage .eventsListPanel .eventsSortField.ant-select-filled:not(.ant-select-disabled) .ant-select-selector {
+  box-shadow: none !important;
+}
+
+.eventsPage .eventsListPanel .eventsSortField.ant-select:hover .ant-select-selector,
+.eventsPage .eventsListPanel .eventsSortField.ant-select-open .ant-select-selector,
+.eventsPage .eventsListPanel .eventsSortField.ant-select-focused .ant-select-selector,
+.eventsPage .eventsListPanel .eventsSortField.ant-select.ant-select-focused .ant-select-selector {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.eventsListPanel .eventsSortField .ant-select-selection-item,
+.eventsListPanel .eventsSortField .ant-select-selection-placeholder {
+  color: var(--home-text) !important;
+}
+
+.eventsListPanel .eventsSortField .ant-select-arrow,
+.eventsListPanel .eventsSortField .ant-select-suffix {
+  position: absolute !important;
+  inset-inline-end: 10px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: var(--home-text) !important;
+  pointer-events: none;
+  margin: 0 !important;
+}
+
+.eventsListPanel .eventsSortField .ant-select-suffix .anticon {
+  font-size: 11px;
+  color: var(--home-text) !important;
+  line-height: 1 !important;
+}
+
+.eventsListPanel .eventsSortField.ant-select-open .ant-select-suffix .anticon {
+  transform: rotate(180deg) !important;
+  transition: transform 0.2s ease;
+}
+
+[data-theme='light'] .eventsPage .eventsListPanel .eventsSortField.ant-select {
+  --ant-color-border: rgba(255, 255, 255, 0.9);
+  --ant-select-hover-border-color: var(--home-accent);
+  --ant-select-active-border-color: var(--home-accent);
+}
+
+[data-theme='light'] .eventsPage .eventsListPanel .eventsSortField.ant-select .ant-select-selector,
+[data-theme='light'] .eventsPage .eventsListPanel .eventsSortField.ant-select-outlined .ant-select-selector,
+[data-theme='light'] .eventsPage .eventsListPanel .eventsSortField .ant-select-selector {
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: none !important;
+}
+
+[data-theme='light'] .eventsPage .eventsListPanel .eventsSortField.ant-select:hover .ant-select-selector,
+[data-theme='light'] .eventsPage .eventsListPanel .eventsSortField.ant-select-open .ant-select-selector,
+[data-theme='light'] .eventsPage .eventsListPanel .eventsSortField.ant-select-focused .ant-select-selector,
+[data-theme='light'] .eventsPage .eventsListPanel .eventsSortField.ant-select.ant-select-focused .ant-select-selector {
+  border: 1px solid var(--home-accent) !important;
+  border-color: var(--home-accent) !important;
+}
+
+.eventsViewToggle .ant-btn-default,
+.eventsPage .eventsListPanel .eventsViewToggle .ant-btn-default {
+  --ant-button-bg-color: var(--events-filter-date-bg);
+  background: var(--events-filter-date-bg) !important;
+  background-color: var(--events-filter-date-bg) !important;
+  border-color: var(--events-field-border) !important;
+  color: var(--home-text) !important;
+}
+
+.eventsViewToggle .ant-btn-default:hover,
+.eventsPage .eventsListPanel .eventsViewToggle .ant-btn-default:hover {
+  background: var(--events-filter-date-hover-bg) !important;
+  background-color: var(--events-filter-date-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+  color: var(--home-text) !important;
+}
+
+.eventsOrganizerField.ant-input,
+.eventsOrganizerField.ant-input-affix-wrapper input {
+  color: var(--home-text) !important;
+}
+
+.eventsOrganizerField.ant-input::placeholder,
+.eventsOrganizerField.ant-input-affix-wrapper input::placeholder {
+  color: var(--home-text-secondary) !important;
+  opacity: 1 !important;
+}
+
+.eventsOrganizerField.ant-input-affix-wrapper .anticon,
+.eventsFilters .eventsOrganizerField .ant-input-prefix .anticon,
+.eventsPage .eventsFilters .eventsOrganizerField .ant-input-prefix .anticon {
+  color: rgba(0, 0, 0, 0.55) !important;
+  font-size: 15px !important;
+  opacity: 1 !important;
+}
+
+[data-theme='dark'] .eventsOrganizerField.ant-input-affix-wrapper .anticon,
+[data-theme='dark'] .eventsFilters .eventsOrganizerField .ant-input-prefix .anticon,
+[data-theme='dark'] .eventsPage .eventsFilters .eventsOrganizerField .ant-input-prefix .anticon {
+  color: #ffffff !important;
+}
+
+.eventsOrganizerField.ant-input-affix-wrapper:hover .anticon,
+.eventsOrganizerField.ant-input-affix-wrapper-focused .anticon,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper:hover .ant-input-prefix .anticon,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper-focused .ant-input-prefix .anticon {
+  color: var(--home-accent) !important;
+}
+
+[data-theme='dark'] .eventsOrganizerField.ant-input-affix-wrapper:hover .anticon,
+[data-theme='dark'] .eventsOrganizerField.ant-input-affix-wrapper-focused .anticon,
+[data-theme='dark'] .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper:hover .ant-input-prefix .anticon,
+[data-theme='dark'] .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper-focused .ant-input-prefix .anticon {
+  color: #ffffff !important;
+}
+
+/* Dropdown / calendar panels (portaled) */
+.eventsFieldDropdown.ant-select-dropdown {
+  background: var(--events-dropdown-bg) !important;
+}
+
+.eventsFieldDropdown.ant-select-dropdown .ant-select-item {
+  color: var(--home-text) !important;
+}
+
+.eventsFieldDropdown.ant-select-dropdown .ant-select-item-option-active,
+.eventsFieldDropdown.ant-select-dropdown .ant-select-item-option-selected {
+  background: rgba(192, 139, 70, 0.15) !important;
+}
+
+.eventsFieldDropdown .ant-picker-panel-container {
+  background: var(--events-dropdown-bg) !important;
+}
+
+.eventsFieldDropdown .ant-picker-header,
+.eventsFieldDropdown .ant-picker-body,
+.eventsFieldDropdown .ant-picker-footer {
+  background: transparent !important;
+}
+
+.eventsFieldDropdown .ant-picker-cell-in-view {
+  color: var(--home-text) !important;
+}
+
+.eventsFieldDropdown .ant-picker-header button,
+.eventsFieldDropdown .ant-picker-content th {
+  color: var(--home-text-secondary) !important;
+}
+
+/* Light mode – stronger glass on events page */
+[data-theme='light'] .eventsPage {
+  --home-glass-bg: rgba(255, 255, 255, 0.92);
+  --home-glass-border: rgba(0, 0, 0, 0.12);
+  --home-glass-hover-bg: rgba(255, 255, 255, 0.98);
+  --home-search-bg: var(--events-filters-panel-bg);
+  --home-search-border: var(--events-filters-panel-border);
+  --home-surface: rgba(255, 255, 255, 0.94);
+  --home-border: rgba(0, 0, 0, 0.1);
+  --home-card-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='light'] .eventsPage .eventsSection {
+  background: var(--events-section-tint) !important;
+  border-radius: 12px;
+}
+
+/* Events hero search – same glass panel as filters sidebar */
+[data-theme='light'] .eventsPage .eventsSearchHero .eventsSection {
+  background: transparent !important;
+  border-radius: 0;
+}
+
+.eventsPage .eventsSearchBar {
+  background: var(--events-filters-panel-bg, var(--events-panel-bg)) !important;
+  background-color: var(--events-filters-panel-bg, var(--events-panel-bg)) !important;
+  border-color: var(--events-filters-panel-border, var(--events-panel-border)) !important;
+  backdrop-filter: blur(16px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.3) !important;
+  box-shadow: none !important;
+}
+
+/* Hero search inputs – transparent on filter-style panel bar */
+.eventsPage .eventsSearchBar .searchGroup,
+.eventsPage .eventsSearchBar .locationGroup {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.eventsPage .eventsSearchBar .ant-input,
+.eventsPage .eventsSearchBar .ant-input-affix-wrapper,
+.eventsPage .eventsSearchBar .ant-input-borderless,
+.eventsPage .eventsSearchBar input.ant-input,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput.ant-input,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput input,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input-affix-wrapper,
+.eventsPage .eventsSearchBar input[placeholder*='Search events'],
+.eventsPage .eventsSearchBar .ant-select .ant-select-selector,
+.eventsPage .eventsSearchBar .ant-input:hover,
+.eventsPage .eventsSearchBar .ant-input-affix-wrapper:hover,
+.eventsPage .eventsSearchBar .ant-input:focus,
+.eventsPage .eventsSearchBar .ant-input-affix-wrapper-focused,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput:hover,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput:focus,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input:hover,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input:focus,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input-affix-wrapper:hover,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input-affix-wrapper-focused,
+.eventsPage .eventsSearchBar .ant-select:hover .ant-select-selector,
+.eventsPage .eventsSearchBar .ant-select-focused .ant-select-selector,
+.eventsPage .eventsSearchBar .ant-select.ant-select-focused .ant-select-selector {
+  --ant-color-bg-container: transparent;
+  --ant-input-bg: transparent;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-color: transparent !important;
+}
+
+[data-theme='light'] .eventsPage .eventsFilters {
+  background: var(--events-filters-panel-bg) !important;
+  background-color: var(--events-filters-panel-bg) !important;
+  border-color: var(--events-filters-panel-border) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(16px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.3) !important;
+}
+
+[data-theme='light'] .eventsPage .eventsListPanel {
+  background: var(--events-list-panel-bg) !important;
+  background-color: var(--events-list-panel-bg) !important;
+  border-color: var(--events-list-panel-border) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(16px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.3) !important;
+}
+
 @media (max-width: 768px) {
   .eventsSection {
     padding: 0 16px;

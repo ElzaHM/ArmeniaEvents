@@ -1,13 +1,18 @@
 .pageWrapper {
   min-height: 100vh;
-  background-image: var(--auth-page-overlay),
-    url('https://images.unsplash.com/photo-1562590748-0320b1275997?auto=format&fit=crop&w=1920&q=80');
+  height: auto;
+  overflow: visible;
+  box-sizing: border-box;
+  background-image: var(--auth-page-overlay), url('../../assets/eventPageLigthBg.png');
+  background-repeat: no-repeat;
+  background-position: top;
   background-size: cover;
-  background-position: center;
   color: var(--home-text);
   display: flex;
   flex-direction: column;
   position: relative;
+  padding-top: 110px;
+  padding-bottom: 30px;
 }
 
 .logo {
@@ -33,23 +38,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 24px 40px;
+  padding: 72px 0 32px;
   position: relative;
+  overflow: visible;
 }
 
 .arcDecoration {
   position: absolute;
-  top: 8%;
+  top: 10%;
   left: 5%;
-  width: 320px;
+  width: 300px;
   height: 500px;
   border: 1px solid var(--auth-arc-border);
-  border-radius: 160px 160px 0 0;
+  border-radius: 150px 150px 0 0;
   pointer-events: none;
 }
 
 .footer {
   background: var(--auth-footer-bg);
+  backdrop-filter: var(--auth-footer-backdrop, blur(16px));
+  -webkit-backdrop-filter: var(--auth-footer-backdrop, blur(16px));
   padding: 60px 5% 20px;
   border-top: 1px solid var(--auth-footer-border);
 }
@@ -127,6 +135,6 @@
   }
 
   .mainContent {
-    padding: 96px 16px 32px;
+    padding: 64px 12px 12px;
   }
 }

@@ -2,11 +2,11 @@ import React from 'react';
 import { MapPin, Heart, Bell, User } from 'lucide-react';
 import { SignUpForm } from './SignUpForm';
 import styles from './SignUpPanel.module.css';
-import signUpIllustration from '../../pages/SignUpPage/photo_2026-05-31_13-59-21.jpg';
+import signUpIllustration from '../../assets/signInImg.png';
 
 export const SignUpPanel: React.FC = () => {
   return (
-    <div className={styles.panel}>
+    <div className={`${styles.panel} sign-up-panel`}>
       <div className={styles.leftSection}>
         <div className={styles.logoBox}>
           <MapPin size={24} />
@@ -53,12 +53,14 @@ export const SignUpPanel: React.FC = () => {
           </div>
         </div>
 
-        <div className={styles.illustration}>
-          <img
-            src={signUpIllustration}
-            alt="Armenia Events skyline illustration"
-            className={styles.illustrationImage}
-          />
+        <div className={`${styles.illustration} auth-illustration`}>
+          <div className="auth-illustration-image">
+            <img
+              src={signUpIllustration}
+              alt="Armenia Events skyline illustration"
+              className={styles.illustrationImage}
+            />
+          </div>
         </div>
       </div>
 

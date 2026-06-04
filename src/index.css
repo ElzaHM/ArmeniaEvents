@@ -60,6 +60,20 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  background-image: linear-gradient(rgba(13, 13, 15, 0.15), rgba(13, 13, 15, 0.25)),
+    url("./assets/homeBg.png");
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
+[data-theme='light'] #root {
+  background-image: url("./assets/homeBgLight.png");
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
 }
 
 body {
