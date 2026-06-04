@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { QueryState } from '../../hooks/queries/query-state';
 import { useCategories } from '../../hooks/queries/useCategories';
 import CategoryCard from './CategoryCard';
@@ -13,9 +15,9 @@ export default function PopularCategories() {
           <div className="homeSection">
             <div className={styles.header}>
               <h2 className={styles.title}>Popular Categories</h2>
-              <a href="/categories" className={styles.viewAll}>
+              <Link to="/events" className={styles.viewAll}>
                 View all <span className={styles.arrow}>→</span>
-              </a>
+              </Link>
             </div>
 
             <div className={styles.grid}>

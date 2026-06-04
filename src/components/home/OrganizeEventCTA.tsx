@@ -1,9 +1,22 @@
 import { Button, Typography } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+
+import { useAuth } from '../../hooks/useAuth';
 import styles from './OrganizeEventCTA.module.css';
 
-
 export default function OrganizeEventCTA() {
+  const navigate = useNavigate();
+  const { isAuthenticated, loading } = useAuth();
+
+  const handleAddYourEvent = () => {
+    if (loading) {
+      return;
+    }
+
+    navigate(isAuthenticated ? '/events/new' : '/signin');
+  };
+
   return (
     <section className={styles.section}>
       <div className="homeSection">
@@ -22,7 +35,13 @@ export default function OrganizeEventCTA() {
             </div>
           </div>
 
-          <Button type="primary" size="large" className={`homeActionBtn ${styles.button}`}>
+          <Button
+            type="primary"
+            size="large"
+            className={`homeActionBtn ${styles.button}`}
+            onClick={handleAddYourEvent}
+            disabled={loading}
+          >
             Add Your Event
           </Button>
 

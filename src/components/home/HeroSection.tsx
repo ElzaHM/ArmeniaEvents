@@ -1,4 +1,5 @@
 import { Tag, Typography } from 'antd';
+import { Link } from 'react-router-dom';
 import { QueryState } from '../../hooks/queries/query-state';
 import { usePopularTags } from '../../hooks/queries/useEvents';
 import SearchBar from './SearchBar';
@@ -43,9 +44,13 @@ export default function HeroSection() {
               {popularTags && (
                 <div className={styles.tags}>
                   {popularTags.map((tag) => (
-                    <Tag key={tag} className={styles.tag}>
-                      {tag}
-                    </Tag>
+                    <Link
+                      key={tag}
+                      to={`/events?q=${encodeURIComponent(tag)}`}
+                      className={styles.tagLink}
+                    >
+                      <Tag className={styles.tag}>{tag}</Tag>
+                    </Link>
                   ))}
                 </div>
               )}
