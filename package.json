@@ -8,6 +8,7 @@
     "dev:api": "tsx watch backend/src/index.ts",
     "start:api": "tsx backend/src/index.ts",
     "build:api": "tsc -p backend/tsconfig.json",
+    "list:db": "node scripts/list-users-events.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

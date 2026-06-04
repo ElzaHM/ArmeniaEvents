@@ -1,10 +1,10 @@
-import { Table, Tag } from 'antd';
+import { Alert, Spin, Table, Tag } from 'antd';
 import type { TableColumnsType } from 'antd';
 
 import AdminCard from '../../components/admin/AdminCard';
 import AdminPageHeader from '../../components/admin/AdminPageHeader';
-import { getAdminUsers } from '../../components/admin/mockData';
 import type { AdminUser, AdminUserRole, AdminUserStatus } from '../../components/admin/types';
+import { useAdminUsers } from '../../hooks/queries/useAdminUsers';
 
 import styles from './AdminUsersPage.module.css';
 
@@ -22,7 +22,7 @@ const STATUS_COLORS: Record<AdminUserStatus, string> = {
 };
 
 export default function AdminUsersPage() {
-  const users = getAdminUsers();
+  const { data: users = [], isLoading, isError, error } = useAdminUsers();
 
   const columns: TableColumnsType<AdminUser> = [
     {
@@ -68,9 +68,20 @@ export default function AdminUsersPage() {
         subtitle="View and manage registered platform users."
       />
       <AdminCard>
-        <div className={styles.tableWrap}>
-          <Table columns={columns} dataSource={users} rowKey="id" pagination={{ pageSize: 8 }} />
-        </div>
+        {isError ? (
+          <Alert
+            type="error"
+            showIcon
+            message="Failed to load users"
+            description={error instanceof Error ? error.message : 'Please try again.'}
+          />
+        ) : (
+          <div className={styles.tableWrap}>
+            <Spin spinning={isLoading}>
+              <Table columns={columns} dataSource={users} rowKey="id" pagination={{ pageSize: 8 }} />
+            </Spin>
+          </div>
+        )}
       </AdminCard>
     </>
   );
