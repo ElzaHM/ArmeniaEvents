@@ -35,13 +35,4 @@
   --admin-sidebar: rgba(255, 255, 255, 0.98);
 }
 
-body {
-  background-image: var(--admin-bg-image);
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center 20%;
-  min-height: 100vh;
-  margin: 0;
-  color: var(--admin-text);
-  transition: background 0.3s ease;
-}
+/* Background lives on AdminLayout `.layout` only — do not style `body` here (breaks public pages). */
