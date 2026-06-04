@@ -3,8 +3,7 @@ import { Button } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
 import EventCard from './EventCard';
-import type { EventItem } from './types';
-import { useTheme } from '../../hooks/useTheme'; 
+import type { EventItem } from './types'; 
 // import homePageBg from '../../assets/homePageBzg.png'; 
 // import homePageBgLight from '../../assets/eventPageLigthBg.png';
 import styles from './EventSection.module.css';
