@@ -27,7 +27,7 @@ export const SignUpForm: React.FC = () => {
         password: values.password,
         confirmPassword: values.confirmPassword,
       });
-      messageApi.success('Account created successfully');
+      messageApi.success('Sign up successful');
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Registration failed. Please try again.';

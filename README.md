@@ -113,6 +113,8 @@ Vite proxies `/api/*` to the backend via `vite.config.ts`.
   - `POST /api/events` (auth required)
   - `PATCH /api/events/:id` (auth required)
   - `DELETE /api/events/:id` (auth required)
+- Admin:
+  - `GET /api/admin/users` (auth required)
 - Categories:
   - `GET /api/categories`
   - `GET /api/categories/:id`

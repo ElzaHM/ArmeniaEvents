@@ -23,7 +23,7 @@ export const SignInForm: React.FC = () => {
         email: values.email,
         password: values.password,
       });
-      messageApi.success('Signed in successfully');
+      messageApi.success('Sign in successful');
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Sign in failed. Please try again.';

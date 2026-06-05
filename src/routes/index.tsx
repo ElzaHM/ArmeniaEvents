@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import PublicLayout from '../layouts/PublicLayout';
 import AdminLayout from '../layouts/AdminLayout';
@@ -84,6 +84,10 @@ export const router = createBrowserRouter([
         element: <AdminSettingsPage />,
       },
     ],
+  },
+  {
+    path: '/admin/signup',
+    element: <Navigate to="/signup" replace />,
   },
   {
     path: '*',
