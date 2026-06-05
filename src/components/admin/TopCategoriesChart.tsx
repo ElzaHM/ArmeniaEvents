@@ -36,7 +36,6 @@ export default function TopCategoriesChart({ categories }: TopCategoriesChartPro
                 outerRadius={90}
                 paddingAngle={2}
                 stroke="none"
-                activeIndex={activeIndex ?? undefined}
                 onMouseEnter={(_, index) => setActiveIndex(index)}
                 onMouseLeave={() => setActiveIndex(null)}
                 onClick={(_, index) => handleActivate(index)}

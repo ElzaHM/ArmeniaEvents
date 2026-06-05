@@ -35,7 +35,7 @@ interface Props {
   previewImage: string | null;
 }
 
-export default function CreateEventForm({ images, setImages, selectedIndex, setSelectedIndex, previewImage }: Props) {
+export default function CreateEventForm({ images, setImages, selectedIndex, setSelectedIndex }: Props) {
   
   const handleUpload = (info: any) => {
     const file = info.file.originFileObj || info.file;
