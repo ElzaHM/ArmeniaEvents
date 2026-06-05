@@ -1,17 +1,22 @@
 import {useMemo, useState} from "react";
 import {Button, Modal, Table, Tag, message, Space} from "antd";
 import type {TableColumnsType} from "antd";
-import {PlusOutlined, EditOutlined} from "@ant-design/icons";
+import {PlusOutlined, EditOutlined, CloudDownloadOutlined} from "@ant-design/icons";
+import axios from "axios";
+import {useQueryClient} from "@tanstack/react-query";
 
 import AdminCard from "../../../components/admin/AdminCard";
 import AdminPageHeader from "../../../components/admin/AdminPageHeader";
 import type {AdminEvent, AdminEventStatus} from "../../../components/admin/types";
 import {
+  eventsKeys,
   useDeleteEvent,
   useEvents,
   useCreateEvent,
   useUpdateEvent,
 } from "../../../hooks/queries/useEvents";
+
+const TOKEN_STORAGE_KEY = "armenia-events-access-token";
 
 import styles from "./AdminEventsPage.module.css";
 
@@ -41,7 +46,9 @@ function getEventDate(event: AdminEvent): Date {
 export default function AdminEventsPage() {
   const [messageApi, contextHolder] = message.useMessage();
   const [activeSection, setActiveSection] = useState<EventSectionKey>("all");
-  const {data: eventsData = [], isLoading} = useEvents();
+  const [importing, setImporting] = useState(false);
+  const queryClient = useQueryClient();
+  const { events: eventsData = [], isLoading } = useEvents({ page: 1, pageSize: 1000 });
   const createEvent = useCreateEvent();
   const deleteEvent = useDeleteEvent();
   const updateEvent = useUpdateEvent();
@@ -220,6 +227,34 @@ export default function AdminEventsPage() {
     }
   };
 
+  const handleImportEventbrite = async () => {
+    setImporting(true);
+
+    try {
+      const token = localStorage.getItem(TOKEN_STORAGE_KEY);
+      const { data } = await axios.post<{ imported: number; skipped: number }>(
+        "/api/admin/events/import/eventbrite",
+        {},
+        {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        },
+      );
+
+      messageApi.success(`Imported: ${data.imported}, Skipped: ${data.skipped}`);
+      await queryClient.invalidateQueries({ queryKey: eventsKeys.all });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message = (error.response?.data as { message?: string } | undefined)?.message;
+        messageApi.error(message ?? error.message);
+        return;
+      }
+
+      messageApi.error(error instanceof Error ? error.message : "Import failed");
+    } finally {
+      setImporting(false);
+    }
+  };
+
   return (
     <>
       {contextHolder}
@@ -251,14 +286,22 @@ export default function AdminEventsPage() {
             <p className={styles.tableEyebrow}>Showing</p>
             <h2 className={styles.tableTitle}>{activeSectionTitle}</h2>
           </div>
-          <Button
-            type="primary"
-            className="admin-btn-add"
-            icon={<PlusOutlined />}
-            onClick={handleCreate}
-            loading={createEvent.isPending}>
-            Add Event
-          </Button>
+          <Space>
+            <Button
+              icon={<CloudDownloadOutlined />}
+              onClick={handleImportEventbrite}
+              loading={importing}>
+              Import from Eventbrite
+            </Button>
+            <Button
+              type="primary"
+              className="admin-btn-add"
+              icon={<PlusOutlined />}
+              onClick={handleCreate}
+              loading={createEvent.isPending}>
+              Add Event
+            </Button>
+          </Space>
         </div>
         <div className={styles.tableWrap}>
           <Table

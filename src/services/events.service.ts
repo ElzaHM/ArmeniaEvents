@@ -294,6 +294,26 @@ function buildFilterOrganizersFromEvents(events: EventListRow[]): { label: strin
     .map((name) => ({ label: name, value: name }));
 }
 
+type EventsListParams = {
+  page?: number;
+  pageSize?: number;
+  q?: string;
+};
+
+type EventsApiResponse = {
+  data: EventListRow[];
+  total: number;
+  page: number;
+  pageSize: number;
+};
+
+export type EventsPaginatedResult = {
+  events: EventItem[];
+  total: number;
+  page: number;
+  pageSize: number;
+};
+
 function buildFilterLanguagesFromEvents(events: EventListRow[]): { label: string; count: number }[] {
   const languageCounts = new Map<string, number>();
 
@@ -308,10 +328,22 @@ function buildFilterLanguagesFromEvents(events: EventListRow[]): { label: string
 }
 
 export const eventsService = {
-  async getEvents(): Promise<EventItem[]> {
+  async getEvents(params: EventsListParams = {}): Promise<EventsPaginatedResult> {
     try {
-      const { data } = await api.get<EventListRow[]>('/events');
-      return data.map((event) => mapEventRowToEventItem(event));
+      const { data } = await api.get<EventsApiResponse>('/events', {
+        params: {
+          page: params.page,
+          pageSize: params.pageSize,
+          q: params.q,
+        },
+      });
+
+      return {
+        events: data.data.map((event) => mapEventRowToEventItem(event)),
+        total: data.total,
+        page: data.page,
+        pageSize: data.pageSize,
+      };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const message = (error.response?.data as { message?: string } | undefined)?.message;
@@ -372,13 +404,13 @@ export const eventsService = {
   },
 
   async getRelatedEvents(currentEventId: string, category: string): Promise<EventItem[]> {
-    const events = await this.getEvents();
+    const { events } = await this.getEvents();
     return this.pickRelatedEvents(events, currentEventId, category, 3);
   },
 
   async getTotalEventsCount(): Promise<number> {
-    const events = await this.getEvents();
-    return events.length;
+    const { total } = await this.getEvents();
+    return total;
   },
 
   async createEvent(payload: EventCrudPayload): Promise<EventDetailRow> {
@@ -402,13 +434,15 @@ export const eventsService = {
   },
 
   async getEventFilters(): Promise<EventFiltersData> {
-    const { data } = await api.get<EventListRow[]>('/events');
+    const { data } = await api.get<EventsApiResponse>('/events', {
+      params: { page: 1, pageSize: 1000 },
+    });
 
     return {
-      filterCategories: buildFilterCategoriesFromEvents(data),
-      eventTypes: buildFilterEventTypesFromEvents(data),
-      languages: buildFilterLanguagesFromEvents(data),
-      organizers: buildFilterOrganizersFromEvents(data),
+      filterCategories: buildFilterCategoriesFromEvents(data.data),
+      eventTypes: buildFilterEventTypesFromEvents(data.data),
+      languages: buildFilterLanguagesFromEvents(data.data),
+      organizers: buildFilterOrganizersFromEvents(data.data),
       priceMarks: PRICE_MARKS,
       radiusMarks: RADIUS_MARKS,
     };

@@ -6,10 +6,14 @@ import * as eventsService from './events.service.js';
 
 const idSchema = z.object({ id: z.string().uuid() });
 
-export async function listEventsController(_req: Request, res: Response, next: NextFunction) {
+export async function listEventsController(req: Request, res: Response, next: NextFunction) {
   try {
-    const events = await eventsService.listEvents();
-    res.status(200).json(events);
+    const page = req.query.page ? Number(req.query.page) : 1;
+    const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 20;
+    const q = typeof req.query.q === 'string' ? req.query.q : undefined;
+
+    const result = await eventsService.findAll({ page, pageSize, q });
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
@@ -18,7 +22,7 @@ export async function listEventsController(_req: Request, res: Response, next: N
 export async function getEventController(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = idSchema.parse(req.params);
-    const event = await eventsService.getEventById(id);
+    const event = await eventsService.findOne(id);
     res.status(200).json(event);
   } catch (error) {
     next(error);

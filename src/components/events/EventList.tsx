@@ -164,17 +164,21 @@ export default function EventList({
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('q') ?? '';
 
-  const eventsQuery = useEvents();
+  const [sortBy, setSortBy] = useState('date-newest');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const eventsQuery = useEvents({
+    page: currentPage,
+    pageSize: PAGE_SIZE,
+    q: searchQuery || undefined,
+  });
 
   const isLoading = eventsQuery.isLoading;
   const isError = eventsQuery.isError;
   const error = eventsQuery.error;
-
-  const allEvents = eventsQuery.data;
-
-  const [sortBy, setSortBy] = useState('date-newest');
-  const [viewMode, setViewMode] = useState<ViewMode>('list');
-  const [currentPage, setCurrentPage] = useState(1);
+  const allEvents = eventsQuery.events;
+  const apiTotal = eventsQuery.total;
 
   const filteredEvents = useMemo(() => {
     if (!allEvents) {
@@ -217,14 +221,9 @@ export default function EventList({
     sortBy,
   ]);
 
-  const paginatedEvents = useMemo(() => {
-    const start = (currentPage - 1) * PAGE_SIZE;
-    return filteredEvents.slice(start, start + PAGE_SIZE);
-  }, [filteredEvents, currentPage]);
-
   return (
     <QueryState isLoading={isLoading} isError={isError} error={error}>
-      {allEvents && (
+      {eventsQuery.isSuccess ? (
         <section className={`${styles.listSection} eventsListPanel`}>
           <div className={styles.toolbar}>
             <Typography.Text className={styles.resultCount}>
@@ -260,19 +259,19 @@ export default function EventList({
           </div>
 
           <div className={viewMode === 'list' ? styles.list : styles.grid}>
-            {paginatedEvents.map((event) => (
+            {filteredEvents.map((event) => (
               <EventListItem key={event.id} event={event} variant={viewMode} />
             ))}
           </div>
 
           <EventPagination
             current={currentPage}
-            total={filteredCount}
+            total={apiTotal}
             pageSize={PAGE_SIZE}
             onChange={setCurrentPage}
           />
         </section>
-      )}
+      ) : null}
     </QueryState>
   );
 }
