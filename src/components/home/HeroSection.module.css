@@ -80,6 +80,11 @@
   max-width: 100%;
 }
 
+.tagLink {
+  text-decoration: none;
+  display: inline-block;
+}
+
 .tag {
   margin: 0 !important;
   padding: 8px 20px !important;

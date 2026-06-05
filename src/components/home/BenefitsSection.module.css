@@ -13,6 +13,10 @@
   height: 100%;
 }
 
+.itemClickable {
+  cursor: pointer;
+}
+
 .icon {
   font-size: 24px;
   color: #d48806;

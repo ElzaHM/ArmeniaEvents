@@ -4,7 +4,6 @@ import {
   FOOTER_QUICK_LINKS,
   LOCATIONS,
   POPULAR_TAGS,
-  TOP_PICKS,
 } from '../components/home/mockData';
 import type { EventItem } from '../components/home/types';
 import {
@@ -159,9 +158,11 @@ const EVENT_LIST_SELECT = `
 `;
 
 const UPCOMING_EVENTS_LIMIT = 6;
+const TOP_PICKS_LIMIT = 6;
 
 type FetchEventListOptions = {
   upcomingOnly?: boolean;
+  latestFirst?: boolean;
   limit?: number;
 };
 
@@ -175,6 +176,8 @@ async function fetchEventListRows(
       .not('start_date', 'is', null)
       .gte('start_date', new Date().toISOString())
       .order('start_date', { ascending: true });
+  } else if (options.latestFirst) {
+    query = query.order('created_at', { ascending: false, nullsFirst: false });
   }
 
   if (options.limit != null) {
@@ -274,8 +277,12 @@ export const eventsService = {
     return mapEventListRowsToEventItems(rows);
   },
 
-  getTopPicks(): Promise<EventItem[]> {
-    return simulateRequest([...TOP_PICKS]);
+  async getTopPicks(): Promise<EventItem[]> {
+    const rows = await fetchEventListRows({
+      latestFirst: true,
+      limit: TOP_PICKS_LIMIT,
+    });
+    return mapEventListRowsToEventItems(rows);
   },
 
   getRelatedEvents(): Promise<EventItem[]> {

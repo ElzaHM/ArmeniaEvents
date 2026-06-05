@@ -6,6 +6,7 @@ import { errorHandler } from './middleware/error.middleware.js';
 import { authRoutes } from './modules/auth/auth.routes.js';
 import { categoriesRoutes } from './modules/categories/categories.routes.js';
 import { eventsRoutes } from './modules/events/events.routes.js';
+import { newsletterRoutes } from './modules/newsletter/newsletter.routes.js';
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/events', eventsRoutes);
 app.use('/api/categories', categoriesRoutes);
+app.use('/api/newsletter', newsletterRoutes);
 app.use(errorHandler);
 
 app.listen(env.PORT, () => {
