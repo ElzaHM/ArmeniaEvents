@@ -109,50 +109,11 @@ export async function register(input: RegisterInput): Promise<AuthPayload> {
     return signInWithCredentials(input.email, input.password);
   }
 
-  // Fallback when admin create is blocked (e.g. rate limits on public signUp path).
-  const { data, error } = await supabaseAuthClient.auth.signUp({
-    email: input.email,
-    password: input.password,
-    options: {
-      data: {
-        fullName: input.fullName,
-      },
-    },
-  });
-
-  if (error) {
-    if (isUserAlreadyExistsMessage(error.message)) {
-      await confirmUserByEmail(input.email);
-      return signInWithCredentials(input.email, input.password);
-    }
-    throw new Error(error.message);
-  }
-
-  if (!data.user) {
-    throw new Error('Registration failed: user was not created.');
-  }
-
-  if (data.session) {
-    return mapAuthResponse({
-      user: data.user,
-      session: data.session,
-    });
-  }
-
-  if (data.user.identities?.length === 0) {
-    await confirmUserByEmail(input.email);
-    return signInWithCredentials(input.email, input.password);
-  }
-
-  const { error: confirmError } = await supabaseAdminClient.auth.admin.updateUserById(data.user.id, {
-    email_confirm: true,
-  });
-
-  if (confirmError) {
-    throw new Error(confirmError.message);
-  }
-
-  return signInWithCredentials(input.email, input.password);
+  // Never call auth.signUp here — it triggers Supabase confirmation emails when enabled.
+  throw new Error(
+    createError?.message ??
+      'Registration failed. Check SUPABASE_SERVICE_ROLE_KEY in .env and restart pnpm dev:api.',
+  );
 }
 
 export async function login(input: LoginInput): Promise<AuthPayload> {
