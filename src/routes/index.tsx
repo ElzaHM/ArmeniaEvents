@@ -14,6 +14,7 @@ import AdminUsersPage from '../pages/AdminUsersPage';
 import AdminAnalyticsPage from '../pages/AdminAnalyticsPage';
 import AdminSettingsPage from '../pages/AdminSettingsPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import CreateEventPage from '../pages/CreateEventPage';
 import { RequireAuth, RequireGuest } from './guards';
 
 export const router = createBrowserRouter([
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: 'events/:id',
         element: <EventDetailsPage />,
+      },
+      {
+        path: 'create-event',
+        element: <CreateEventPage />,
       },
       {
         path: 'signin',

@@ -1,0 +1,72 @@
+/* PAGE LAYOUT */
+.pageWrapper { padding: 80px 0 40px; background: transparent; min-height: 100vh; }
+.heroHeader { margin-bottom: 20px; }
+.mainTitle { font-size: 42px !important; color: white !important; margin: 0 !important; }
+.goldText { color: #c08b46; }
+
+/* KEEP CARDS DARK */
+.formCard, .previewCard {
+  background: rgba(14, 14, 14, 0.6) !important; /* Original dark glass */
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px 20px;
+}
+.previewSticky { position: sticky; top: 90px; }
+
+.cardHeader { color: white !important; margin-bottom: 10px !important; display: flex; align-items: center; gap: 8px; font-size: 15px !important; }
+.headerIcon { color: #c08b46; }
+
+/* LIGHTER WRITABLE INPUTS */
+.glassInput, 
+:global(.ant-select-selector),
+:global(.ant-picker),
+:global(.ant-input-affix-wrapper) {
+  /* Lighter background for better contrast when typing */
+  background: rgba(255, 255, 255, 0.18) !important; 
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  height: 36px !important;
+  border-radius: 6px !important;
+}
+
+/* Ant Design Pickers/Selects inner text */
+:global(.ant-picker-input > input),
+:global(.ant-select-selection-item),
+:global(.ant-select-selection-placeholder) {
+  color: white !important;
+}
+
+.glassInput:hover, .glassInput:focus {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-color: #c08b46 !important;
+}
+
+.compactItem { margin-bottom: 8px !important; }
+.compactItem :global(.ant-form-item-label > label) { color: rgba(255, 255, 255, 0.8) !important; font-size: 12px; height: auto; }
+
+/* PREVIEW TEXT VISIBILITY */
+.previewImageArea {
+  height: 180px; background-size: cover; background-position: center; position: relative; padding: 15px;
+  display: flex; flex-direction: column; justify-content: flex-end; border-radius: 12px 12px 0 0;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+}
+.previewTitle { color: white !important; margin: 0 !important; font-size: 18px !important; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+.previewDesc { color: rgba(255,255,255,0.9) !important; font-size: 12px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+
+/* IMAGES GRID */
+.imageGrid { display: flex; gap: 12px; margin-top: 15px; }
+.imageItem { position: relative; width: 70px; height: 70px; border-radius: 8px; overflow: hidden; border: 2px solid transparent; cursor: pointer; }
+.imageItem img { width: 100%; height: 100%; object-fit: cover; }
+.selectedImage { border-color: #c08b46; box-shadow: 0 0 10px rgba(192, 139, 70, 0.5); }
+.imageDeleteIcon { position: absolute; top: 4px; right: 4px; background: rgba(255, 77, 79, 0.9); color: white; padding: 4px; border-radius: 50%; font-size: 10px; opacity: 0; transition: 0.2s; }
+.imageItem:hover .imageDeleteIcon { opacity: 1; }
+
+/* BOTTOM BAR */
+.eventPreviewBox { background: #141414; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); }
+.previewDetails { padding: 15px; }
+.detailLine { display: flex; align-items: center; gap: 8px; color: rgba(255, 255, 255, 0.7); margin-bottom: 4px; font-size: 12px; }
+.actionButtons { display: flex; gap: 10px; margin-top: 15px; }
+.cancelBtn { flex: 1; height: 40px !important; background: rgba(255, 255, 255, 0.1) !important; color: white !important; border: none !important; }
+.submitBtn { flex: 2; height: 40px !important; background: #c08b46 !important; color: #1a1a1a !important; border: none !important; font-weight: bold !important; }
