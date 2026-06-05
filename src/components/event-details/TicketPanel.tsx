@@ -10,6 +10,10 @@ interface TicketPanelProps {
 }
 
 export default function TicketPanel({ event }: TicketPanelProps) {
+  if (!event.ticketUrl) {
+    return null;
+  }
+
   return (
     <aside className={`${styles.panel} detailsGlassCard`}>
       <Typography.Title level={5} className={styles.title}>
@@ -17,34 +21,43 @@ export default function TicketPanel({ event }: TicketPanelProps) {
       </Typography.Title>
 
       <div className={styles.tickets}>
-        {(event.tickets ?? []).map((ticket) => (
-          <article key={ticket.id} className={styles.ticketCard}>
-            <div className={styles.ticketInfo}>
-              <Typography.Text strong className={styles.ticketName}>
-                {ticket.name}
-              </Typography.Text>
-              <Typography.Text type="secondary" className={styles.ticketDescription}>
-                {ticket.description}
-              </Typography.Text>
-            </div>
-            <div className={styles.ticketActions}>
-              <Typography.Text
-                className={`${styles.ticketPrice} ${ticket.isFree ? styles.priceFree : styles.pricePaid}`}
-              >
-                {ticket.price}
-              </Typography.Text>
-              <Button type="primary" size="small" className={styles.getTicketBtn}>
-                Get Ticket
-              </Button>
-            </div>
-          </article>
-        ))}
+        <article className={styles.ticketCard}>
+          <div className={styles.ticketInfo}>
+            <Typography.Text strong className={styles.ticketName}>
+              General Admission
+            </Typography.Text>
+            <Typography.Text type="secondary" className={styles.ticketDescription}>
+              Get your ticket for {event.title}
+            </Typography.Text>
+          </div>
+          <div className={styles.ticketActions}>
+            <Typography.Text className={`${styles.ticketPrice} ${styles.priceFree}`}>
+              {event.price}
+            </Typography.Text>
+            <Button
+              type="primary"
+              size="small"
+              className={styles.getTicketBtn}
+              href={event.ticketUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Get Ticket
+            </Button>
+          </div>
+        </article>
       </div>
 
-      <button type="button" className={styles.viewAll}>
+      <Button
+        type="link"
+        className={styles.viewAll}
+        href={event.ticketUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        icon={<ArrowRightOutlined />}
+      >
         View All Tickets
-        <ArrowRightOutlined />
-      </button>
+      </Button>
     </aside>
   );
 }

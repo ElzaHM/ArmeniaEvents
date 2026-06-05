@@ -3,6 +3,9 @@ import type { EventCreateInput, EventUpdateInput } from './events.schema.js';
 
 const EVENTS_SELECT = `
   *,
+  event_type,
+  language,
+  price,
   categories ( name ),
   organizers ( name, avatar_url, description )
 `;

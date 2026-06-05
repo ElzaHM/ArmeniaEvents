@@ -1,23 +1,46 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import {
   Button,
   Checkbox,
   DatePicker,
   Input,
-  Select,
   Slider,
   Typography,
 } from 'antd';
-import { DownOutlined, SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 
 import { QueryState } from '../../hooks/queries/query-state';
 import { useEventFilters } from '../../hooks/queries/useEvents';
 
 import styles from './EventFilters.module.css';
 
-export default function EventFilters() {
+export type AppliedEventFilters = {
+  categories: string[];
+  eventType: string | null;
+  language: string | null;
+  priceRange: 'free' | 'paid' | null;
+  organizer: string | null;
+  dateRange: { from: string; to: string } | null;
+};
+
+interface EventFiltersProps {
+  onApply: (filters: AppliedEventFilters) => void;
+}
+
+function resolveAppliedPriceRange(priceRange: number): 'free' | 'paid' | null {
+  if (priceRange === 0) {
+    return 'free';
+  }
+
+  if (priceRange === 100) {
+    return 'paid';
+  }
+
+  return null;
+}
+
+export default function EventFilters({ onApply }: EventFiltersProps) {
   const { data: filters, isLoading, isError, error } = useEventFilters();
-  const initializedRef = useRef(false);
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
@@ -26,19 +49,10 @@ export default function EventFilters() {
   const [priceRange, setPriceRange] = useState(50);
   const [locationRadius, setLocationRadius] = useState(25);
   const [organizerQuery, setOrganizerQuery] = useState('');
+  const [fromDate, setFromDate] = useState<string | null>(null);
+  const [toDate, setToDate] = useState<string | null>(null);
+  const [datePickerKey, setDatePickerKey] = useState(0);
   const [showAllCategories, setShowAllCategories] = useState(false);
-
-  useLayoutEffect(() => {
-    if (!filters || initializedRef.current) {
-      return;
-    }
-
-    initializedRef.current = true;
-    setSelectedCategories(filters.filterCategories.map((category) => category.name));
-    setSelectedEventTypes(filters.eventTypes.map((type) => type.label));
-    setSelectedLanguages(filters.languages.map((language) => language.label));
-    setSelectedOrganizers(filters.organizers.slice(0, 3).map((organizer) => organizer.name));
-  }, [filters]);
 
   if (!filters) {
     return (
@@ -62,18 +76,48 @@ export default function EventFilters() {
     : filterCategories.slice(0, 5);
 
   const filteredOrganizers = organizers.filter((organizer) =>
-    organizer.name.toLowerCase().includes(organizerQuery.toLowerCase()),
+    (organizer.label ?? '').toLowerCase().includes(organizerQuery.toLowerCase()),
   );
+
+  const resolveAppliedDateRange = (): { from: string; to: string } | null => {
+    if (!fromDate || !toDate) {
+      return null;
+    }
+
+    return { from: fromDate, to: toDate };
+  };
 
   const handleReset = () => {
     setSelectedCategories([]);
     setSelectedEventTypes([]);
     setSelectedLanguages([]);
     setSelectedOrganizers([]);
-    setPriceRange(0);
+    setPriceRange(50);
     setLocationRadius(5);
     setOrganizerQuery('');
+    setFromDate(null);
+    setToDate(null);
+    setDatePickerKey((key) => key + 1);
     setShowAllCategories(false);
+    onApply({
+      categories: [],
+      eventType: null,
+      language: null,
+      priceRange: null,
+      organizer: null,
+      dateRange: null,
+    });
+  };
+
+  const handleApply = () => {
+    onApply({
+      categories: selectedCategories,
+      eventType: selectedEventTypes[0] ?? null,
+      language: selectedLanguages[0] ?? null,
+      priceRange: resolveAppliedPriceRange(priceRange),
+      organizer: selectedOrganizers[0] ?? null,
+      dateRange: resolveAppliedDateRange(),
+    });
   };
 
   return (
@@ -94,12 +138,16 @@ export default function EventFilters() {
           </Typography.Text>
           <div className={styles.dateFields}>
             <DatePicker
+              key={`from-${datePickerKey}`}
               placeholder="From Date"
               className={`${styles.datePicker} eventsDateField`}
+              onChange={(_, dateString) => setFromDate(dateString || null)}
             />
             <DatePicker
+              key={`to-${datePickerKey}`}
               placeholder="To Date"
               className={`${styles.datePicker} eventsDateField`}
+              onChange={(_, dateString) => setToDate(dateString || null)}
             />
           </div>
         </div>
@@ -209,12 +257,11 @@ export default function EventFilters() {
           >
             {filteredOrganizers.map((organizer) => (
               <Checkbox
-                key={organizer.name}
-                value={organizer.name}
+                key={organizer.value}
+                value={organizer.value}
                 className={styles.checkboxRow}
               >
-                <span className={styles.checkboxLabel}>{organizer.name}</span>
-                <span className={styles.count}>{organizer.count}</span>
+                <span className={styles.checkboxLabel}>{organizer.label}</span>
               </Checkbox>
             ))}
           </Checkbox.Group>
@@ -237,7 +284,13 @@ export default function EventFilters() {
         </div>
 
         <div className={styles.actions}>
-          <Button type="primary" block size="large" className={styles.applyBtn}>
+          <Button
+            type="primary"
+            block
+            size="large"
+            className={styles.applyBtn}
+            onClick={handleApply}
+          >
             Apply Filters
           </Button>
 

@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import type { EventItem } from '../../components/home/types';
 import { eventsService } from '../../services/events.service';
 
 export const eventsKeys = {
@@ -9,12 +10,10 @@ export const eventsKeys = {
   topPicks: ['events', 'top-picks'] as const,
   related: ['events', 'related'] as const,
   filters: ['events', 'filters'] as const,
-  sortOptions: ['events', 'sort-options'] as const,
   totalCount: ['events', 'total-count'] as const,
   popularTags: ['events', 'popular-tags'] as const,
   benefits: ['events', 'benefits'] as const,
   footerQuickLinks: ['events', 'footer-quick-links'] as const,
-  locations: ['events', 'locations'] as const,
   interestedAvatars: ['events', 'interested-avatars'] as const,
   tabs: ['events', 'tabs'] as const,
 };
@@ -43,10 +42,17 @@ export function useTopPicks() {
   });
 }
 
-export function useRelatedEvents() {
+export function useRelatedEvents(eventId: string | undefined, category: string | undefined) {
+  const queryClient = useQueryClient();
+
   return useQuery({
-    queryKey: eventsKeys.related,
-    queryFn: () => eventsService.getRelatedEvents(),
+    queryKey: [...eventsKeys.related, eventId, category] as const,
+    enabled: Boolean(eventId && category),
+    queryFn: async () => {
+      const cached = queryClient.getQueryData<EventItem[]>(eventsKeys.all);
+      const events = cached ?? (await eventsService.getEvents());
+      return eventsService.pickRelatedEvents(events, eventId!, category!, 3);
+    },
   });
 }
 
@@ -54,13 +60,6 @@ export function useEventFilters() {
   return useQuery({
     queryKey: eventsKeys.filters,
     queryFn: () => eventsService.getEventFilters(),
-  });
-}
-
-export function useSortOptions() {
-  return useQuery({
-    queryKey: eventsKeys.sortOptions,
-    queryFn: () => eventsService.getSortOptions(),
   });
 }
 
@@ -89,13 +88,6 @@ export function useFooterQuickLinks() {
   return useQuery({
     queryKey: eventsKeys.footerQuickLinks,
     queryFn: () => eventsService.getFooterQuickLinks(),
-  });
-}
-
-export function useLocations() {
-  return useQuery({
-    queryKey: eventsKeys.locations,
-    queryFn: () => eventsService.getLocations(),
   });
 }
 

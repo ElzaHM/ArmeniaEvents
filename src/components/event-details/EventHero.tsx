@@ -9,6 +9,7 @@ import {
 
 import { QueryState } from '../../hooks/queries/query-state';
 import { useInterestedAvatars } from '../../hooks/queries/useEvents';
+import { formatDateBadge } from '../events/eventDateUtils';
 import type { EventDetails } from './types';
 
 import styles from './EventHero.module.css';
@@ -17,18 +18,10 @@ interface EventHeroProps {
   event: EventDetails;
 }
 
-function formatDateParts(dateString: string) {
-  const date = new Date(dateString);
-  return {
-    month: date.toLocaleString('en-US', { month: 'short' }).toUpperCase(),
-    day: date.getDate(),
-  };
-}
-
 export default function EventHero({ event }: EventHeroProps) {
   const { data: interestedAvatars, isLoading, isError, error } = useInterestedAvatars();
   const [isSaved, setIsSaved] = useState(false);
-  const { month, day } = useMemo(() => formatDateParts(event.date), [event.date]);
+  const { month, day } = useMemo(() => formatDateBadge(event.date), [event.date]);
 
   return (
     <section className={styles.hero}>
@@ -74,9 +67,18 @@ export default function EventHero({ event }: EventHeroProps) {
             </QueryState>
 
             <div className={styles.actions}>
-              <Button type="primary" size="large" className={styles.primaryBtn}>
-                Get Tickets
-              </Button>
+              {event.ticketUrl ? (
+                <Button
+                  type="primary"
+                  size="large"
+                  className={styles.primaryBtn}
+                  href={event.ticketUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Get Tickets
+                </Button>
+              ) : null}
               <Button
                 size="large"
                 icon={isSaved ? <HeartFilled /> : <HeartOutlined />}
