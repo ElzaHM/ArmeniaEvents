@@ -1,13 +1,13 @@
-import AnalyticsChart from '../../components/admin/AnalyticsChart';
-import AdminPageHeader from '../../components/admin/AdminPageHeader';
-import StatCards from '../../components/admin/StatCards';
-import TopCategoriesChart from '../../components/admin/TopCategoriesChart';
+import AnalyticsChart from '../../../components/admin/AnalyticsChart';
+import AdminPageHeader from '../../../components/admin/AdminPageHeader';
+import StatCards from '../../../components/admin/StatCards';
+import TopCategoriesChart from '../../../components/admin/TopCategoriesChart';
 import {
   ANALYTICS_CHART_DATA,
   ANALYTICS_SUMMARY,
   CATEGORY_DISTRIBUTION,
   DASHBOARD_STATS,
-} from '../../components/admin/mockData';
+} from '../../../components/admin/mockData';
 
 import styles from './AdminAnalyticsPage.module.css';
 

@@ -1,41 +1,37 @@
-import { useState } from 'react';
-import { Dropdown, Progress, Table, Tag } from 'antd';
-import type { MenuProps, TableColumnsType } from 'antd';
-import { MoreOutlined } from '@ant-design/icons';
+import {Dropdown, Progress, Table, Tag} from "antd";
+import type {MenuProps, TableColumnsType} from "antd";
+import {MoreOutlined} from "@ant-design/icons";
 
-import AdminCard from './AdminCard';
-import type { AdminEvent, AdminEventStatus } from './types';
+import AdminCard from "./AdminCard";
+import type {AdminEvent, AdminEventStatus} from "./types";
 
-import styles from './UpcomingEventsTable.module.css';
+import styles from "./UpcomingEventsTable.module.css";
 
 const STATUS_CONFIG: Record<
   AdminEventStatus,
-  { label: string; color: 'success' | 'warning' | 'default' }
+  {label: string; color: "success" | "warning" | "default"}
 > = {
-  published: { label: 'Published', color: 'success' },
-  draft: { label: 'Draft', color: 'warning' },
-  archived: { label: 'Archived', color: 'default' },
+  published: {label: "Published", color: "success"},
+  draft: {label: "Draft", color: "warning"},
+  archived: {label: "Archived", color: "default"},
 };
 
-const ACTION_ITEMS: MenuProps['items'] = [
-  { key: 'edit', label: 'Edit' },
-  { key: 'view', label: 'View' },
-  { key: 'delete', label: 'Delete', danger: true },
+const ACTION_ITEMS: MenuProps["items"] = [
+  {key: "edit", label: "Edit"},
+  {key: "view", label: "View"},
+  {key: "delete", label: "Delete", danger: true},
 ];
 
 interface UpcomingEventsTableProps {
   events: AdminEvent[];
 }
 
-export default function UpcomingEventsTable({ events }: UpcomingEventsTableProps) {
-  const [page, setPage] = useState(1);
-  const pageSize = 5;
-
+export default function UpcomingEventsTable({events}: UpcomingEventsTableProps) {
   const columns: TableColumnsType<AdminEvent> = [
     {
-      title: 'Event',
-      dataIndex: 'title',
-      key: 'title',
+      title: "Event",
+      dataIndex: "title",
+      key: "title",
       render: (_, record) => (
         <div className={styles.eventCell}>
           <img src={record.imageUrl} alt="" className={styles.thumbnail} />
@@ -44,26 +40,26 @@ export default function UpcomingEventsTable({ events }: UpcomingEventsTableProps
       ),
     },
     {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-      responsive: ['md'],
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+      responsive: ["md"],
     },
     {
-      title: 'Category',
-      dataIndex: 'category',
-      key: 'category',
-      responsive: ['lg'],
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      responsive: ["lg"],
     },
     {
-      title: 'Location',
-      dataIndex: 'location',
-      key: 'location',
-      responsive: ['xl'],
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+      responsive: ["xl"],
     },
     {
-      title: 'Views',
-      key: 'views',
+      title: "Views",
+      key: "views",
       render: (_, record) => {
         const percent = Math.round((record.views / record.maxViews) * 100);
         return (
@@ -84,20 +80,20 @@ export default function UpcomingEventsTable({ events }: UpcomingEventsTableProps
       },
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
       render: (status: AdminEventStatus) => {
         const config = STATUS_CONFIG[status];
         return <Tag color={config.color}>{config.label}</Tag>;
       },
     },
     {
-      title: '',
-      key: 'actions',
+      title: "",
+      key: "actions",
       width: 48,
       render: () => (
-        <Dropdown menu={{ items: ACTION_ITEMS }} trigger={['click']}>
+        <Dropdown menu={{items: ACTION_ITEMS}} trigger={["click"]} overlayClassName="admin-dropdown-menu">
           <button type="button" aria-label="Actions">
             <MoreOutlined />
           </button>
@@ -113,13 +109,8 @@ export default function UpcomingEventsTable({ events }: UpcomingEventsTableProps
           columns={columns}
           dataSource={events}
           rowKey="id"
-          pagination={{
-            current: page,
-            pageSize,
-            total: events.length,
-            onChange: setPage,
-            showSizeChanger: false,
-          }}
+          scroll={{x: 800}}
+          pagination={{pageSize: 5}}
           size="middle"
         />
       </div>

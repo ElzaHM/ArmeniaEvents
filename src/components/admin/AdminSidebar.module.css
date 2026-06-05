@@ -7,10 +7,13 @@
   flex-direction: column;
   width: 260px;
   height: 100vh;
+  height: 100dvh;
   background: var(--admin-sidebar);
   backdrop-filter: blur(25px) saturate(180%);
   border-right: 1px solid var(--admin-border);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
@@ -21,15 +24,49 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 10px;
-  text-decoration: none;
-  min-height: 40px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 14px;
+  min-height: 72px;
   flex-shrink: 0;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.collapsed .brandLink {
+  flex: none;
 }
 
 .collapsed .brand {
   justify-content: center;
+  padding: 16px 10px;
+}
+
+.closeMobileBtn {
+  display: none;
+  flex-shrink: 0;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  border-radius: 10px !important;
+  color: var(--admin-text-muted) !important;
+  border: 1px solid var(--admin-border) !important;
+  background: transparent !important;
+  transition: all 0.2s ease !important;
+}
+
+.closeMobileBtn:hover {
+  color: var(--admin-gold) !important;
+  border-color: var(--admin-gold) !important;
+  background: var(--admin-gold-light) !important;
 }
 
 .brandIcon {
@@ -56,36 +93,44 @@
   font-weight: 700;
   color: var(--admin-text);
   white-space: nowrap;
+  line-height: 1.2;
 }
 
 .brandSubtitle {
   font-size: 9px;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--admin-text-muted);
   white-space: nowrap;
+  line-height: 1.4;
 }
 
-.scrollArea {
+.sidebarBody {
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  position: relative;
-}
-
-.scrollArea::-webkit-scrollbar {
-  width: 4px;
-}
-.scrollArea::-webkit-scrollbar-thumb {
-  background: var(--admin-border);
-  border-radius: 10px;
+  overflow: hidden;
 }
 
 .nav {
+  flex: 1;
+  min-height: 0;
   padding: 10px 12px;
   position: relative;
-  z-index: 2; 
+  z-index: 2;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+.nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.nav::-webkit-scrollbar-thumb {
+  background: var(--admin-border);
+  border-radius: 10px;
 }
 
 .navList {
@@ -95,18 +140,50 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  width: 100%;
+}
+
+.navList li {
+  min-width: 0;
 }
 
 .navLink {
   display: flex;
   align-items: center;
   gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
   padding: 12px 16px;
   border-radius: 12px;
+  border: 1px solid transparent;
   color: var(--admin-text-secondary);
   text-decoration: none;
-  transition: all 0.2s;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
   white-space: nowrap;
+}
+
+.navButton {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+}
+
+.navLink:hover,
+.navLink:focus-visible {
+  background: var(--admin-gold-hover);
+  border-color: var(--admin-gold-border);
+  color: var(--admin-gold-strong);
+  transform: translateX(2px);
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--admin-gold);
+  outline-offset: 2px;
 }
 
 .collapsed .navLink {
@@ -120,38 +197,53 @@
 }
 
 .navLinkActive {
-  background: var(--admin-gold-light) !important;
-  color: var(--admin-gold) !important;
+  background: var(--admin-gold-hover) !important;
+  border-color: var(--admin-gold-border);
+  color: var(--admin-gold-strong) !important;
   font-weight: 600;
+}
+
+.logoutLink {
+  margin-top: 8px;
+  color: #d14343;
+}
+
+.logoutLink:hover,
+.logoutLink:focus-visible {
+  background: rgba(209, 67, 67, 0.12);
+  border-color: rgba(209, 67, 67, 0.35);
+  color: #b42323;
 }
 
 .skylineDecoration {
   margin-top: auto;
+  flex-shrink: 0;
   min-height: 140px;
+  height: 140px;
   width: 100%;
   pointer-events: none;
   z-index: 1;
 
   -webkit-mask-image: url("../../assets/adminPage/yerevan-skyline.svg");
   mask-image: url("../../assets/adminPage/yerevan-skyline.svg");
-  -webkit-mask-size: contain;
-  mask-size: contain;
+  -webkit-mask-size: 100% auto;
+  mask-size: 100% auto;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: bottom center;
   mask-position: bottom center;
 
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 [data-theme="dark"] .skylineDecoration {
   background-color: var(--admin-gold);
-  opacity: 0.25;
+  opacity: 0.42;
 }
 
 [data-theme="light"] .skylineDecoration {
-  background-color: #d9a34a;
-  opacity: 0.35;
+  background-color: #ffd27a;
+  opacity: 0.72;
 }
 
 .sidebarFooter {
@@ -223,5 +315,62 @@
   inset: 0;
   z-index: 999;
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
   border: none;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 280px !important;
+    z-index: 1001;
+    height: 100dvh;
+  }
+
+  .mobileOpen {
+    transform: translateX(0);
+  }
+
+  .closeMobileBtn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .collapsed {
+    width: 280px !important;
+  }
+
+  .collapsed .brand {
+    justify-content: space-between;
+    padding: 16px 14px;
+  }
+
+  .collapsed .brandText,
+  .collapsed .navLabel,
+  .collapsed .profileInfo,
+  .collapsed .copyright,
+  .collapsed .skylineDecoration {
+    opacity: 1;
+    visibility: visible;
+    display: flex !important;
+  }
+
+  .collapsed .navLabel {
+    display: inline !important;
+  }
+
+  .collapsed .copyright {
+    display: block !important;
+  }
+
+  .collapsed .skylineDecoration {
+    display: block !important;
+  }
+
+  .navLink,
+  .collapsed .navLink {
+    justify-content: flex-start;
+    padding: 12px 16px;
+  }
 }

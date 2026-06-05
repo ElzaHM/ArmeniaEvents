@@ -15,9 +15,15 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: 2;
   transform: translate(-50%, -50%);
   text-align: center;
   pointer-events: none;
+  min-width: 88px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: var(--admin-card-bg);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .centerValue {
@@ -48,6 +54,15 @@
   align-items: center;
   gap: 10px;
   font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.legendItem:hover,
+.legendItemActive {
+  background: var(--admin-gold-light);
 }
 
 .dot {
