@@ -12,6 +12,8 @@
   transition: all 0.3s ease;
   cursor: pointer;
   height: 100%;
+  text-decoration: none;
+  color: inherit;
 }
 
 .card:hover {

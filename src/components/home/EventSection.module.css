@@ -134,12 +134,24 @@
     padding: 40px 0 48px;
   }
 
+  .section {
+    overflow: visible !important;
+  }
+
+  .sectionOverlay {
+    overflow: visible;
+  }
+
+  .relativeWrapper {
+    overflow: visible;
+  }
+
   .leftBtn {
-    left: 4px;
+    left: -20px;
   }
 
   .rightBtn {
-    right: 4px;
+    right: -20px;
   }
 }
 
@@ -159,7 +171,8 @@
   }
 
   .relativeWrapper {
-    padding: 0 4px;
+    padding: 0;
+    overflow: visible;
   }
 
   .navButton {
@@ -173,23 +186,24 @@
   }
 
   .leftBtn {
-    left: 0;
+    left: -18px;
   }
 
   .rightBtn {
-    right: 0;
+    right: -18px;
   }
 
   .scrollContainer {
-    gap: 12px;
+    gap: 10px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
   }
 
   .cardWrap {
-    flex: 0 0 calc(42% - 8px);
-    min-width: 150px;
-    max-width: 200px;
+    flex: 0 0 calc((100% - 20px) / 3);
+    min-width: 0;
+    max-width: none;
     scroll-snap-align: start;
   }
 }
@@ -204,13 +218,19 @@
     font-size: 12px;
   }
 
+  .leftBtn {
+    left: -16px;
+  }
+
+  .rightBtn {
+    right: -16px;
+  }
+
   .scrollContainer {
-    gap: 10px;
+    gap: 8px;
   }
 
   .cardWrap {
-    flex: 0 0 calc(48% - 6px);
-    min-width: 130px;
-    max-width: 168px;
+    flex: 0 0 calc((100% - 16px) / 3);
   }
 }

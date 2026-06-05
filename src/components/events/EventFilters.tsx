@@ -4,10 +4,11 @@ import {
   Checkbox,
   DatePicker,
   Input,
+  Select,
   Slider,
   Typography,
 } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { DownOutlined, SearchOutlined } from '@ant-design/icons';
 
 import { QueryState } from '../../hooks/queries/query-state';
 import { useEventFilters } from '../../hooks/queries/useEvents';
@@ -77,7 +78,7 @@ export default function EventFilters() {
 
   return (
     <QueryState isLoading={isLoading} isError={isError} error={error}>
-      <aside className={styles.filters}>
+      <aside className={`${styles.filters} eventsFilters`}>
         <div className={styles.header}>
           <Typography.Title level={5} className={styles.title}>
             Filters
@@ -92,8 +93,14 @@ export default function EventFilters() {
             Date
           </Typography.Text>
           <div className={styles.dateFields}>
-            <DatePicker placeholder="From Date" className={styles.datePicker} />
-            <DatePicker placeholder="To Date" className={styles.datePicker} />
+            <DatePicker
+              placeholder="From Date"
+              className={`${styles.datePicker} eventsDateField`}
+            />
+            <DatePicker
+              placeholder="To Date"
+              className={`${styles.datePicker} eventsDateField`}
+            />
           </div>
         </div>
 
@@ -192,7 +199,7 @@ export default function EventFilters() {
             prefix={<SearchOutlined />}
             value={organizerQuery}
             onChange={(event) => setOrganizerQuery(event.target.value)}
-            className={styles.organizerSearch}
+            className={`${styles.organizerSearch} eventsOrganizerField`}
           />
 
           <Checkbox.Group

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Input, Select, Button } from 'antd';
 import { SearchOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import styles from './SearchBar.module.css';
@@ -11,8 +12,26 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ className }: SearchBarProps) {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isEventsSearch = className?.includes('eventsSearchBar');
+  const qFromUrl = searchParams.get('q') ?? '';
+  const [searchTerm, setSearchTerm] = useState('');
   const [compact, setCompact] = useState(false);
   const [narrow, setNarrow] = useState(false);
+
+  useEffect(() => {
+    setSearchTerm(qFromUrl);
+  }, [qFromUrl]);
+
+  const handleSearch = () => {
+    const query = searchTerm.trim();
+    if (query) {
+      navigate(`/events?q=${encodeURIComponent(query)}`);
+      return;
+    }
+    navigate('/events');
+  };
 
   useEffect(() => {
     const compactMedia = window.matchMedia('(max-width: 768px)');
@@ -37,7 +56,10 @@ export default function SearchBar({ className }: SearchBarProps) {
         <Input
           placeholder={compact ? SEARCH_PLACEHOLDER_COMPACT : SEARCH_PLACEHOLDER_DESKTOP}
           variant="borderless"
-          className={styles.inputField}
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+          onPressEnter={handleSearch}
+          className={[styles.inputField, isEventsSearch ? 'eventsHeroSearchInput' : ''].filter(Boolean).join(' ')}
         />
       </div>
 
@@ -59,6 +81,7 @@ export default function SearchBar({ className }: SearchBarProps) {
         type="primary"
         icon={narrow ? <SearchOutlined /> : undefined}
         aria-label="Search events"
+        onClick={handleSearch}
         className={`homeActionBtn ${styles.searchBtn}${narrow ? ` ${styles.searchBtnIcon}` : ''}`}
       >
         {narrow ? null : 'Search'}

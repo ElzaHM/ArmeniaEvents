@@ -7,6 +7,8 @@
 [data-theme='light'] {
   --events-field-bg: rgba(255, 255, 255, 0.88);
   --events-field-light-bg: rgba(255, 255, 255, 0.96);
+  --events-filter-date-bg: rgba(255, 255, 255, 1);
+  --events-filter-date-hover-bg: rgba(255, 255, 255, 1);
   --events-field-border: rgba(0, 0, 0, 0.14);
   --events-field-hover-bg: rgba(255, 255, 255, 1);
   --events-checkbox-bg: rgba(255, 255, 255, 0.96);
@@ -30,6 +32,8 @@
 [data-theme='dark'] {
   --events-field-bg: rgba(255, 255, 255, 0.1);
   --events-field-light-bg: rgba(255, 255, 255, 0.22);
+  --events-filter-date-bg: rgba(255, 255, 255, 0.38);
+  --events-filter-date-hover-bg: rgba(255, 255, 255, 0.46);
   --events-field-border: rgba(255, 255, 255, 0.2);
   --events-field-hover-bg: rgba(255, 255, 255, 0.28);
   --events-checkbox-bg: rgba(255, 255, 255, 0.22);
@@ -114,26 +118,78 @@
   border-color: var(--home-accent) !important;
 }
 
-/* Filter date fields, organizer search, filter selects */
+/* Filter date fields – lighter than other filter inputs */
 .eventsDateField.ant-picker,
+.eventsFilters .eventsDateField.ant-picker,
+.eventsPage .eventsFilters .eventsDateField.ant-picker {
+  --ant-color-bg-container: var(--events-filter-date-bg);
+  background: var(--events-filter-date-bg) !important;
+  background-color: var(--events-filter-date-bg) !important;
+  border-color: var(--events-field-border) !important;
+}
+
+.eventsDateField.ant-picker:hover,
+.eventsFilters .eventsDateField.ant-picker:hover,
+.eventsPage .eventsFilters .eventsDateField.ant-picker:hover {
+  background: var(--events-filter-date-hover-bg) !important;
+  background-color: var(--events-filter-date-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+}
+
+.eventsDateField.ant-picker-focused,
+.eventsFilters .eventsDateField.ant-picker-focused,
+.eventsPage .eventsFilters .eventsDateField.ant-picker-focused {
+  background: var(--events-filter-date-hover-bg) !important;
+  background-color: var(--events-filter-date-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+  box-shadow: 0 0 0 2px rgba(192, 139, 70, 0.15) !important;
+}
+
+/* Organizer search – same lighter fill as date fields */
 .eventsOrganizerField.ant-input,
 .eventsOrganizerField.ant-input-affix-wrapper,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper,
+.eventsPage .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper {
+  --ant-color-bg-container: var(--events-filter-date-bg);
+  background: var(--events-filter-date-bg) !important;
+  background-color: var(--events-filter-date-bg) !important;
+  border-color: var(--events-field-border) !important;
+}
+
+.eventsOrganizerField.ant-input-affix-wrapper > input.ant-input,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper > input.ant-input {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.eventsOrganizerField.ant-input:hover,
+.eventsOrganizerField.ant-input-affix-wrapper:hover,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper:hover,
+.eventsPage .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper:hover {
+  background: var(--events-filter-date-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+}
+
+.eventsOrganizerField.ant-input:focus,
+.eventsOrganizerField.ant-input-affix-wrapper-focused,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper-focused,
+.eventsPage .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper-focused {
+  background: var(--events-filter-date-hover-bg) !important;
+  border-color: var(--home-accent) !important;
+  box-shadow: 0 0 0 2px rgba(192, 139, 70, 0.15) !important;
+}
+
+/* Filter selects (mobile toolbar, etc.) */
 .eventsFilters .eventsSortField.ant-select .ant-select-selector {
   background: var(--events-field-light-bg) !important;
   border-color: var(--events-field-border) !important;
 }
 
-.eventsDateField.ant-picker:hover,
-.eventsOrganizerField.ant-input:hover,
-.eventsOrganizerField.ant-input-affix-wrapper:hover,
 .eventsFilters .eventsSortField.ant-select:hover .ant-select-selector {
   background: var(--events-field-hover-bg) !important;
   border-color: var(--home-accent) !important;
 }
 
-.eventsDateField.ant-picker-focused,
-.eventsOrganizerField.ant-input:focus,
-.eventsOrganizerField.ant-input-affix-wrapper-focused,
 .eventsFilters .eventsSortField.ant-select-focused .ant-select-selector {
   background: var(--events-field-hover-bg) !important;
   border-color: var(--home-accent) !important;
@@ -164,15 +220,23 @@
   opacity: 1 !important;
 }
 
-.eventsFilters .eventsDateField .ant-picker-suffix .anticon {
-  color: var(--home-text-secondary) !important;
+.eventsFilters .eventsDateField .ant-picker-suffix,
+.eventsFilters .eventsDateField .ant-picker-suffix .anticon,
+.eventsPage .eventsFilters .eventsDateField .ant-picker-suffix .anticon {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+[data-theme='dark'] .eventsFilters .eventsDateField .ant-picker-suffix,
+[data-theme='dark'] .eventsFilters .eventsDateField .ant-picker-suffix .anticon,
+[data-theme='dark'] .eventsPage .eventsFilters .eventsDateField .ant-picker-suffix .anticon {
+  color: #ffffff !important;
 }
 
 /* Date (Newest) sort select in event list toolbar */
 .eventsListPanel .eventsSortField.ant-select {
-  --ant-color-bg-container: var(--events-field-light-bg);
+  --ant-color-bg-container: var(--events-filter-date-bg);
   --ant-color-bg-elevated: var(--events-dropdown-bg);
-  --ant-select-selector-bg: var(--events-field-light-bg);
+  --ant-select-selector-bg: transparent;
   --ant-color-border: var(--events-sort-border);
   --ant-select-hover-border-color: var(--home-accent);
   --ant-select-active-border-color: var(--home-accent);
@@ -183,10 +247,10 @@
 .eventsPage .eventsListPanel .eventsSortField.ant-select-outlined .ant-select-selector,
 .eventsPage .eventsListPanel .eventsSortField.ant-select-filled .ant-select-selector,
 .eventsPage .eventsListPanel .eventsSortField .ant-select-selector {
-  background: var(--events-field-light-bg) !important;
-  background-color: var(--events-field-light-bg) !important;
-  border: 1px solid var(--events-sort-border) !important;
-  border-color: var(--events-sort-border) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-color: transparent !important;
   box-shadow: none !important;
   outline: none !important;
 }
@@ -198,21 +262,14 @@
 }
 
 .eventsPage .eventsListPanel .eventsSortField.ant-select:hover .ant-select-selector,
-.eventsPage .eventsListPanel .eventsSortField.ant-select-open .ant-select-selector {
-  background: var(--events-field-hover-bg) !important;
-  background-color: var(--events-field-hover-bg) !important;
-  border: 1px solid var(--home-accent) !important;
-  border-color: var(--home-accent) !important;
-  box-shadow: none !important;
-}
-
+.eventsPage .eventsListPanel .eventsSortField.ant-select-open .ant-select-selector,
 .eventsPage .eventsListPanel .eventsSortField.ant-select-focused .ant-select-selector,
 .eventsPage .eventsListPanel .eventsSortField.ant-select.ant-select-focused .ant-select-selector {
-  background: var(--events-field-hover-bg) !important;
-  background-color: var(--events-field-hover-bg) !important;
-  border: 1px solid var(--home-accent) !important;
-  border-color: var(--home-accent) !important;
-  box-shadow: 0 0 0 2px rgba(192, 139, 70, 0.15) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
 
 .eventsListPanel .eventsSortField .ant-select-selection-item,
@@ -269,14 +326,19 @@
   border-color: var(--home-accent) !important;
 }
 
-.eventsViewToggle .ant-btn-default {
-  background-color: var(--events-field-light-bg) !important;
+.eventsViewToggle .ant-btn-default,
+.eventsPage .eventsListPanel .eventsViewToggle .ant-btn-default {
+  --ant-button-bg-color: var(--events-filter-date-bg);
+  background: var(--events-filter-date-bg) !important;
+  background-color: var(--events-filter-date-bg) !important;
   border-color: var(--events-field-border) !important;
   color: var(--home-text) !important;
 }
 
-.eventsViewToggle .ant-btn-default:hover {
-  background-color: var(--events-field-hover-bg) !important;
+.eventsViewToggle .ant-btn-default:hover,
+.eventsPage .eventsListPanel .eventsViewToggle .ant-btn-default:hover {
+  background: var(--events-filter-date-hover-bg) !important;
+  background-color: var(--events-filter-date-hover-bg) !important;
   border-color: var(--home-accent) !important;
   color: var(--home-text) !important;
 }
@@ -292,8 +354,32 @@
   opacity: 1 !important;
 }
 
-.eventsOrganizerField.ant-input-affix-wrapper .anticon {
-  color: var(--home-icon-muted) !important;
+.eventsOrganizerField.ant-input-affix-wrapper .anticon,
+.eventsFilters .eventsOrganizerField .ant-input-prefix .anticon,
+.eventsPage .eventsFilters .eventsOrganizerField .ant-input-prefix .anticon {
+  color: rgba(0, 0, 0, 0.55) !important;
+  font-size: 15px !important;
+  opacity: 1 !important;
+}
+
+[data-theme='dark'] .eventsOrganizerField.ant-input-affix-wrapper .anticon,
+[data-theme='dark'] .eventsFilters .eventsOrganizerField .ant-input-prefix .anticon,
+[data-theme='dark'] .eventsPage .eventsFilters .eventsOrganizerField .ant-input-prefix .anticon {
+  color: #ffffff !important;
+}
+
+.eventsOrganizerField.ant-input-affix-wrapper:hover .anticon,
+.eventsOrganizerField.ant-input-affix-wrapper-focused .anticon,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper:hover .ant-input-prefix .anticon,
+.eventsFilters .eventsOrganizerField.ant-input-affix-wrapper-focused .ant-input-prefix .anticon {
+  color: var(--home-accent) !important;
+}
+
+[data-theme='dark'] .eventsOrganizerField.ant-input-affix-wrapper:hover .anticon,
+[data-theme='dark'] .eventsOrganizerField.ant-input-affix-wrapper-focused .anticon,
+[data-theme='dark'] .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper:hover .ant-input-prefix .anticon,
+[data-theme='dark'] .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper-focused .ant-input-prefix .anticon {
+  color: #ffffff !important;
 }
 
 /* Dropdown / calendar panels (portaled) */
@@ -344,6 +430,63 @@
 [data-theme='light'] .eventsPage .eventsSection {
   background: var(--events-section-tint) !important;
   border-radius: 12px;
+}
+
+/* Events hero search – same glass panel as filters sidebar */
+[data-theme='light'] .eventsPage .eventsSearchHero .eventsSection {
+  background: transparent !important;
+  border-radius: 0;
+}
+
+.eventsPage .eventsSearchBar {
+  background: var(--events-filters-panel-bg, var(--events-panel-bg)) !important;
+  background-color: var(--events-filters-panel-bg, var(--events-panel-bg)) !important;
+  border-color: var(--events-filters-panel-border, var(--events-panel-border)) !important;
+  backdrop-filter: blur(16px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.3) !important;
+  box-shadow: none !important;
+}
+
+/* Hero search inputs – transparent on filter-style panel bar */
+.eventsPage .eventsSearchBar .searchGroup,
+.eventsPage .eventsSearchBar .locationGroup {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.eventsPage .eventsSearchBar .ant-input,
+.eventsPage .eventsSearchBar .ant-input-affix-wrapper,
+.eventsPage .eventsSearchBar .ant-input-borderless,
+.eventsPage .eventsSearchBar input.ant-input,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput.ant-input,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput input,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input-affix-wrapper,
+.eventsPage .eventsSearchBar input[placeholder*='Search events'],
+.eventsPage .eventsSearchBar .ant-select .ant-select-selector,
+.eventsPage .eventsSearchBar .ant-input:hover,
+.eventsPage .eventsSearchBar .ant-input-affix-wrapper:hover,
+.eventsPage .eventsSearchBar .ant-input:focus,
+.eventsPage .eventsSearchBar .ant-input-affix-wrapper-focused,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput:hover,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput:focus,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input:hover,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input:focus,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input-affix-wrapper:hover,
+.eventsPage .eventsSearchBar .eventsHeroSearchInput .ant-input-affix-wrapper-focused,
+.eventsPage .eventsSearchBar .ant-select:hover .ant-select-selector,
+.eventsPage .eventsSearchBar .ant-select-focused .ant-select-selector,
+.eventsPage .eventsSearchBar .ant-select.ant-select-focused .ant-select-selector {
+  --ant-color-bg-container: transparent;
+  --ant-input-bg: transparent;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-color: transparent !important;
 }
 
 [data-theme='light'] .eventsPage .eventsFilters {

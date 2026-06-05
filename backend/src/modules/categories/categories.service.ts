@@ -3,10 +3,34 @@ import type { CategoryCreateInput, CategoryUpdateInput } from './categories.sche
 
 const CATEGORY_SELECT = '*';
 
+type CategoryListRow = {
+  id: string;
+  name: string;
+  slug: string;
+  icon?: string | null;
+  description?: string | null;
+  is_active?: boolean | null;
+  event_count?: number | null;
+  events?: { count: number }[];
+};
+
+function withComputedEventCount(category: CategoryListRow) {
+  const { events, ...rest } = category;
+  const aggregatedCount = events?.[0]?.count;
+  const event_count =
+    typeof aggregatedCount === 'number' ? aggregatedCount : (rest.event_count ?? 0);
+
+  return { ...rest, event_count };
+}
+
 export async function listCategories() {
-  const { data, error } = await supabaseAdminClient.from('categories').select(CATEGORY_SELECT);
+  const { data, error } = await supabaseAdminClient
+    .from('categories')
+    .select(`${CATEGORY_SELECT}, events(count)`);
+
   if (error) throw new Error(error.message);
-  return data ?? [];
+
+  return (data ?? []).map((category) => withComputedEventCount(category as CategoryListRow));
 }
 
 export async function getCategoryById(id: string) {

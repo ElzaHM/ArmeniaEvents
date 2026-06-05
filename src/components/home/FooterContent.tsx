@@ -1,10 +1,11 @@
-import { Button, Col, Input, Row, Typography } from 'antd';
+import { Col, Row, Typography } from 'antd';
 import { HeartFilled } from '@ant-design/icons';
 
 import { QueryState } from '../../hooks/queries/query-state';
 import { useFooterCategories } from '../../hooks/queries/useCategories';
 import { useFooterQuickLinks } from '../../hooks/queries/useEvents';
 
+import NewsletterSubscribe from './NewsletterSubscribe';
 import styles from './FooterContent.module.css';
 
 export default function FooterContent() {
@@ -34,21 +35,7 @@ export default function FooterContent() {
                   Get the latest events delivered to your inbox.
                 </Typography.Paragraph>
   
-                <div className={styles.newsletterForm}>
-                  <Input
-                    placeholder="Your email address"
-                    type="email"
-                    size="large"
-                  />
-  
-                  <Button
-                    type="primary"
-                    size="large"
-                    className="homeActionBtn"
-                  >
-                    Subscribe
-                  </Button>
-                </div>
+                <NewsletterSubscribe />
               </Col>
             </Row>
   

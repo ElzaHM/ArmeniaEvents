@@ -7,7 +7,7 @@ import styles from './EventSearch.module.css';
 export default function HomePage() {
 
   return (
-    <section className={styles.hero} >
+    <section className={`${styles.hero} eventsSearchHero`}>
       <div className={styles.overlay}>
         <div className={`eventsSection ${styles.content}`}>
           <Typography.Title level={1} className={styles.title}>

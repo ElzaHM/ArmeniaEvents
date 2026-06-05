@@ -11,7 +11,6 @@ import {
 
 import {ADMIN_PROFILE} from "./mockData";
 import styles from "./AdminSidebar.module.css";
-import skylineImg from "../../assets/adminPage/yerevan-skyline.png";
 
 const NAV_ITEMS = [
   {to: "/admin", label: "Dashboard", icon: AppstoreOutlined, end: true},
@@ -38,14 +37,11 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
           <div className={styles.brandIcon}>
             <EnvironmentOutlined />
           </div>
-          {!collapsed && (
-            <div className={styles.brandText}>
-              <span className={styles.brandTitle}>Armenia Events</span>
-              <span className={styles.brandSubtitle}>ADMIN PANEL</span>
-            </div>
-          )}
+          <div className={styles.brandText}>
+            <span className={styles.brandTitle}>Armenia Events</span>
+            <span className={styles.brandSubtitle}>ADMIN PANEL</span>
+          </div>
         </NavLink>
-
         <div className={styles.scrollArea}>
           <nav className={styles.nav}>
             <ul className={styles.navList}>
@@ -56,8 +52,7 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
                     end={end}
                     className={({isActive}) =>
                       `${styles.navLink} ${isActive ? styles.navLinkActive : ""}`
-                    }
-                    title={collapsed ? label : undefined}>
+                    }>
                     <Icon className={styles.navIcon} />
                     <span className={styles.navLabel}>{label}</span>
                   </NavLink>
@@ -65,14 +60,8 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
               ))}
             </ul>
           </nav>
-
-          {!collapsed && (
-            <div className={styles.skylineDecoration}>
-              <img src={skylineImg} alt="" className={styles.skyline} />
-            </div>
-          )}
+          <div className={styles.skylineDecoration} />
         </div>
-
         <div className={styles.sidebarFooter}>
           <div className={styles.profileCard}>
             <img src={ADMIN_PROFILE.avatarUrl} alt="Admin" className={styles.avatar} />
@@ -81,7 +70,7 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
               <div className={styles.profileRole}>Super Administrator</div>
             </div>
           </div>
-          {!collapsed && <div className={styles.copyright}>© 2026 Armenia Events</div>}
+          <div className={styles.copyright}>© 2026 Armenia Events</div>
         </div>
       </aside>
     </>

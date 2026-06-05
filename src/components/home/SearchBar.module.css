@@ -137,26 +137,67 @@
 
 @media (max-width: 768px) {
   .heroSearchBar {
+    width: 100%;
     min-width: 0;
     max-width: 100% !important;
+  }
+
+  .heroSearchBar .searchGroup {
+    flex: 1 1 0;
+  }
+
+  .heroSearchBar .locationGroup {
+    flex: 0.85 1 0;
+    min-width: 0;
   }
 }
 
 .eventsSearchBar {
   width: 100%;
   max-width: 800px !important;
-}
-
-[data-theme='light'] .eventsSearchBar {
-  background: var(--events-filters-panel-bg) !important;
-  border-color: var(--events-filters-panel-border) !important;
+  background: var(--events-filters-panel-bg, var(--events-panel-bg, var(--home-search-bg))) !important;
+  border-color: var(--events-filters-panel-border, var(--events-panel-border, var(--home-search-border))) !important;
   backdrop-filter: blur(16px) saturate(1.3);
   -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: none;
 }
 
-[data-theme='light'] .eventsSearchBar .inputField :global(.ant-input),
-[data-theme='light'] .eventsSearchBar .locationSelect :global(.ant-select-selector) {
+.eventsSearchBar .searchGroup,
+.eventsSearchBar .locationGroup {
   background: transparent !important;
+  border: none !important;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.eventsSearchBar .inputField :global(.ant-input),
+.eventsSearchBar .inputField :global(.ant-input-affix-wrapper),
+.eventsSearchBar .inputField :global(input.ant-input),
+.eventsSearchBar :global(.eventsHeroSearchInput),
+.eventsSearchBar :global(.eventsHeroSearchInput.ant-input),
+.eventsSearchBar :global(.eventsHeroSearchInput) :global(.ant-input),
+.eventsSearchBar .locationSelect :global(.ant-select),
+.eventsSearchBar .locationSelect :global(.ant-select-selector) {
+  --ant-color-bg-container: transparent;
+  --ant-input-bg: transparent;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.eventsSearchBar .inputField :global(.ant-input:hover),
+.eventsSearchBar .inputField :global(.ant-input:focus),
+.eventsSearchBar .inputField :global(.ant-input-affix-wrapper:hover),
+.eventsSearchBar .inputField :global(.ant-input-affix-wrapper-focused),
+.eventsSearchBar :global(.eventsHeroSearchInput:hover),
+.eventsSearchBar :global(.eventsHeroSearchInput:focus),
+.eventsSearchBar :global(.eventsHeroSearchInput) :global(.ant-input:hover),
+.eventsSearchBar :global(.eventsHeroSearchInput) :global(.ant-input:focus) {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .eventsSearchBar .searchGroup {
@@ -165,6 +206,19 @@
 
 .eventsSearchBar .locationGroup {
   flex: 1 1 0;
+}
+
+.eventsSearchBar .icon {
+  color: var(--home-text-secondary);
+  opacity: 1;
+}
+
+[data-theme='light'] .eventsSearchBar .icon {
+  color: rgba(0, 0, 0, 0.58);
+}
+
+[data-theme='dark'] .eventsSearchBar .icon {
+  color: #ffffff;
 }
 
 @media (max-width: 992px) {
@@ -267,6 +321,10 @@
 }
 
 @media (max-width: 480px) {
+  .heroSearchBar {
+    padding: 3px 3px 3px 6px;
+  }
+
   .searchBar {
     padding: 3px 3px 3px 8px;
     border-radius: 10px;
