@@ -12,6 +12,7 @@ import ForgotPasswordPage from '../pages/ForgotPasswordPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage';
 import AdminPage from '../pages/admin/AdminPage';
 import AdminEventsPage from '../pages/admin/AdminEventsPage';
+import AdminCreateEventPage from '../pages/admin/AdminCreateEventPage';
 import AdminCategoriesPage from '../pages/admin/AdminCategoriesPage';
 import AdminUsersPage from '../pages/admin/AdminUsersPage';
 import AdminAnalyticsPage from '../pages/admin/AdminAnalyticsPage';
@@ -92,6 +93,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <AdminPage />,
+      },
+      {
+        path: 'events/create',
+        element: <AdminCreateEventPage />,
       },
       {
         path: 'events',

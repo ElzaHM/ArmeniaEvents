@@ -36,7 +36,7 @@ export default function AdminLayout() {
   }, [mobileOpen]);
 
   return (
-    <div className={`${styles.layout} admin-panel`}>
+    <div className={`${styles.layout} admin-panel`} data-theme={mode}>
       <AdminSidebar
         collapsed={sidebarCollapsed}
         mobileOpen={mobileOpen}

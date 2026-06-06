@@ -30,6 +30,29 @@
   margin-bottom: 16px;
 }
 
+.totalUsersBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: -12px 0 20px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--admin-border);
+  background: var(--admin-card-bg);
+  color: var(--admin-text);
+}
+
+.totalUsersLabel {
+  font-size: 13px;
+  color: var(--admin-text-secondary);
+}
+
+.totalUsersCount {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--admin-gold);
+}
+
 .tableTitle {
   margin: 0;
   font-size: 20px;

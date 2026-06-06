@@ -1,6 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { eventsService, type EventsPaginatedResult } from '../../services/events.service';
+import {
+  createAdminEvent,
+  type AdminCreateEventFormValues,
+} from '../../services/admin-events.service';
 import { adminDashboardKeys } from './useAdminDashboard';
 
 type EventsListParams = {
@@ -120,6 +124,24 @@ export function useEventTabs() {
   return useQuery({
     queryKey: eventsKeys.tabs,
     queryFn: () => eventsService.getEventTabs(),
+  });
+}
+
+export function useCreateAdminEvent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      values,
+      image,
+    }: {
+      values: AdminCreateEventFormValues;
+      image: { url: string; name: string };
+    }) => createAdminEvent(values, image),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: eventsKeys.all });
+      void queryClient.invalidateQueries({ queryKey: adminDashboardKeys.all });
+      void queryClient.invalidateQueries({ queryKey: eventsKeys.totalCount });
+    },
   });
 }
 

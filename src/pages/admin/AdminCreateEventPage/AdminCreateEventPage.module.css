@@ -1,0 +1,26 @@
+.createCard {
+  overflow: visible;
+}
+
+.createCard :global([class*="bodyNoHeader"]) {
+  overflow: visible;
+}
+
+.workspace {
+  width: 100%;
+}
+
+.submitting {
+  pointer-events: none;
+  opacity: 0.72;
+}
+
+.workspace :global(.previewSticky) {
+  top: 24px;
+}
+
+@media (max-width: 991px) {
+  .workspace :global(.previewSticky) {
+    position: static;
+  }
+}

@@ -21,35 +21,9 @@ type EventCategoryRow = {
   categories: { name: string } | null;
 };
 
-async function countTableRows(table: string): Promise<number | null> {
-  const client = supabase as unknown as {
-    from: (name: string) => ReturnType<typeof supabase.from>;
-  };
-  const { count, error } = await client
-    .from(table)
-    .select('*', { count: 'exact', head: true });
-
-  if (error) {
-    return null;
-  }
-
-  return count ?? 0;
-}
-
-async function getActiveUsersCount(): Promise<number> {
-  const usersCount = await countTableRows('users');
-  if (usersCount !== null) {
-    return usersCount;
-  }
-
-  const profilesCount = await countTableRows('profiles');
-  if (profilesCount !== null) {
-    return profilesCount;
-  }
-
+async function getAllUsersCount(): Promise<number> {
   try {
-    const users = await adminUsersService.getUsers();
-    return users.length;
+    return await adminUsersService.getUsersCount();
   } catch {
     return 0;
   }
@@ -80,7 +54,7 @@ async function getCategoriesCount(): Promise<number> {
 export async function getDashboardStats(): Promise<StatMetric[]> {
   const [eventsResult, usersCount, categoriesCount, totalViews] = await Promise.all([
     supabase.from('events').select('*', { count: 'exact', head: true }),
-    getActiveUsersCount(),
+    getAllUsersCount(),
     getCategoriesCount(),
     getTotalEventViews(),
   ]);
@@ -99,7 +73,7 @@ export async function getDashboardStats(): Promise<StatMetric[]> {
     },
     {
       id: 'active-users',
-      label: 'Active Users',
+      label: 'All Users',
       value: usersCount,
       changePercent: 0,
       icon: 'users',
