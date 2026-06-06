@@ -3,23 +3,28 @@ import type { User } from '@supabase/supabase-js';
 import type { LoginInput, RegisterInput, ForgotPasswordInput, ResetPasswordInput } from './auth.schema.js';
 import { supabaseAdminClient, supabaseAuthClient } from '../../lib/supabase.js';
 import { env } from '../../config/env.js';
+import { parseUserRole, type UserRole } from '../../lib/user-roles.js';
+
+export type AuthUser = {
+  id: string;
+  email: string;
+  fullName: string;
+  role: UserRole;
+};
 
 export type AuthPayload = {
-  user: {
-    id: string;
-    email: string;
-    fullName: string;
-  };
+  user: AuthUser;
   accessToken: string;
   refreshToken: string;
   expiresAt: string | null;
 };
 
-function mapUser(user: User) {
+function mapUser(user: User): AuthUser {
   return {
     id: user.id,
     email: user.email ?? '',
     fullName: (user.user_metadata?.fullName as string | undefined) ?? '',
+    role: parseUserRole(user.app_metadata),
   };
 }
 
@@ -98,6 +103,9 @@ export async function register(input: RegisterInput): Promise<AuthPayload> {
     email_confirm: true,
     user_metadata: {
       fullName: input.fullName,
+    },
+    app_metadata: {
+      role: 'user',
     },
   });
 

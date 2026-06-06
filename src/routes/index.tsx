@@ -19,7 +19,7 @@ import AdminSettingsPage from '../pages/admin/AdminSettingsPage';
 import AdminProfilePage from '../pages/admin/AdminProfilePage';
 import NotFoundPage from '../pages/NotFoundPage';
 import CreateEventPage from '../pages/CreateEventPage';
-import { RequireAuth, RequireGuest } from './guards';
+import { RequireAdmin, RequireGuest } from './guards';
 
 export const router = createBrowserRouter([
   {
@@ -83,9 +83,9 @@ export const router = createBrowserRouter([
   {
     path: '/admin',
     element: (
-      <RequireAuth>
+      <RequireAdmin>
         <AdminLayout />
-      </RequireAuth>
+      </RequireAdmin>
     ),
     children: [
       {
@@ -117,6 +117,10 @@ export const router = createBrowserRouter([
         element: <AdminSettingsPage />,
       },
     ],
+  },
+  {
+    path: '/admin/signin',
+    element: <Navigate to="/signin" replace state={{ from: '/admin' }} />,
   },
   {
     path: '/admin/signup',

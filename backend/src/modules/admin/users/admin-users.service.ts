@@ -1,5 +1,6 @@
 import type { User } from '@supabase/supabase-js';
 
+import { parseUserRole } from '../../../lib/user-roles.js';
 import { supabaseAdminClient } from '../../../lib/supabase.js';
 
 export type AdminUserDto = {
@@ -29,7 +30,7 @@ function mapAuthUser(user: User): AdminUserDto {
     id: user.id,
     name,
     email: user.email ?? '',
-    role: 'user',
+    role: parseUserRole(user.app_metadata),
     status,
     avatarUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user.id)}`,
     joinedAt: user.created_at ? new Date(user.created_at).toISOString().slice(0, 10) : '',

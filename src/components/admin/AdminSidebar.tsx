@@ -12,7 +12,6 @@ import {
 } from "@ant-design/icons";
 import {Button} from "antd";
 
-import {useAuth} from "../../hooks/useAuth";
 import {ADMIN_PROFILE} from "./mockData";
 import styles from "./AdminSidebar.module.css";
 
@@ -33,13 +32,11 @@ interface AdminSidebarProps {
 }
 
 export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: AdminSidebarProps) {
-  const {logout} = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    await logout();
+  const handleLeaveAdmin = () => {
     onMobileClose();
-    navigate("/signin", {replace: true});
+    navigate('/');
   };
 
   return (
@@ -93,8 +90,8 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
                 <button
                   type="button"
                   className={`${styles.navLink} ${styles.navButton} ${styles.logoutLink}`}
-                  onClick={handleLogout}
-                  title={collapsed ? "Log Out" : undefined}>
+                  onClick={handleLeaveAdmin}
+                  title={collapsed ? 'Log Out' : undefined}>
                   <LogoutOutlined className={styles.navIcon} />
                   <span className={styles.navLabel}>Log Out</span>
                 </button>

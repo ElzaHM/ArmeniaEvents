@@ -1,9 +1,12 @@
 import axios from 'axios';
 
+export type AuthUserRole = 'super_admin' | 'admin' | 'moderator' | 'user';
+
 export type AuthUser = {
   id: string;
   email: string;
   fullName: string;
+  role: AuthUserRole;
 };
 
 export type AuthSession = {

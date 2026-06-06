@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 
+import { isAdminRole } from '../lib/user-roles.js';
 import { getUserFromToken } from '../modules/auth/auth.service.js';
 
 export async function requireAuth(req: Request, res: Response, next: NextFunction) {
@@ -17,5 +18,17 @@ export async function requireAuth(req: Request, res: Response, next: NextFunctio
 
   req.authUser = user;
   req.accessToken = token;
+  next();
+}
+
+export function requireAdmin(req: Request, res: Response, next: NextFunction) {
+  if (!req.authUser) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  if (!isAdminRole(req.authUser.role)) {
+    return res.status(403).json({ message: 'Admin access required' });
+  }
+
   next();
 }

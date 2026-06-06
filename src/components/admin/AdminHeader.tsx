@@ -16,7 +16,6 @@ import {
 import {useNavigate} from "react-router-dom";
 
 import {useTheme} from "../../hooks/useTheme";
-import {useAuth} from "../../hooks/useAuth";
 import {ADMIN_PROFILE} from "./mockData";
 import styles from "./AdminHeader.module.css";
 
@@ -30,7 +29,7 @@ const USER_MENU_ITEMS: MenuProps["items"] = [
   {key: "profile", label: "My Profile", icon: <UserOutlined />},
   {key: "settings", label: "Settings", icon: <SettingOutlined />},
   {type: "divider"},
-  {key: "logout", label: "Log Out", icon: <LogoutOutlined />, danger: true},
+  {key: "logout", label: "Log Out", icon: <LogoutOutlined />},
 ];
 
 export default function AdminHeader({
@@ -39,7 +38,6 @@ export default function AdminHeader({
   onToggleSidebar,
 }: AdminHeaderProps) {
   const {mode, toggleTheme} = useTheme();
-  const {logout} = useAuth();
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -60,7 +58,7 @@ export default function AdminHeader({
     return () => mediaQuery.removeEventListener("change", updateMobile);
   }, []);
 
-  const handleUserMenuClick: MenuProps["onClick"] = async ({key}) => {
+  const handleUserMenuClick: MenuProps["onClick"] = ({key}) => {
     if (key === "profile") {
       navigate("/admin/profile");
       return;
@@ -72,8 +70,7 @@ export default function AdminHeader({
     }
 
     if (key === "logout") {
-      await logout();
-      navigate("/signin", {replace: true});
+      navigate("/");
     }
   };
 

@@ -1,7 +1,9 @@
+import { flushSync } from 'react-dom';
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 
 import type { AuthSession, LoginPayload, RegisterPayload } from '../services/auth.service';
 import { authService } from '../services/auth.service';
+import { isAdminRole } from '../lib/user-roles';
 import { AuthContext } from './auth-context';
 
 const TOKEN_STORAGE_KEY = 'armenia-events-access-token';
@@ -41,10 +43,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     void bootstrapSession();
   }, [bootstrapSession]);
 
-  const login = useCallback(async (payload: LoginPayload) => {
+  const login = useCallback(async (payload: LoginPayload): Promise<AuthSession> => {
     const currentSession = await authService.login(payload);
-    setSession(currentSession);
-    persistToken(currentSession.accessToken);
+    flushSync(() => {
+      setSession(currentSession);
+      persistToken(currentSession.accessToken);
+    });
+    return currentSession;
   }, []);
 
   const register = useCallback(async (payload: RegisterPayload) => {
@@ -70,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       register,
       logout,
       isAuthenticated: Boolean(session?.accessToken),
+      isAdmin: isAdminRole(session?.user.role),
     }),
     [session, loading, login, register, logout],
   );

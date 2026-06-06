@@ -7,6 +7,7 @@ declare global {
         id: string;
         email: string;
         fullName: string;
+        role: 'super_admin' | 'admin' | 'moderator' | 'user';
       };
       accessToken?: string;
     }
