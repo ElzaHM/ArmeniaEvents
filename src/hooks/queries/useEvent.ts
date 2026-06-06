@@ -7,5 +7,6 @@ export function useEvent(id: string | undefined) {
   return useQuery({
     queryKey: eventsKeys.detail(id),
     queryFn: () => eventsService.getEventById(id),
+    enabled: Boolean(id),
   });
 }

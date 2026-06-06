@@ -1,5 +1,4 @@
 import { Link, useParams } from 'react-router-dom';
-//import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import {
   EventHero,
@@ -19,6 +18,13 @@ import { useEvent } from '../../hooks/queries/useEvent';
 
 import pageStyles from '../../components/event-details/EventDetails.module.css';
 
+function hasScheduleData(event: {
+  schedule?: { time: string; title: string }[];
+  scheduleDays?: { date: string; label: string; weekday: string }[];
+}) {
+  return (event.schedule?.length ?? 0) > 0 || (event.scheduleDays?.length ?? 0) > 0;
+}
+
 export default function EventDetailsPage() {
   const { id } = useParams();
   const { data: event, isLoading, isError, error } = useEvent(id);
@@ -28,10 +34,7 @@ export default function EventDetailsPage() {
       {event && (
         <div className={pageStyles.detailsPage}>
           <div className={pageStyles.backBar}>
-            <Link to="/events" className={pageStyles.backLink}>
-             {/*  <ArrowLeftOutlined /> */}
-             
-            </Link>
+            <Link to="/events" className={pageStyles.backLink} />
           </div>
 
           <EventHero event={event} />
@@ -45,18 +48,18 @@ export default function EventDetailsPage() {
           <div className={`detailsSection ${pageStyles.main}`}>
             <div className={pageStyles.mainContent}>
               <EventInfo event={event} />
-              <EventSchedule event={event} />
+              {hasScheduleData(event) ? <EventSchedule event={event} /> : null}
               <EventVenue event={event} />
             </div>
 
             <aside className={pageStyles.sidebar}>
-              <TicketPanel event={event} />
+              {event.ticketUrl ? <TicketPanel event={event} /> : null}
               <OrganizerCard event={event} />
               <ReminderCard />
             </aside>
           </div>
 
-          <RelatedEvents />
+          <RelatedEvents eventId={event.id} category={event.category} />
         </div>
       )}
     </QueryState>

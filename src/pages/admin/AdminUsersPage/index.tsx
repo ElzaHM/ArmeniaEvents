@@ -1,10 +1,10 @@
 import { Alert, Spin, Table, Tag } from 'antd';
 import type { TableColumnsType } from 'antd';
 
-import AdminCard from '../../components/admin/AdminCard';
-import AdminPageHeader from '../../components/admin/AdminPageHeader';
-import type { AdminUser, AdminUserRole, AdminUserStatus } from '../../components/admin/types';
-import { useAdminUsers } from '../../hooks/queries/useAdminUsers';
+import AdminCard from '../../../components/admin/AdminCard';
+import AdminPageHeader from '../../../components/admin/AdminPageHeader';
+import type { AdminUser, AdminUserRole, AdminUserStatus } from '../../../components/admin/types';
+import { useAdminUsers } from '../../../hooks/queries/useAdminUsers';
 
 import styles from './AdminUsersPage.module.css';
 

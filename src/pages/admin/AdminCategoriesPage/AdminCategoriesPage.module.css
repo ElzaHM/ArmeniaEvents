@@ -6,4 +6,6 @@
 
 .tableWrap {
   overflow-x: auto;
+  background: var(--admin-table-row-bg);
+  -webkit-overflow-scrolling: touch;
 }

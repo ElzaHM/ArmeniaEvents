@@ -1,4 +1,5 @@
 import {CalendarOutlined, EyeOutlined, FolderOutlined, UserOutlined} from "@ant-design/icons";
+import {Link} from "react-router-dom";
 
 import type {StatMetric} from "./types";
 
@@ -9,6 +10,13 @@ const ICON_MAP = {
   users: UserOutlined,
   folder: FolderOutlined,
   eye: EyeOutlined,
+};
+
+const STAT_ROUTES: Record<string, string> = {
+  "total-events": "/admin/events",
+  "active-users": "/admin/users",
+  categories: "/admin/categories",
+  "page-views": "/admin/analytics",
 };
 
 function formatValue(value: number): string {
@@ -25,11 +33,11 @@ export default function StatCards({stats}: StatCardsProps) {
       {stats.map((stat) => {
         const Icon = ICON_MAP[stat.icon];
         const isPositive = stat.changePercent >= 0;
+        const path = STAT_ROUTES[stat.id] ?? "/admin";
 
         return (
-          <article key={stat.id} className={styles.card}>
+          <Link key={stat.id} to={path} className={styles.card} aria-label={`Open ${stat.label}`}>
             <div className={styles.topRow}>
-              {" "}
               <div className={styles.iconWrap}>
                 <Icon />
               </div>
@@ -40,11 +48,12 @@ export default function StatCards({stats}: StatCardsProps) {
             </div>
             <div className={`${styles.trend} ${!isPositive ? styles.trendNegative : ""}`}>
               <span>
-                {isPositive ? "↑" : "↓"} {stat.changePercent}%
+                {isPositive ? "+" : "-"}
+                {Math.abs(stat.changePercent)}%
               </span>{" "}
               from last month
             </div>
-          </article>
+          </Link>
         );
       })}
     </div>

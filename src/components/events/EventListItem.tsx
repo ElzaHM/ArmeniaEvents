@@ -9,30 +9,13 @@ import {
 import { Link } from 'react-router-dom';
 
 import type { EventItem } from '../home/types';
+import { formatDateBadge, formatEventDateTime } from './eventDateUtils';
 
 import styles from './EventListItem.module.css';
 
 interface EventListItemProps {
   event: EventItem;
   variant?: 'list' | 'grid';
-}
-
-function formatDateBadge(dateString: string) {
-  const date = new Date(dateString);
-  const month = date.toLocaleString('en-US', { month: 'short' }).toUpperCase();
-  const day = date.getDate();
-
-  return { month, day };
-}
-
-function formatEventDateTime(dateString: string, time: string) {
-  const date = new Date(dateString);
-  const formattedDate = date.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-  });
-
-  return `${formattedDate} • ${time}`;
 }
 
 export default function EventListItem({ event, variant = 'list' }: EventListItemProps) {

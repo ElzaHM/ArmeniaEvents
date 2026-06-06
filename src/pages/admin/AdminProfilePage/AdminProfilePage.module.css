@@ -1,0 +1,126 @@
+.profileLayout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.photoPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  background: var(--admin-surface);
+}
+
+.avatarButton {
+  position: relative;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.avatar {
+  display: block;
+  width: 136px;
+  height: 136px;
+  border: 3px solid var(--admin-gold);
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--admin-shadow);
+}
+
+.previewBadge {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--admin-gold-border);
+  border-radius: 50%;
+  background: var(--admin-card-bg);
+  color: var(--admin-gold-strong);
+  box-shadow: var(--admin-shadow);
+}
+
+.avatarButton:hover .previewBadge,
+.avatarButton:focus-visible .previewBadge {
+  background: var(--admin-gold-hover);
+}
+
+.avatarButton:focus-visible {
+  outline: 2px solid var(--admin-gold);
+  outline-offset: 4px;
+}
+
+.photoHint {
+  max-width: 190px;
+  margin: 0;
+  color: var(--admin-text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.form {
+  min-width: 0;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 18px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.previewModal :global(.ant-modal-content) {
+  background: var(--admin-card-bg);
+  border: 1px solid var(--admin-border);
+}
+
+.previewImage {
+  display: block;
+  width: 100%;
+  max-height: 70vh;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+@media (max-width: 820px) {
+  .profileLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .photoPanel {
+    align-items: flex-start;
+  }
+
+  .photoHint {
+    max-width: none;
+    text-align: left;
+  }
+}
+
+@media (max-width: 560px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+}

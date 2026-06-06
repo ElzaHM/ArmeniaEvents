@@ -8,9 +8,6 @@ export const TOTAL_EVENTS = 320;
 export const SORT_OPTIONS = [
   { value: 'date-newest', label: 'Date (Newest)' },
   { value: 'date-oldest', label: 'Date (Oldest)' },
-  { value: 'price-low', label: 'Price (Low to High)' },
-  { value: 'price-high', label: 'Price (High to Low)' },
-  { value: 'popular', label: 'Most Popular' },
 ];
 
 export const FILTER_CATEGORIES = CATEGORIES.map((category) => ({

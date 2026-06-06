@@ -167,6 +167,7 @@
 .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper:hover,
 .eventsPage .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper:hover {
   background: var(--events-filter-date-hover-bg) !important;
+  background-color: var(--events-filter-date-hover-bg) !important;
   border-color: var(--home-accent) !important;
 }
 
@@ -175,6 +176,7 @@
 .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper-focused,
 .eventsPage .eventsFilters .eventsOrganizerField.ant-input-affix-wrapper-focused {
   background: var(--events-filter-date-hover-bg) !important;
+  background-color: var(--events-filter-date-hover-bg) !important;
   border-color: var(--home-accent) !important;
   box-shadow: 0 0 0 2px rgba(192, 139, 70, 0.15) !important;
 }

@@ -1,42 +1,86 @@
 .dashboard {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 24px;
 }
 
 .row {
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 16px;
-  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.upcomingEventsWrapper,
+.analyticsWrapper {
+  display: flex;
+  min-width: 0;
+}
+
+.upcomingEventsWrapper {
+  flex: 1 1 650px;
+}
+
+.analyticsWrapper {
+  flex: 1 1 380px;
+  min-width: 320px;
+  transition: all 0.3s ease;
+}
+
+.upcomingEventsWrapper > section,
+.analyticsWrapper > section {
+  flex: 1;
+  width: 100%;
+}
+
+@media (max-width: 1350px) {
+  .analyticsWrapper {
+    flex: 1 1 100%;
+  }
 }
 
 .bottomRow {
   display: grid;
   grid-template-columns: 1fr 1fr 340px;
-  gap: 16px;
+  gap: 24px;
 }
 
 @media (max-width: 1400px) {
   .bottomRow {
     grid-template-columns: 1fr 1fr;
   }
-
   .bottomRow > :last-child {
     grid-column: 1 / -1;
   }
 }
 
 @media (max-width: 1024px) {
-  .row {
-    grid-template-columns: 1fr;
-  }
-
   .bottomRow {
     grid-template-columns: 1fr;
   }
 
   .bottomRow > :last-child {
     grid-column: auto;
+  }
+
+  .row {
+    margin-bottom: 0;
+    gap: 16px;
+  }
+
+  .dashboard {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard {
+    gap: 12px;
+  }
+
+  .row,
+  .bottomRow {
+    gap: 12px;
   }
 }

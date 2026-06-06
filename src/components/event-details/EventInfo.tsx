@@ -7,24 +7,13 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 
+import { formatFullDate } from '../events/eventDateUtils';
 import type { EventDetails } from './types';
 
 import styles from './EventInfo.module.css';
 
 interface EventInfoProps {
   event: EventDetails;
-}
-
-function formatFullDate(dateString: string, time: string) {
-  const date = new Date(dateString);
-
-  const formatted = date.toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
-
-  return `${formatted} • ${time}`;
 }
 
 export default function EventInfo({ event }: EventInfoProps) {

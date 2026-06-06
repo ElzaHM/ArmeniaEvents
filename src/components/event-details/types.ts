@@ -26,6 +26,7 @@ export interface OrganizerInfo {
   name: string;
   role: string;
   avatarUrl: string;
+  description: string;
 }
 
 export interface EventDetails extends EventItem {
@@ -43,4 +44,5 @@ export interface EventDetails extends EventItem {
   scheduleDays: { date: string; label: string; weekday: string }[];
   tickets: TicketOption[];
   organizer: OrganizerInfo;
+  ticketUrl?: string | null;
 }

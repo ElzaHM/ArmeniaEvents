@@ -12,7 +12,7 @@ export default function AdminPageHeader({
 }: AdminPageHeaderProps) {
   return (
     <div className={styles.pageHeader}>
-      <h1 className={styles.greeting}>
+      <h1 className={`${styles.greeting} ${title ? styles.pageTitle : ""}`}>
         {title ? (
           title
         ) : (

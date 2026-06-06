@@ -19,6 +19,7 @@
     "@tanstack/react-query": "^5.100.14",
     "@tanstack/react-query-devtools": "^5.100.14",
     "antd": "^6.4.3",
+    "dayjs": "^1.11.10",
     "axios": "^1.16.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",

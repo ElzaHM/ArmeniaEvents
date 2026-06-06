@@ -7,20 +7,19 @@ import {
 } from '../components/home/mockData';
 import type { EventItem } from '../components/home/types';
 import {
-  EVENT_TYPES,
-  FILTER_CATEGORIES,
-  LANGUAGES,
-  ORGANIZERS,
   PRICE_MARKS,
   RADIUS_MARKS,
-  SORT_OPTIONS,
 } from '../components/events/mockData';
 import {
   EVENT_TABS,
   INTERESTED_AVATARS,
-  RELATED_EVENTS,
 } from '../components/event-details/mockData';
 import type { EventDetails } from '../components/event-details/types';
+import {
+  formatEventTime,
+  formatWeekday,
+  parseEventDate,
+} from '../components/events/eventDateUtils';
 import { supabase } from '../lib/supabase';
 
 const DEFAULT_EVENT_IMAGE =
@@ -34,7 +33,10 @@ type EventListRow = {
   image_url?: string | null;
   address?: string | null;
   venue?: string | null;
-  start_date: string;
+  start_date?: string | null;
+  event_type?: string | null;
+  language?: string | null;
+  price?: number | null;
   categories: { name: string } | null;
   organizers: { name: string } | null;
   views?: number | null;
@@ -50,9 +52,12 @@ type EventDetailRow = {
   organizer_id?: string | null;
   venue?: string | null;
   address?: string | null;
-  start_date: string;
+  start_date?: string | null;
   end_date?: string | null;
   ticket_url?: string | null;
+  event_type?: string | null;
+  language?: string | null;
+  price?: number | null;
   categories: { name: string } | null;
   organizers: {
     name: string;
@@ -91,26 +96,14 @@ async function simulateRequest<T>(data: T): Promise<T> {
   return data;
 }
 
-function formatEventTime(startDate: string): string {
-  return new Date(startDate).toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-}
+function formatDuration(startDate?: string | null, endDate?: string | null): string {
+  const start = parseEventDate(startDate);
+  const end = parseEventDate(endDate);
 
-function formatWeekday(startDate: string): string {
-  return new Date(startDate)
-    .toLocaleDateString('en-US', { weekday: 'short' })
-    .toUpperCase();
-}
-
-function formatDuration(startDate: string, endDate?: string | null): string {
-  if (!startDate || !endDate) {
+  if (!start || !end) {
     return '';
   }
 
-  const start = new Date(startDate);
-  const end = new Date(endDate);
   const diffMs = end.getTime() - start.getTime();
 
   if (diffMs <= 0) {
@@ -137,18 +130,28 @@ function formatDuration(startDate: string, endDate?: string | null): string {
   return `${minutes}m`;
 }
 
+function formatPriceLabel(price: number | null | undefined): string {
+  const value = price ?? 0;
+  return value === 0 ? 'Free' : `$${value}`;
+}
+
 function mapEventRowToEventItem(event: EventListRow): EventItem {
+  const priceValue = event.price ?? 0;
+
   return {
     id: event.id,
     title: event.title,
     category: event.categories?.name ?? 'Uncategorized',
     location: event.address ?? event.venue ?? 'Yerevan',
-    date: event.start_date,
+    date: event.start_date ?? '',
     time: formatEventTime(event.start_date),
     imageUrl: event.image_url ?? DEFAULT_EVENT_IMAGE,
-    price: 'Free',
-    isFree: true,
-  };
+    price: formatPriceLabel(priceValue),
+    isFree: priceValue === 0,
+    eventType: event.event_type ?? 'Offline',
+    language: event.language ?? 'English',
+    organizer: event.organizers?.name ?? 'Armenia Events',
+  } as EventItem;
 }
 
 const EVENT_LIST_SELECT = `
@@ -201,25 +204,27 @@ export function mapEventRowToEventDetails(row: EventDetailRow): EventDetails {
   const location = row.address ?? row.venue ?? 'Yerevan, Armenia';
   const imageUrl = row.image_url ?? DEFAULT_EVENT_IMAGE;
   const organizerName = row.organizers?.name ?? 'Armenia Events';
+  const priceValue = row.price ?? 0;
 
   return {
     id: row.id,
     title: row.title,
     category: row.categories?.name ?? 'Uncategorized',
     location,
-    date: row.start_date,
+    date: row.start_date ?? '',
     time: formatEventTime(row.start_date),
-    price: 'Free',
-    isFree: true,
+    price: formatPriceLabel(priceValue),
+    isFree: priceValue === 0,
     imageUrl,
     weekday: formatWeekday(row.start_date),
+    ticketUrl: row.ticket_url ?? null,
     interestedCount: 0,
     goingCount: 0,
     description: row.description ? [row.description] : [],
     tags: [],
     duration: formatDuration(row.start_date, row.end_date),
-    eventType: 'Offline',
-    languages: 'English',
+    eventType: row.event_type ?? 'Offline',
+    languages: row.language ?? 'English',
     ageRange: 'All ages',
     venue: {
       name: row.venue ?? 'Event Venue',
@@ -236,28 +241,118 @@ export function mapEventRowToEventDetails(row: EventDetailRow): EventDetails {
       name: organizerName,
       role: 'Event Organizer',
       avatarUrl: row.organizers?.avatar_url ?? DEFAULT_ORGANIZER_AVATAR,
+      description: row.organizers?.description ?? '',
     },
   };
 }
-
-export type SortOption = {
-  value: string;
-  label: string;
-};
 
 export type EventFiltersData = {
   filterCategories: { name: string; count: number }[];
   eventTypes: { label: string; count: number }[];
   languages: { label: string; count: number }[];
-  organizers: { name: string; count: number }[];
+  organizers: { label: string; value: string }[];
   priceMarks: typeof PRICE_MARKS;
   radiusMarks: typeof RADIUS_MARKS;
 };
 
+function buildFilterCategoriesFromEvents(events: EventListRow[]): { name: string; count: number }[] {
+  const categoryCounts = new Map<string, number>();
+
+  for (const event of events) {
+    const name = event.categories?.name ?? 'Uncategorized';
+    categoryCounts.set(name, (categoryCounts.get(name) ?? 0) + 1);
+  }
+
+  return Array.from(categoryCounts.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((left, right) => left.name.localeCompare(right.name));
+}
+
+function buildFilterEventTypesFromEvents(events: EventListRow[]): { label: string; count: number }[] {
+  const eventTypeCounts = new Map<string, number>();
+
+  for (const event of events) {
+    const label = event.event_type ?? 'Offline';
+    eventTypeCounts.set(label, (eventTypeCounts.get(label) ?? 0) + 1);
+  }
+
+  return Array.from(eventTypeCounts.entries())
+    .map(([label, count]) => ({ label, count }))
+    .sort((left, right) => left.label.localeCompare(right.label));
+}
+
+function buildFilterOrganizersFromEvents(events: EventListRow[]): { label: string; value: string }[] {
+  const organizerNames = new Set<string>();
+
+  for (const event of events) {
+    const name = event.organizers?.name ?? 'Armenia Events';
+    organizerNames.add(name);
+  }
+
+  return Array.from(organizerNames)
+    .sort((left, right) => left.localeCompare(right))
+    .map((name) => ({ label: name, value: name }));
+}
+
+type EventsListParams = {
+  page?: number;
+  pageSize?: number;
+  q?: string;
+};
+
+type EventsApiResponse = {
+  data: EventListRow[];
+  total: number;
+  page: number;
+  pageSize: number;
+};
+
+export type EventsPaginatedResult = {
+  events: EventItem[];
+  total: number;
+  page: number;
+  pageSize: number;
+};
+
+function buildFilterLanguagesFromEvents(events: EventListRow[]): { label: string; count: number }[] {
+  const languageCounts = new Map<string, number>();
+
+  for (const event of events) {
+    const label = event.language ?? 'English';
+    languageCounts.set(label, (languageCounts.get(label) ?? 0) + 1);
+  }
+
+  return Array.from(languageCounts.entries())
+    .map(([label, count]) => ({ label, count }))
+    .sort((left, right) => left.label.localeCompare(right.label));
+}
+
 export const eventsService = {
-  async getEvents(): Promise<EventItem[]> {
-    const { data } = await api.get<EventListRow[]>('/events');
-    return data.map((event) => mapEventRowToEventItem(event));
+  async getEvents(params: EventsListParams = {}): Promise<EventsPaginatedResult> {
+    try {
+      const { data } = await api.get<EventsApiResponse>('/events', {
+        params: {
+          page: params.page,
+          pageSize: params.pageSize,
+          q: params.q,
+        },
+      });
+
+      return {
+        events: data.data.map((event) => mapEventRowToEventItem(event)),
+        total: data.total,
+        page: data.page,
+        pageSize: data.pageSize,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message = (error.response?.data as { message?: string } | undefined)?.message;
+        if (message) {
+          throw new Error(message);
+        }
+      }
+      throw error;
+    }
   },
 
   async getEventById(id: string | undefined): Promise<EventDetails> {
@@ -265,8 +360,18 @@ export const eventsService = {
       throw new Error('Event id is required');
     }
 
-    const { data } = await api.get<EventDetailRow>(`/events/${id}`);
-    return mapEventRowToEventDetails(data);
+    try {
+      const { data } = await api.get<EventDetailRow>(`/events/${id}`);
+      return mapEventRowToEventDetails(data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message = (error.response?.data as { message?: string } | undefined)?.message;
+        if (message) {
+          throw new Error(message);
+        }
+      }
+      throw error;
+    }
   },
 
   async getUpcomingEvents(): Promise<EventItem[]> {
@@ -285,13 +390,27 @@ export const eventsService = {
     return mapEventListRowsToEventItems(rows);
   },
 
-  getRelatedEvents(): Promise<EventItem[]> {
-    return simulateRequest([...RELATED_EVENTS]);
+  pickRelatedEvents(
+    events: EventItem[],
+    currentEventId: string,
+    category: string,
+    limit = 3,
+  ): EventItem[] {
+    const others = events.filter((event) => event.id !== currentEventId);
+    const sameCategory = others.filter((event) => event.category === category);
+    const pool = sameCategory.length > 0 ? sameCategory : others;
+
+    return pool.slice(0, limit);
+  },
+
+  async getRelatedEvents(currentEventId: string, category: string): Promise<EventItem[]> {
+    const { events } = await this.getEvents();
+    return this.pickRelatedEvents(events, currentEventId, category, 3);
   },
 
   async getTotalEventsCount(): Promise<number> {
-    const events = await this.getEvents();
-    return events.length;
+    const { total } = await this.getEvents();
+    return total;
   },
 
   async createEvent(payload: EventCrudPayload): Promise<EventDetailRow> {
@@ -314,19 +433,19 @@ export const eventsService = {
     });
   },
 
-  getSortOptions(): Promise<SortOption[]> {
-    return simulateRequest([...SORT_OPTIONS]);
-  },
+  async getEventFilters(): Promise<EventFiltersData> {
+    const { data } = await api.get<EventsApiResponse>('/events', {
+      params: { page: 1, pageSize: 1000 },
+    });
 
-  getEventFilters(): Promise<EventFiltersData> {
-    return simulateRequest({
-      filterCategories: [...FILTER_CATEGORIES],
-      eventTypes: [...EVENT_TYPES],
-      languages: [...LANGUAGES],
-      organizers: [...ORGANIZERS],
+    return {
+      filterCategories: buildFilterCategoriesFromEvents(data.data),
+      eventTypes: buildFilterEventTypesFromEvents(data.data),
+      languages: buildFilterLanguagesFromEvents(data.data),
+      organizers: buildFilterOrganizersFromEvents(data.data),
       priceMarks: PRICE_MARKS,
       radiusMarks: RADIUS_MARKS,
-    });
+    };
   },
 
   getPopularTags(): Promise<readonly string[]> {

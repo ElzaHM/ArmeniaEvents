@@ -4,13 +4,18 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
 import { QueryState } from '../../hooks/queries/query-state';
 import { useRelatedEvents } from '../../hooks/queries/useEvents';
-import EventCard from '../home/EventCard';
+import EventListItem from '../events/EventListItem';
 import SectionHeader from '../home/SectionHeader';
 
 import styles from './RelatedEvents.module.css';
 
-export default function RelatedEvents() {
-  const { data: relatedEvents, isLoading, isError, error } = useRelatedEvents();
+interface RelatedEventsProps {
+  eventId: string;
+  category: string;
+}
+
+export default function RelatedEvents({ eventId, category }: RelatedEventsProps) {
+  const { data: relatedEvents, isLoading, isError, error } = useRelatedEvents(eventId, category);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -24,9 +29,13 @@ export default function RelatedEvents() {
     });
   };
 
+  if (!isLoading && !isError && relatedEvents?.length === 0) {
+    return null;
+  }
+
   return (
     <QueryState isLoading={isLoading} isError={isError} error={error}>
-      {relatedEvents && (
+      {relatedEvents && relatedEvents.length > 0 && (
         <section className={styles.section}>
           <div className="detailsSection">
             <div className={styles.headerRow}>
@@ -54,7 +63,7 @@ export default function RelatedEvents() {
             <div ref={scrollRef} className={styles.scrollContainer}>
               {relatedEvents.map((event) => (
                 <div key={event.id} className={styles.cardWrap}>
-                  <EventCard event={event} />
+                  <EventListItem event={event} variant="grid" />
                 </div>
               ))}
             </div>

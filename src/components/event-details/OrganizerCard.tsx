@@ -17,6 +17,7 @@ export default function OrganizerCard({ event }: OrganizerCardProps) {
     name: 'Armenia Events',
     role: 'Event Organizer',
     avatarUrl: DEFAULT_ORGANIZER_AVATAR,
+    description: '',
   };
 
   return (
@@ -32,6 +33,11 @@ export default function OrganizerCard({ event }: OrganizerCardProps) {
             <Typography.Text strong className={styles.name}>
               {organizer.name}
             </Typography.Text>
+            {organizer.description ? (
+              <Typography.Paragraph className={styles.role}>
+                {organizer.description}
+              </Typography.Paragraph>
+            ) : null}
             <Typography.Text className={styles.role}>
               {organizer.role}
             </Typography.Text>
