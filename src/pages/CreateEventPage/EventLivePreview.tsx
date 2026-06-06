@@ -1,56 +1,73 @@
+import React from 'react';
 import { Typography, Button } from 'antd';
 import { 
-  HeartFilled, EnvironmentOutlined, GlobalOutlined, 
-  CalendarOutlined, ClockCircleOutlined, LinkOutlined, PlusCircleOutlined 
+  HeartOutlined, 
+  EnvironmentOutlined, 
+  GlobalOutlined, 
+  CalendarOutlined, 
+  PlusCircleOutlined,
+  HomeOutlined // Վայրի համար
 } from '@ant-design/icons';
 import styles from './CreateEventPage.module.css';
 
 const { Title, Text } = Typography;
 
 export default function EventLivePreview({ data, image }: { data: any, image: string }) {
+  const isFree = !data.price || data.price === 'Free' || data.price === '0';
+
   return (
     <div className={styles.previewSticky}>
-      <div className={styles.previewCard}>
-        <Title level={5} className={styles.cardHeader}>
-          <GlobalOutlined className={styles.headerIcon} /> Live Preview
-        </Title>
-        
-        <div className={styles.eventPreviewBox}>
-          <div 
-            className={styles.previewImageArea} 
-            style={{ backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%), url(${image})` }}
-          >
-            <div className={styles.categoryBadge}>{data.category}</div>
-            <HeartFilled className={styles.previewHeart} />
-            <div className={styles.dateBadge}>
-              <Text className={styles.badgeMonth}>WED</Text>
-              <Text className={styles.badgeDay}>15</Text>
-            </div>
-            <div className={styles.imageOverlayText}>
-               <Title level={4} className={styles.previewTitle}>{data.title}</Title>
-               <Text className={styles.previewDesc}>{data.description}</Text>
-            </div>
+      <Title level={5} className={styles.previewSectionTitle}>Live Preview</Title>
+      
+      <div className={styles.eventCardPreview}>
+        <div 
+          className={styles.previewImageArea} 
+          style={{ backgroundImage: `url(${image})` }}
+        >
+          <div className={styles.dateBadge}>
+            <span className={styles.badgeMonth}>MAY</span>
+            <span className={styles.badgeDay}>24</span>
+          </div>
+          <div className={styles.heartCircle}><HeartOutlined /></div>
+          <div className={styles.typeBadgeOnImage}>{data.eventType}</div>
+        </div>
+
+        <div className={styles.previewContent}>
+          <Title level={4} className={styles.previewTitle}>{data.title}</Title>
+          <Text className={styles.previewCategory}>{data.category}</Text>
+
+          {/* Venue (Վայրի անուն) */}
+          <div className={styles.detailRow}>
+            <HomeOutlined className={styles.detailIcon} />
+            <Text className={styles.detailText}>{data.venue}</Text>
           </div>
 
-          <div className={styles.previewDetails}>
-            <div className={styles.detailLine}><EnvironmentOutlined /> {data.venue}</div>
-            <div className={styles.detailLine}><GlobalOutlined /> {data.address}</div>
-            <div className={styles.detailLine}><CalendarOutlined /> {data.date}</div>
-            <div className={styles.detailLine}><ClockCircleOutlined /> {data.startTime} - {data.endTime}</div>
-            <Button block className={styles.viewTicketsBtn}>View Tickets <LinkOutlined /></Button>
+          {/* Address (Հասցե) */}
+          <div className={styles.detailRow}>
+            <EnvironmentOutlined className={styles.detailIcon} />
+            <Text className={styles.detailText}>{data.address}</Text>
+          </div>
+
+          {/* Date & Time */}
+          <div className={styles.detailRow}>
+            <CalendarOutlined className={styles.detailIcon} />
+            <Text className={styles.detailText}>{data.date} • {data.startTime}</Text>
+          </div>
+
+          <div className={`${styles.previewPrice} ${isFree ? styles.freePrice : ''}`}>
+            {isFree ? 'Free' : `$${data.price}`}
           </div>
         </div>
       </div>
 
       <div className={styles.actionButtons}>
         <Button size="large" className={styles.cancelBtn}>Cancel</Button>
-        {/* htmlType="submit" կապում է կոճակը Form-ի հետ */}
         <Button 
           type="primary" 
           size="large" 
           icon={<PlusCircleOutlined />} 
-          className={styles.submitBtn} 
-          htmlType="submit" 
+          className={styles.submitBtn}
+          htmlType="submit"
         >
           Create Event
         </Button>

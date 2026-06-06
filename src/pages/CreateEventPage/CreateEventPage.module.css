@@ -1,40 +1,69 @@
-/* PAGE LAYOUT */
-.pageWrapper { padding: 80px 0 40px; background: transparent; min-height: 100vh; }
-.heroHeader { margin-bottom: 20px; }
-.mainTitle { font-size: 42px !important; color: white !important; margin: 0 !important; }
-.goldText { color: #c08b46; }
+   /* 1. PAGE LAYOUT & HERO HEADER */
+.pageWrapper {
+  padding: 100px 0 60px;
+  background: transparent;
+  min-height: 100vh;
+}
 
-/* KEEP CARDS DARK */
+.heroHeader {
+  margin-bottom: 25px;
+}
+
+.mainTitle {
+  font-size: 42px !important;
+  color: white !important;
+  margin: 0 !important;
+}
+
+.goldText {
+  color: #c08b46;
+}
+
+.heroSubtitle {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 15px;
+}
+
+   /* 2. MAIN GLASS CONTAINERS (CARDS) */
 .formCard, .previewCard {
-  background: rgba(14, 14, 14, 0.6) !important; /* Original dark glass */
+  background: rgba(14, 14, 14, 0.75) !important; 
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
-  padding: 12px 20px;
+  padding: 16px 20px;
+  margin-bottom: 0;
 }
-.previewSticky { position: sticky; top: 90px; }
 
-.cardHeader { color: white !important; margin-bottom: 10px !important; display: flex; align-items: center; gap: 8px; font-size: 15px !important; }
-.headerIcon { color: #c08b46; }
+.cardHeader {
+  color: white !important;
+  margin-bottom: 12px !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px !important;
+}
 
-/* LIGHTER WRITABLE INPUTS */
+.headerIcon {
+  color: #c08b46;
+}
+
+   /* 3. FORM ELEMENTS & WRITABLE INPUTS */
 .glassInput, 
 :global(.ant-select-selector),
 :global(.ant-picker),
 :global(.ant-input-affix-wrapper) {
-  /* Lighter background for better contrast when typing */
-  background: rgba(255, 255, 255, 0.18) !important; 
+  background: rgba(255, 255, 255, 0.18) !important; /* Լուսավոր ֆոն գրելու համար */
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
   color: white !important;
   height: 36px !important;
   border-radius: 6px !important;
 }
 
-/* Ant Design Pickers/Selects inner text */
 :global(.ant-picker-input > input),
 :global(.ant-select-selection-item),
-:global(.ant-select-selection-placeholder) {
+:global(.ant-select-selection-placeholder),
+:global(.ant-input::placeholder) {
   color: white !important;
 }
 
@@ -43,30 +72,217 @@
   border-color: #c08b46 !important;
 }
 
-.compactItem { margin-bottom: 8px !important; }
-.compactItem :global(.ant-form-item-label > label) { color: rgba(255, 255, 255, 0.8) !important; font-size: 12px; height: auto; }
-
-/* PREVIEW TEXT VISIBILITY */
-.previewImageArea {
-  height: 180px; background-size: cover; background-position: center; position: relative; padding: 15px;
-  display: flex; flex-direction: column; justify-content: flex-end; border-radius: 12px 12px 0 0;
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+.compactItem {
+  margin-bottom: 10px !important;
 }
-.previewTitle { color: white !important; margin: 0 !important; font-size: 18px !important; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-.previewDesc { color: rgba(255,255,255,0.9) !important; font-size: 12px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
 
-/* IMAGES GRID */
-.imageGrid { display: flex; gap: 12px; margin-top: 15px; }
-.imageItem { position: relative; width: 70px; height: 70px; border-radius: 8px; overflow: hidden; border: 2px solid transparent; cursor: pointer; }
-.imageItem img { width: 100%; height: 100%; object-fit: cover; }
-.selectedImage { border-color: #c08b46; box-shadow: 0 0 10px rgba(192, 139, 70, 0.5); }
-.imageDeleteIcon { position: absolute; top: 4px; right: 4px; background: rgba(255, 77, 79, 0.9); color: white; padding: 4px; border-radius: 50%; font-size: 10px; opacity: 0; transition: 0.2s; }
-.imageItem:hover .imageDeleteIcon { opacity: 1; }
+.compactItem :global(.ant-form-item-label > label) {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 12px;
+  height: auto;
+}
 
-/* BOTTOM BAR */
-.eventPreviewBox { background: #141414; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); }
-.previewDetails { padding: 15px; }
-.detailLine { display: flex; align-items: center; gap: 8px; color: rgba(255, 255, 255, 0.7); margin-bottom: 4px; font-size: 12px; }
-.actionButtons { display: flex; gap: 10px; margin-top: 15px; }
-.cancelBtn { flex: 1; height: 40px !important; background: rgba(255, 255, 255, 0.1) !important; color: white !important; border: none !important; }
-.submitBtn { flex: 2; height: 40px !important; background: #c08b46 !important; color: #1a1a1a !important; border: none !important; font-weight: bold !important; }
+   /* 4. SINGLE IMAGE UPLOAD & DELETE BAR */
+.glassUpload :global(.ant-upload-drag) {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 2px dashed rgba(255, 255, 255, 0.15) !important;
+  padding: 10px 0 !important;
+}
+
+.uploadedFileBar {
+  background: rgba(192, 139, 70, 0.1);
+  border: 1px solid rgba(192, 139, 70, 0.3);
+  border-radius: 10px;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fileDetails {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fileIcon {
+  font-size: 20px;
+  color: #c08b46;
+}
+
+.fileText {
+  display: flex;
+  flex-direction: column;
+}
+
+.deleteBtn {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.2s;
+}
+
+.deleteBtn:hover {
+  color: #ff4d4f;
+}
+
+   /* 5. LIVE PREVIEW CARD (MATCHING GRID STYLE) */
+.previewSticky {
+  position: sticky;
+  top: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: fit-content;
+  background: rgba(14, 14, 14, 0.75) !important; 
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 16px 25px;
+}
+
+.previewSectionTitle {
+  color: white !important;
+  align-self: flex-start;
+  margin-bottom: 20px !important;
+}
+
+.eventCardPreview {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid #c08b46; /* Live effect border */
+  border-radius: 24px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 300px;
+}
+
+.previewImageArea {
+  height: 180px; /* Մեծացված բարձրություն */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  margin: 12px;
+  border-radius: 18px;
+  /* Մուգ գրադիենտ տեքստի տակ */
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+}
+
+.dateBadge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: white;
+  padding: 5px 10px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.badgeMonth { font-size: 9px; font-weight: 800; color: #1a1a1a; }
+.badgeDay { font-size: 16px; font-weight: 800; color: #1a1a1a; }
+
+.heartCircle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: white;
+  font-size: 18px;
+}
+
+.typeBadgeOnImage {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.previewContent {
+  padding: 0 20px 20px 20px;
+}
+
+.previewTitle {
+  color: white !important;
+  font-size: 18px !important;
+  margin: 0 !important;
+  font-weight: 600 !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.previewCategory {
+  color: rgba(255, 255, 255, 0.4) !important;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.detailRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.detailIcon {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 14px;
+}
+
+.detailText {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 13px;
+}
+
+.previewPrice {
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #c08b46;
+}
+
+.freePrice {
+  color: #52c41a;
+}
+
+   /* 6. FINAL ACTION BUTTONS */
+.actionButtons {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.cancelBtn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: white !important;
+  border: none !important;
+  height: 44px !important;
+  border-radius: 8px !important;
+}
+
+.submitBtn {
+  flex: 2;
+  background: #c08b46 !important;
+  color: #1a1a1a !important;
+  border: none !important;
+  height: 44px !important;
+  border-radius: 8px !important;
+  font-weight: bold !important;
+}
+
+.submitBtn:hover {
+  background: #d4a363 !important;
+}
