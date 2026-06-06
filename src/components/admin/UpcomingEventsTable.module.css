@@ -1,3 +1,89 @@
+.tableWrap {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--admin-table-row-bg);
+  -webkit-overflow-scrolling: touch;
+}
+
+.tableWrap :global(.ant-table-wrapper) {
+  max-width: 100%;
+}
+
+.tableWrap :global(.admin-table-row-clickable) {
+  cursor: pointer;
+}
+
+.detailActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.detailModal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detailImage {
+  width: 100%;
+  max-height: 220px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.detailList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+
+.detailRow {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.detailRow dt {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--admin-text-muted);
+}
+
+.detailRow dd {
+  margin: 0;
+  color: var(--admin-text);
+}
+
+.detailActions :global(.ant-btn) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 520px) {
+  .detailActions {
+    flex-direction: column-reverse;
+  }
+
+  .detailActions :global(.ant-btn) {
+    width: 100%;
+  }
+
+  .detailRow {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
 .eventCell {
   display: flex;
   align-items: center;
@@ -45,10 +131,4 @@
   color: var(--admin-text-muted);
   background: var(--admin-gold-light);
   border: none;
-}
-
-.tableWrap {
-  overflow-x: auto;
-  background: var(--admin-table-row-bg);
-  -webkit-overflow-scrolling: touch;
 }

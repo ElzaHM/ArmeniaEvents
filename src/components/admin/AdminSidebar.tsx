@@ -3,8 +3,10 @@ import {
   AppstoreOutlined,
   CalendarOutlined,
   LogoutOutlined,
+  SearchOutlined,
   SettingOutlined,
   TagsOutlined,
+  TeamOutlined,
   UserOutlined,
   BarChartOutlined,
   EnvironmentOutlined,
@@ -20,7 +22,8 @@ const NAV_ITEMS = [
   {to: "/admin", label: "Dashboard", icon: AppstoreOutlined, end: true},
   {to: "/admin/events", label: "Events", icon: CalendarOutlined, end: false},
   {to: "/admin/categories", label: "Categories", icon: TagsOutlined, end: false},
-  {to: "/admin/users", label: "Users", icon: UserOutlined, end: false},
+  {to: "/admin/users", label: "Users", icon: TeamOutlined, end: false},
+  {to: "/admin/search", label: "Search", icon: SearchOutlined, end: false},
   {to: "/admin/analytics", label: "Analytics", icon: BarChartOutlined, end: false},
   {to: "/admin/profile", label: "My Profile", icon: UserOutlined, end: false},
   {to: "/admin/settings", label: "Settings", icon: SettingOutlined, end: false},
@@ -101,8 +104,8 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
               </li>
             </ul>
           </nav>
-          <div className={styles.skylineDecoration} aria-hidden="true" />
         </div>
+        <div className={styles.skylineDecoration} aria-hidden="true" />
         <div className={styles.sidebarFooter}>
           <div className={styles.profileCard}>
             <img src={ADMIN_PROFILE.avatarUrl} alt="Admin" className={styles.avatar} />

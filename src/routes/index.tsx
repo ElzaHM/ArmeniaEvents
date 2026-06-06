@@ -14,6 +14,7 @@ import AdminUsersPage from '../pages/admin/AdminUsersPage';
 import AdminAnalyticsPage from '../pages/admin/AdminAnalyticsPage';
 import AdminSettingsPage from '../pages/admin/AdminSettingsPage';
 import AdminProfilePage from '../pages/admin/AdminProfilePage';
+import AdminSearchPage from '../pages/admin/AdminSearchPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import CreateEventPage from '../pages/CreateEventPage';
 import { RequireAuth, RequireGuest } from './guards';
@@ -84,6 +85,10 @@ export const router = createBrowserRouter([
       {
         path: 'users',
         element: <AdminUsersPage />,
+      },
+      {
+        path: 'search',
+        element: <AdminSearchPage />,
       },
       {
         path: 'analytics',

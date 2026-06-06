@@ -1,7 +1,58 @@
 .tableWrap {
-  overflow-x: auto;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
   background: var(--admin-table-row-bg);
   -webkit-overflow-scrolling: touch;
+}
+
+.tableWrap :global(.ant-table-wrapper) {
+  max-width: 100%;
+}
+
+.tableWrap :global(.admin-btn-edit),
+.tableWrap :global(.admin-btn-edit:hover),
+.tableWrap :global(.admin-btn-edit:focus),
+.tableWrap :global(.admin-btn-delete),
+.tableWrap :global(.admin-btn-delete:hover),
+.tableWrap :global(.admin-btn-delete:focus) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.tableHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.tableTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--admin-text);
+}
+
+.emptyWrap {
+  display: flex;
+  min-height: 220px;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyWrap :global(.ant-empty-description) {
+  color: var(--admin-text-secondary);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
 }
 
 .userCell {
@@ -10,9 +61,116 @@
   gap: 10px;
 }
 
+.detailList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+}
+
+.detailRow {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.detailRow dt {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--admin-text-muted);
+}
+
+.detailRow dd {
+  margin: 0;
+  color: var(--admin-text);
+}
+
 .avatar {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.userModal :global(.ant-modal-content) {
+  max-width: 420px;
+  margin: 0 auto;
+  background: var(--admin-card-bg);
+  border: 1px solid var(--admin-border);
+}
+
+.userModal :global(.ant-modal-body) {
+  padding: 18px;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.modalAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--admin-gold);
+  object-fit: cover;
+}
+
+.editButton {
+  background: #1d4ed8 !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #eff6ff !important;
+}
+
+.editButton:hover,
+.editButton:focus {
+  background: #2563eb !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+}
+
+.modalContent :global(.ant-form) {
+  width: 100%;
+}
+
+.modalActions {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modalActions :global(.ant-btn),
+.modalContent :global(.ant-btn) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 520px) {
+  .modalActions {
+    flex-direction: column-reverse;
+  }
+
+  .modalActions :global(.ant-btn) {
+    width: 100%;
+  }
+
+  .detailRow {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .userModal :global(.ant-modal-body) {
+    padding: 14px;
+  }
 }

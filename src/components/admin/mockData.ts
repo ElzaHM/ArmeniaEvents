@@ -11,8 +11,19 @@ import type {
   QuickAction,
   StatMetric,
 } from "./types";
+import { ORGANIZER_AVATAR_PLACEHOLDER } from "./mapApiEventToAdminEvent";
 
 import adminAvatar from "../../assets/adminPage/admin_avatar.png";
+
+function mockAdminEvent(partial: Omit<AdminEvent, "endDate" | "endDateDisplay" | "organizerName" | "organizerAvatarUrl"> & Partial<Pick<AdminEvent, "endDate" | "endDateDisplay" | "organizerName" | "organizerAvatarUrl">>): AdminEvent {
+  return {
+    ...partial,
+    endDate: partial.endDate ?? partial.startDate,
+    endDateDisplay: partial.endDateDisplay ?? partial.date,
+    organizerName: partial.organizerName ?? "N/A",
+    organizerAvatarUrl: partial.organizerAvatarUrl ?? ORGANIZER_AVATAR_PLACEHOLDER,
+  };
+}
 
 export const ADMIN_PROFILE = {
   name: "Admin",
@@ -52,10 +63,11 @@ export const DASHBOARD_STATS: StatMetric[] = [
 ];
 
 export const UPCOMING_ADMIN_EVENTS: AdminEvent[] = [
-  {
+  mockAdminEvent({
     id: "1",
     title: "Yerevan Wine Days 2026",
     date: "2024-05-24",
+    startDate: "2024-05-24",
     category: "Festival",
     location: "Yerevan, Armenia",
     views: 842,
@@ -63,11 +75,12 @@ export const UPCOMING_ADMIN_EVENTS: AdminEvent[] = [
     status: "published",
     imageUrl:
       "https://images.unsplash.com/photo-1510812431400-5745154a390a?auto=format&fit=crop&w=120&q=80",
-  },
-  {
+  }),
+  mockAdminEvent({
     id: "2",
     title: "React Armenia Conference",
     date: "2024-06-15",
+    startDate: "2024-06-15",
     category: "Technology",
     location: "Yerevan, Armenia",
     views: 620,
@@ -75,11 +88,12 @@ export const UPCOMING_ADMIN_EVENTS: AdminEvent[] = [
     status: "published",
     imageUrl:
       "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=120&q=80",
-  },
-  {
+  }),
+  mockAdminEvent({
     id: "3",
     title: "Jazz Night at Cascade",
     date: "2024-05-30",
+    startDate: "2024-05-30",
     category: "Music",
     location: "Yerevan, Armenia",
     views: 310,
@@ -87,11 +101,12 @@ export const UPCOMING_ADMIN_EVENTS: AdminEvent[] = [
     status: "draft",
     imageUrl:
       "https://images.unsplash.com/photo-1415201364774-f6f0ff35a028?auto=format&fit=crop&w=120&q=80",
-  },
-  {
+  }),
+  mockAdminEvent({
     id: "4",
     title: "Armenian Startup Summit",
     date: "2024-07-08",
+    startDate: "2024-07-08",
     category: "Business",
     location: "Gyumri, Armenia",
     views: 480,
@@ -99,11 +114,12 @@ export const UPCOMING_ADMIN_EVENTS: AdminEvent[] = [
     status: "published",
     imageUrl:
       "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=120&q=80",
-  },
-  {
+  }),
+  mockAdminEvent({
     id: "5",
     title: "Modern Art Exhibition",
     date: "2024-06-10",
+    startDate: "2024-06-10",
     category: "Culture",
     location: "Yerevan, Armenia",
     views: 195,
@@ -111,7 +127,7 @@ export const UPCOMING_ADMIN_EVENTS: AdminEvent[] = [
     status: "draft",
     imageUrl:
       "https://images.unsplash.com/photo-1531243269054-5ebf6f34067e?auto=format&fit=crop&w=120&q=80",
-  },
+  }),
 ];
 
 export const ANALYTICS_CHART_DATA: AnalyticsDataPoint[] = [

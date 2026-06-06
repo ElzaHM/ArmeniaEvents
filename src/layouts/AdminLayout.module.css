@@ -3,6 +3,8 @@
   display: flex;
   min-height: 100vh;
   min-height: 100dvh;
+  max-width: 100%;
+  overflow-x: hidden;
   color: var(--admin-text);
   isolation: isolate;
 }
@@ -18,6 +20,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .main {
@@ -25,6 +28,8 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
   min-height: 100dvh;
   margin-left: 260px;
   transition: margin-left 0.25s ease;

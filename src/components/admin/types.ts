@@ -23,8 +23,13 @@ export interface AdminEvent {
   id: string;
   title: string;
   date: string;
+  startDate: string;
+  endDate: string;
+  endDateDisplay: string;
   category: string;
   location: string;
+  organizerName: string;
+  organizerAvatarUrl: string;
   views: number;
   maxViews: number;
   status: AdminEventStatus;

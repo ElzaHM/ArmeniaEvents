@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { eventsService, type EventsPaginatedResult } from '../../services/events.service';
+import { adminDashboardKeys } from './useAdminDashboard';
 
 type EventsListParams = {
   page?: number;
@@ -128,6 +129,7 @@ export function useCreateEvent() {
     mutationFn: (payload: EventCreatePayload) => eventsService.createEvent(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: eventsKeys.all });
+      void queryClient.invalidateQueries({ queryKey: adminDashboardKeys.all });
       void queryClient.invalidateQueries({ queryKey: eventsKeys.totalCount });
     },
   });
@@ -140,6 +142,7 @@ export function useUpdateEvent() {
       eventsService.updateEvent(id, payload),
     onSuccess: (_, variables) => {
       void queryClient.invalidateQueries({ queryKey: eventsKeys.all });
+      void queryClient.invalidateQueries({ queryKey: adminDashboardKeys.all });
       void queryClient.invalidateQueries({ queryKey: eventsKeys.detail(variables.id) });
     },
   });
@@ -151,6 +154,7 @@ export function useDeleteEvent() {
     mutationFn: (id: string) => eventsService.deleteEvent(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: eventsKeys.all });
+      void queryClient.invalidateQueries({ queryKey: adminDashboardKeys.all });
       void queryClient.invalidateQueries({ queryKey: eventsKeys.totalCount });
     },
   });

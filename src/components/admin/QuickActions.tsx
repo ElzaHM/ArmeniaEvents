@@ -12,6 +12,37 @@ import type { QuickAction } from './types';
 
 import styles from './QuickActions.module.css';
 
+const QUICK_ACTIONS: QuickAction[] = [
+  {
+    id: '1',
+    title: 'Add New Event',
+    description: 'Create and publish a new event.',
+    icon: 'plus',
+    path: '/admin/events',
+  },
+  {
+    id: '2',
+    title: 'Add New Category',
+    description: 'Organize events with categories.',
+    icon: 'folder-add',
+    path: '/admin/categories',
+  },
+  {
+    id: '3',
+    title: 'Send Notification',
+    description: 'Notify users about events.',
+    icon: 'notification',
+    path: '/admin/settings',
+  },
+  {
+    id: '4',
+    title: 'Export Reports',
+    description: 'Download analytics reports.',
+    icon: 'export',
+    path: '/admin/analytics',
+  },
+];
+
 const ICON_MAP = {
   plus: PlusOutlined,
   'folder-add': FolderAddOutlined,
@@ -20,10 +51,10 @@ const ICON_MAP = {
 };
 
 interface QuickActionsProps {
-  actions: QuickAction[];
+  actions?: QuickAction[];
 }
 
-export default function QuickActions({ actions }: QuickActionsProps) {
+export default function QuickActions({ actions = QUICK_ACTIONS }: QuickActionsProps) {
   return (
     <AdminCard title="Quick Actions">
       <ul className={styles.list}>

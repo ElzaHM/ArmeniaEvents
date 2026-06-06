@@ -1,6 +1,8 @@
-import {Dropdown, Progress, Table, Tag} from "antd";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {Button, Dropdown, Modal, Progress, Table, Tag} from "antd";
 import type {MenuProps, TableColumnsType} from "antd";
-import {MoreOutlined} from "@ant-design/icons";
+import {EditOutlined, MoreOutlined} from "@ant-design/icons";
 
 import AdminCard from "./AdminCard";
 import type {AdminEvent, AdminEventStatus} from "./types";
@@ -26,7 +28,36 @@ interface UpcomingEventsTableProps {
   events: AdminEvent[];
 }
 
-export default function UpcomingEventsTable({events}: UpcomingEventsTableProps) {
+export default function UpcomingEventsTable({events: initialEvents}: UpcomingEventsTableProps) {
+  const navigate = useNavigate();
+  const [events, setEvents] = useState(initialEvents);
+  const [viewingEvent, setViewingEvent] = useState<AdminEvent | null>(null);
+
+  useEffect(() => {
+    setEvents(initialEvents);
+  }, [initialEvents]);
+
+  const openViewModal = (event: AdminEvent) => {
+    setViewingEvent(event);
+  };
+
+  const closeViewModal = () => {
+    setViewingEvent(null);
+  };
+
+  const handleDeleteEvent = (event: AdminEvent) => {
+    Modal.confirm({
+      title: "Delete event?",
+      content: `This will remove "${event.title}" from the upcoming events list.`,
+      okText: "Delete",
+      okButtonProps: {danger: true},
+      onOk: () => {
+        setEvents((currentEvents) => currentEvents.filter((item) => item.id !== event.id));
+        closeViewModal();
+      },
+    });
+  };
+
   const columns: TableColumnsType<AdminEvent> = [
     {
       title: "Event",
@@ -92,9 +123,26 @@ export default function UpcomingEventsTable({events}: UpcomingEventsTableProps) 
       title: "",
       key: "actions",
       width: 48,
-      render: () => (
-        <Dropdown menu={{items: ACTION_ITEMS}} trigger={["click"]} overlayClassName="admin-dropdown-menu">
-          <button type="button" aria-label="Actions">
+      render: (_, record) => (
+        <Dropdown
+          menu={{
+            items: ACTION_ITEMS,
+            onClick: ({key, domEvent}) => {
+              domEvent.stopPropagation();
+              if (key === "view" || key === "edit") {
+                openViewModal(record);
+              }
+              if (key === "delete") {
+                handleDeleteEvent(record);
+              }
+            },
+          }}
+          trigger={["click"]}
+          overlayClassName="admin-dropdown-menu">
+          <button
+            type="button"
+            aria-label="Actions"
+            onClick={(event) => event.stopPropagation()}>
             <MoreOutlined />
           </button>
         </Dropdown>
@@ -103,17 +151,87 @@ export default function UpcomingEventsTable({events}: UpcomingEventsTableProps) 
   ];
 
   return (
-    <AdminCard title="Upcoming Events">
-      <div className={styles.tableWrap}>
-        <Table
-          columns={columns}
-          dataSource={events}
-          rowKey="id"
-          scroll={{x: 800}}
-          pagination={{pageSize: 5}}
-          size="middle"
-        />
-      </div>
-    </AdminCard>
+    <>
+      <AdminCard title="Upcoming Events">
+        <div className={styles.tableWrap}>
+          <Table
+            columns={columns}
+            dataSource={events}
+            rowKey="id"
+            scroll={{x: "max-content"}}
+            pagination={{pageSize: 5}}
+            size="middle"
+            onRow={(record) => ({
+              onClick: () => openViewModal(record),
+              className: "admin-table-row-clickable",
+            })}
+          />
+        </div>
+      </AdminCard>
+      <Modal
+        open={Boolean(viewingEvent)}
+        title="Event Details"
+        footer={null}
+        onCancel={closeViewModal}
+        className="admin-detail-modal"
+        width={480}
+        centered>
+        {viewingEvent ? (
+          <div className={styles.detailModal}>
+            <img src={viewingEvent.imageUrl} alt="" className={styles.detailImage} />
+            <dl className={styles.detailList}>
+              <div className={styles.detailRow}>
+                <dt>Title</dt>
+                <dd>{viewingEvent.title}</dd>
+              </div>
+              <div className={styles.detailRow}>
+                <dt>Organizer</dt>
+                <dd>{viewingEvent.organizerName}</dd>
+              </div>
+              <div className={styles.detailRow}>
+                <dt>Category</dt>
+                <dd>{viewingEvent.category}</dd>
+              </div>
+              <div className={styles.detailRow}>
+                <dt>Location</dt>
+                <dd>{viewingEvent.location}</dd>
+              </div>
+              <div className={styles.detailRow}>
+                <dt>Start Date</dt>
+                <dd>{viewingEvent.date}</dd>
+              </div>
+              <div className={styles.detailRow}>
+                <dt>End Date</dt>
+                <dd>{viewingEvent.endDateDisplay}</dd>
+              </div>
+              <div className={styles.detailRow}>
+                <dt>Status</dt>
+                <dd>
+                  <Tag color={STATUS_CONFIG[viewingEvent.status].color}>
+                    {STATUS_CONFIG[viewingEvent.status].label}
+                  </Tag>
+                </dd>
+              </div>
+              <div className={styles.detailRow}>
+                <dt>Views</dt>
+                <dd>{viewingEvent.views.toLocaleString()}</dd>
+              </div>
+            </dl>
+            <div className={styles.detailActions}>
+              <Button danger onClick={() => handleDeleteEvent(viewingEvent)}>
+                Delete
+              </Button>
+              <Button
+                type="primary"
+                className="admin-btn-edit"
+                icon={<EditOutlined />}
+                onClick={() => navigate("/admin/events")}>
+                Edit
+              </Button>
+            </div>
+          </div>
+        ) : null}
+      </Modal>
+    </>
   );
 }

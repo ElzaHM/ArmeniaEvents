@@ -1,7 +1,7 @@
 .header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
   gap: 16px;
   padding: 20px 24px;
   position: sticky;
@@ -9,6 +9,29 @@
   z-index: 100;
   background: transparent;
   transition: all 0.4s ease;
+}
+
+.headerMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+
+.searchRow {
+  width: 100%;
+}
+
+.searchRow .searchWrap {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  flex: none;
+}
+
+.headerCompact {
+  gap: 10px;
 }
 
 .headerScrolled {
@@ -22,7 +45,7 @@
 
 [data-theme="light"] .headerScrolled {
   backdrop-filter: blur(40px) saturate(200%);
-  background: rgba(42, 39, 43, 0.50);
+  background: rgba(42, 39, 43, 0.5);
   color: #1a1a1a;
 }
 
@@ -90,6 +113,29 @@
 [data-theme="light"] .searchIcon,
 [data-theme="light"] .searchShortcut {
   color: rgba(0, 0, 0, 0.58) !important;
+}
+
+.searchButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.searchButton:hover .searchIcon,
+.searchButton:focus-visible .searchIcon {
+  color: var(--admin-button-primary-hover-bg) !important;
+}
+
+.searchButton:focus-visible {
+  outline: 2px solid var(--admin-gold);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 .actionBox:hover,
@@ -180,6 +226,12 @@
   color: inherit;
 }
 
+@media (max-width: 499px) {
+  .searchRow :global(.ant-input-affix-wrapper).searchInput {
+    width: 100%;
+  }
+}
+
 @media (max-width: 1024px) {
   .header {
     padding: 16px;
@@ -209,8 +261,20 @@
     padding: 10px 12px;
   }
 
+  .headerMain {
+    gap: 8px;
+  }
+
   .searchWrap {
-    display: none;
+    display: block;
+    flex: 1 1 140px;
+    min-width: 120px;
+    max-width: none;
+    margin: 0;
+  }
+
+  .actions {
+    gap: 6px;
   }
 
   .sidebarToggle,

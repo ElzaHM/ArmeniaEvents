@@ -216,11 +216,12 @@
 }
 
 .skylineDecoration {
-  margin-top: auto;
   flex-shrink: 0;
-  min-height: 140px;
-  height: 140px;
+  min-height: 72px;
+  height: min(120px, 18vh);
+  max-height: 140px;
   width: 100%;
+  margin-top: auto;
   pointer-events: none;
   z-index: 1;
 
@@ -372,5 +373,56 @@
   .collapsed .navLink {
     justify-content: flex-start;
     padding: 12px 16px;
+  }
+}
+
+@media (max-width: 640px), (max-height: 420px) {
+  .brand {
+    min-height: 62px;
+    padding: 10px 12px;
+  }
+
+  .nav {
+    padding: 8px 10px;
+  }
+
+  .navList {
+    gap: 2px;
+  }
+
+  .navLink,
+  .collapsed .navLink {
+    padding: 9px 12px;
+    border-radius: 10px;
+  }
+
+  .navIcon {
+    font-size: 18px;
+  }
+
+  .skylineDecoration {
+    min-height: 80px;
+    height: min(120px, 18vh);
+    max-height: 120px;
+  }
+
+  .sidebarFooter {
+    padding: 4px 12px 0;
+  }
+}
+
+@media (max-height: 650px) {
+  .skylineDecoration,
+  .collapsed .skylineDecoration {
+    min-height: 48px;
+    height: min(72px, 12vh);
+    max-height: 72px;
+  }
+}
+
+@media (max-height: 500px) {
+  .skylineDecoration,
+  .collapsed .skylineDecoration {
+    display: none !important;
   }
 }

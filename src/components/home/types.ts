@@ -24,4 +24,8 @@ export interface EventItem {
   price: string;
   isFree: boolean;
   imageUrl: string;
+  views?: number;
+  status?: 'published' | 'draft' | 'archived';
+  /** Raw ISO start date — used for sorting and admin edit payloads */
+  startDate?: string;
 }

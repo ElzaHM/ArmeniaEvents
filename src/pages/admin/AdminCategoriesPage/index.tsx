@@ -138,6 +138,7 @@ export default function AdminCategoriesPage() {
             rowKey="id"
             loading={isLoading || deleteCategory.isPending}
             pagination={{ pageSize: 8 }}
+            scroll={{ x: 'max-content' }}
           />
         </div>
       </AdminCard>

@@ -1,0 +1,66 @@
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.topActions {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  margin: 0 0 16px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--admin-text);
+}
+
+.tableWrap {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--admin-table-row-bg);
+  -webkit-overflow-scrolling: touch;
+}
+
+.tableWrap :global(.ant-table-wrapper) {
+  max-width: 100%;
+}
+
+.loadingWrap,
+.emptyWrap {
+  display: flex;
+  min-height: 180px;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyWrap :global(.ant-empty-description) {
+  color: var(--admin-text-secondary);
+}
+
+.eventCell,
+.userCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.thumbnail {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
