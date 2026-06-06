@@ -2,9 +2,9 @@ import {useMemo, useState} from "react";
 import {Button, Modal, Table, Tag, message, Space} from "antd";
 import type {TableColumnsType} from "antd";
 import {PlusOutlined, EditOutlined, CloudDownloadOutlined} from "@ant-design/icons";
-import axios from "axios";
 import {useQueryClient} from "@tanstack/react-query";
 
+import {api} from "../../../api/axios";
 import AdminCard from "../../../components/admin/AdminCard";
 import AdminPageHeader from "../../../components/admin/AdminPageHeader";
 import type {AdminEvent, AdminEventStatus} from "../../../components/admin/types";
@@ -15,8 +15,6 @@ import {
   useCreateEvent,
   useUpdateEvent,
 } from "../../../hooks/queries/useEvents";
-
-const TOKEN_STORAGE_KEY = "armenia-events-access-token";
 
 import styles from "./AdminEventsPage.module.css";
 
@@ -231,25 +229,23 @@ export default function AdminEventsPage() {
     setImporting(true);
 
     try {
-      const token = localStorage.getItem(TOKEN_STORAGE_KEY);
-      const { data } = await axios.post<{ imported: number; skipped: number }>(
+      const { data } = await api.post<{ imported: number; skipped: number }>(
         "/api/admin/events/import/eventbrite",
         {},
-        {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
-        },
       );
 
       messageApi.success(`Imported: ${data.imported}, Skipped: ${data.skipped}`);
       await queryClient.invalidateQueries({ queryKey: eventsKeys.all });
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const message = (error.response?.data as { message?: string } | undefined)?.message;
-        messageApi.error(message ?? error.message);
-        return;
-      }
+      const responseMessage =
+        error &&
+        typeof error === "object" &&
+        "response" in error &&
+        (error.response as { data?: { message?: string } } | undefined)?.data?.message;
 
-      messageApi.error(error instanceof Error ? error.message : "Import failed");
+      messageApi.error(
+        responseMessage ?? (error instanceof Error ? error.message : "Import failed"),
+      );
     } finally {
       setImporting(false);
     }
