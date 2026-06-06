@@ -15,10 +15,20 @@
   box-shadow: var(--home-card-shadow);
 }
 
+[data-theme='light'] .card {
+  background: rgba(255, 255, 255, 0.80);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
 .card:hover {
   background: var(--home-glass-hover-bg);
   border-color: var(--home-accent);
   transform: translateY(-6px);
+}
+
+[data-theme='light'] .card:hover {
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .imageWrapper {

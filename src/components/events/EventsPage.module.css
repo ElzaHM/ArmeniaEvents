@@ -35,6 +35,10 @@
   flex-direction: column;
 }
 
+.filtersBackdrop {
+  display: none;
+}
+
 @media (max-width: 992px) {
   .main {
     grid-template-columns: 1fr;
@@ -42,11 +46,50 @@
   }
 
   .sidebar {
-    order: 1;
+    display: none;
+  }
+
+  .sidebarOpen {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1001;
+    width: min(320px, 92vw);
+    padding: 16px 12px 16px 16px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    animation: filtersSlideIn 0.25s ease;
+  }
+
+  .sidebarOpen > * {
+    height: auto;
+  }
+
+  .filtersBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    border: none;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
   }
 
   .content {
     order: 2;
+  }
+}
+
+@keyframes filtersSlideIn {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
   }
 }
 

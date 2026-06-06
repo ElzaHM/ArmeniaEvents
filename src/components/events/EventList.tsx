@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Button, Select, Typography } from 'antd';
 import {
   AppstoreOutlined,
+  FilterOutlined,
   UnorderedListOutlined,
 } from '@ant-design/icons';
 
@@ -33,6 +34,7 @@ interface EventListProps {
   appliedPriceRange?: 'free' | 'paid' | null;
   appliedOrganizer?: string | null;
   appliedDateRange?: { from: string; to: string } | null;
+  onOpenFilters?: () => void;
 }
 
 function filterEventsByQuery(events: EventItem[], query: string): EventItem[] {
@@ -160,6 +162,7 @@ export default function EventList({
   appliedPriceRange = null,
   appliedOrganizer = null,
   appliedDateRange = null,
+  onOpenFilters,
 }: EventListProps) {
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('q') ?? '';
@@ -231,6 +234,17 @@ export default function EventList({
             </Typography.Text>
 
             <div className={styles.toolbarActions}>
+              {onOpenFilters && (
+                <Button
+                  type="default"
+                  icon={<FilterOutlined />}
+                  className={styles.filtersBtn}
+                  onClick={onOpenFilters}
+                >
+                  Filters
+                </Button>
+              )}
+
               <div className={styles.sortSelectWrap}>
                 <Select
                   value={sortBy}

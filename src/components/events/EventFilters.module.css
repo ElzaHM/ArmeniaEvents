@@ -20,6 +20,33 @@
   border-bottom: 1px solid var(--home-border);
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.closeBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--home-border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--home-text);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.closeBtn:hover {
+  border-color: var(--home-accent);
+  color: var(--home-accent);
+}
+
 .title {
   margin: 0 !important;
   font-size: 16px !important;
@@ -291,6 +318,10 @@
   .header {
     margin-bottom: 14px;
     padding-bottom: 12px;
+  }
+
+  .closeBtn {
+    display: inline-flex;
   }
 }
 

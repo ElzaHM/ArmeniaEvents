@@ -18,7 +18,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
       aria-label={`Browse ${category.name} events`}
     >
       <div className={styles.iconWrap}>
-        <CategoryIcon name={category.icon} className={styles.icon} />
+        <CategoryIcon name={category.icon} categoryName={category.name} className={styles.icon} />
       </div>
       <Typography.Text strong className={styles.name}>
         {category.name}

@@ -150,6 +150,21 @@
   gap: 4px;
 }
 
+.filtersBtn {
+  display: none;
+  align-items: center;
+  height: 32px !important;
+  border-radius: 6px !important;
+  border-color: var(--events-field-border, var(--home-border)) !important;
+  background: var(--events-filter-date-bg, var(--events-field-light-bg)) !important;
+  color: var(--home-text) !important;
+}
+
+.filtersBtn:hover {
+  border-color: var(--home-accent) !important;
+  color: var(--home-text) !important;
+}
+
 .viewToggle :global(.ant-btn) {
   width: 32px !important;
   height: 32px !important;
@@ -191,6 +206,10 @@
 @media (max-width: 992px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filtersBtn {
+    display: inline-flex;
   }
 }
 

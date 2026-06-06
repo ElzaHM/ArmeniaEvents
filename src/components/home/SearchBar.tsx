@@ -14,7 +14,6 @@ interface SearchBarProps {
 export default function SearchBar({ className }: SearchBarProps) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const isEventsSearch = className?.includes('eventsSearchBar');
   const qFromUrl = searchParams.get('q') ?? '';
   const [searchTerm, setSearchTerm] = useState('');
   const [compact, setCompact] = useState(false);
@@ -59,7 +58,7 @@ export default function SearchBar({ className }: SearchBarProps) {
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
           onPressEnter={handleSearch}
-          className={[styles.inputField, isEventsSearch ? 'eventsHeroSearchInput' : ''].filter(Boolean).join(' ')}
+          className={styles.inputField}
         />
       </div>
 
