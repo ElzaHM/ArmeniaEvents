@@ -1,56 +1,65 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Row, Col, ConfigProvider, theme, Typography, message } from 'antd';
 import dayjs from 'dayjs';
 import CreateEventForm from './CreateEventForm';
 import EventLivePreview from './EventLivePreview';
 import styles from './CreateEventPage.module.css';
-import CreateEventDefault from '../../assets/createEventDefault.png'
+import CreateEventDefault from'../../assets/createEventDefault.png'
 
 const { Title, Paragraph } = Typography;
 const PLACEHOLDER_IMAGE = `${CreateEventDefault}`;
 
+const initialPreviewData = {
+  title: 'AI Conference Armenia',
+  description: 'Join the biggest tech event in Yerevan.',
+  category: 'Technology',
+  eventType: 'Offline',
+  venue: 'Meridian Expo Center',
+  address: 'Yerevan, Armenia',
+  date: 'Jul 15, 2026',
+  startTime: '10:00 AM',
+  endTime: '06:00 PM',
+  organizer: 'Tech Armenia',
+  price: '0'
+};
+
 export default function CreateEventPage() {
   const [form] = Form.useForm();
-  const [images, setImages] = useState<{ url: string; name: string }[]>([]);
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
-
-  const [previewData, setPreviewData] = useState({
-    title: 'AI Conference Armenia',
-    description: 'Annual AI conference in Yerevan',
-    category: 'Technology',
-    venue: 'Meridian Expo Center',
-    address: 'Yerevan, Armenia',
-    date: 'Jul 15, 2026',
-    startTime: '10:00 AM',
-    endTime: '06:00 PM',
-    organizer: 'Tech Armenia'
-  });
+  const [eventImage, setEventImage] = useState<{ url: string; name: string } | null>(null);
+  const [previewData, setPreviewData] = useState(initialPreviewData);
 
   const handleValuesChange = (_: any, allValues: any) => {
     setPreviewData({
-      ...previewData,
-      title: allValues.title || 'Event Title',
-      description: allValues.description || 'Description...',
-      category: allValues.category || 'Category',
-      venue: allValues.venue || 'Venue',
-      address: allValues.address || 'Address',
-      organizer: allValues.organizer || 'Organizer',
-      date: allValues.startDate ? dayjs(allValues.startDate).format('MMM DD, YYYY') : 'Date',
-      startTime: allValues.startTime ? dayjs(allValues.startTime).format('hh:mm A') : '10:00 AM',
-      endTime: allValues.endTime ? dayjs(allValues.endTime).format('hh:mm A') : '06:00 PM',
+      title: allValues.title || initialPreviewData.title,
+      description: allValues.description || initialPreviewData.description,
+      category: allValues.category || initialPreviewData.category,
+      eventType: allValues.eventType || initialPreviewData.eventType,
+      venue: allValues.venue || initialPreviewData.venue,
+      address: allValues.address || initialPreviewData.address,
+      organizer: allValues.organizer || initialPreviewData.organizer,
+      price: allValues.price || initialPreviewData.price,
+      date: allValues.startDate ? dayjs(allValues.startDate).format('MMM DD, YYYY') : initialPreviewData.date,
+      startTime: allValues.startTime ? dayjs(allValues.startTime).format('hh:mm A') : initialPreviewData.startTime,
+      endTime: allValues.endTime ? dayjs(allValues.endTime).format('hh:mm A') : initialPreviewData.endTime,
     });
   };
 
   const onFinish = (values: any) => {
-    if (images.length === 0) {
-      message.error("Please upload at least one image");
+    if (!eventImage) {
+      message.error("Please upload an image before creating the event.");
       return;
     }
-    console.log("Validated Data:", values);
-    message.success("Event created successfully!");
+    console.log("SUBMITTED DATA:", { ...values, image: eventImage });
+    
+    // Մաքրում ենք ամեն ինչ
+    form.resetFields();
+    setEventImage(null);
+    setPreviewData(initialPreviewData);
+    
+    message.success("Your event has been submitted! Waiting for admin approval.");
   };
 
-  const currentPreviewImage = images[selectedIndex]?.url || PLACEHOLDER_IMAGE;
+  const currentPreviewImage = eventImage?.url || PLACEHOLDER_IMAGE;
 
   return (
     <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
@@ -66,16 +75,11 @@ export default function CreateEventPage() {
             layout="vertical" 
             onValuesChange={handleValuesChange} 
             onFinish={onFinish}
+            initialValues={{ eventType: 'Offline', price: '0' }}
           >
             <Row gutter={[24, 24]}>
               <Col xs={24} lg={15}>
-                <CreateEventForm 
-                  images={images} 
-                  setImages={setImages} 
-                  selectedIndex={selectedIndex} 
-                  setSelectedIndex={setSelectedIndex} 
-                  previewImage={currentPreviewImage}
-                />
+                <CreateEventForm image={eventImage} setImage={setEventImage} />
               </Col>
               <Col xs={24} lg={9}>
                 <EventLivePreview data={previewData} image={currentPreviewImage} />
