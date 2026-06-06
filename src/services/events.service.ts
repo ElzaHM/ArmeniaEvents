@@ -66,6 +66,8 @@ type EventDetailRow = {
   } | null;
   views?: number | null;
   status?: 'published' | 'draft' | 'archived' | null;
+  tags?: string[] | null;
+  age_range?: string | null;
 };
 
 type EventCrudPayload = {
@@ -221,11 +223,11 @@ export function mapEventRowToEventDetails(row: EventDetailRow): EventDetails {
     interestedCount: 0,
     goingCount: 0,
     description: row.description ? [row.description] : [],
-    tags: [],
+    tags: row.tags ?? [],
     duration: formatDuration(row.start_date, row.end_date),
     eventType: row.event_type ?? 'Offline',
     languages: row.language ?? 'English',
-    ageRange: 'All ages',
+    ageRange: row.age_range ?? 'All ages',
     venue: {
       name: row.venue ?? 'Event Venue',
       address: location,

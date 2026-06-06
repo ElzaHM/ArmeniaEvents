@@ -10,6 +10,8 @@ const EVENTS_SELECT = `
   views,
   source,
   external_id,
+  tags,
+  age_range,
   categories ( name ),
   organizers ( name, avatar_url, description )
 `;
