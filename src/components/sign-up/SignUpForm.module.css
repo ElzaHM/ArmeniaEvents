@@ -54,8 +54,19 @@
 }
 
 .strengthText {
-  color: var(--auth-accent);
   font-weight: 600;
+}
+
+.strengthTextWeak {
+  color: #ef4444;
+}
+
+.strengthTextMedium {
+  color: #f59e0b;
+}
+
+.strengthTextStrong {
+  color: #22c55e;
 }
 
 .strengthBars {
@@ -72,6 +83,18 @@
 
 .barActive {
   background: var(--auth-accent);
+}
+
+.barWeak {
+  background: #ef4444;
+}
+
+.barMedium {
+  background: #f59e0b;
+}
+
+.barStrong {
+  background: #22c55e;
 }
 
 .termsLink {

@@ -55,6 +55,15 @@
   pointer-events: none;
 }
 
+.simplePanel {
+  width: min(100%, 420px);
+  padding: 28px 24px;
+  border-radius: 16px;
+  background: var(--auth-panel-bg, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--auth-input-border);
+  backdrop-filter: blur(12px);
+}
+
 .footer {
   background: var(--auth-footer-bg);
   backdrop-filter: var(--auth-footer-backdrop, blur(16px));

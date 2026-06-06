@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:api": "tsx watch backend/src/index.ts",
-    "start:api": "tsx backend/src/index.ts",
+    "dev:api": "node scripts/free-port.mjs 4000 && tsx watch backend/src/index.ts",
+    "start:api": "node scripts/free-port.mjs 4000 && tsx backend/src/index.ts",
     "build:api": "tsc -p backend/tsconfig.json",
     "list:db": "node scripts/list-users-events.mjs",
     "build": "tsc -b && vite build",

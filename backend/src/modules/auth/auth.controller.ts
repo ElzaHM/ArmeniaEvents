@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import { loginSchema, registerSchema } from './auth.schema.js';
+import { loginSchema, registerSchema, forgotPasswordSchema, resetPasswordSchema } from './auth.schema.js';
 import * as authService from './auth.service.js';
 
 export async function registerController(req: Request, res: Response, next: NextFunction) {
@@ -52,4 +52,30 @@ export function meController(req: Request, res: Response) {
 
 export function logoutController(_req: Request, res: Response) {
   return res.status(200).json({ success: true });
+}
+
+export async function forgotPasswordController(req: Request, res: Response, next: NextFunction) {
+  try {
+    const payload = forgotPasswordSchema.parse(req.body);
+    // eslint-disable-next-line no-console
+    console.log(`[auth] password reset requested: ${payload.email}`);
+    await authService.requestPasswordReset(payload);
+    res.status(200).json({
+      message: 'If an account exists for this email, password reset instructions have been sent.',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function resetPasswordController(req: Request, res: Response, next: NextFunction) {
+  try {
+    const payload = resetPasswordSchema.parse(req.body);
+    await authService.resetPassword(payload);
+    // eslint-disable-next-line no-console
+    console.log('[auth] password reset completed');
+    res.status(200).json({ message: 'Password updated successfully.' });
+  } catch (error) {
+    next(error);
+  }
 }

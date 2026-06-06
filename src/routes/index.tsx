@@ -8,6 +8,9 @@ import EventDetailsPage from '../pages/EventDetailsPage';
 import SignInPage from '../pages/SignInPage';
 import AdminPage from '../pages/AdminPage';
 import SignUpPage from '../pages/SignUpPage';
+import PrivacyPolicyPage from '../pages/PrivacyPolicyPage';
+import ForgotPasswordPage from '../pages/ForgotPasswordPage';
+import ResetPasswordPage from '../pages/ResetPasswordPage';
 import AdminEventsPage from '../pages/AdminEventsPage';
 import AdminCategoriesPage from '../pages/AdminCategoriesPage';
 import AdminUsersPage from '../pages/AdminUsersPage';
@@ -48,6 +51,22 @@ export const router = createBrowserRouter([
             <SignUpPage />
           </RequireGuest>
         ),
+      },
+      {
+        path: 'privacy-policy',
+        element: <PrivacyPolicyPage />,
+      },
+      {
+        path: 'forgot-password',
+        element: (
+          <RequireGuest>
+            <ForgotPasswordPage />
+          </RequireGuest>
+        ),
+      },
+      {
+        path: 'reset-password',
+        element: <ResetPasswordPage />,
       },
     ],
   },

@@ -39,9 +39,24 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 app.use(errorHandler);
 
-app.listen(env.PORT, () => {
+const server = app.listen(env.PORT);
+
+server.on('listening', () => {
   // eslint-disable-next-line no-console
   console.log(`API running on http://localhost:${env.PORT}`);
   // eslint-disable-next-line no-console
   console.log('Request logs appear below when the frontend calls /api/*');
+});
+
+server.on('error', (err: NodeJS.ErrnoException) => {
+  if (err.code === 'EADDRINUSE') {
+    // eslint-disable-next-line no-console
+    console.error(
+      `Port ${env.PORT} is already in use. Stop the other backend (Ctrl+C) and run pnpm dev:api again.`,
+    );
+  } else {
+    // eslint-disable-next-line no-console
+    console.error(`Server failed to start: ${err.message}`);
+  }
+  process.exit(1);
 });

@@ -1,7 +1,8 @@
 import type { User } from '@supabase/supabase-js';
 
-import type { LoginInput, RegisterInput } from './auth.schema.js';
+import type { LoginInput, RegisterInput, ForgotPasswordInput, ResetPasswordInput } from './auth.schema.js';
 import { supabaseAdminClient, supabaseAuthClient } from '../../lib/supabase.js';
+import { env } from '../../config/env.js';
 
 export type AuthPayload = {
   user: {
@@ -136,4 +137,30 @@ export async function getUserFromToken(token: string) {
   }
 
   return mapUser(data.user);
+}
+
+export async function requestPasswordReset(input: ForgotPasswordInput): Promise<void> {
+  const { error } = await supabaseAuthClient.auth.resetPasswordForEmail(input.email, {
+    redirectTo: `${env.CLIENT_ORIGIN}/reset-password`,
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function resetPassword(input: ResetPasswordInput): Promise<void> {
+  const { data, error } = await supabaseAuthClient.auth.getUser(input.accessToken);
+
+  if (error || !data.user) {
+    throw new Error('Invalid or expired reset link. Please request a new password reset.');
+  }
+
+  const { error: updateError } = await supabaseAdminClient.auth.admin.updateUserById(data.user.id, {
+    password: input.password,
+  });
+
+  if (updateError) {
+    throw new Error(updateError.message);
+  }
 }

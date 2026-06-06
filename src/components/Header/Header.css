@@ -173,7 +173,7 @@
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        z-index: 999;
+        z-index: 1101;
     }
 
     .header-nav--open {
@@ -196,7 +196,7 @@
         inset: 72px 0 0;
         border: none;
         background: rgba(0, 0, 0, 0.45);
-        z-index: 998;
+        z-index: 1100;
         cursor: pointer;
         padding: 0;
     }

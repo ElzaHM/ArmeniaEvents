@@ -13,10 +13,61 @@ type SignUpValues = {
   agree: boolean;
 };
 
+type PasswordStrength = {
+  level: 'weak' | 'medium' | 'strong' | null;
+  label: string;
+  activeBars: number;
+};
+
+const strengthTextClass = {
+  weak: styles.strengthTextWeak,
+  medium: styles.strengthTextMedium,
+  strong: styles.strengthTextStrong,
+} as const;
+
+const strengthBarClass = {
+  weak: styles.barWeak,
+  medium: styles.barMedium,
+  strong: styles.barStrong,
+} as const;
+
+function evaluatePasswordStrength(password: string): PasswordStrength {
+  if (!password) {
+    return { level: null, label: '', activeBars: 0 };
+  }
+
+  if (password.length < 6) {
+    return { level: 'weak', label: 'Թույլ', activeBars: 1 };
+  }
+
+  const hasLower = /[a-z]/.test(password);
+  const hasUpper = /[A-Z]/.test(password);
+  const hasDigit = /\d/.test(password);
+  const hasSymbol = /[^a-zA-Z0-9]/.test(password);
+  const charTypes = [hasLower, hasUpper, hasDigit, hasSymbol].filter(Boolean).length;
+
+  if (password.length < 8 || charTypes <= 1) {
+    return { level: 'weak', label: 'Թույլ', activeBars: 1 };
+  }
+
+  if (password.length < 10 || charTypes <= 2) {
+    return { level: 'medium', label: 'Միջին', activeBars: 2 };
+  }
+
+  if (password.length >= 10 && charTypes >= 3) {
+    return { level: 'strong', label: 'Ուժեղ', activeBars: 4 };
+  }
+
+  return { level: 'medium', label: 'Միջին', activeBars: 2 };
+}
+
 export const SignUpForm: React.FC = () => {
   const { register } = useAuth();
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = React.useState(false);
+  const [passwordValue, setPasswordValue] = React.useState('');
+  const [form] = Form.useForm<SignUpValues>();
+  const strength = evaluatePasswordStrength(passwordValue);
 
   const handleSubmit = async (values: SignUpValues) => {
     setLoading(true);
@@ -43,7 +94,7 @@ export const SignUpForm: React.FC = () => {
       <h2 className={styles.title}>Sign Up</h2>
       <p className={styles.subtitle}>Create your account to get started.</p>
 
-      <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
+      <Form form={form} layout="vertical" requiredMark={false} onFinish={handleSubmit}>
         <Form.Item
           label={<span className={styles.label}>Full Name</span>}
           name="fullName"
@@ -79,25 +130,40 @@ export const SignUpForm: React.FC = () => {
             { min: 8, message: 'Password must be at least 8 characters' },
           ]}
         >
-          <Input.Password 
-            prefix={<LockOutlined className={styles.inputIcon} />} 
-            placeholder="Create a password" 
+          <Input.Password
+            prefix={<LockOutlined className={styles.inputIcon} />}
+            placeholder="Create a password"
             className={styles.inputField}
+            onChange={(event) => setPasswordValue(event.target.value)}
           />
         </Form.Item>
 
-        {/* Password Strength Indicator */}
-        <div className={styles.strengthContainer}>
-          <div className={styles.strengthLabel}>
-            Password strength: <span className={styles.strengthText}>Medium</span>
+        {passwordValue && (
+          <div className={styles.strengthContainer}>
+            <div className={styles.strengthLabel}>
+              Password strength:{' '}
+              <span
+                className={`${styles.strengthText} ${
+                  strength.level ? strengthTextClass[strength.level] : ''
+                }`}
+              >
+                {strength.label}
+              </span>
+            </div>
+            <div className={styles.strengthBars}>
+              {[0, 1, 2, 3].map((index) => (
+                <div
+                  key={index}
+                  className={`${styles.bar} ${
+                    index < strength.activeBars && strength.level
+                      ? `${styles.barActive} ${strengthBarClass[strength.level]}`
+                      : ''
+                  }`}
+                />
+              ))}
+            </div>
           </div>
-          <div className={styles.strengthBars}>
-            <div className={`${styles.bar} ${styles.barActive}`} />
-            <div className={`${styles.bar} ${styles.barActive}`} />
-            <div className={styles.bar} />
-            <div className={styles.bar} />
-          </div>
-        </div>
+        )}
 
         <Form.Item
           label={<span className={styles.label}>Confirm Password</span>}
@@ -134,7 +200,10 @@ export const SignUpForm: React.FC = () => {
           ]}
         >
           <Checkbox>
-            I agree to the <a href="#" className={styles.termsLink}>Terms & Privacy Policy</a>
+            I agree to the{' '}
+            <Link to="/privacy-policy" className={styles.termsLink}>
+              Terms & Privacy Policy
+            </Link>
           </Checkbox>
         </Form.Item>
 
