@@ -25,6 +25,12 @@ export type LoginPayload = {
   password: string;
 };
 
+export type ResetPasswordPayload = {
+  accessToken: string;
+  password: string;
+  confirmPassword: string;
+};
+
 const api = axios.create({
   baseURL: '/api',
 });
@@ -79,5 +85,21 @@ export const authService = {
 
   async logout(): Promise<void> {
     await api.post('/auth/logout');
+  },
+
+  async forgotPassword(email: string): Promise<void> {
+    try {
+      await api.post('/auth/forgot-password', { email });
+    } catch (error) {
+      throw toApiError(error);
+    }
+  },
+
+  async resetPassword(payload: ResetPasswordPayload): Promise<void> {
+    try {
+      await api.post('/auth/reset-password', payload);
+    } catch (error) {
+      throw toApiError(error);
+    }
   },
 };

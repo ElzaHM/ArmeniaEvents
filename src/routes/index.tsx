@@ -7,6 +7,9 @@ import EventsPage from '../pages/EventsPage';
 import EventDetailsPage from '../pages/EventDetailsPage';
 import SignInPage from '../pages/SignInPage';
 import SignUpPage from '../pages/SignUpPage';
+import PrivacyPolicyPage from '../pages/PrivacyPolicyPage';
+import ForgotPasswordPage from '../pages/ForgotPasswordPage';
+import ResetPasswordPage from '../pages/ResetPasswordPage';
 import AdminPage from '../pages/admin/AdminPage';
 import AdminEventsPage from '../pages/admin/AdminEventsPage';
 import AdminCategoriesPage from '../pages/admin/AdminCategoriesPage';
@@ -60,6 +63,22 @@ export const router = createBrowserRouter([
           </RequireGuest>
         ),
       },
+      {
+        path: 'privacy-policy',
+        element: <PrivacyPolicyPage />,
+      },
+      {
+        path: 'forgot-password',
+        element: (
+          <RequireGuest>
+            <ForgotPasswordPage />
+          </RequireGuest>
+        ),
+      },
+      {
+        path: 'reset-password',
+        element: <ResetPasswordPage />,
+      },
     ],
   },
   {
@@ -77,7 +96,7 @@ export const router = createBrowserRouter([
       {
         path: 'events',
         element: <AdminEventsPage />,
-      },  
+      },
       {
         path: 'categories',
         element: <AdminCategoriesPage />,

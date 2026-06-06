@@ -71,7 +71,7 @@ export const SignInForm: React.FC = () => {
           <Form.Item name="remember" valuePropName="checked" style={{ marginBottom: 0 }}>
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
-          <a href="#" className={styles.forgotPassword}>Forgot Password?</a>
+          <Link to="/forgot-password" className={styles.forgotPassword}>Forgot Password?</Link>
         </div>
 
         <Button type="primary" className={styles.submitBtn} htmlType="submit" loading={loading}>
