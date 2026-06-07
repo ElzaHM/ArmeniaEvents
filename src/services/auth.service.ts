@@ -105,4 +105,13 @@ export const authService = {
       throw toApiError(error);
     }
   },
+
+  async loginWithGoogle(credential: string): Promise<AuthSession> {
+    try {
+      const { data } = await api.post<AuthSession>('/auth/google', { credential });
+      return data;
+    } catch (error) {
+      throw toApiError(error);
+    }
+  },
 };

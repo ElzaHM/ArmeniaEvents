@@ -1,6 +1,13 @@
 import type { User } from '@supabase/supabase-js';
+import { OAuth2Client } from 'google-auth-library';
 
-import type { LoginInput, RegisterInput, ForgotPasswordInput, ResetPasswordInput } from './auth.schema.js';
+import type {
+  LoginInput,
+  RegisterInput,
+  ForgotPasswordInput,
+  ResetPasswordInput,
+  GoogleLoginInput,
+} from './auth.schema.js';
 import { supabaseAdminClient, supabaseAuthClient } from '../../lib/supabase.js';
 import { env } from '../../config/env.js';
 import { parseUserRole, type UserRole } from '../../lib/user-roles.js';
@@ -171,4 +178,91 @@ export async function resetPassword(input: ResetPasswordInput): Promise<void> {
   if (updateError) {
     throw new Error(updateError.message);
   }
+}
+
+const googleOAuthClient = new OAuth2Client(env.GOOGLE_CLIENT_ID);
+
+async function findUserByEmail(email: string): Promise<User | null> {
+  const { data, error } = await supabaseAdminClient.auth.admin.listUsers({
+    page: 1,
+    perPage: 1000,
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data.users.find((entry) => entry.email?.toLowerCase() === email.toLowerCase()) ?? null;
+}
+
+async function createSessionForEmail(email: string): Promise<AuthPayload> {
+  const { data: linkData, error: linkError } = await supabaseAdminClient.auth.admin.generateLink({
+    type: 'magiclink',
+    email,
+  });
+
+  const hashedToken = linkData?.properties?.hashed_token;
+  if (linkError || !hashedToken) {
+    throw new Error(linkError?.message ?? 'Failed to create user session.');
+  }
+
+  const { data, error } = await supabaseAuthClient.auth.verifyOtp({
+    token_hash: hashedToken,
+    type: 'magiclink',
+  });
+
+  if (error || !data.user || !data.session) {
+    throw new Error(error?.message ?? 'Failed to verify user session.');
+  }
+
+  return mapAuthResponse({
+    user: data.user,
+    session: data.session,
+  });
+}
+
+async function findOrCreateGoogleUser(email: string, fullName: string, picture?: string): Promise<User> {
+  const existingUser = await findUserByEmail(email);
+  if (existingUser) {
+    return existingUser;
+  }
+
+  const { data: created, error: createError } = await supabaseAdminClient.auth.admin.createUser({
+    email,
+    email_confirm: true,
+    user_metadata: {
+      fullName,
+      avatar_url: picture,
+    },
+    app_metadata: {
+      role: 'user',
+      provider: 'google',
+    },
+  });
+
+  if (createError || !created.user) {
+    throw new Error(createError?.message ?? 'Failed to create Google user.');
+  }
+
+  return created.user;
+}
+
+export async function loginWithGoogle(input: GoogleLoginInput): Promise<AuthPayload> {
+  const ticket = await googleOAuthClient.verifyIdToken({
+    idToken: input.credential,
+    audience: env.GOOGLE_CLIENT_ID,
+  });
+
+  const payload = ticket.getPayload();
+  const email = payload?.email;
+  if (!email) {
+    throw new Error('Google account does not include an email address.');
+  }
+
+  if (payload.email_verified === false) {
+    throw new Error('Google email address is not verified.');
+  }
+
+  await findOrCreateGoogleUser(email, payload.name ?? '', payload.picture);
+  return createSessionForEmail(email);
 }

@@ -58,6 +58,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     persistToken(currentSession.accessToken);
   }, []);
 
+  const establishSession = useCallback((currentSession: AuthSession) => {
+    flushSync(() => {
+      setSession(currentSession);
+      persistToken(currentSession.accessToken);
+    });
+  }, []);
+
   const logout = useCallback(async () => {
     try {
       await authService.logout();
@@ -73,11 +80,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       loading,
       login,
       register,
+      establishSession,
       logout,
       isAuthenticated: Boolean(session?.accessToken),
       isAdmin: isAdminRole(session?.user.role),
     }),
-    [session, loading, login, register, logout],
+    [session, loading, login, register, establishSession, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

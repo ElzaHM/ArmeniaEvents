@@ -7,6 +7,7 @@ export type AuthContextValue = {
   loading: boolean;
   login: (payload: LoginPayload) => Promise<AuthSession>;
   register: (payload: RegisterPayload) => Promise<void>;
+  establishSession: (session: AuthSession) => void;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
   isAdmin: boolean;
