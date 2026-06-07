@@ -1,6 +1,8 @@
 import { Link, useParams } from 'react-router-dom';
+import { LeftOutlined } from '@ant-design/icons';
 
 import {
+  CountdownCard,
   EventHero,
   EventInfo,
   EventSchedule,
@@ -33,27 +35,33 @@ export default function EventDetailsPage() {
     <QueryState isLoading={isLoading} isError={isError} error={error} minHeight={240}>
       {event && (
         <div className={pageStyles.detailsPage}>
-          <div className={pageStyles.backBar}>
-            <Link to="/events" className={pageStyles.backLink} />
+          <div className={`detailsSection ${pageStyles.backBar}`}>
+            <Link to="/events" className={pageStyles.backLink}>
+              <LeftOutlined />
+              Back to Events
+            </Link>
           </div>
 
           <EventHero event={event} />
 
           <div className={pageStyles.tabsWrap}>
             <div className="detailsSection">
-              <EventTabs />
+              <EventTabs event={event} />
             </div>
           </div>
 
           <div className={`detailsSection ${pageStyles.main}`}>
             <div className={pageStyles.mainContent}>
+              <CountdownCard startDate={event.date} />
               <EventInfo event={event} />
               {hasScheduleData(event) ? <EventSchedule event={event} /> : null}
-              <EventVenue event={event} />
+              <div id="event-venue">
+                <EventVenue event={event} />
+              </div>
             </div>
 
             <aside className={pageStyles.sidebar}>
-              {event.ticketUrl ? <TicketPanel event={event} /> : null}
+              {event.isFree || event.ticketUrl ? <TicketPanel event={event} /> : null}
               <OrganizerCard event={event} />
               <ReminderCard />
             </aside>

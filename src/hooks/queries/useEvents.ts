@@ -20,12 +20,20 @@ export const eventsKeys = {
   popularTags: ['events', 'popular-tags'] as const,
   benefits: ['events', 'benefits'] as const,
   footerQuickLinks: ['events', 'footer-quick-links'] as const,
-  interestedAvatars: ['events', 'interested-avatars'] as const,
   tabs: ['events', 'tabs'] as const,
 };
 
 type EventCreatePayload = Parameters<typeof eventsService.createEvent>[0];
 type EventUpdatePayload = Parameters<typeof eventsService.updateEvent>[1];
+
+function isEventsPaginatedResult(value: unknown): value is EventsPaginatedResult {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'events' in value &&
+    Array.isArray((value as EventsPaginatedResult).events)
+  );
+}
 
 export function useEvents(params: EventsListParams = {}) {
   const query = useQuery({
@@ -66,9 +74,12 @@ export function useRelatedEvents(eventId: string | undefined, category: string |
       const cachedQueries = queryClient.getQueriesData<EventsPaginatedResult>({
         queryKey: eventsKeys.all,
       });
-      const cached = cachedQueries[0]?.[1];
+      const cached = cachedQueries
+        .map(([, data]) => data)
+        .find(isEventsPaginatedResult);
       const result = cached ?? (await eventsService.getEvents());
-      return eventsService.pickRelatedEvents(result.events, eventId!, category!, 3);
+      const events = result.events ?? [];
+      return eventsService.pickRelatedEvents(events, eventId!, category!, 3);
     },
   });
 }
@@ -105,13 +116,6 @@ export function useFooterQuickLinks() {
   return useQuery({
     queryKey: eventsKeys.footerQuickLinks,
     queryFn: () => eventsService.getFooterQuickLinks(),
-  });
-}
-
-export function useInterestedAvatars() {
-  return useQuery({
-    queryKey: eventsKeys.interestedAvatars,
-    queryFn: () => eventsService.getInterestedAvatars(),
   });
 }
 

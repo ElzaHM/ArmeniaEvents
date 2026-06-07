@@ -48,27 +48,6 @@
   display: block;
 }
 
-.mapBtn {
-  position: absolute;
-  left: 50%;
-  bottom: 20px;
-  transform: translateX(-50%);
-  min-width: 220px;
-  height: 42px !important;
-  font-weight: 500;
-  border-radius: 10px !important;
-  border-color: var(--details-glass-border) !important;
-  background: var(--details-glass-bg) !important;
-  backdrop-filter: blur(12px);
-  color: var(--home-text) !important;
-  box-shadow: var(--home-card-shadow);
-}
-
-.mapBtn:hover {
-  border-color: var(--details-accent) !important;
-  color: var(--details-accent) !important;
-}
-
 .contacts {
   list-style: none;
   margin: 0;
@@ -95,10 +74,5 @@
 @media (max-width: 768px) {
   .section {
     padding: 20px;
-  }
-
-  .mapBtn {
-    width: calc(100% - 32px);
-    min-width: 0;
   }
 }

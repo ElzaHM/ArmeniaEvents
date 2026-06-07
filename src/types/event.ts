@@ -80,7 +80,6 @@ export interface EventAdminFields {
 export interface EventDetailFields {
   weekday: string;
   interestedCount: number;
-  goingCount: number;
   description: string[];
   tags: string[];
   duration: string;

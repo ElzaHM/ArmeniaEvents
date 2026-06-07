@@ -22,7 +22,12 @@ export default function RelatedEvents({ eventId, category }: RelatedEventsProps)
     const container = scrollRef.current;
     if (!container) return;
 
-    const scrollAmount = container.clientWidth * 0.85;
+    const firstCard = container.firstElementChild as HTMLElement | null;
+    const gap = 20;
+    const scrollAmount = firstCard?.offsetWidth
+      ? firstCard.offsetWidth + gap
+      : container.clientWidth * 0.85;
+
     container.scrollBy({
       left: direction === 'left' ? -scrollAmount : scrollAmount,
       behavior: 'smooth',

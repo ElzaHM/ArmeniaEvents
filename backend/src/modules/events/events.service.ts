@@ -12,6 +12,7 @@ const EVENTS_SELECT = `
   external_id,
   tags,
   age_range,
+  interested_count,
   categories ( name ),
   organizers ( name, avatar_url, description )
 `;

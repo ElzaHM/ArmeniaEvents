@@ -76,3 +76,52 @@ export function formatWeekday(dateString?: string | null): string {
 
   return date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
 }
+
+function toGoogleCalendarUtc(date: Date): string {
+  return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+}
+
+type GoogleCalendarEventParams = {
+  title: string;
+  startDate: string;
+  endDate?: string | null;
+  location?: string;
+  description?: string[];
+};
+
+export function buildGoogleCalendarEventUrl(params: GoogleCalendarEventParams): string | null {
+  const start = parseEventDate(params.startDate);
+  if (!start) {
+    return null;
+  }
+
+  const parsedEnd = params.endDate ? parseEventDate(params.endDate) : null;
+  const end =
+    parsedEnd && parsedEnd.getTime() > start.getTime()
+      ? parsedEnd
+      : new Date(start.getTime() + 60 * 60 * 1000);
+
+  const searchParams = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: params.title,
+    dates: `${toGoogleCalendarUtc(start)}/${toGoogleCalendarUtc(end)}`,
+  });
+
+  if (params.location) {
+    searchParams.set('location', params.location);
+  }
+
+  const details = (params.description ?? []).filter(Boolean).join('\n\n');
+  if (details) {
+    searchParams.set('details', details);
+  }
+
+  return `https://calendar.google.com/calendar/render?${searchParams.toString()}`;
+}
+
+export function openGoogleCalendarEvent(params: GoogleCalendarEventParams): void {
+  const url = buildGoogleCalendarEventUrl(params);
+  if (url) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+}

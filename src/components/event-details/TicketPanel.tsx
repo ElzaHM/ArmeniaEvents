@@ -10,6 +10,19 @@ interface TicketPanelProps {
 }
 
 export default function TicketPanel({ event }: TicketPanelProps) {
+  if (event.isFree) {
+    return (
+      <aside className={`${styles.panel} detailsGlassCard`}>
+        <article className={styles.freeCard}>
+          <Typography.Text className={styles.freeLabel}>FREE EVENT</Typography.Text>
+          <Typography.Text className={styles.freeDescription}>
+            No ticket purchase required
+          </Typography.Text>
+        </article>
+      </aside>
+    );
+  }
+
   if (!event.ticketUrl) {
     return null;
   }
