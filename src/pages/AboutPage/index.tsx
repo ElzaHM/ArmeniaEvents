@@ -1,218 +1,203 @@
-
-
 import React from 'react';
 import { Typography, Row, Col, Divider, Space } from 'antd';
-import { 
-  TeamOutlined, RocketOutlined, BookOutlined, CodeOutlined, ApiOutlined, 
-  DatabaseOutlined, ShareAltOutlined, LayoutOutlined, AppstoreOutlined, 
-  DashboardOutlined, LoginOutlined, SafetyOutlined, UserOutlined, 
-  LinkedinOutlined, GithubOutlined, BgColorsOutlined 
-} from '@ant-design/icons';
+import { LinkedinOutlined, GithubOutlined } from '@ant-design/icons';
 import '../../components/home/home.css';
 import styles from './AboutPage.module.css';
-import cityTall from '../../assets/aboutBg.png';
-import landscapeWide from '../../assets/signInImg.png';
-import elzaImg from '../../assets/team/elza.png';
-import lilitImg from '../../assets/team/lilit.png';
-import martaImg from '../../assets/team/marta.png';
-import hasmikImg from '../../assets/team/hasmik.png';
+import {
+  ABOUT_PAGE_HEADER,
+  STORY_SECTION,
+  VISION_SECTION,
+  TEAM_SECTION,
+  TEAM_MEMBERS,
+  TECH_SECTION,
+  TECH_STACK,
+  type TechStackLogo,
+} from './constants';
 
 const { Title, Paragraph, Text } = Typography;
 
-export default function AboutPage() {
+function renderTechLogo(logo: TechStackLogo) {
+  if (logo.kind === 'express') {
+    return <Text className={styles.techExpressLabel}>ex</Text>;
+  }
+
+  if (logo.kind === 'zod') {
+    return <Text className={styles.techZodLabel}>Z</Text>;
+  }
+
   return (
-    <div className={styles.pageWrapper}>
-      <div className="homeSection">
-        
-        {/* --- Header --- */}
+    <img
+      src={logo.src}
+      className={styles.svgIcon}
+      style={logo.filter ? { filter: logo.filter } : undefined}
+      alt={logo.alt}
+    />
+  );
+}
+
+export default function AboutPage() {
+  const StoryIcon = STORY_SECTION.Icon;
+  const VisionIcon = VISION_SECTION.Icon;
+  const TeamSectionIcon = TEAM_SECTION.Icon;
+  const TechSectionIcon = TECH_SECTION.Icon;
+
+  return (
+    <div className={`${styles.pageWrapper} about-page`}>
+      <div className={styles.container}>
         <div className={styles.header}>
-          <Title level={2} className={styles.aboutLabel}>About</Title>
-          <Title level={1} className={styles.mainTitle}>Armenia <span className={styles.goldText}>Events</span></Title>
-          <Paragraph className={styles.subtitle}>
-            Discover the story behind Armenia Events, the team, and the technology that powers it.
-          </Paragraph>
+          <Title level={2} className={styles.aboutLabel}>
+            {ABOUT_PAGE_HEADER.label}
+          </Title>
+          <Title level={1} className={styles.mainTitle}>
+            {ABOUT_PAGE_HEADER.title}{' '}
+            <span className={styles.goldText}>{ABOUT_PAGE_HEADER.titleAccent}</span>
+          </Title>
+          <Paragraph className={styles.subtitle}>{ABOUT_PAGE_HEADER.subtitle}</Paragraph>
         </div>
 
-        {/* --- Story & Vision (Equal Heights) --- */}
-        <Row gutter={[24, 24]} align="stretch">
-          <Col xs={24} lg={14}>
+        <Row
+          gutter={[{ xs: 16, sm: 20, lg: 24 }, { xs: 16, sm: 20, lg: 24 }]}
+          align="stretch"
+          className={styles.storyVisionRow}
+        >
+          <Col xs={24} lg={15}>
             <div className={styles.storyCard}>
               <div className={styles.cardContent}>
                 <Space align="start" size={16}>
-                  <div className={styles.iconBox}><BookOutlined /></div>
+                  <div className={styles.iconBox}>
+                    <StoryIcon />
+                  </div>
                   <div>
-                    <Text className={styles.cardLabel}>The Project</Text>
-                    <Title level={2} className={styles.cardTitle}>Our Story</Title>
+                    <Text className={styles.cardLabel}>{STORY_SECTION.label}</Text>
+                    <Title level={2} className={styles.cardTitle}>
+                      {STORY_SECTION.title}
+                    </Title>
                   </div>
                 </Space>
-                <Paragraph className={styles.descriptionText}>
-                  Born as a final graduation project for the AGBU Training Program, Armenia Events was brought to life in just two weeks by a dedicated team of four. Our goal was to solve a common problem: the fragmentation of local events across countless social media pages and scattered websites.
-                </Paragraph>
-                <Paragraph className={styles.descriptionText}>
-                  Unlike global platforms that treat Armenia as an afterthought, our mission is to provide an Armenia-first aggregation hub. We bring together tech meetups, cultural festivals, and business gatherings into one beautifully designed, searchable home.
-                </Paragraph>
+                {STORY_SECTION.paragraphs.map((paragraph, index) => (
+                  <Paragraph key={index} className={styles.descriptionText}>
+                    {paragraph}
+                  </Paragraph>
+                ))}
               </div>
-              <div className={styles.storyImage} style={{ backgroundImage: `url(${cityTall})` }} />
+              <div
+                className={styles.storyImage}
+                style={{ backgroundImage: `url(${STORY_SECTION.image})` }}
+              />
             </div>
           </Col>
-          <Col xs={24} lg={10}>
+
+          <Col xs={24} lg={9}>
             <div className={styles.visionCard}>
               <Space align="start" size={16}>
-                <div className={styles.iconBox}><RocketOutlined /></div>
+                <div className={styles.iconBox}>
+                  <VisionIcon />
+                </div>
                 <div>
-                  <Text className={styles.cardLabel}>Our Vision</Text>
-                  <Title level={2} className={styles.cardTitle}>Our Vision</Title>
+                  <Text className={styles.cardLabel}>{VISION_SECTION.label}</Text>
+                  <Title level={2} className={styles.cardTitle}>
+                    {VISION_SECTION.title}
+                  </Title>
                 </div>
               </Space>
-              <Paragraph className={styles.descriptionText}>
-                To become the primary gateway for locals, tourists, and expats to experience the rich tapestry of events that Armenia has to offer.
-              </Paragraph>
-              <Paragraph className={styles.descriptionText}>
-                We are building more than a platform; we are building a community hub, powered by technology.
-              </Paragraph>
-              <div className={styles.visionImage} style={{ backgroundImage: `url(${landscapeWide})` }} />
+              {VISION_SECTION.paragraphs.map((paragraph) => (
+                <Paragraph key={paragraph.slice(0, 32)} className={styles.descriptionText}>
+                  {paragraph}
+                </Paragraph>
+              ))}
+              <div
+                className={styles.visionImage}
+                style={{ backgroundImage: `url(${VISION_SECTION.image})` }}
+              />
             </div>
           </Col>
         </Row>
 
-        {/* --- Meet Our Team --- */}
         <div className={styles.teamHeader}>
-          <Space><TeamOutlined className={styles.goldText} /> <Text className={styles.cardLabel}>The Team</Text></Space>
-          <Title level={2} className={styles.cardTitle}>Meet Our Team</Title>
+          <Space>
+            <TeamSectionIcon className={styles.goldText} />
+            <Text className={styles.cardLabel}>{TEAM_SECTION.label}</Text>
+          </Space>
+          <Title level={2} className={styles.cardTitle}>
+            {TEAM_SECTION.title}
+          </Title>
         </div>
 
-        <Row gutter={[20, 20]} align="stretch" className={styles.teamRow}>
-          {/* ELZA */}
-          <Col xs={24} sm={12} lg={6}>
-            <div className={styles.teamCard}>
-              <img src={elzaImg} className={styles.avatar} alt="Elza" />
-              <Title level={4} className={styles.memberName}>Elza Hovhannisyan</Title>
-              <Text className={styles.memberRole}>Full Stack Developer & Team Lead</Text>
-              <Divider className={styles.cardDivider} />
-              <div className={styles.responsibilities}>
-                <div className={styles.respItem}><CodeOutlined /> <span>Events feature architecture</span></div>
-                <div className={styles.respItem}><ApiOutlined /> <span>REST API integration</span></div>
-                <div className={styles.respItem}><DatabaseOutlined /> <span>Backend services</span></div>
-                <div className={styles.respItem}><ShareAltOutlined /> <span>Eventbrite import</span></div>
-                <div className={styles.respItem}><TeamOutlined /> <span>Team coordination</span></div>
-              </div>
-              <Space className={styles.socials} size={20}><LinkedinOutlined /><GithubOutlined /></Space>
-            </div>
-          </Col>
+        <Row gutter={[{ xs: 16, sm: 16, lg: 20 }, { xs: 16, sm: 16, lg: 20 }]} align="stretch" className={styles.teamRow}>
+          {TEAM_MEMBERS.map((member) => (
+            <Col key={member.id} xs={24} sm={12} lg={6}>
+              <div className={styles.teamCard}>
+                <img src={member.image} className={styles.avatar} alt={member.imageAlt} />
+                <Title level={4} className={styles.memberName}>
+                  {member.name}
+                </Title>
+                <Text className={styles.memberRole}>{member.role}</Text>
+                <Divider className={styles.cardDivider} />
+                <div className={styles.responsibilities}>
+                  {member.responsibilities.map((responsibility) => {
+                    const ResponsibilityIcon = responsibility.Icon;
 
-          {/* LILIT */}
-          <Col xs={24} sm={12} lg={6}>
-            <div className={styles.teamCard}>
-              <img src={lilitImg} className={styles.avatar} alt="Lilit" />
-              <Title level={4} className={styles.memberName}>Lilit Hovhannisyan</Title>
-              <Text className={styles.memberRole}>UI/UX Designer & Frontend Developer</Text>
-              <Divider className={styles.cardDivider} />
-              <div className={styles.responsibilities}>
-                <div className={styles.respItem}><LayoutOutlined /> <span>Full project design system</span></div>
-                <div className={styles.respItem}><AppstoreOutlined /> <span>Create Event UI</span></div>
-                <div className={styles.respItem}><BgColorsOutlined /> <span>About page design</span></div>
-                <div className={styles.respItem}><DashboardOutlined /> <span>Event page design</span></div>
+                    return (
+                      <div key={responsibility.label} className={styles.respItem}>
+                        <ResponsibilityIcon />
+                        <span>{responsibility.label}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <Space className={styles.socials} size={20}>
+                  {member.socials?.linkedin ? (
+                    <a
+                      href={member.socials.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.socialLink}
+                      aria-label={`${member.name} on LinkedIn`}
+                    >
+                      <LinkedinOutlined />
+                    </a>
+                  ) : (
+                    <LinkedinOutlined />
+                  )}
+                  {member.socials?.github ? (
+                    <a
+                      href={member.socials.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.socialLink}
+                      aria-label={`${member.name} on GitHub`}
+                    >
+                      <GithubOutlined />
+                    </a>
+                  ) : (
+                    <GithubOutlined />
+                  )}
+                </Space>
               </div>
-              <Space className={styles.socials} size={20}><LinkedinOutlined /><GithubOutlined /></Space>
-            </div>
-          </Col>
-
-          {/* MARTA */}
-          <Col xs={24} sm={12} lg={6}>
-            <div className={styles.teamCard}>
-              <img src={martaImg} className={styles.avatar} alt="Marta" />
-              <Title level={4} className={styles.memberName}>Marta Hayrapetyan</Title>
-              <Text className={styles.memberRole}>Frontend Developer</Text>
-              <Divider className={styles.cardDivider} />
-              <div className={styles.responsibilities}>
-                <div className={styles.respItem}><SafetyOutlined /> <span>Admin panel (full)</span></div>
-                <div className={styles.respItem}><DashboardOutlined /> <span>Dashboard analytics</span></div>
-                <div className={styles.respItem}><BgColorsOutlined /> <span>Glassmorphism theme</span></div>
-              </div>
-              <Space className={styles.socials} size={20}><LinkedinOutlined /><GithubOutlined /></Space>
-            </div>
-          </Col>
-
-          {/* HASMIK */}
-          <Col xs={24} sm={12} lg={6}>
-            <div className={styles.teamCard}>
-              <img src={hasmikImg} className={styles.avatar} alt="Hasmik" />
-              <Title level={4} className={styles.memberName}>Hasmik Asatryan</Title>
-              <Text className={styles.memberRole}>Frontend Developer</Text>
-              <Divider className={styles.cardDivider} />
-              <div className={styles.responsibilities}>
-                <div className={styles.respItem}><LoginOutlined /> <span>Login & registration flows</span></div>
-                <div className={styles.respItem}><SafetyOutlined /> <span>Auth routing</span></div>
-                <div className={styles.respItem}><UserOutlined /> <span>User management UI</span></div>
-              </div>
-              <Space className={styles.socials} size={20}><LinkedinOutlined /><GithubOutlined /></Space>
-            </div>
-          </Col>
+            </Col>
+          ))}
         </Row>
 
-        {/* --- Built With Modern Tools --- */}
         <div className={styles.techSection}>
           <div className={styles.techHeader}>
-            <div className={styles.iconBox}><CodeOutlined /></div>
+            <div className={styles.iconBox}>
+              <TechSectionIcon />
+            </div>
             <div className={styles.techHeaderText}>
-              <Text className={styles.cardLabel}>The Technology</Text>
-              <Title level={2} className={styles.cardTitle}>Built With Modern Tools</Title>
+              <Text className={styles.cardLabel}>{TECH_SECTION.label}</Text>
+              <Title level={2} className={styles.cardTitle}>
+                {TECH_SECTION.title}
+              </Title>
             </div>
           </div>
 
           <div className={styles.techStackRow}>
-            {/* React */}
-            <div className={styles.techItem}>
-              <div className={styles.techLogoBox}>
-                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/react.svg" className={styles.svgIcon} style={{filter: 'invert(84%) sepia(29%) saturate(4920%) hue-rotate(174deg) brightness(103%) contrast(101%)'}} alt="React" />
+            {TECH_STACK.map((item) => (
+              <div key={item.name} className={styles.techItem}>
+                <div className={styles.techLogoBox}>{renderTechLogo(item.logo)}</div>
+                <Text className={styles.techName}>{item.name}</Text>
               </div>
-              <Text className={styles.techName}>React 19</Text>
-            </div>
-            {/* TS */}
-            <div className={styles.techItem}>
-              <div className={styles.techLogoBox}>
-                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/typescript.svg" className={styles.svgIcon} alt="TypeScript" />
-              </div>
-              <Text className={styles.techName}>TypeScript</Text>
-            </div>
-            {/* AntD */}
-            <div className={styles.techItem}>
-              <div className={styles.techLogoBox}>
-                <img src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" className={styles.svgIcon} alt="Ant Design" />
-              </div>
-              <Text className={styles.techName}>Ant Design</Text>
-            </div>
-            {/* Supabase */}
-            <div className={styles.techItem}>
-              <div className={styles.techLogoBox}>
-                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/supabase.svg" className={styles.svgIcon} style={{filter: 'invert(65%) sepia(85%) saturate(378%) hue-rotate(106deg) brightness(95%) contrast(92%)'}} alt="Supabase" />
-              </div>
-              <Text className={styles.techName}>Supabase</Text>
-            </div>
-            {/* Express */}
-            <div className={styles.techItem}>
-              <div className={styles.techLogoBox}><Text style={{color: 'white', fontWeight: 'bold', fontSize: '20px'}}>ex</Text></div>
-              <Text className={styles.techName}>Express</Text>
-            </div>
-            {/* Vite */}
-            <div className={styles.techItem}>
-              <div className={styles.techLogoBox}>
-                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vite.svg" className={styles.svgIcon} alt="Vite" />
-              </div>
-              <Text className={styles.techName}>Vite</Text>
-            </div>
-            {/* Query */}
-            <div className={styles.techItem}>
-              <div className={styles.techLogoBox}>
-                <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/reactquery.svg" className={styles.svgIcon} style={{filter: 'invert(37%) sepia(93%) saturate(5427%) hue-rotate(345deg) brightness(101%) contrast(101%)'}} alt="React Query" />
-              </div>
-              <Text className={styles.techName}>React Query</Text>
-            </div>
-            {/* Zod */}
-            <div className={styles.techItem}>
-              <div className={styles.techLogoBox}><Text style={{color: '#3068b7', fontWeight: 'bold', fontSize: '24px'}}>Z</Text></div>
-              <Text className={styles.techName}>Zod</Text>
-            </div>
+            ))}
           </div>
         </div>
       </div>

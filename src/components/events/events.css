@@ -1,7 +1,14 @@
 .eventsSection {
-  max-width: 1200px;
+  width: 90%;
   margin: 0 auto;
   padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.eventsPage .eventsSearchHero .eventsSection {
+  width: 90%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 [data-theme='light'] {
@@ -23,14 +30,14 @@
   --events-list-panel-border: rgba(0, 0, 0, 0.08);
   --events-filters-panel-bg: rgba(255, 255, 255, 0.55);
   --events-filters-panel-border: rgba(0, 0, 0, 0.08);
-  --events-card-bg: rgba(255, 255, 255, 0.94);
-  --events-card-border: rgba(0, 0, 0, 0.1);
+  --events-card-bg: rgba(255, 255, 255, 0.50);
+  --events-card-border: rgba(255, 255, 255, 0.95);
   --events-card-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
   --events-section-tint: rgba(255, 255, 255, 0.5);
 }
 
 [data-theme='dark'] {
-  --events-field-bg: rgba(255, 255, 255, 0.1);
+  --events-field-bg: rgba(255, 255, 255, 20%);
   --events-field-light-bg: rgba(255, 255, 255, 0.22);
   --events-filter-date-bg: rgba(255, 255, 255, 0.38);
   --events-filter-date-hover-bg: rgba(255, 255, 255, 0.46);
@@ -44,7 +51,7 @@
   --events-panel-bg: rgba(255, 255, 255, 0.08);
   --events-panel-border: rgba(255, 255, 255, 0.12);
   --events-panel-shadow: rgba(0, 0, 0, 0.4) 0 8px 32px 0;
-  --events-card-bg: rgba(255, 255, 255, 0.08);
+  --events-card-bg: rgba(255, 255, 255, 10%);
   --events-card-border: rgba(255, 255, 255, 0.12);
   --events-card-shadow: rgba(0, 0, 0, 0.4) 0 8px 32px 0;
   --events-section-tint: color-mix(in srgb, var(--home-hero-overlay), transparent 30%);
@@ -482,15 +489,7 @@
   box-shadow: none !important;
 }
 
-[data-theme='light'] .eventsPage .eventsFilters {
-  background: var(--events-filters-panel-bg) !important;
-  background-color: var(--events-filters-panel-bg) !important;
-  border-color: var(--events-filters-panel-border) !important;
-  box-shadow: none !important;
-  backdrop-filter: blur(16px) saturate(1.3) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.3) !important;
-}
-
+[data-theme='light'] .eventsPage .eventsFilters,
 [data-theme='light'] .eventsPage .eventsListPanel {
   background: var(--events-list-panel-bg) !important;
   background-color: var(--events-list-panel-bg) !important;
@@ -498,6 +497,16 @@
   box-shadow: none !important;
   backdrop-filter: blur(16px) saturate(1.3) !important;
   -webkit-backdrop-filter: blur(16px) saturate(1.3) !important;
+}
+
+[data-theme='dark'] .eventsPage .eventsFilters,
+[data-theme='dark'] .eventsPage .eventsListPanel {
+  background: var(--events-list-panel-bg, var(--events-panel-bg)) !important;
+  background-color: var(--events-list-panel-bg, var(--events-panel-bg)) !important;
+  border-color: var(--events-list-panel-border, var(--events-panel-border)) !important;
+  box-shadow: var(--events-panel-shadow) !important;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 @media (max-width: 768px) {

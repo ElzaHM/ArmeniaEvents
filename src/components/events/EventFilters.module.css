@@ -3,11 +3,12 @@
   height: 100%;
   box-sizing: border-box;
   padding: 24px;
-  border: 1px solid var(--events-panel-border);
+  border: 1px solid var(--events-list-panel-border, var(--events-panel-border));
   border-radius: 12px;
   backdrop-filter: blur(16px) saturate(1.8);
   -webkit-backdrop-filter: blur(16px) saturate(1.8);
-  background-color: var(--events-filters-panel-bg, var(--events-panel-bg));
+  background: var(--events-list-panel-bg, var(--events-panel-bg));
+  background-color: var(--events-list-panel-bg, var(--events-panel-bg));
   box-shadow: var(--events-panel-shadow);
 }
 

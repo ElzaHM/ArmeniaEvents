@@ -7,9 +7,10 @@
 }
 
 .eventsSection {
-  max-width: 1200px;
+  width: 90%;
   margin: 0 auto;
   padding: 0 24px;
+  box-sizing: border-box;
   background: var(--events-section-tint, color-mix(in srgb, var(--home-hero-overlay), transparent 30%)) !important;
 }
 
@@ -17,9 +18,10 @@
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
   gap: 32px;
-  max-width: 1200px;
+  width: 90%;
   margin: 0 auto;
   padding: 32px 24px 56px;
+  box-sizing: border-box;
   align-items: stretch;
 }
 

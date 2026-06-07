@@ -2,6 +2,7 @@ import {
   BenefitsSection,
   FooterContent,
   HeroSection,
+  HeyGenVideoWidget,
   OrganizeEventCTA,
   PopularCategories,
   TopPicks,
@@ -21,6 +22,7 @@ export default function HomePage() {
       <TopPicks />
       <BenefitsSection />
       <FooterContent />
+      <HeyGenVideoWidget />
     </div>
   );
 }

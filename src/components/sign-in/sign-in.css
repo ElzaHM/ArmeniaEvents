@@ -115,7 +115,7 @@
 
 .sign-in-page {
   --auth-illustration-box-width: 100%;
-  --auth-illustration-box-height: 128px;
+  --auth-illustration-box-height: 168px;
   --auth-left-padding-x: 40px;
 }
 
@@ -162,10 +162,32 @@
 }
 
 .sign-in-page .sign-in-panel {
-  max-width: 760px;
-  width: 82%;
-  max-height: calc(100vh - 88px);
-  box-shadow: var(--auth-panel-shadow) !important;
+  max-width: 960px;
+  width: 92%;
+  min-height: 560px;
+  max-height: calc(100vh - 48px);
+}
+
+[data-theme='light'] .sign-in-page .sign-in-panel {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 0.1px solid rgba(255, 255, 255, 0.65) !important;
+  box-shadow:
+    0 0 0 0.3px rgba(255, 255, 255, 0.55),
+    0 2px 15px rgba(0, 0, 0, 0.06) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+}
+
+[data-theme='light'] .sign-in-page .sign-in-panel .leftSection {
+  border-right-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme='dark'] .sign-in-page .sign-in-panel {
+  background: rgba(14, 14, 14, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
 }
 
 .sign-in-page .ant-form-item {

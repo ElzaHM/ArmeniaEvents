@@ -12,12 +12,11 @@
   margin-top: 8px;
   cursor: pointer;
   box-sizing: border-box;
-  box-shadow: var(--home-card-shadow);
 }
 
 [data-theme='light'] .card {
-  background: rgba(255, 255, 255, 0.80);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(8px);
 }
 
@@ -25,10 +24,11 @@
   background: var(--home-glass-hover-bg);
   border-color: var(--home-accent);
   transform: translateY(-6px);
+  box-shadow: var(--home-card-shadow);
 }
 
 [data-theme='light'] .card:hover {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.99) !important;
 }
 
 .imageWrapper {

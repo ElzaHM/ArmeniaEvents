@@ -11,7 +11,7 @@
 .sectionOverlay {
   width: 100% !important;
   height: 100% !important;
-  padding: 50px 0 60px;
+  padding: 60px 0 60px;
   margin: 0 !important;
   background: color-mix(in srgb, var(--home-hero-overlay), transparent 80%) !important;
   position: relative;
@@ -21,9 +21,9 @@
 }
 
 [data-theme='light'] .sectionOverlay {
-  background: var(--home-glass-panel-bg) !important;
-  backdrop-filter: blur(20px) saturate(1.3);
-  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  background: transparent !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 [data-theme='dark'] .sectionOverlay {

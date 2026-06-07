@@ -13,13 +13,35 @@
 }
 
 .sign-up-page .sign-up-panel {
-  max-width: 760px;
-  width: 82%;
+  max-width: 960px;
+  width: 92%;
   max-height: none;
   height: auto;
-  border-radius: 20px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: var(--auth-panel-shadow) !important;
+}
+
+[data-theme='light'] .sign-up-page .sign-up-panel {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 0.1px solid rgba(255, 255, 255, 0.65) !important;
+  box-shadow:
+    0 0 0 0.3px rgba(255, 255, 255, 0.55),
+    0 2px 15px rgba(0, 0, 0, 0.06) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+}
+
+[data-theme='light'] .sign-up-page .sign-up-panel .leftSection {
+  border-right-color: rgba(0, 0, 0, 0.08) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme='dark'] .sign-up-page .sign-up-panel {
+  background: rgba(14, 14, 14, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
 }
 
 .sign-up-page .auth-illustration {

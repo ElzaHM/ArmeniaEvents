@@ -1,22 +1,23 @@
 .panel {
   display: flex;
-  background: var(--auth-panel-bg);
-  backdrop-filter: var(--auth-panel-backdrop, blur(20px));
-  border-radius: 20px;
+  background: rgba(14, 14, 14, 0.6);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-radius: 12px;
   overflow: hidden;
-  max-width: 760px;
-  width: 82%;
+  max-width: 960px;
+  width: 92%;
   max-height: 100%;
   margin: 0 auto;
-  border: 1px solid var(--auth-panel-border);
-  box-shadow: var(--auth-panel-shadow, 0 4px 24px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: none;
 }
 
 .leftSection {
   flex: 1;
-  padding: 14px 28px 14px;
-  background: var(--auth-panel-bg);
-  border-right: 1px solid var(--auth-panel-divider);
+  padding: 26px 28px 26px;
+  background: transparent;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -26,8 +27,8 @@
 
 .rightSection {
   flex: 1;
-  padding: 18px 24px;
-  background: var(--auth-panel-bg);
+  padding: 30px 28px;
+  background: transparent;
   overflow-y: auto;
   min-height: 0;
 }
