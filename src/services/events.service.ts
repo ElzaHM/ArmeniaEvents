@@ -12,7 +12,6 @@ import {
 } from '../components/events/mockData';
 import {
   EVENT_TABS,
-  INTERESTED_AVATARS,
 } from '../components/event-details/mockData';
 import type { EventDetails } from '../components/event-details/types';
 import {
@@ -41,6 +40,7 @@ type EventListRow = {
   organizers: { name: string } | null;
   views?: number | null;
   status?: 'published' | 'draft' | 'archived' | null;
+  interested_count?: number | null;
 };
 
 type EventDetailRow = {
@@ -66,6 +66,9 @@ type EventDetailRow = {
   } | null;
   views?: number | null;
   status?: 'published' | 'draft' | 'archived' | null;
+  tags?: string[] | null;
+  age_range?: string | null;
+  interested_count?: number | null;
 };
 
 type EventCrudPayload = {
@@ -151,6 +154,7 @@ function mapEventRowToEventItem(event: EventListRow): EventItem {
     eventType: event.event_type ?? 'Offline',
     language: event.language ?? 'English',
     organizer: event.organizers?.name ?? 'Armenia Events',
+    interestedCount: event.interested_count ?? 0,
   } as EventItem;
 }
 
@@ -213,19 +217,20 @@ export function mapEventRowToEventDetails(row: EventDetailRow): EventDetails {
     location,
     date: row.start_date ?? '',
     time: formatEventTime(row.start_date),
+    endDate: row.end_date ?? null,
+    endTime: formatEventTime(row.end_date),
     price: formatPriceLabel(priceValue),
     isFree: priceValue === 0,
     imageUrl,
     weekday: formatWeekday(row.start_date),
     ticketUrl: row.ticket_url ?? null,
-    interestedCount: 0,
-    goingCount: 0,
+    interestedCount: row.interested_count ?? 0,
     description: row.description ? [row.description] : [],
-    tags: [],
+    tags: row.tags ?? [],
     duration: formatDuration(row.start_date, row.end_date),
     eventType: row.event_type ?? 'Offline',
     languages: row.language ?? 'English',
-    ageRange: 'All ages',
+    ageRange: row.age_range ?? 'All ages',
     venue: {
       name: row.venue ?? 'Event Venue',
       address: location,
@@ -462,10 +467,6 @@ export const eventsService = {
 
   getLocations(): Promise<typeof LOCATIONS> {
     return simulateRequest([...LOCATIONS]);
-  },
-
-  getInterestedAvatars(): Promise<string[]> {
-    return simulateRequest([...INTERESTED_AVATARS]);
   },
 
   getEventTabs(): Promise<readonly string[]> {

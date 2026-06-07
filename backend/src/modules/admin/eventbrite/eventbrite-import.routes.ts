@@ -5,8 +5,8 @@ import { requireAuth } from '../../../middleware/auth.middleware.js';
 import { importEventbriteController } from './eventbrite-import.controller.js';
 
 function requireAdmin(req: Request, res: Response, next: NextFunction) {
-  if (!req.authUser) {
-    return res.status(401).json({ message: 'Unauthorized' });
+  if (!req.authUser || req.authUser.role !== 'admin') {
+    return res.status(403).json({ message: 'Forbidden' });
   }
 
   next();

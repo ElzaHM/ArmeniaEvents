@@ -9,17 +9,24 @@ export type AuthPayload = {
     id: string;
     email: string;
     fullName: string;
+    role: string;
   };
   accessToken: string;
   refreshToken: string;
   expiresAt: string | null;
 };
 
-function mapUser(user: User) {
+function mapUser(user: User): {
+  id: string;
+  email: string;
+  fullName: string;
+  role: string;
+} {
   return {
     id: user.id,
     email: user.email ?? '',
     fullName: (user.user_metadata?.fullName as string | undefined) ?? '',
+    role: (user.user_metadata?.role as string | undefined) ?? 'user',
   };
 }
 

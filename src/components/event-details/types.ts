@@ -32,7 +32,6 @@ export interface OrganizerInfo {
 export interface EventDetails extends EventItem {
   weekday: string;
   interestedCount: number;
-  goingCount: number;
   description: string[];
   tags: string[];
   duration: string;
@@ -45,4 +44,6 @@ export interface EventDetails extends EventItem {
   tickets: TicketOption[];
   organizer: OrganizerInfo;
   ticketUrl?: string | null;
+  endDate?: string | null;
+  endTime?: string;
 }

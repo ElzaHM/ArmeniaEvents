@@ -1,3 +1,4 @@
+export { default as CountdownCard } from './CountdownCard';
 export { default as EventHero } from './EventHero';
 export { default as EventTabs } from './EventTabs';
 export { default as EventInfo } from './EventInfo';

@@ -1,4 +1,4 @@
-import { Tag, Typography } from 'antd';
+import { Button, Tag, Typography } from 'antd';
 import {
   CalendarOutlined,
   ClockCircleOutlined,
@@ -7,7 +7,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 
-import { formatFullDate } from '../events/eventDateUtils';
+import { formatFullDate, openGoogleCalendarEvent, parseEventDate } from '../events/eventDateUtils';
 import type { EventDetails } from './types';
 
 import styles from './EventInfo.module.css';
@@ -16,14 +16,47 @@ interface EventInfoProps {
   event: EventDetails;
 }
 
+type InfoItem = {
+  icon: typeof CalendarOutlined;
+  label: string;
+  value: string;
+  extra?: string;
+  onExtraClick?: () => void;
+  extraDisabled?: boolean;
+};
+
 export default function EventInfo({ event }: EventInfoProps) {
-  const infoItems = [
+  const hasEndDate = Boolean(event.endDate && parseEventDate(event.endDate));
+  const hasValidStartDate = Boolean(parseEventDate(event.date));
+
+  const handleAddToCalendar = () => {
+    openGoogleCalendarEvent({
+      title: event.title,
+      startDate: event.date,
+      endDate: event.endDate,
+      location: event.location,
+      description: event.description,
+    });
+  };
+
+  const infoItems: InfoItem[] = [
     {
       icon: CalendarOutlined,
       label: 'Date & Time',
       value: formatFullDate(event.date, event.time),
       extra: 'Add to Calendar',
+      onExtraClick: handleAddToCalendar,
+      extraDisabled: !hasValidStartDate,
     },
+    ...(hasEndDate
+      ? [
+          {
+            icon: CalendarOutlined,
+            label: 'Ends',
+            value: formatFullDate(event.endDate, event.endTime),
+          },
+        ]
+      : []),
     {
       icon: ClockCircleOutlined,
       label: 'Duration',
@@ -32,7 +65,7 @@ export default function EventInfo({ event }: EventInfoProps) {
     {
       icon: TeamOutlined,
       label: 'Attendees',
-      value: `${event.interestedCount ?? 0} interested / ${event.goingCount ?? 0} going`,
+      value: `${event.interestedCount ?? 0} interested`,
     },
     {
       icon: GlobalOutlined,
@@ -92,9 +125,16 @@ export default function EventInfo({ event }: EventInfoProps) {
                 </Typography.Text>
 
                 {item.extra && (
-                  <button type="button" className={styles.infoExtra}>
+                  <Button
+                    type="default"
+                    size="small"
+                    icon={<CalendarOutlined />}
+                    className={styles.calendarBtn}
+                    onClick={item.onExtraClick}
+                    disabled={item.extraDisabled}
+                  >
                     {item.extra}
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>

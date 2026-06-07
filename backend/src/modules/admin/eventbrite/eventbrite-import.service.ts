@@ -66,22 +66,36 @@ function mapEventbriteEvent(event: EventbriteEvent): EventInsertRow | null {
 }
 
 async function fetchEventbriteEvents(token: string): Promise<EventbriteEvent[]> {
-  const { data } = await axios.get<EventbriteSearchResponse>(
-    'https://www.eventbriteapi.com/v3/events/search/',
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      params: {
-        'location.address': 'Yerevan, Armenia',
-        'location.within': '50km',
-        expand: 'venue,organizer,ticket_availability',
-        page_size: 50,
-      },
-    },
-  );
+  const url = `https://www.eventbriteapi.com/v3/events/search/?token=${token}&location.address=Yerevan%2C%20Armenia&location.within=50km&expand=venue,organizer,ticket_availability&page_size=50`;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const params = {
+    token,
+    'location.address': 'Yerevan, Armenia',
+    'location.within': '50km',
+    expand: 'venue,organizer,ticket_availability',
+    page_size: 50,
+  };
 
-  return data.events ?? [];
+  console.log('EVENTBRITE URL:');
+  console.log(url);
+  console.log('EVENTBRITE PARAMS:');
+  console.log({ ...params, token: '***' });
+  console.log('EVENTBRITE HEADERS:');
+  console.log({ Authorization: 'Bearer ***' });
+
+  try {
+    const { data } = await axios.get<EventbriteSearchResponse>(url, { headers });
+
+    return data.events ?? [];
+  } catch (error: any) {
+    console.error('EVENTBRITE ERROR RESPONSE:');
+    console.error('Status:', error?.response?.status);
+    console.error('Data:', error?.response?.data);
+    console.error('Eventbrite API error:', error?.response?.status, error?.response?.data);
+    throw new Error(error?.response?.data?.error_description ?? error?.message ?? 'Eventbrite API failed');
+  }
 }
 
 async function eventbriteEventExists(externalId: string): Promise<boolean> {

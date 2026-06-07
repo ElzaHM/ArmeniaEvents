@@ -2,6 +2,19 @@ import type { NextFunction, Request, Response } from 'express';
 
 import { getUserFromToken } from '../modules/auth/auth.service.js';
 
+declare global {
+  namespace Express {
+    interface Request {
+      authUser?: {
+        id: string;
+        email: string;
+        fullName: string;
+        role: string;
+      };
+    }
+  }
+}
+
 export async function requireAuth(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
   const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;

@@ -25,9 +25,8 @@
 }
 
 .backBar {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 24px 0;
+  padding-top: 96px;
+  padding-bottom: 20px;
 }
 
 .backLink {
@@ -91,7 +90,8 @@
   }
 
   .backBar {
-    padding: 16px 16px 0;
+    padding-top: 88px;
+    padding-bottom: 16px;
   }
 
   .main {

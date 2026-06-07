@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
-import { Button, Tag, Typography } from 'antd';
+import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Tag, Typography, message } from 'antd';
 import {
   EnvironmentOutlined,
   HeartOutlined,
@@ -7,8 +8,8 @@ import {
   ShareAltOutlined,
 } from '@ant-design/icons';
 
-import { QueryState } from '../../hooks/queries/query-state';
-import { useInterestedAvatars } from '../../hooks/queries/useEvents';
+import { useFavoriteStatus, useToggleFavorite } from '../../hooks/queries/useFavorite';
+import { useAuth } from '../../hooks/useAuth';
 import { formatDateBadge } from '../events/eventDateUtils';
 import type { EventDetails } from './types';
 
@@ -19,9 +20,31 @@ interface EventHeroProps {
 }
 
 export default function EventHero({ event }: EventHeroProps) {
-  const { data: interestedAvatars, isLoading, isError, error } = useInterestedAvatars();
-  const [isSaved, setIsSaved] = useState(false);
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const { data: favoriteStatus } = useFavoriteStatus(event.id);
+  const toggleFavorite = useToggleFavorite(event.id);
   const { month, day } = useMemo(() => formatDateBadge(event.date), [event.date]);
+
+  const isSaved = favoriteStatus?.favorited ?? false;
+
+  const handleSave = () => {
+    if (!isAuthenticated) {
+      navigate('/sign-in');
+      return;
+    }
+
+    toggleFavorite.mutate();
+  };
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      message.success('Link copied to clipboard');
+    } catch {
+      message.error('Unable to copy link');
+    }
+  };
 
   return (
     <section className={styles.hero}>
@@ -46,25 +69,11 @@ export default function EventHero({ event }: EventHeroProps) {
               {event.location}
             </Typography.Text>
 
-            <QueryState isLoading={isLoading} isError={isError} error={error} minHeight={48}>
-              {interestedAvatars && (
-                <div className={styles.interested}>
-                  <div className={styles.avatars}>
-                    {interestedAvatars.map((avatar) => (
-                      <img
-                        key={avatar}
-                        src={avatar}
-                        alt=""
-                        className={styles.avatar}
-                      />
-                    ))}
-                  </div>
-                  <Typography.Text className={styles.interestedText}>
-                    +128 · {event.interestedCount ?? 0} people are interested
-                  </Typography.Text>
-                </div>
-              )}
-            </QueryState>
+            <div className={styles.interested}>
+              <Typography.Text className={styles.interestedText}>
+                {event.interestedCount ?? 0} people are interested
+              </Typography.Text>
+            </div>
 
             <div className={styles.actions}>
               {event.ticketUrl ? (
@@ -83,11 +92,17 @@ export default function EventHero({ event }: EventHeroProps) {
                 size="large"
                 icon={isSaved ? <HeartFilled /> : <HeartOutlined />}
                 className={styles.secondaryBtn}
-                onClick={() => setIsSaved((current) => !current)}
+                onClick={handleSave}
+                loading={toggleFavorite.isPending}
               >
                 Save Event
               </Button>
-              <Button size="large" icon={<ShareAltOutlined />} className={styles.secondaryBtn}>
+              <Button
+                size="large"
+                icon={<ShareAltOutlined />}
+                className={styles.secondaryBtn}
+                onClick={handleShare}
+              >
                 Share
               </Button>
             </div>
@@ -101,7 +116,8 @@ export default function EventHero({ event }: EventHeroProps) {
               aria-label="Save event"
               icon={isSaved ? <HeartFilled className={styles.imageHeartActive} /> : <HeartOutlined />}
               className={styles.imageFavorite}
-              onClick={() => setIsSaved((current) => !current)}
+              onClick={handleSave}
+              loading={toggleFavorite.isPending}
             />
           </div>
         </div>

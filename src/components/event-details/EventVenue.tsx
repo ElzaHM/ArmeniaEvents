@@ -1,4 +1,4 @@
-import { Button, Typography } from 'antd';
+import { Typography } from 'antd';
 import {
   EnvironmentOutlined,
   GlobalOutlined,
@@ -54,7 +54,6 @@ export default function EventVenue({ event }: EventVenueProps) {
 
       <div className={styles.imageWrap}>
         <img src={venue.imageUrl} alt={venue.name} className={styles.image} loading="lazy" />
-        <Button className={styles.mapBtn}>View on Map</Button>
       </div>
 
       <ul className={styles.contacts}>
