@@ -3,8 +3,9 @@ import {
   AppstoreOutlined,
   CalendarOutlined,
   LogoutOutlined,
-  SettingOutlined,
+  SearchOutlined,
   TagsOutlined,
+  TeamOutlined,
   UserOutlined,
   BarChartOutlined,
   EnvironmentOutlined,
@@ -12,17 +13,19 @@ import {
 } from "@ant-design/icons";
 import {Button} from "antd";
 
-import {ADMIN_PROFILE} from "./mockData";
+import {useAuth} from "../../hooks/useAuth";
+import {useAdminProfileDisplay} from "../../pages/admin/AdminProfilePage/useAdminProfileDisplay";
 import styles from "./AdminSidebar.module.css";
 
 const NAV_ITEMS = [
   {to: "/admin", label: "Dashboard", icon: AppstoreOutlined, end: true},
   {to: "/admin/events", label: "Events", icon: CalendarOutlined, end: false},
   {to: "/admin/categories", label: "Categories", icon: TagsOutlined, end: false},
-  {to: "/admin/users", label: "Users", icon: UserOutlined, end: false},
+  {to: "/admin/users", label: "Users", icon: TeamOutlined, end: false},
+  {to: "/admin/search", label: "Search", icon: SearchOutlined, end: false},
   {to: "/admin/analytics", label: "Analytics", icon: BarChartOutlined, end: false},
   {to: "/admin/profile", label: "My Profile", icon: UserOutlined, end: false},
-  {to: "/admin/settings", label: "Settings", icon: SettingOutlined, end: false},
+  // {to: "/admin/settings", label: "Settings", icon: SettingOutlined, end: false},
 ];
 
 interface AdminSidebarProps {
@@ -32,11 +35,14 @@ interface AdminSidebarProps {
 }
 
 export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: AdminSidebarProps) {
+  const {logout} = useAuth();
   const navigate = useNavigate();
+  const {displayName, avatarUrl, roleLabel} = useAdminProfileDisplay();
 
-  const handleLeaveAdmin = () => {
+  const handleLogout = async () => {
+    await logout();
     onMobileClose();
-    navigate('/');
+    navigate("/signin", {replace: true});
   };
 
   return (
@@ -90,22 +96,22 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
                 <button
                   type="button"
                   className={`${styles.navLink} ${styles.navButton} ${styles.logoutLink}`}
-                  onClick={handleLeaveAdmin}
-                  title={collapsed ? 'Log Out' : undefined}>
+                  onClick={handleLogout}
+                  title={collapsed ? "Log Out" : undefined}>
                   <LogoutOutlined className={styles.navIcon} />
                   <span className={styles.navLabel}>Log Out</span>
                 </button>
               </li>
             </ul>
           </nav>
-          <div className={styles.skylineDecoration} aria-hidden="true" />
         </div>
+        <div className={styles.skylineDecoration} aria-hidden="true" />
         <div className={styles.sidebarFooter}>
           <div className={styles.profileCard}>
-            <img src={ADMIN_PROFILE.avatarUrl} alt="Admin" className={styles.avatar} />
+            <img src={avatarUrl} alt={displayName} className={styles.avatar} />
             <div className={styles.profileInfo}>
-              <div className={styles.profileName}>{ADMIN_PROFILE.name}</div>
-              <div className={styles.profileRole}>Super Administrator</div>
+              <div className={styles.profileName}>{displayName}</div>
+              <div className={styles.profileRole}>{roleLabel}</div>
             </div>
           </div>
           <div className={styles.copyright}>© 2026 Armenia Events</div>

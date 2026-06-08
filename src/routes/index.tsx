@@ -12,14 +12,17 @@ import ForgotPasswordPage from '../pages/ForgotPasswordPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage';
 import AdminPage from '../pages/admin/AdminPage';
 import AdminEventsPage from '../pages/admin/AdminEventsPage';
+import AdminCreateEventPage from '../pages/admin/AdminCreateEventPage';
 import AdminCategoriesPage from '../pages/admin/AdminCategoriesPage';
 import AdminUsersPage from '../pages/admin/AdminUsersPage';
 import AdminAnalyticsPage from '../pages/admin/AdminAnalyticsPage';
 import AdminSettingsPage from '../pages/admin/AdminSettingsPage';
 import AdminProfilePage from '../pages/admin/AdminProfilePage';
+import AdminSearchPage from '../pages/admin/AdminSearchPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import CreateEventPage from '../pages/CreateEventPage';
-import { RequireAdmin, RequireGuest } from './guards';
+import AboutPage from '../pages/AboutPage';
+import { RequireAuth, RequireGuest } from './guards';
 
 export const router = createBrowserRouter([
   {
@@ -43,8 +46,8 @@ export const router = createBrowserRouter([
         element: <EventDetailsPage />,
       },
       {
-        path: 'create-event',
-        element: <CreateEventPage />,
+        path: 'about',
+        element: <AboutPage />,
       },
       {
         path: 'signin',
@@ -83,14 +86,18 @@ export const router = createBrowserRouter([
   {
     path: '/admin',
     element: (
-      <RequireAdmin>
+      <RequireAuth>
         <AdminLayout />
-      </RequireAdmin>
+      </RequireAuth>
     ),
     children: [
       {
         index: true,
         element: <AdminPage />,
+      },
+      {
+        path: 'events/create',
+        element: <AdminCreateEventPage />,
       },
       {
         path: 'events',
@@ -105,6 +112,10 @@ export const router = createBrowserRouter([
         element: <AdminUsersPage />,
       },
       {
+        path: 'search',
+        element: <AdminSearchPage />,
+      },
+      {
         path: 'analytics',
         element: <AdminAnalyticsPage />,
       },
@@ -117,10 +128,6 @@ export const router = createBrowserRouter([
         element: <AdminSettingsPage />,
       },
     ],
-  },
-  {
-    path: '/admin/signin',
-    element: <Navigate to="/signin" replace state={{ from: '/admin' }} />,
   },
   {
     path: '/admin/signup',

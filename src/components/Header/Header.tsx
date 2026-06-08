@@ -18,7 +18,7 @@ const { Header: AntHeader } = Layout;
 export default function Header() {
   const { pathname } = useLocation();
   const { mode, toggleTheme } = useTheme();
-  const { isAuthenticated, isAdmin, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -116,19 +116,12 @@ export default function Header() {
   />
 
   {isAuthenticated ? (
-    <>
-      {isAdmin ? (
-        <Link to="/admin" className="header-signin-link">
-          <Button className="signin-button homeActionBtn">Admin Panel</Button>
-        </Link>
-      ) : null}
-      <Button
-        className="signin-button homeActionBtn"
-        onClick={() => void handleLogout()}
-      >
-        Sign Out
-      </Button>
-    </>
+    <Button
+      className="signin-button homeActionBtn"
+      onClick={() => void handleLogout()}
+    >
+      Log Out
+    </Button>
   ) : (
     <Link to="/signin" className="header-signin-link">
       <Button className="signin-button homeActionBtn">

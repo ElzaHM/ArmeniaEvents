@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import { loginSchema, registerSchema, forgotPasswordSchema, resetPasswordSchema, googleLoginSchema } from './auth.schema.js';
+import { loginSchema, registerSchema, forgotPasswordSchema, resetPasswordSchema } from './auth.schema.js';
 import * as authService from './auth.service.js';
 
 export async function registerController(req: Request, res: Response, next: NextFunction) {
@@ -75,18 +75,6 @@ export async function resetPasswordController(req: Request, res: Response, next:
     // eslint-disable-next-line no-console
     console.log('[auth] password reset completed');
     res.status(200).json({ message: 'Password updated successfully.' });
-  } catch (error) {
-    next(error);
-  }
-}
-
-export async function googleLoginController(req: Request, res: Response, next: NextFunction) {
-  try {
-    const payload = googleLoginSchema.parse(req.body);
-    const session = await authService.loginWithGoogle(payload);
-    // eslint-disable-next-line no-console
-    console.log(`[auth] google login ok: ${session.user.email}`);
-    res.status(200).json(session);
   } catch (error) {
     next(error);
   }

@@ -9,14 +9,13 @@
     "start:api": "node scripts/free-port.mjs 4000 && tsx backend/src/index.ts",
     "build:api": "tsc -p backend/tsconfig.json",
     "list:db": "node scripts/list-users-events.mjs",
-    "setup:google": "node scripts/setup-google-oauth.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@ant-design/icons": "^6.2.5",
-    "@react-oauth/google": "^0.13.5",
+    "@google/generative-ai": "^0.24.1",
     "@supabase/supabase-js": "^2.106.2",
     "@tanstack/react-query": "^5.100.14",
     "@tanstack/react-query-devtools": "^5.100.14",
@@ -27,7 +26,6 @@
     "dayjs": "^1.11.10",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "google-auth-library": "^10.7.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^1.17.0",
     "react": "^19.2.6",
