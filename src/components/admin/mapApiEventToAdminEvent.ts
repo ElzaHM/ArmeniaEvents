@@ -1,5 +1,6 @@
 import type { SyntheticEvent } from 'react';
 
+import createEventDefault from '../../assets/createEventDefault.png';
 import { parseEventDate } from '../events/eventDateUtils';
 import type { EventItem } from '../home/types';
 import { supabase } from '../../lib/supabase';
@@ -8,9 +9,16 @@ import type { AdminEvent, AdminEventStatus } from './types';
 const EVENT_IMAGES_BUCKET =
   import.meta.env.VITE_SUPABASE_EVENT_IMAGES_BUCKET ?? 'EVENT_IMAGES_BUCKET';
 
-/** Default fallback when an event has no stored image. */
-export const EVENT_IMAGE_PLACEHOLDER =
-  'https://images.unsplash.com/photo-1565008576549-5756a870570e?auto=format&fit=crop&w=800&q=80';
+const IMAGE_FALLBACK_APPLIED_ATTR = 'data-image-fallback-applied';
+
+/** Bundled default image — reliable offline fallback for broken or missing URLs. */
+export const EVENT_IMAGE_PLACEHOLDER = createEventDefault;
+
+/** Legacy Unsplash URLs stored in DB that often fail to load in the admin UI. */
+const LEGACY_BROKEN_PLACEHOLDER_URLS = [
+  'images.unsplash.com/photo-1565008576549',
+  'images.unsplash.com/photo-1540575467063',
+];
 
 export const DEFAULT_FALLBACK_IMAGE = EVENT_IMAGE_PLACEHOLDER;
 
@@ -63,6 +71,11 @@ function getRawImageUrl(row: Pick<ApiEventRow, 'image_url' | 'imageUrl'>): strin
   return row.image_url?.trim() || row.imageUrl?.trim() || '';
 }
 
+function isLegacyBrokenPlaceholderUrl(imageUrl: string): boolean {
+  const lower = imageUrl.toLowerCase();
+  return LEGACY_BROKEN_PLACEHOLDER_URLS.some((fragment) => lower.includes(fragment));
+}
+
 /**
  * Resolves the stored image reference to a browser-loadable URL.
  * Database value always wins; placeholder is used only when empty.
@@ -71,6 +84,10 @@ export function resolveStoredEventImageUrl(imageUrl?: string | null): string {
   const trimmed = imageUrl?.trim();
 
   if (!trimmed) {
+    return EVENT_IMAGE_PLACEHOLDER;
+  }
+
+  if (isLegacyBrokenPlaceholderUrl(trimmed)) {
     return EVENT_IMAGE_PLACEHOLDER;
   }
 
@@ -89,19 +106,22 @@ export function resolveAdminEventImageUrl(imageUrl?: string | null): string {
   return resolveStoredEventImageUrl(imageUrl);
 }
 
-/** Normalizes an image URL before persisting to Supabase. */
-export function sanitizeAdminImageUrl(imageUrl?: string | null): string {
+/** Normalizes an image URL before persisting to Supabase (never writes display placeholders). */
+export function sanitizeAdminImageUrl(imageUrl?: string | null): string | null {
   const trimmed = imageUrl?.trim();
 
-  if (!trimmed) {
-    return EVENT_IMAGE_PLACEHOLDER;
+  if (!trimmed || isLegacyBrokenPlaceholderUrl(trimmed)) {
+    return null;
   }
 
   if (/^https?:\/\//i.test(trimmed)) {
     return trimmed;
   }
 
-  return resolveStoredEventImageUrl(trimmed);
+  const storagePath = trimmed.replace(/^\/+/, '');
+  const { data } = supabase.storage.from(EVENT_IMAGES_BUCKET).getPublicUrl(storagePath);
+
+  return data.publicUrl || null;
 }
 
 export function getCategoryEventImagePlaceholder(): string {
@@ -231,9 +251,12 @@ export function buildAdminGoogleSearchUrl(title: string): string {
 export function handleAdminEventImageError(event: SyntheticEvent<HTMLImageElement>): void {
   const img = event.currentTarget;
 
-  if (img.src !== EVENT_IMAGE_PLACEHOLDER) {
-    img.src = EVENT_IMAGE_PLACEHOLDER;
+  if (img.getAttribute(IMAGE_FALLBACK_APPLIED_ATTR) === 'true') {
+    return;
   }
+
+  img.setAttribute(IMAGE_FALLBACK_APPLIED_ATTR, 'true');
+  img.src = EVENT_IMAGE_PLACEHOLDER;
 }
 
 export function isBlockedAdminExternalUrl(url?: string | null): boolean {

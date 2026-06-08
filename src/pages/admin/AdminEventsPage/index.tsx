@@ -177,8 +177,8 @@ export default function AdminEventsPage() {
       render: (_, record) => (
         <div className={styles.eventCell}>
           <AdminEventImage
-            imageUrl={record.imageUrl}
-            alt=""
+            imageUrl={record.storedImageUrl}
+            alt={record.title}
             className={styles.thumbnail}
           />
           <span className={`${styles.eventTitle} ${styles.clampTwoLines}`}>{record.title}</span>
@@ -302,8 +302,13 @@ export default function AdminEventsPage() {
       });
 
       setAiFetchStatus(null);
-      messageApi.success(`AI found and imported ${result.imported} new events.`);
-      await queryClient.invalidateQueries({ queryKey: adminDashboardKeys.all });
+
+      if (result.imported > 0) {
+        messageApi.success(`AI found and imported ${result.imported} new events.`);
+        await queryClient.invalidateQueries({ queryKey: adminDashboardKeys.events() });
+      } else {
+        messageApi.info("AI fetch completed. No new events to import — your existing events were left unchanged.");
+      }
     } catch (error) {
       setAiFetchStatus(null);
       messageApi.error(getAiSyncErrorMessage(error));

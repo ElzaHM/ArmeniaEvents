@@ -18,7 +18,7 @@ export const GEMINI_BUSY_RETRY_MESSAGE =
   "Google servers are busy. Retrying in 10 seconds...";
 
 export const GEMINI_UNAVAILABLE_MESSAGE =
-  "AI Service is temporarily unavailable due to Google limits. Please try again in a minute.";
+  "AI service is currently busy. Please try again in a few seconds.";
 
 export const GEMINI_AUTH_MISSING_MESSAGE =
   "Missing VITE_GEMINI_API_KEY. Add your Gemini API key to .env.local and restart the dev server.";
@@ -32,7 +32,7 @@ export const GEMINI_PARSE_ERROR_MESSAGE =
 /** @deprecated Use GEMINI_AUTH_MISSING_MESSAGE or GEMINI_AUTH_REJECTED_MESSAGE */
 export const GEMINI_AUTH_ERROR_MESSAGE = GEMINI_AUTH_REJECTED_MESSAGE;
 
-const AI_PROMPT = `Search Google for 10 REAL and VERIFIED upcoming events in Armenia for 2026.
+const BASE_AI_PROMPT = `Search Google for 10 REAL and VERIFIED upcoming events in Armenia for 2026.
 
 For each event provide: title, description, venue, address, start_date (ISO 8601), source (website or organizer name), category_name, source_url, and ticket_url when available.
 
@@ -45,6 +45,16 @@ CRITICAL — source_url rules:
 image_url may be omitted — images are assigned automatically.
 
 Your entire response must be a valid JSON array. Do not add any intro or outro text.`;
+
+function getAiPrompt(existingTitles: string[]): string {
+  if (existingTitles.length === 0) {
+    return BASE_AI_PROMPT;
+  }
+
+  return `${BASE_AI_PROMPT}
+
+CRITICAL - Do NOT generate duplicates. We already have these events in our database: [${existingTitles.join(", ")}]. Do NOT generate any events that are identical or semantically highly similar to these. For example, if the list contains 'Yerevan Beer Days' and you find 'Yerevan Beer Days 2026', do NOT generate it.`;
+}
 
 /** Google Search grounding tool (API expects google_search, not googleSearchRetrieval). */
 function getGoogleSearchTools(): import("@google/generative-ai").Tool[] {
@@ -88,7 +98,7 @@ type AiEventRaw = {
 type EventUpsertRow = {
   title: string;
   description: string | null;
-  image_url: string;
+  image_url: string | null;
   venue: string | null;
   address: string | null;
   start_date: string;
@@ -141,7 +151,7 @@ function mapNormalizedEventToUpsertRow(
   return sanitizeEventUpsertRow({
     title: event.title.trim(),
     description: event.description.trim(),
-    image_url: event.image_url.trim(),
+    image_url: event.image_url,
     venue: event.venue.trim(),
     address: event.address?.trim() ?? null,
     start_date: event.start_date,
@@ -354,6 +364,17 @@ function extractJsonArray(text: string): AiEventRaw[] {
   }
 }
 
+/** Strips years, punctuation, and casing so near-duplicate titles share the same hash. */
+function normalizeTitleForHash(title: string): string {
+  let normalized = title.toLowerCase();
+
+  normalized = normalized.replace(/\b(19|20)\d{2}\b/g, " ");
+  normalized = normalized.replace(/[^a-z0-9\u0531-\u058f\u0400-\u04ff\s]/g, " ");
+  normalized = normalized.replace(/\s+/g, " ").trim();
+
+  return normalized;
+}
+
 async function hashTitle(title: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(title.trim().toLowerCase());
@@ -363,6 +384,22 @@ async function hashTitle(title: string): Promise<string> {
     .join("");
 
   return `ai_${hashHex.slice(0, 16)}`;
+}
+
+type ExistingEventTitleRow = {
+  title: string;
+};
+
+async function loadExistingEventTitles(): Promise<string[]> {
+  const {data: existingEvents, error} = await supabase.from("events").select("title");
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return ((existingEvents ?? []) as ExistingEventTitleRow[])
+    .map((event) => event.title?.trim())
+    .filter((title): title is string => Boolean(title));
 }
 
 async function loadCategoryLookup(): Promise<{
@@ -557,7 +594,7 @@ function resolveAiSourceUrl(rawUrl: string | undefined, title: string): string {
 function normalizeAiEvent(raw: AiEventRaw): {
   title: string;
   description: string;
-  image_url: string;
+  image_url: string | null;
   start_date: string;
   venue: string;
   address: string | null;
@@ -602,23 +639,20 @@ function normalizeAiEvent(raw: AiEventRaw): {
   };
 }
 
-async function upsertAiEvents(rows: EventUpsertRow[]): Promise<void> {
+function assertValidAiEventArray(events: unknown): asserts events is AiEventRaw[] {
+  if (!Array.isArray(events) || events.length === 0) {
+    throw new GeminiParseError();
+  }
+}
+
+async function insertNewAiEvents(rows: EventUpsertRow[]): Promise<void> {
   if (rows.length === 0) {
     return;
   }
 
   const payload = rows.map(sanitizeEventUpsertRow);
 
-  const client = supabase as unknown as {
-    from: (table: string) => {
-      upsert: (
-        values: EventUpsertRow[],
-        options: {onConflict: string},
-      ) => Promise<{error: {message: string} | null}>;
-    };
-  };
-
-  const {error} = await client.from("events").upsert(payload, {onConflict: "external_id"});
+  const {error} = await supabase.from("events").insert(payload);
 
   if (error) {
     throw new Error(error.message);
@@ -627,20 +661,25 @@ async function upsertAiEvents(rows: EventUpsertRow[]): Promise<void> {
 
 async function requestAiEventsFromGemini(): Promise<AiEventRaw[]> {
   const sanitizedKey = assertGeminiConfig();
+  const existingTitles = await loadExistingEventTitles();
+  const prompt = getAiPrompt(existingTitles);
   const genAI = new GoogleGenerativeAI(sanitizedKey);
   const model = genAI.getGenerativeModel({
     model: GEMINI_MODEL,
     tools: getGoogleSearchTools(),
   });
 
-  const result = await model.generateContent(AI_PROMPT);
+  const result = await model.generateContent(prompt);
   const text = result.response.text();
 
   if (!text.trim()) {
-    throw new Error("Gemini returned an empty response.");
+    throw new GeminiServiceUnavailableError();
   }
 
-  return extractJsonArray(text);
+  const events = extractJsonArray(text);
+  assertValidAiEventArray(events);
+
+  return events;
 }
 
 export async function fetchEventsWithAI(options?: AiSyncOptions): Promise<AiEventRaw[]> {
@@ -674,12 +713,14 @@ export async function syncLiveAiEvents(options?: AiSyncOptions): Promise<AiSyncR
   assertSupabaseConfig();
 
   const rawEvents = await fetchEventsWithAI(options);
+  assertValidAiEventArray(rawEvents);
+
   const normalizedEvents = rawEvents
     .map(normalizeAiEvent)
     .filter((event): event is NonNullable<typeof event> => event !== null);
 
   if (normalizedEvents.length === 0) {
-    throw new Error("Gemini did not return any valid events to import.");
+    throw new GeminiParseError();
   }
 
   const [categoryLookup, organizerLookup] = await Promise.all([
@@ -690,13 +731,19 @@ export async function syncLiveAiEvents(options?: AiSyncOptions): Promise<AiSyncR
   const rows: EventUpsertRow[] = [];
 
   for (const event of normalizedEvents) {
-    const external_id = await hashTitle(event.title);
+    const normalizedTitle = normalizeTitleForHash(event.title);
+    const hashInput = normalizedTitle || event.title.trim().toLowerCase();
+    const external_id = await hashTitle(hashInput);
     const categoryId = resolveCategoryId(event.category_name, categoryLookup);
     const organizerId = await resolveOrCreateOrganizerId(event.source, organizerLookup);
 
     rows.push(
       mapNormalizedEventToUpsertRow(event, categoryId, organizerId, external_id),
     );
+  }
+
+  if (rows.length === 0) {
+    throw new GeminiParseError();
   }
 
   const externalIds = rows.map((row) => row.external_id);
@@ -710,12 +757,19 @@ export async function syncLiveAiEvents(options?: AiSyncOptions): Promise<AiSyncR
   }
 
   const existingIds = new Set((existingRows ?? []).map((row) => row.external_id));
-  const imported = rows.filter((row) => !existingIds.has(row.external_id)).length;
+  const newRows = rows.filter((row) => !existingIds.has(row.external_id));
 
-  await upsertAiEvents(rows);
+  if (newRows.length === 0) {
+    return {
+      imported: 0,
+      total: rows.length,
+    };
+  }
+
+  await insertNewAiEvents(newRows);
 
   return {
-    imported,
+    imported: newRows.length,
     total: rows.length,
   };
 }

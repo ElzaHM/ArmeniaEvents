@@ -61,8 +61,8 @@ export default function AdminEventDetailModal({
         <div className={styles.scrollContent}>
           <header className={styles.header}>
             <AdminEventImage
-              imageUrl={event.imageUrl}
-              alt=""
+              imageUrl={event.storedImageUrl}
+              alt={event.title}
               className={styles.heroImage}
             />
             <h2 className={styles.title}>{event.title}</h2>
