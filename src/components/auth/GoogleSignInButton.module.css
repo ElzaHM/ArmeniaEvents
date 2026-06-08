@@ -1,0 +1,13 @@
+.wrapper {
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+.wrapper :global(iframe) {
+  width: 100% !important;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}

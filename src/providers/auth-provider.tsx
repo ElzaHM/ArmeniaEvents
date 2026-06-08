@@ -1,7 +1,9 @@
+import { flushSync } from 'react-dom';
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 
 import type { AuthSession, LoginPayload, RegisterPayload } from '../services/auth.service';
 import { authService } from '../services/auth.service';
+import { isAdminRole } from '../lib/user-roles';
 import { AuthContext } from './auth-context';
 
 const TOKEN_STORAGE_KEY = 'armenia-events-access-token';
@@ -41,16 +43,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     void bootstrapSession();
   }, [bootstrapSession]);
 
-  const login = useCallback(async (payload: LoginPayload) => {
+  const login = useCallback(async (payload: LoginPayload): Promise<AuthSession> => {
     const currentSession = await authService.login(payload);
-    setSession(currentSession);
-    persistToken(currentSession.accessToken);
+    flushSync(() => {
+      setSession(currentSession);
+      persistToken(currentSession.accessToken);
+    });
+    return currentSession;
   }, []);
 
   const register = useCallback(async (payload: RegisterPayload) => {
     const currentSession = await authService.register(payload);
     setSession(currentSession);
     persistToken(currentSession.accessToken);
+  }, []);
+
+  const establishSession = useCallback((currentSession: AuthSession) => {
+    flushSync(() => {
+      setSession(currentSession);
+      persistToken(currentSession.accessToken);
+    });
   }, []);
 
   const logout = useCallback(async () => {
@@ -68,10 +80,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       loading,
       login,
       register,
+      establishSession,
       logout,
       isAuthenticated: Boolean(session?.accessToken),
+      isAdmin: isAdminRole(session?.user.role),
     }),
-    [session, loading, login, register, logout],
+    [session, loading, login, register, establishSession, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

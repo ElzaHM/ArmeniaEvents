@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 
 import { env } from './config/env.js';
+import { requireAdmin, requireAuth } from './middleware/auth.middleware.js';
 import { errorHandler } from './middleware/error.middleware.js';
 import { adminRoutes } from './modules/admin/admin.routes.js';
 import { eventbriteImportRoutes } from './modules/admin/eventbrite/eventbrite-import.routes.js';
@@ -57,8 +58,8 @@ app.get('/api/test-eventbrite', async (_req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/admin', eventbriteImportRoutes);
+app.use('/api/admin', requireAuth, requireAdmin, adminRoutes);
+app.use('/api/admin', requireAuth, requireAdmin, eventbriteImportRoutes);
 app.use('/api/events', eventsRoutes);
 app.use('/api/events', favoritesRoutes);
 app.use('/api/categories', categoriesRoutes);
