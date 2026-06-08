@@ -105,6 +105,7 @@ export interface QuickAction {
   description: string;
   icon: 'plus' | 'folder-add' | 'notification' | 'export';
   path: string;
+  variant?: 'link' | 'export';
 }
 
 export interface AdminSettings {

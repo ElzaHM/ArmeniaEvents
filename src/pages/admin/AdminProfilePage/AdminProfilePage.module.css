@@ -87,9 +87,72 @@
   margin-top: 8px;
 }
 
+.actions :global(.ant-btn) {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.actions :global(.ant-btn-default) {
+  background: var(--admin-input-bg) !important;
+  color: var(--admin-text) !important;
+}
+
+.actions :global(.ant-btn-default):hover,
+.actions :global(.ant-btn-default):focus-visible {
+  background: var(--admin-surface-hover) !important;
+  color: var(--admin-gold-strong) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.actions :global(.ant-btn-primary) {
+  background: var(--admin-button-primary-bg) !important;
+  color: var(--admin-button-primary-text) !important;
+  border: none !important;
+}
+
+.actions :global(.ant-btn-primary):hover,
+.actions :global(.ant-btn-primary):focus-visible {
+  background: var(--admin-button-primary-hover-bg) !important;
+  color: var(--admin-button-primary-text) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+:global([data-theme="light"]) .actions :global(.ant-btn::after) {
+  display: none !important;
+}
+
 .previewModal :global(.ant-modal-content) {
-  background: var(--admin-card-bg);
-  border: 1px solid var(--admin-border);
+  background: rgba(20, 20, 22, 0.95) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.45) !important;
+}
+
+.previewModal :global(.ant-modal-body) {
+  background: transparent !important;
+}
+
+.previewModal :global(.ant-modal-mask) {
+  background: rgba(0, 0, 0, 0.72) !important;
+}
+
+:global([data-theme="light"]) .previewModal :global(.ant-modal-content),
+:global([data-theme="light"]) .previewModal :global(.ant-modal-body) {
+  background: #202227b3 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:global([data-theme="light"]) .previewModal :global(.ant-modal-mask) {
+  background: rgba(0, 0, 0, 0.75) !important;
+}
+
+.previewModal :global(.ant-modal-close) {
+  color: #ffffff !important;
 }
 
 .previewImage {

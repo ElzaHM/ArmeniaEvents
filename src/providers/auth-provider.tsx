@@ -1,25 +1,21 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 
 import type { AuthSession, LoginPayload, RegisterPayload } from '../services/auth.service';
-import { authService } from '../services/auth.service';
+import {
+  authService,
+  clearAuthTokens,
+  getStoredAccessToken,
+  persistAuthTokens,
+  updateCachedAuthUser,
+} from '../services/auth.service';
 import { AuthContext } from './auth-context';
-
-const TOKEN_STORAGE_KEY = 'armenia-events-access-token';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<AuthSession | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const persistToken = (token: string | null) => {
-    if (!token) {
-      localStorage.removeItem(TOKEN_STORAGE_KEY);
-      return;
-    }
-    localStorage.setItem(TOKEN_STORAGE_KEY, token);
-  };
-
   const bootstrapSession = useCallback(async () => {
-    const token = localStorage.getItem(TOKEN_STORAGE_KEY);
+    const token = getStoredAccessToken();
     if (!token) {
       setLoading(false);
       return;
@@ -28,9 +24,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const currentSession = await authService.me(token);
       setSession(currentSession);
-      persistToken(currentSession.accessToken);
+      persistAuthTokens(currentSession);
     } catch {
-      persistToken(null);
+      clearAuthTokens();
       setSession(null);
     } finally {
       setLoading(false);
@@ -44,23 +40,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = useCallback(async (payload: LoginPayload) => {
     const currentSession = await authService.login(payload);
     setSession(currentSession);
-    persistToken(currentSession.accessToken);
+    persistAuthTokens(currentSession);
   }, []);
 
   const register = useCallback(async (payload: RegisterPayload) => {
     const currentSession = await authService.register(payload);
     setSession(currentSession);
-    persistToken(currentSession.accessToken);
+    persistAuthTokens(currentSession);
   }, []);
 
   const logout = useCallback(async () => {
     try {
       await authService.logout();
     } finally {
-      persistToken(null);
+      clearAuthTokens();
       setSession(null);
     }
   }, []);
+
+  const syncSessionProfile = useCallback((fullName: string) => {
+    const accessToken = session?.accessToken ?? getStoredAccessToken();
+    if (!accessToken) {
+      return;
+    }
+
+    const nextSession = updateCachedAuthUser(accessToken, { fullName });
+    if (nextSession) {
+      setSession(nextSession);
+    }
+  }, [session?.accessToken]);
 
   const value = useMemo(
     () => ({
@@ -69,9 +77,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       login,
       register,
       logout,
+      syncSessionProfile,
       isAuthenticated: Boolean(session?.accessToken),
     }),
-    [session, loading, login, register, logout],
+    [session, loading, login, register, logout, syncSessionProfile],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

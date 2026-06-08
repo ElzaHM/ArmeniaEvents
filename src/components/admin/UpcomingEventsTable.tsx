@@ -27,6 +27,11 @@ const ACTION_ITEMS: MenuProps["items"] = [
   {key: "delete", label: "Delete", danger: true},
 ];
 
+const WRAP_CELL_PROPS = {
+  className: "admin-table-wrap-cell",
+  style: {whiteSpace: "normal" as const, wordBreak: "break-word" as const},
+};
+
 interface UpcomingEventsTableProps {
   events: AdminEvent[];
 }
@@ -67,12 +72,12 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
       dataIndex: "title",
       key: "title",
       width: 260,
-      onCell: () => ({className: "admin-table-wrap-cell"}),
+      onCell: () => WRAP_CELL_PROPS,
       render: (_, record) => (
         <div className={styles.eventCell}>
           <AdminEventImage
-            imageUrl={record.imageUrl}
-            alt=""
+            imageUrl={record.storedImageUrl}
+            alt={record.title}
             className={styles.thumbnail}
           />
           <span className={styles.eventTitle}>{record.title}</span>
@@ -90,7 +95,7 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
       dataIndex: "source",
       key: "source",
       width: 160,
-      onCell: () => ({className: "admin-table-wrap-cell"}),
+      onCell: () => WRAP_CELL_PROPS,
       responsive: ["lg"],
       render: (source: string) => (
         <div className={styles.sourceCell}>
@@ -108,13 +113,23 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
       title: "Category",
       dataIndex: "category",
       key: "category",
+      width: 120,
+      onCell: () => WRAP_CELL_PROPS,
       responsive: ["lg"],
+      render: (category: string) => (
+        <span className={styles.wrapText}>{category}</span>
+      ),
     },
     {
       title: "Location",
       dataIndex: "location",
       key: "location",
+      width: 200,
+      onCell: () => WRAP_CELL_PROPS,
       responsive: ["xl"],
+      render: (location: string) => (
+        <span className={styles.locationText}>{location}</span>
+      ),
     },
     {
       title: "Views",

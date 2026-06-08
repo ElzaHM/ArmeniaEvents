@@ -51,6 +51,7 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
 
       <aside
         className={`
+        admin-no-print
         ${styles.sidebar} 
         ${collapsed ? styles.collapsed : ""} 
         ${mobileOpen ? styles.mobileOpen : ""}
@@ -108,7 +109,7 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
         <div className={styles.skylineDecoration} aria-hidden="true" />
         <div className={styles.sidebarFooter}>
           <div className={styles.profileCard}>
-            <img src={avatarUrl} alt={displayName} className={styles.avatar} />
+            <img key={avatarUrl} src={avatarUrl} alt={displayName} className={styles.avatar} />
             <div className={styles.profileInfo}>
               <div className={styles.profileName}>{displayName}</div>
               <div className={styles.profileRole}>{roleLabel}</div>

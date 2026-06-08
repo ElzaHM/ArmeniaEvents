@@ -53,14 +53,20 @@ export default function DashboardContent() {
 
   return (
     <Spin spinning={isDashboardLoading} description="Loading dashboard...">
-      <div className={styles.dashboard}>
-        <AdminPageHeader />
+      <div className={`${styles.dashboard} admin-analytics-report`}>
+        <div className="admin-no-print">
+          <AdminPageHeader />
+        </div>
+        <h1 className="admin-print-only">Armenia Events — Analytics Report</h1>
+        <p className="admin-print-only">
+          Generated {new Date().toLocaleDateString('en-US', { dateStyle: 'long' })}
+        </p>
         <StatCards stats={stats} />
 
         {!isDashboardLoading ? (
           <>
             <div className={styles.row}>
-              <div className={styles.upcomingEventsWrapper}>
+              <div className={`${styles.upcomingEventsWrapper} admin-no-print`}>
                 <UpcomingEventsTable events={upcomingEvents} />
               </div>
 
@@ -73,9 +79,13 @@ export default function DashboardContent() {
             </div>
 
             <div className={styles.bottomRow}>
-              <RecentActivity activities={recentActivity} />
+              <div className="admin-no-print">
+                <RecentActivity activities={recentActivity} />
+              </div>
               <TopCategoriesChart categories={categoryDistribution} />
-              <QuickActions />
+              <div className="admin-no-print">
+                <QuickActions />
+              </div>
             </div>
           </>
         ) : null}

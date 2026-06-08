@@ -123,8 +123,30 @@
 .userModal :global(.ant-modal-content) {
   max-width: 420px;
   margin: 0 auto;
-  background: var(--admin-card-bg);
-  border: 1px solid var(--admin-border);
+}
+
+.userModal .detailRow dt {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.userModal .detailRow dd,
+.userModal .avatarHint,
+.userModal .pendingAvatarName {
+  color: #e0e0e0;
+}
+
+.userModal :global(.ant-modal-close) {
+  top: 14px !important;
+  inset-inline-end: 14px !important;
+  width: 36px !important;
+  height: 36px !important;
+  margin: 0 !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #ffffff !important;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .userModal :global(.ant-modal-body) {
@@ -211,10 +233,25 @@
   gap: 12px;
 }
 
-.modalActions :global(.ant-btn),
-.modalContent :global(.ant-btn) {
+.modalActions :global(.ant-btn:not(.ant-btn-dangerous)),
+.modalContent :global(.ant-btn:not(.ant-btn-dangerous)) {
   border: none !important;
   box-shadow: none !important;
+}
+
+.modalDeleteButton {
+  border: 1px solid rgba(239, 68, 68, 0.55) !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+  color: #ef4444 !important;
+  box-shadow: none !important;
+  font-weight: 600;
+}
+
+.modalDeleteButton:hover,
+.modalDeleteButton:focus-visible {
+  border-color: #ef4444 !important;
+  background: #ef4444 !important;
+  color: #ffffff !important;
 }
 
 @media (max-width: 520px) {

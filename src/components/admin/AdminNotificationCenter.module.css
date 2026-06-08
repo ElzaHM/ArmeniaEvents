@@ -1,0 +1,108 @@
+.bellButton {
+  width: 42px !important;
+  height: 42px !important;
+  padding: 0 !important;
+  border-radius: 10px !important;
+  backdrop-filter: blur(15px) !important;
+  transition: all 0.3s ease !important;
+}
+
+[data-theme='dark'] .bellButton {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+[data-theme='light'] .bellButton {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  color: #000000 !important;
+}
+
+.bellButton:hover,
+.bellButton:focus-visible {
+  transform: translateY(-2px);
+  background: var(--admin-gold-hover) !important;
+  border-color: var(--admin-gold-border) !important;
+  color: var(--admin-gold-strong) !important;
+}
+
+.popover :global(.ant-popover-inner) {
+  background: var(--admin-card-bg) !important;
+  border: 1px solid var(--admin-border);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: var(--admin-shadow);
+}
+
+.popover :global(.ant-popover-title) {
+  color: var(--admin-text) !important;
+  border-bottom: 1px solid var(--admin-border) !important;
+  font-weight: 700;
+}
+
+.popover :global(.ant-popover-arrow::before) {
+  background: var(--admin-card-bg) !important;
+}
+
+.panel {
+  width: min(320px, 72vw);
+}
+
+.stateWrap {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.emptyState {
+  margin: 0;
+  padding: 8px 0;
+  text-align: center;
+  color: var(--admin-text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.itemButton {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  background: var(--admin-surface-hover);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.itemButton:hover {
+  border-color: var(--admin-gold-border);
+  background: var(--admin-gold-light);
+}
+
+.itemIcon {
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.itemText {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--admin-text);
+}
