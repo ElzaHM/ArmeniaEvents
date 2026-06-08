@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { Button, Form, Input, Modal, Spin, Upload, message } from 'antd';
-import type { UploadChangeParam } from 'antd/es/upload';
-import { CameraOutlined, EyeOutlined, SaveOutlined } from '@ant-design/icons';
+import {useCallback, useEffect, useState} from "react";
+import {keepPreviousData, useQuery} from "@tanstack/react-query";
+import {Button, Form, Input, Modal, Spin, Upload, message} from "antd";
+import type {UploadChangeParam} from "antd/es/upload";
+import {CameraOutlined, EyeOutlined, SaveOutlined} from "@ant-design/icons";
 
-import AdminCard from '../../../components/admin/AdminCard';
-import AdminPageHeader from '../../../components/admin/AdminPageHeader';
-import { DEFAULT_ADMIN_DISPLAY } from '../../../components/admin/adminDefaults';
-import { useAuth } from '../../../hooks/useAuth';
+import AdminCard from "../../../components/admin/AdminCard";
+import AdminPageHeader from "../../../components/admin/AdminPageHeader";
+import {DEFAULT_ADMIN_DISPLAY} from "../../../components/admin/adminDefaults";
+import {useAuth} from "../../../hooks/useAuth";
 import {
   adminProfileQueryKey,
   adminProfileQueryOptions,
@@ -17,10 +17,10 @@ import {
   uploadProfileAvatar,
   type ProfileFormValues,
   type ProfileState,
-} from './profileApi';
-import { useAdminProfileDisplay } from './useAdminProfileDisplay';
+} from "./profileApi";
+import {useAdminProfileDisplay} from "./useAdminProfileDisplay";
 
-import styles from './AdminProfilePage.module.css';
+import styles from "./AdminProfilePage.module.css";
 
 type PendingAvatar = {
   url: string;
@@ -29,14 +29,14 @@ type PendingAvatar = {
 };
 
 function revokeBlobUrl(url?: string | null): void {
-  if (url?.startsWith('blob:')) {
+  if (url?.startsWith("blob:")) {
     URL.revokeObjectURL(url);
   }
 }
 
 export default function AdminProfilePage() {
-  const { session, syncSessionProfile } = useAuth();
-  const { avatarUrl: cachedAvatarUrl } = useAdminProfileDisplay();
+  const {session, syncSessionProfile} = useAuth();
+  const {avatarUrl: cachedAvatarUrl} = useAdminProfileDisplay();
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm<ProfileFormValues>();
   const [baselineProfile, setBaselineProfile] = useState<ProfileState | null>(null);
@@ -47,8 +47,8 @@ export default function AdminProfilePage() {
 
   const accessToken = session?.accessToken;
 
-  const { data: profile, isLoading: isLoadingProfile } = useQuery({
-    queryKey: [...adminProfileQueryKey, accessToken ?? 'anonymous'],
+  const {data: profile, isLoading: isLoadingProfile} = useQuery({
+    queryKey: [...adminProfileQueryKey, accessToken ?? "anonymous"],
     queryFn: () => fetchAdminProfile(accessToken!),
     enabled: Boolean(accessToken),
     staleTime: adminProfileQueryOptions.staleTime,
@@ -126,7 +126,7 @@ export default function AdminProfilePage() {
 
   const handleSave = async (values: ProfileFormValues) => {
     if (!accessToken) {
-      messageApi.error('You must be signed in to save profile changes.');
+      messageApi.error("You must be signed in to save profile changes.");
       return;
     }
 
@@ -140,7 +140,7 @@ export default function AdminProfilePage() {
       }
 
       if (!baselineProfile) {
-        messageApi.error('Profile is still loading. Please try again.');
+        messageApi.error("Profile is still loading. Please try again.");
         return;
       }
 
@@ -155,10 +155,10 @@ export default function AdminProfilePage() {
       applyProfileToForm(savedProfile);
       clearPendingAvatar();
       syncSessionProfile(`${savedProfile.firstName} ${savedProfile.lastName}`.trim());
-      messageApi.success('Profile saved successfully');
+      messageApi.success("Profile saved successfully");
     } catch (saveError) {
       const errorMessage =
-        saveError instanceof Error ? saveError.message : 'Failed to save profile';
+        saveError instanceof Error ? saveError.message : "Failed to save profile";
 
       if (!isIgnorableSupabaseSessionError(errorMessage)) {
         messageApi.error(errorMessage);
@@ -195,8 +195,7 @@ export default function AdminProfilePage() {
                 type="button"
                 className={styles.avatarButton}
                 onClick={() => setIsPreviewOpen(true)}
-                aria-label="Preview admin profile photo"
-              >
+                aria-label="Preview admin profile photo">
                 <img src={avatarPreviewUrl} alt="Admin profile" className={styles.avatar} />
                 <span className={styles.previewBadge}>
                   <EyeOutlined />
@@ -222,18 +221,12 @@ export default function AdminProfilePage() {
               )}
             </aside>
 
-            <Form
-              form={form}
-              layout="vertical"
-              className={styles.form}
-              onFinish={handleSave}
-            >
+            <Form form={form} layout="vertical" className={styles.form} onFinish={handleSave}>
               <div className={styles.formGrid}>
                 <Form.Item
                   label="First Name"
                   name="firstName"
-                  rules={[{ required: true, message: 'First name is required' }]}
-                >
+                  rules={[{required: true, message: "First name is required"}]}>
                   <Input disabled={isLoadingProfile || isSaving} />
                 </Form.Item>
                 <Form.Item label="Last Name" name="lastName">
@@ -243,10 +236,9 @@ export default function AdminProfilePage() {
                   label="Email"
                   name="email"
                   rules={[
-                    { required: true, message: 'Email is required' },
-                    { type: 'email', message: 'Enter a valid email' },
-                  ]}
-                >
+                    {required: true, message: "Email is required"},
+                    {type: "email", message: "Enter a valid email"},
+                  ]}>
                   <Input type="email" disabled={isLoadingProfile || isSaving} />
                 </Form.Item>
                 <Form.Item label="Phone" name="phone">
@@ -269,8 +261,7 @@ export default function AdminProfilePage() {
                   htmlType="submit"
                   icon={<SaveOutlined />}
                   loading={isSaving}
-                  disabled={isLoadingProfile && !profile}
-                >
+                  disabled={isLoadingProfile && !profile}>
                   Save Changes
                 </Button>
               </div>
@@ -283,8 +274,7 @@ export default function AdminProfilePage() {
         footer={null}
         onCancel={() => setIsPreviewOpen(false)}
         centered
-        className={styles.previewModal}
-      >
+        className={`admin-detail-modal ${styles.previewModal}`}>
         <img src={avatarPreviewUrl} alt="Admin profile preview" className={styles.previewImage} />
       </Modal>
     </>

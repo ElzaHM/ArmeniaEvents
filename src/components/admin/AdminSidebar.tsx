@@ -51,6 +51,7 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
 
       <aside
         className={`
+        admin-no-print
         ${styles.sidebar} 
         ${collapsed ? styles.collapsed : ""} 
         ${mobileOpen ? styles.mobileOpen : ""}

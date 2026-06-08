@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import {
@@ -21,6 +21,7 @@ import type { UploadChangeParam } from 'antd/es/upload';
 import { CameraOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 import AdminCard from '../../../components/admin/AdminCard';
+import { adminPendingNotificationsKey } from '../../../components/admin/AdminHeader';
 import AdminPageHeader from '../../../components/admin/AdminPageHeader';
 import type { AdminUser, AdminUserRole, AdminUserStatus } from '../../../components/admin/types';
 import { useAdminUsers } from '../../../hooks/queries/useAdminUsers';
@@ -90,6 +91,8 @@ export default function AdminUsersPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const searchQuery = searchParams.get('q')?.trim() ?? '';
+  const editUserId = searchParams.get('edit')?.trim() ?? '';
+  const handledEditUserId = useRef<string | null>(null);
 
   useEffect(() => {
     setTableUsers(users);
@@ -195,6 +198,29 @@ export default function AdminUsersPage() {
     clearPendingAvatar();
   };
 
+  useEffect(() => {
+    if (!editUserId || isLoading) {
+      return;
+    }
+
+    if (handledEditUserId.current === editUserId) {
+      return;
+    }
+
+    const user = users.find((entry) => entry.id === editUserId);
+
+    if (!user) {
+      return;
+    }
+
+    handledEditUserId.current = editUserId;
+    openEditModal(user);
+
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.delete('edit');
+    setSearchParams(nextParams, { replace: true });
+  }, [editUserId, isLoading, users, searchParams, setSearchParams]);
+
   const handleSaveUser = async () => {
     if (!selectedUser) {
       return;
@@ -227,6 +253,7 @@ export default function AdminUsersPage() {
       clearPendingAvatar();
       messageApi.success('User changes saved');
       await refreshUsers();
+      await queryClient.invalidateQueries({ queryKey: adminPendingNotificationsKey });
       closeUserModal();
     } catch (saveError) {
       messageApi.error(saveError instanceof Error ? saveError.message : 'Save failed');
@@ -258,6 +285,7 @@ export default function AdminUsersPage() {
           setTableUsers((currentUsers) => currentUsers.filter((item) => item.id !== user.id));
           messageApi.success('User deleted');
           await refreshUsers();
+          await queryClient.invalidateQueries({ queryKey: adminPendingNotificationsKey });
           closeUserModal();
         } catch (deleteError) {
           messageApi.error(deleteError instanceof Error ? deleteError.message : 'Delete failed');
@@ -438,7 +466,10 @@ export default function AdminUsersPage() {
               </div>
             </dl>
             <div className={styles.modalActions}>
-              <Button danger onClick={() => handleDeleteUser(selectedUser)}>
+              <Button
+                danger
+                className={styles.modalDeleteButton}
+                onClick={() => handleDeleteUser(selectedUser)}>
                 Delete
               </Button>
               <Button type="primary" className="admin-btn-edit" onClick={openEditMode}>

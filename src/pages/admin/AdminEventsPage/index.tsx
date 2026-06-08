@@ -1,4 +1,4 @@
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import {Button, Empty, Modal, Table, Tag, message, Space, Alert} from "antd";
 import type {TableColumnsType} from "antd";
 import {PlusOutlined, EditOutlined, CloudDownloadOutlined} from "@ant-design/icons";
@@ -6,6 +6,7 @@ import {useQueryClient} from "@tanstack/react-query";
 import {useNavigate, useSearchParams} from "react-router-dom";
 
 import AdminCard from "../../../components/admin/AdminCard";
+import {adminPendingNotificationsKey} from "../../../components/admin/AdminHeader";
 import AdminEventDetailModal from "../../../components/admin/AdminEventDetailModal";
 import AdminEventEditModal from "../../../components/admin/AdminEventEditModal";
 import AdminPageHeader from "../../../components/admin/AdminPageHeader";
@@ -23,6 +24,11 @@ const STATUS_COLORS: Record<AdminEventStatus, string> = {
   published: "success",
   draft: "warning",
   archived: "default",
+};
+
+const WRAP_CELL_PROPS = {
+  className: "admin-table-wrap-cell",
+  style: {whiteSpace: "normal" as const, wordBreak: "break-word" as const},
 };
 
 type EventSectionKey = "all" | "needsReview" | "liveToday" | "upcoming" | "past";
@@ -53,6 +59,8 @@ export default function AdminEventsPage() {
   const [editingEvent, setEditingEvent] = useState<AdminEvent | null>(null);
   const queryClient = useQueryClient();
   const searchQuery = searchParams.get("q")?.trim() ?? "";
+  const editEventId = searchParams.get("edit")?.trim() ?? "";
+  const handledEditEventId = useRef<string | null>(null);
   const {data: allEvents = [], isLoading: isAllLoading} = useAdminEventsList();
   const {data: searchResults = [], isLoading: isSearchLoading} = useAdminEventsList(
     searchQuery || undefined,
@@ -90,7 +98,32 @@ export default function AdminEventsPage() {
 
   const closeEditModal = () => {
     setEditingEvent(null);
+    void queryClient.invalidateQueries({queryKey: adminPendingNotificationsKey});
   };
+
+  useEffect(() => {
+    if (!editEventId || isAllLoading) {
+      return;
+    }
+
+    if (handledEditEventId.current === editEventId) {
+      return;
+    }
+
+    const event = allEvents.find((entry) => entry.id === editEventId);
+
+    if (!event) {
+      return;
+    }
+
+    handledEditEventId.current = editEventId;
+    setActiveSection(event.status === "draft" ? "needsReview" : "all");
+    openEditModal(event);
+
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.delete("edit");
+    setSearchParams(nextParams, { replace: true });
+  }, [allEvents, editEventId, isAllLoading, searchParams, setSearchParams]);
 
   const sections: EventSection[] = useMemo(() => {
     const now = new Date();
@@ -159,6 +192,7 @@ export default function AdminEventsPage() {
         try {
           await deleteEvent.mutateAsync(event.id);
           messageApi.success("Event deleted");
+          await queryClient.invalidateQueries({queryKey: adminPendingNotificationsKey});
           closeViewModal();
         } catch (error) {
           messageApi.error(error instanceof Error ? error.message : "Delete failed");
@@ -172,7 +206,7 @@ export default function AdminEventsPage() {
       title: "Event",
       key: "title",
       width: 240,
-      onCell: () => ({className: "admin-table-wrap-cell"}),
+      onCell: () => WRAP_CELL_PROPS,
       sorter: (left, right) => left.title.localeCompare(right.title),
       render: (_, record) => (
         <div className={styles.eventCell}>
@@ -181,7 +215,7 @@ export default function AdminEventsPage() {
             alt={record.title}
             className={styles.thumbnail}
           />
-          <span className={`${styles.eventTitle} ${styles.clampTwoLines}`}>{record.title}</span>
+          <span className={styles.eventTitle}>{record.title}</span>
         </div>
       ),
     },
@@ -189,7 +223,7 @@ export default function AdminEventsPage() {
       title: "Organizer",
       key: "organizer",
       width: 180,
-      onCell: () => ({className: "admin-table-wrap-cell"}),
+      onCell: () => WRAP_CELL_PROPS,
       responsive: ["lg"],
       render: (_, record) => (
         <div className={styles.organizerCell}>
@@ -199,7 +233,7 @@ export default function AdminEventsPage() {
             avatarClassName={styles.organizerAvatar}
             fallbackClassName={styles.organizerAvatarFallback}
           />
-          <span className={`${styles.organizerName} ${styles.clampTwoLines}`}>
+          <span className={styles.organizerName}>
             {record.organizerName}
           </span>
         </div>
@@ -210,16 +244,16 @@ export default function AdminEventsPage() {
       dataIndex: "source",
       key: "source",
       width: 150,
-      onCell: () => ({className: "admin-table-wrap-cell"}),
+      onCell: () => WRAP_CELL_PROPS,
       responsive: ["lg"],
       render: (source: string) => (
         <div className={styles.sourceCell}>
           {source ? (
-            <Tag color={getSourceTagColor(source)} className={`${styles.sourceTag} ${styles.clampTwoLines}`}>
+            <Tag color={getSourceTagColor(source)} className={styles.sourceTag}>
               {source}
             </Tag>
           ) : (
-            <Tag className={`${styles.sourceTag} ${styles.clampTwoLines}`}>Manual</Tag>
+            <Tag className={styles.sourceTag}>Manual</Tag>
           )}
         </div>
       ),
@@ -238,10 +272,10 @@ export default function AdminEventsPage() {
       dataIndex: "location",
       key: "location",
       width: 180,
-      onCell: () => ({className: "admin-table-wrap-cell"}),
+      onCell: () => WRAP_CELL_PROPS,
       responsive: ["md"],
       render: (location: string) => (
-        <span className={`${styles.locationText} ${styles.clampTwoLines}`}>{location}</span>
+        <span className={styles.locationText}>{location}</span>
       ),
     },
     {
@@ -302,6 +336,7 @@ export default function AdminEventsPage() {
       });
 
       setAiFetchStatus(null);
+      await queryClient.invalidateQueries({queryKey: adminPendingNotificationsKey});
 
       if (result.imported > 0) {
         messageApi.success(`AI found and imported ${result.imported} new events.`);

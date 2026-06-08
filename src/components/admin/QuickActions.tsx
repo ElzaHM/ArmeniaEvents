@@ -37,7 +37,7 @@ const QUICK_ACTIONS: QuickAction[] = [
   {
     id: '4',
     title: 'Export Reports',
-    description: 'Download analytics reports.',
+    description: 'View analytics and download reports.',
     icon: 'export',
     path: '/admin/analytics',
   },

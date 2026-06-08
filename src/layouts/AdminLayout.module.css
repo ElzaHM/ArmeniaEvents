@@ -9,6 +9,20 @@
   isolation: isolate;
 }
 
+/* Unify vibrant golden-yellow accents in dark theme (match light theme palette) */
+:global([data-theme="dark"]).layout {
+  --admin-gold: #ffd27a;
+  --admin-gold-strong: #ffd27a;
+  --admin-gold-light: rgba(255, 210, 122, 0.2);
+  --admin-gold-hover: rgba(255, 210, 122, 0.24);
+  --admin-gold-border: rgba(255, 210, 122, 0.52);
+  --admin-button-primary-bg: #f2c200;
+  --admin-button-primary-hover-bg: #e6b800;
+  --admin-button-primary-border: #9f7600;
+  --admin-button-primary-hover-border: #8a6400;
+  --admin-card-hover-bg: rgba(42, 44, 52, 0.94);
+}
+
 .layout::before {
   content: "";
   position: fixed;
@@ -47,6 +61,123 @@
   box-sizing: border-box;
 }
 
+.content :global([class*="pageHeader"]) {
+  padding: 20px 24px !important;
+  border-radius: 16px;
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+}
+
+:global([data-theme="dark"]) .content :global([class*="pageHeader"]) {
+  background: rgba(34, 37, 46, 0.99) !important;
+  border: 1px solid rgba(217, 163, 74, 0.34);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.38);
+}
+
+.content :global([class*="pageHeader"]) :global([class*="greeting"]) {
+  color: #ffffff !important;
+}
+
+.content :global([class*="pageHeader"]) :global([class*="pageTitle"]),
+.content :global([class*="pageHeader"]) :global([class*="goldText"]) {
+  color: #ffd27a !important;
+}
+
+.content :global([class*="pageHeader"]) :global([class*="subtitle"]) {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+/* Admin modals: always dark glass in both themes */
+:global(.admin-detail-modal) :global(.ant-modal-content) {
+  background: rgba(20, 20, 22, 0.95) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.45) !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-modal-body),
+:global(.admin-detail-modal) :global(.ant-modal-header) {
+  background: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-modal-title),
+:global(.admin-detail-modal) :global(.ant-modal-close) {
+  color: #ffffff !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-modal-header) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-modal-mask) {
+  background: rgba(0, 0, 0, 0.72) !important;
+}
+
+/* Light theme: fully opaque modal + stronger mask to block sunset bleed-through */
+:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-content) {
+  background: #202227b3 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-body),
+:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-header) {
+  background: #202227b3 !important;
+}
+
+:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-mask) {
+  background: rgba(0, 0, 0, 0.75) !important;
+}
+
+:global(.admin-detail-modal) section[class*="section"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+:global(.admin-detail-modal) h2,
+:global(.admin-detail-modal) h3,
+:global(.admin-detail-modal) [class*="organizerName"] {
+  color: #ffffff !important;
+}
+
+:global(.admin-detail-modal) [class*="sectionTitle"] {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+:global(.admin-detail-modal) dt,
+:global(.admin-detail-modal) [class*="detailRow"] dt {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+:global(.admin-detail-modal) dd,
+:global(.admin-detail-modal) [class*="detailRow"] dd,
+:global(.admin-detail-modal) [class*="description"],
+:global(.admin-detail-modal) [class*="sourceLabel"],
+:global(.admin-detail-modal) [class*="avatarHint"],
+:global(.admin-detail-modal) [class*="pendingAvatarName"] {
+  color: #e0e0e0 !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-modal-close):hover,
+:global(.admin-detail-modal) :global(.ant-modal-close):focus-visible {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+/* Add Event button: same golden gradient in dark theme */
+:global([data-theme="dark"]).layout :global(.admin-content) :global(.admin-btn-add) {
+  background: linear-gradient(135deg, #ffd84d 0%, #f2c200 52%, #c89412 100%) !important;
+  color: #141006 !important;
+}
+
+:global([data-theme="dark"]).layout :global(.admin-content) :global(.admin-btn-add):hover,
+:global([data-theme="dark"]).layout :global(.admin-content) :global(.admin-btn-add):focus-visible {
+  background: linear-gradient(135deg, #f5c900 0%, #e6b800 52%, #b9850f 100%) !important;
+  color: #141006 !important;
+}
+
 @media (max-width: 1024px) {
   .main,
   .mainCollapsed {
@@ -55,6 +186,12 @@
 
   .content {
     padding: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .content :global([class*="pageHeader"]) {
+    padding: 16px 20px !important;
   }
 }
 

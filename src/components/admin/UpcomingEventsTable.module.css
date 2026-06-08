@@ -122,6 +122,19 @@
   text-align: start;
 }
 
+.wrapText,
+.locationText {
+  display: block;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+  min-width: 0;
+}
+
+.locationText {
+  max-width: 200px;
+}
+
 .tableWrap :global(.admin-table-wrap-cell) {
   white-space: normal !important;
   word-break: break-word;

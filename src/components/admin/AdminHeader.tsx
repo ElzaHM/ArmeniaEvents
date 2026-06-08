@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Button, Dropdown, Input} from "antd";
+import {Badge, Button, Dropdown, Input, Popover, Spin} from "antd";
 import type {MenuProps} from "antd";
 import {
   BellOutlined,
@@ -13,12 +13,31 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import {useQuery} from "@tanstack/react-query";
 import {useLocation, useNavigate} from "react-router-dom";
 
 import {useTheme} from "../../hooks/useTheme";
 import {useAuth} from "../../hooks/useAuth";
 import {useAdminProfileDisplay} from "../../pages/admin/AdminProfilePage/useAdminProfileDisplay";
+import {
+  fetchAdminNotifications,
+  type AdminNotificationItem,
+} from "../../services/admin-notifications.service";
 import styles from "./AdminHeader.module.css";
+
+export const adminPendingNotificationsKey = ["admin", "pending-notifications"] as const;
+
+function getNotificationLabel(item: AdminNotificationItem): string {
+  if (item.type === "user") {
+    return `New user ${item.name} is pending approval.`;
+  }
+
+  return `New AI event ${item.title} is in drafts.`;
+}
+
+function getNotificationIcon(item: AdminNotificationItem): string {
+  return item.type === "user" ? "👤" : "📅";
+}
 
 interface AdminHeaderProps {
   sidebarCollapsed: boolean;
@@ -47,6 +66,55 @@ export default function AdminHeader({
   const [isMobile, setIsMobile] = useState(false);
   const [isCompactSearch, setIsCompactSearch] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const {
+    data: notifications = [],
+    isLoading: notificationsLoading,
+    isError: notificationsError,
+  } = useQuery({
+    queryKey: adminPendingNotificationsKey,
+    queryFn: fetchAdminNotifications,
+    staleTime: 30_000,
+  });
+  const notificationCount = notifications.length;
+
+  const handleNotificationClick = (item: AdminNotificationItem) => {
+    if (item.type === "user") {
+      navigate(`/admin/users?edit=${encodeURIComponent(item.id)}`);
+      return;
+    }
+
+    navigate(`/admin/events?edit=${encodeURIComponent(item.id)}`);
+  };
+
+  const notificationContent = (
+    <div className={styles.notificationPanel}>
+      {notificationsLoading ? (
+        <div className={styles.notificationStateWrap}>
+          <Spin size="small" />
+        </div>
+      ) : notificationsError ? (
+        <p className={styles.notificationEmptyState}>Unable to load notifications right now.</p>
+      ) : notificationCount === 0 ? (
+        <p className={styles.notificationEmptyState}>All caught up! No pending actions.</p>
+      ) : (
+        <ul className={styles.notificationList}>
+          {notifications.map((item) => (
+            <li key={`${item.type}-${item.id}`}>
+              <button
+                type="button"
+                className={styles.notificationItemButton}
+                onClick={() => handleNotificationClick(item)}>
+                <span className={styles.notificationItemIcon} aria-hidden="true">
+                  {getNotificationIcon(item)}
+                </span>
+                <span className={styles.notificationItemText}>{getNotificationLabel(item)}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -158,7 +226,7 @@ export default function AdminHeader({
 
   return (
     <header
-      className={`${styles.header} ${isScrolled ? styles.headerScrolled : ""} ${isCompactSearch ? styles.headerCompact : ""}`}>
+      className={`admin-no-print ${styles.header} ${isScrolled ? styles.headerScrolled : ""} ${isCompactSearch ? styles.headerCompact : ""}`}>
       <div className={styles.headerMain}>
         <Button
           type="text"
@@ -178,9 +246,21 @@ export default function AdminHeader({
             className={styles.actionBox}
           />
 
-          <div className={styles.actionBox}>
-            <BellOutlined style={{color: "inherit", fontSize: "18px"}} />
-          </div>
+          <Popover
+            content={notificationContent}
+            title="Administrative Alerts"
+            trigger="click"
+            placement="bottomRight"
+            classNames={{root: styles.notificationPopover}}>
+            <Badge count={notificationCount} offset={[-2, 2]} size="small">
+              <Button
+                type="text"
+                icon={<BellOutlined style={{fontSize: "18px"}} />}
+                className={styles.notificationBellButton}
+                aria-label="Open administrative notifications"
+              />
+            </Badge>
+          </Popover>
 
           <Dropdown
             menu={{items: USER_MENU_ITEMS, onClick: handleUserMenuClick}}
