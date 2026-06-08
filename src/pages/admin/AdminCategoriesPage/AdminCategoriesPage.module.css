@@ -17,3 +17,28 @@
 .tableWrap :global(.ant-table-wrapper) {
   max-width: 100%;
 }
+
+.tableWrap :global(.admin-btn-edit),
+.tableWrap :global(.admin-btn-edit:hover),
+.tableWrap :global(.admin-btn-edit:focus),
+.tableWrap :global(.admin-btn-delete),
+.tableWrap :global(.admin-btn-delete:hover),
+.tableWrap :global(.admin-btn-delete:focus) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.editButton {
+  background: #1d4ed8 !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #eff6ff !important;
+}
+
+.editButton:hover,
+.editButton:focus {
+  background: #2563eb !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+}
