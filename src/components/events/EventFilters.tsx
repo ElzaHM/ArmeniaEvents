@@ -7,7 +7,7 @@ import {
   Slider,
   Typography,
 } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 
 import { QueryState } from '../../hooks/queries/query-state';
 import { useEventFilters } from '../../hooks/queries/useEvents';
@@ -25,6 +25,7 @@ export type AppliedEventFilters = {
 
 interface EventFiltersProps {
   onApply: (filters: AppliedEventFilters) => void;
+  onClose?: () => void;
 }
 
 function resolveAppliedPriceRange(priceRange: number): 'free' | 'paid' | null {
@@ -39,7 +40,7 @@ function resolveAppliedPriceRange(priceRange: number): 'free' | 'paid' | null {
   return null;
 }
 
-export default function EventFilters({ onApply }: EventFiltersProps) {
+export default function EventFilters({ onApply, onClose }: EventFiltersProps) {
   const { data: filters, isLoading, isError, error } = useEventFilters();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -127,9 +128,21 @@ export default function EventFilters({ onApply }: EventFiltersProps) {
           <Typography.Title level={5} className={styles.title}>
             Filters
           </Typography.Title>
-          <button type="button" className={styles.clearAll} onClick={handleReset}>
-            Clear All
-          </button>
+          <div className={styles.headerActions}>
+            <button type="button" className={styles.clearAll} onClick={handleReset}>
+              Clear All
+            </button>
+            {onClose && (
+              <button
+                type="button"
+                className={styles.closeBtn}
+                aria-label="Close filters"
+                onClick={onClose}
+              >
+                <CloseOutlined />
+              </button>
+            )}
+          </div>
         </div>
 
         <div className={styles.group}>

@@ -1,11 +1,8 @@
 import { Typography } from 'antd';
 import SearchBar from '../home/SearchBar';
-import searchBarStyles from '../home/SearchBar.module.css';
 import styles from './EventSearch.module.css';
 
-
-export default function HomePage() {
-
+export default function EventSearch() {
   return (
     <section className={`${styles.hero} eventsSearchHero`}>
       <div className={styles.overlay}>
@@ -16,7 +13,7 @@ export default function HomePage() {
           <Typography.Paragraph className={styles.subtitle}>
             Find the perfect events in Armenia
           </Typography.Paragraph>
-          <SearchBar className={searchBarStyles.eventsSearchBar} />
+          <SearchBar />
         </div>
       </div>
     </section>

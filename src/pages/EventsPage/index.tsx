@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { EventFilters, EventList, EventSearch } from '../../components/events';
 import type { AppliedEventFilters } from '../../components/events/EventFilters';
@@ -16,6 +16,7 @@ export default function EventsPage() {
   const [appliedDateRange, setAppliedDateRange] = useState<{ from: string; to: string } | null>(
     null,
   );
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const handleApplyFilters = (filters: AppliedEventFilters) => {
     setAppliedCategories(filters.categories);
@@ -24,14 +25,36 @@ export default function EventsPage() {
     setAppliedPriceRange(filters.priceRange);
     setAppliedOrganizer(filters.organizer);
     setAppliedDateRange(filters.dateRange);
+    setFiltersOpen(false);
   };
+
+  useEffect(() => {
+    document.body.style.overflow = filtersOpen ? 'hidden' : '';
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [filtersOpen]);
 
   return (
     <div className={`${pageStyles.eventsPage} eventsPage`}>
       <EventSearch />
       <div className={pageStyles.main}>
-        <div className={pageStyles.sidebar}>
-          <EventFilters onApply={handleApplyFilters} />
+        {filtersOpen && (
+          <button
+            type="button"
+            className={pageStyles.filtersBackdrop}
+            aria-label="Close filters"
+            onClick={() => setFiltersOpen(false)}
+          />
+        )}
+        <div
+          className={`${pageStyles.sidebar} ${filtersOpen ? pageStyles.sidebarOpen : ''}`}
+        >
+          <EventFilters
+            onApply={handleApplyFilters}
+            onClose={() => setFiltersOpen(false)}
+          />
         </div>
         <div className={pageStyles.content}>
           <EventList
@@ -41,6 +64,7 @@ export default function EventsPage() {
             appliedPriceRange={appliedPriceRange}
             appliedOrganizer={appliedOrganizer}
             appliedDateRange={appliedDateRange}
+            onOpenFilters={() => setFiltersOpen(true)}
           />
         </div>
       </div>

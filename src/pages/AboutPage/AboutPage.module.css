@@ -1,0 +1,863 @@
+.pageWrapper {
+  padding: 120px 0 80px;
+  background: transparent;
+  min-height: 100vh;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.goldText { 
+  color: #c08b46; 
+}
+
+/* HEADER */
+.header { 
+  margin-bottom: 60px;
+ }
+
+.aboutLabel { 
+  color: white !important; 
+  font-size: 52px !important; 
+  margin-bottom: 0 !important; 
+  opacity: 1;
+ }
+
+.mainTitle {
+  font-size: 68px !important; 
+  color: white !important; 
+  margin: -10px 0 15px 0 !important; 
+}
+
+.subtitle { 
+  color: rgba(255, 255, 255, 0.88) !important; 
+  font-size: 18px; 
+  max-width: 600px; 
+}
+
+/* HERO CARDS (SAME HEIGHT) */
+.storyVisionRow {
+  align-items: stretch;
+}
+
+.storyVisionRow :global(.ant-col) {
+  display: flex;
+}
+
+.storyCard, .visionCard {
+  background: var(--home-glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--home-glass-border);
+  border-radius: 28px;
+  min-height: 530px;
+  margin-top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+[data-theme='light'] .pageWrapper .storyCard,
+[data-theme='light'] .pageWrapper .visionCard,
+[data-theme='light'] .pageWrapper .teamCard,
+[data-theme='light'] .pageWrapper .techSection,
+[data-theme='light'] .pageWrapper .techLogoBox {
+  background: rgba(255, 255, 255, 0.6) !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  border: 0.1px solid rgba(255, 255, 255, 0.30) !important;
+  box-shadow:
+    0 0 0 0.3px rgba(255, 255, 255, 0.55),
+    0 2px 15px rgba(0, 0, 0, 0.06) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+}
+
+
+[data-theme='light'] .pageWrapper .teamCard:hover,
+[data-theme='light'] .pageWrapper .techSection:hover {
+  background: rgba(255, 255, 255, 0.88) !important;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  border: 0.3px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow:
+    0 0 0 0.3px rgba(255, 255, 255, 0.65),
+    0 4px 16px rgba(0, 0, 0, 0.06) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+}
+
+[data-theme='light'] .pageWrapper .techItem:hover .techLogoBox {
+  background: rgba(255, 255, 255, 0.88) !important;
+  background-color: rgba(255, 255, 255, 0.88) !important;
+  border: 0.3px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow:
+    0 0 0 0.3px rgba(255, 255, 255, 0.65),
+    0 2px 12px rgba(0, 0, 0, 0.06) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+}
+
+.storyCard { 
+  flex-direction: row;  
+}
+
+.visionCard { 
+  flex-direction: column; 
+  padding: 40px; 
+}
+
+.cardContent { 
+  flex: 1; 
+  padding: 40px; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+}
+
+.storyCard .cardContent {
+  position: relative;
+  z-index: 1;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    calc(100% - 14px) 50%,
+    100% 100%,
+    0 100%
+  );
+}
+
+.storyImage {
+  position: relative;
+  width: 300px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center right;
+  border-left: none;
+  border-radius: 50% 0 0 50% / 18% 0 0 18%;
+  overflow: hidden;
+}
+
+.storyImage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.12) 0%,
+    rgba(0, 0, 0, 0.28) 100%
+  );
+}
+
+[data-theme='light'] .storyImage::after {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.22) 100%
+  );
+}
+
+.visionImage {
+  margin-top: auto;
+  height: 180px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* CARD ELEMENTS */
+.cardLabel {
+  color: var(--home-text-secondary);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cardTitle {
+  color: var(--home-heading) !important;
+  margin: 4px 0 25px 0 !important;
+}
+
+.teamHeader .cardLabel {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.teamHeader .cardTitle {
+  color: #ffffff !important;
+}
+
+.teamHeader :global(.anticon) {
+  font-size: 24px;
+  color: #c08b46 !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+}
+
+.iconBox {
+  font-size: 26px;
+  color: #c08b46;
+  background: rgba(192, 139, 70, 0.1);
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(192, 139, 70, 0.3);
+}
+
+.descriptionText {
+  color: var(--home-info-text) !important;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 20px !important;
+}
+
+.descriptionText :global(strong) {
+  color: var(--home-heading) !important;
+  font-weight: 600;
+}
+
+.storyQuote {
+  color: var(--home-heading) !important;
+  font-weight: 600;
+}
+
+[data-theme='light'] .storyCard .cardLabel,
+[data-theme='light'] .visionCard .cardLabel {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+[data-theme='light'] .storyCard .cardTitle,
+[data-theme='light'] .visionCard .cardTitle {
+  color: #ffffff !important;
+}
+
+[data-theme='light'] .techSection .cardLabel {
+  color: #4b5563;
+}
+
+[data-theme='light'] .techSection .cardTitle,
+[data-theme='light'] .memberName,
+[data-theme='light'] .descriptionText :global(strong),
+[data-theme='light'] .storyQuote {
+  color: #141414 !important;
+}
+
+[data-theme='light'] .descriptionText,
+[data-theme='light'] .respItem span {
+  color: #1f2937 !important;
+}
+
+[data-theme='light'] .respItem {
+  color: #6b7280;
+}
+
+[data-theme='light'] .respItem :global(.anticon) {
+  color: #a66b2e;
+  font-size: 15px;
+}
+
+[data-theme='light'] .socials,
+[data-theme='light'] .socials :global(.anticon) {
+  color: #8b5e28;
+}
+
+[data-theme='light'] .socials span:hover,
+[data-theme='light'] .socials :global(.anticon):hover,
+[data-theme='light'] .socialLink:hover,
+[data-theme='light'] .socialLink:hover :global(.anticon) {
+  color: #c08b46;
+}
+
+[data-theme='dark'] .respItem :global(.anticon) {
+  color: #d4a054;
+}
+
+[data-theme='dark'] .socials,
+[data-theme='dark'] .socials :global(.anticon) {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+[data-theme='light'] .techName {
+  color: #4b5563 !important;
+}
+
+[data-theme='dark'] .storyCard .cardLabel,
+[data-theme='dark'] .visionCard .cardLabel,
+[data-theme='dark'] .techSection .cardLabel {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+[data-theme='dark'] .storyCard .cardTitle,
+[data-theme='dark'] .visionCard .cardTitle,
+[data-theme='dark'] .techSection .cardTitle,
+[data-theme='dark'] .memberName {
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .descriptionText,
+[data-theme='dark'] .respItem span {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme='dark'] .respItem {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+[data-theme='dark'] .socials span:hover,
+[data-theme='dark'] .socials :global(.anticon):hover,
+[data-theme='dark'] .socialLink:hover :global(.anticon) {
+  color: #d4a054;
+}
+
+[data-theme='dark'] .techName {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* TEAM SECTION (SAME HEIGHT CARDS) */
+.teamHeader { 
+    margin: 100px 0 40px 0;
+    box-sizing: border-box;
+ }
+
+.teamRow {
+  align-items: stretch;
+}
+
+.teamRow :global(.ant-col) {
+  display: flex;
+}
+
+.teamCard {
+  background: var(--home-glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--home-glass-border);
+  border-radius: 24px;
+  padding: 12px 18px 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+  width: 100%;
+  min-height: 320px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.teamCard:hover {
+  background: var(--home-glass-hover-bg);
+  border-color: var(--home-accent);
+  transform: translateY(-6px);
+  box-shadow: 0 0 0 1px var(--home-accent), var(--home-card-shadow);
+}
+
+/* BIGGER IMAGES */
+.avatar {
+  width: 112px; 
+  height: 112px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 14px;
+  border: 3px solid rgba(192, 139, 70, 0.5);
+  padding: 4px;
+  background: rgba(14,14,14,0.4);
+  flex-shrink: 0;
+}
+
+.memberName {
+  color: var(--home-heading) !important;
+  margin: 0 !important;
+  font-size: 18px !important;
+  line-height: 1.25 !important;
+}
+
+.memberRole {
+  color: #c08b46;
+  font-size: 13px;
+  font-weight: 500;
+  display: block;
+  margin-top: 4px;
+}
+
+.cardDivider {
+  border-color: var(--home-divider) !important;
+  margin: 14px 0 !important;
+}
+
+.responsibilities { text-align: left; flex: 1; padding: 0 6px; min-height: 0; }
+
+.respItem {
+  color: var(--home-icon-muted);
+  font-size: 12.5px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.respItem :global(.anticon) {
+  flex-shrink: 0;
+  font-size: 15px;
+  color: #c08b46;
+}
+
+.respItem span {
+  color: var(--home-info-text);
+}
+
+.socials {
+  margin-top: auto;
+  padding-top: 14px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.socials :global(.anticon) {
+  font-size: 22px;
+  color: inherit;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.socials span:hover,
+.socials :global(.anticon):hover {
+  color: #c08b46;
+  cursor: pointer;
+}
+
+.socialLink:hover :global(.anticon) {
+  color: #c08b46;
+  transform: translateY(-1px);
+}
+
+.socialLink {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.socialLink:hover {
+  color: var(--home-accent);
+}
+
+/* TECHNOLOGY SECTION */
+.techSection {
+  margin-top: 80px;
+  padding: 50px;
+  background: var(--home-glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--home-glass-border);
+  border-radius: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.techHeader { 
+  display: flex; gap: 20px; align-items: flex-start; 
+}
+.techHeaderText { 
+  display: flex; flex-direction: column; 
+}
+.techStackRow { 
+  display: flex; gap: 30px; align-items: center; 
+}
+.techItem { 
+  display: flex; flex-direction: column; align-items: center; gap: 12px; 
+}
+
+.techLogoBox {
+  width: 70px;
+  height: 70px;
+  background: var(--home-glass-bg);
+  border: 1px solid var(--home-glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.techItem:hover .techLogoBox {
+  border-color: var(--home-accent);
+  background: var(--home-glass-hover-bg);
+}
+
+.svgIcon { width: 34px; height: 34px; object-fit: contain; }
+
+.techExpressLabel {
+  color: var(--home-heading);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.techZodLabel {
+  color: #3068b7;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.techName {
+  color: var(--home-text-secondary) !important;
+  font-size: 11px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .techSection {
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .techHeader {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .techStackRow {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 992px) {
+  .pageWrapper {
+    padding: 104px 0 64px;
+  }
+
+  .header {
+    margin-bottom: 48px;
+  }
+
+  .aboutLabel {
+    font-size: 42px !important;
+  }
+
+  .mainTitle {
+    font-size: 54px !important;
+  }
+
+  .subtitle {
+    font-size: 17px;
+  }
+
+  .teamHeader {
+    margin: 72px 0 32px;
+  }
+
+  .techSection {
+    margin-top: 64px;
+    padding: 40px 32px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .storyCard {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .storyCard .cardContent {
+    min-width: 0;
+    padding: 28px 24px;
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      calc(100% - 12px) 50%,
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .storyCard .storyImage {
+    width: 245px;
+    height: auto;
+    align-self: stretch;
+    border-left: none;
+    border-top: none;
+    border-radius: 50% 0 0 50% / 20% 0 0 20%;
+  }
+
+  .teamCard {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 991px) {
+  .storyCard,
+  .visionCard {
+    min-height: 0;
+    height: auto;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .pageWrapper {
+    padding: 96px 0 56px;
+  }
+
+  .header {
+    margin-bottom: 36px;
+  }
+
+  .aboutLabel {
+    font-size: 32px !important;
+  }
+
+  .mainTitle {
+    font-size: 40px !important;
+    margin: -6px 0 12px 0 !important;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    max-width: 100%;
+  }
+
+  .storyCard,
+  .visionCard {
+    border-radius: 20px;
+  }
+
+  .visionCard {
+    padding: 28px 24px;
+  }
+
+  .cardContent {
+    padding: 28px 24px;
+  }
+
+  .cardTitle {
+    font-size: 22px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .descriptionText {
+    font-size: 14px !important;
+    line-height: 1.65 !important;
+    margin-bottom: 14px !important;
+  }
+
+  .iconBox {
+    font-size: 22px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .storyCard {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .storyCard .cardContent {
+    padding: 24px 20px;
+    clip-path: none;
+  }
+
+  .storyCard .storyImage {
+    display: none;
+  }
+
+  .visionImage {
+    height: 160px;
+    border-radius: 16px;
+  }
+
+  .teamHeader {
+    margin: 56px 0 28px;
+  }
+
+  .teamHeader .cardTitle {
+    font-size: 26px !important;
+  }
+
+  .teamCard {
+    min-height: 0;
+    padding: 16px 16px 18px;
+    border-radius: 20px;
+  }
+
+  .avatar {
+    width: 96px;
+    height: 96px;
+    margin-bottom: 12px;
+  }
+
+  .memberName {
+    font-size: 17px !important;
+  }
+
+  .memberRole {
+    font-size: 12px;
+  }
+
+  .respItem {
+    font-size: 12px;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .techSection {
+    margin-top: 56px;
+    padding: 28px 20px;
+    border-radius: 20px;
+    gap: 32px;
+  }
+
+  .techStackRow {
+    gap: 16px 20px;
+  }
+
+  .techLogoBox {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+  }
+
+  .svgIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .techExpressLabel {
+    font-size: 16px;
+  }
+
+  .techZodLabel {
+    font-size: 20px;
+  }
+
+  .techName {
+    font-size: 10px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* .storyCard .storyImage {
+    width: 270px;
+  } */
+
+  .storyImage {
+    width:300px !important;   }
+}
+
+@media (max-width: 576px) {
+  .pageWrapper {
+    padding: 88px 0 48px;
+  }
+
+  .aboutLabel {
+    font-size: 28px !important;
+  }
+
+  .mainTitle {
+    font-size: 34px !important;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+
+  .cardContent {
+    padding: 24px 20px;
+  }
+
+  .storyCard .cardContent {
+    padding: 20px 16px;
+    clip-path: none;
+  }
+
+  .visionCard {
+    padding: 24px 20px;
+  }
+
+  .visionImage {
+    height: 140px;
+  }
+
+  .teamHeader {
+    margin: 48px 0 24px;
+  }
+
+  .teamHeader .cardTitle {
+    font-size: 24px !important;
+  }
+
+  .techSection {
+    margin-top: 48px;
+    padding: 24px 16px;
+  }
+
+  .techStackRow {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px 12px;
+    width: 100%;
+  }
+
+  .techItem {
+    gap: 8px;
+  }
+
+  .techLogoBox {
+    width: 52px;
+    height: 52px;
+  }
+
+  .svgIcon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .aboutLabel {
+    font-size: 24px !important;
+  }
+
+  .mainTitle {
+    font-size: 30px !important;
+  }
+
+  .cardTitle {
+    font-size: 20px !important;
+  }
+
+  .storyCard .cardContent {
+    padding: 18px 14px;
+    clip-path: none;
+  }
+
+  .techStackRow {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px 8px;
+  }
+
+  .techLogoBox {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+
+  .techExpressLabel {
+    font-size: 14px;
+  }
+
+  .techZodLabel {
+    font-size: 18px;
+  }
+}

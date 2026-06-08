@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button, Layout } from 'antd';
 import {
   CloseOutlined,
@@ -22,6 +22,17 @@ export default function Header() {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const isCreateEventPage =
+    pathname === '/events/new' || pathname.startsWith('/events/new/');
+  const isEventsPage =
+    !isCreateEventPage &&
+    (pathname === '/events' ||
+      (pathname.startsWith('/events/') && !pathname.startsWith('/events/new')));
+  const isHomePage = pathname === '/';
+  const isAboutPage = pathname === '/about' || pathname.startsWith('/about/');
+
+  const navClass = (active: boolean) => (active ? 'nav-item active' : 'nav-item');
 
   const handleLogout = async () => {
     await logout();
@@ -57,19 +68,34 @@ export default function Header() {
         </Link>
 
         <nav className={`header-nav ${menuOpen ? 'header-nav--open' : ''}`}>
-          <NavLink
+          <Link
             to="/"
-            className={({ isActive }) => (isActive ? 'nav-item active' : 'nav-item')}
+            className={navClass(isHomePage)}
             onClick={() => setMenuOpen(false)}
           >
             Home
-          </NavLink>
-          <NavLink to="/events" className="nav-item" onClick={() => setMenuOpen(false)}>
+          </Link>
+          <Link
+            to="/events"
+            className={navClass(isEventsPage)}
+            onClick={() => setMenuOpen(false)}
+          >
             Events
-          </NavLink>
-          <NavLink to="/about" className="nav-item" onClick={() => setMenuOpen(false)}>
+          </Link>
+          <Link
+            to="/events/new"
+            className={navClass(isCreateEventPage)}
+            onClick={() => setMenuOpen(false)}
+          >
+            Create Event
+          </Link>
+          <Link
+            to="/about"
+            className={navClass(isAboutPage)}
+            onClick={() => setMenuOpen(false)}
+          >
             About
-          </NavLink>
+          </Link>
         </nav>
 
         {menuOpen && (

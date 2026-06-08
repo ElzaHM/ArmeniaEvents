@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Form, Row, Col, ConfigProvider, theme, Typography, message } from 'antd';
+import { Form, Row, Col, Typography, message } from 'antd';
 import dayjs from 'dayjs';
 import CreateEventForm from './CreateEventForm';
 import EventLivePreview from './EventLivePreview';
 import styles from './CreateEventPage.module.css';
+import '../../components/home/home.css';
 import CreateEventDefault from'../../assets/createEventDefault.png'
 
 const { Title, Paragraph } = Typography;
@@ -62,9 +63,8 @@ export default function CreateEventPage() {
   const currentPreviewImage = eventImage?.url || PLACEHOLDER_IMAGE;
 
   return (
-    <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
-      <div className={styles.pageWrapper}>
-        <div className="homeSection">
+    <div className={`${styles.pageWrapper} create-event-page`}>
+      <div className="homeSection">
           <div className={styles.heroHeader}>
             <Title className={styles.mainTitle}>Create <span className={styles.goldText}>Event</span></Title>
             <Paragraph className={styles.heroSubtitle}>Share your experiences across Armenia.</Paragraph>
@@ -86,8 +86,7 @@ export default function CreateEventPage() {
               </Col>
             </Row>
           </Form>
-        </div>
       </div>
-    </ConfigProvider>
+    </div>
   );
 }

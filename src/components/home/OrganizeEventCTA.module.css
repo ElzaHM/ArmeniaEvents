@@ -84,6 +84,12 @@
   overflow: hidden;
 }
 
+[data-theme='light'] .banner {
+  background: rgba(255, 255, 255, 0.80);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
 .leftSide {
   display: flex;
   align-items: center;

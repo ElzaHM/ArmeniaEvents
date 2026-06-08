@@ -1,17 +1,8 @@
 import { FILTER_CATEGORIES } from '../components/events/mockData';
-import type { Category, CategoryIconName } from '../components/home/types';
+import type { Category } from '../components/home/types';
+import { resolveCategoryIconName } from '../components/home/categoryIconUtils';
 import axios from 'axios';
 import { supabase } from '../lib/supabase';
-
-const CATEGORY_ICONS: CategoryIconName[] = [
-  'code',
-  'briefcase',
-  'rocket',
-  'music',
-  'palette',
-  'camera',
-  'bulb',
-];
 
 type CategoryRow = {
   id: string;
@@ -40,11 +31,8 @@ function authHeaders() {
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
-function mapIcon(icon: string | null | undefined): CategoryIconName {
-  if (icon && CATEGORY_ICONS.includes(icon as CategoryIconName)) {
-    return icon as CategoryIconName;
-  }
-  return 'bulb';
+function mapIcon(name: string, icon: string | null | undefined): Category['icon'] {
+  return resolveCategoryIconName(name, icon);
 }
 
 async function simulateRequest<T>(data: T): Promise<T> {
@@ -59,7 +47,7 @@ export const categoriesService = {
     return data.map((row: CategoryRow) => ({
       id: String(row.id),
       name: row.name,
-      icon: mapIcon(row.icon),
+      icon: mapIcon(row.name, row.icon),
       eventCount: row.event_count ?? 0,
     }));
   },
