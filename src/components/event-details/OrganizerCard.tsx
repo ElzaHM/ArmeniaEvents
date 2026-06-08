@@ -1,5 +1,4 @@
 import { Button, Typography } from 'antd';
-import { ArrowRightOutlined } from '@ant-design/icons';
 
 import type { EventDetails } from './types';
 
@@ -48,8 +47,8 @@ export default function OrganizerCard({ event }: OrganizerCardProps) {
       </div>
 
       <button type="button" className={styles.contactLink}>
-        Contact Organizer
-        <ArrowRightOutlined />
+      {/*   Contact Organizer */}
+       {/*  <ArrowRightOutlined /> */}
       </button>
     </aside>
   );
