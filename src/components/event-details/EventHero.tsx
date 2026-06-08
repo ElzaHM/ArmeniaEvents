@@ -30,7 +30,7 @@ export default function EventHero({ event }: EventHeroProps) {
 
   const handleSave = () => {
     if (!isAuthenticated) {
-      navigate('/sign-in');
+      navigate('/signin');
       return;
     }
 

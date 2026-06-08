@@ -114,7 +114,7 @@ type EventUpsertRow = {
 };
 
 /** Allowed Supabase `events` columns — prevents PGRST204 schema mismatches. */
-const EVENTS_UPSERT_KEYS: (keyof EventUpsertRow)[] = [
+/* const EVENTS_UPSERT_KEYS: (keyof EventUpsertRow)[] = [
   "title",
   "description",
   "image_url",
@@ -130,16 +130,10 @@ const EVENTS_UPSERT_KEYS: (keyof EventUpsertRow)[] = [
   "source",
   "external_id",
   "source_url",
-];
+]; */
 
 function sanitizeEventUpsertRow(row: EventUpsertRow): EventUpsertRow {
-  const sanitized = {} as EventUpsertRow;
-
-  for (const key of EVENTS_UPSERT_KEYS) {
-    sanitized[key] = row[key];
-  }
-
-  return sanitized;
+  return {...row};
 }
 
 function mapNormalizedEventToUpsertRow(
@@ -652,8 +646,8 @@ async function insertNewAiEvents(rows: EventUpsertRow[]): Promise<void> {
 
   const payload = rows.map(sanitizeEventUpsertRow);
 
-  const {error} = await supabase.from("events").insert(payload);
-
+  const {error} = await supabase.from("events").insert(payload as any);
+ 
   if (error) {
     throw new Error(error.message);
   }
@@ -747,7 +741,7 @@ export async function syncLiveAiEvents(options?: AiSyncOptions): Promise<AiSyncR
   }
 
   const externalIds = rows.map((row) => row.external_id);
-  const {data: existingRows, error: existingError} = await supabase
+  const {data: existingRows, error: existingError} = await (supabase as any)
     .from("events")
     .select("external_id")
     .in("external_id", externalIds);
