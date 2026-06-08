@@ -3,6 +3,7 @@ import { Button, Col, Form, Row, message } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import dayjs, { type Dayjs } from 'dayjs';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 import AdminCard from '../../../components/admin/AdminCard';
 import AdminPageHeader from '../../../components/admin/AdminPageHeader';
@@ -11,6 +12,10 @@ import EventLivePreview from '../../CreateEventPage/EventLivePreview';
 import CreateEventDefault from '../../../assets/createEventDefault.png';
 import type { AdminCreateEventFormValues } from '../../../services/admin-events.service';
 import { useCreateAdminEvent } from '../../../hooks/queries/useEvents';
+import {
+  fetchActiveCategories,
+  toCategoryAutoCompleteOptions,
+} from '../AdminEventsPage/eventCategories';
 
 import styles from './AdminCreateEventPage.module.css';
 
@@ -77,6 +82,11 @@ export default function AdminCreateEventPage() {
   const createAdminEvent = useCreateAdminEvent();
   const [eventImage, setEventImage] = useState<{ url: string; name: string } | null>(null);
   const [previewData, setPreviewData] = useState(initialPreviewData);
+  const { data: activeCategories = [] } = useQuery({
+    queryKey: ['admin', 'active-categories'],
+    queryFn: fetchActiveCategories,
+  });
+  const categoryOptions = toCategoryAutoCompleteOptions(activeCategories);
 
   const goToEventsList = () => {
     navigate('/admin/events');
@@ -152,7 +162,11 @@ export default function AdminCreateEventPage() {
           >
             <Row gutter={[24, 24]}>
               <Col xs={24} lg={15}>
-                <CreateEventForm image={eventImage} setImage={setEventImage} />
+                <CreateEventForm
+                  image={eventImage}
+                  setImage={setEventImage}
+                  categoryOptions={categoryOptions}
+                />
               </Col>
               <Col xs={24} lg={9}>
                 <EventLivePreview

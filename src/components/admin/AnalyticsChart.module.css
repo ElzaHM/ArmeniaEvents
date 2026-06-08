@@ -1,6 +1,8 @@
 .chartWrap {
   width: 100%;
+  min-width: 0;
   height: 260px;
+  min-height: 260px;
 }
 
 .summary {

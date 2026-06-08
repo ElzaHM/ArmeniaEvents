@@ -26,7 +26,7 @@ import styles from "./CreateEventPage.module.css";
 const {Title, Text} = Typography;
 const {TextArea} = Input;
 
-const categoryOptions = [
+const defaultCategoryOptions = [
   {value: "Programming"},
   {value: "Business"},
   {value: "Music"},
@@ -42,9 +42,14 @@ const typeOptions = [{value: "Online"}, {value: "Offline"}];
 interface Props {
   image: {url: string; name: string} | null;
   setImage: (img: {url: string; name: string} | null) => void;
+  categoryOptions?: {value: string}[];
 }
 
-export default function CreateEventForm({image, setImage}: Props) {
+export default function CreateEventForm({
+  image,
+  setImage,
+  categoryOptions = defaultCategoryOptions,
+}: Props) {
   const handleUpload = (info: any) => {
     const file = info.file.originFileObj || info.file;
     if (file) {
@@ -56,7 +61,7 @@ export default function CreateEventForm({image, setImage}: Props) {
   };
 
   return (
-    <Space direction="vertical" size={12} style={{width: "100%"}}>
+    <Space orientation="vertical" size={12} style={{width: "100%"}}>
       {/* Information Section */}
       <div className={styles.formCard}>
         <Title level={5} className={styles.cardHeader}>

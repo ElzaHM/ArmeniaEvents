@@ -4,7 +4,6 @@ import {
   CalendarOutlined,
   LogoutOutlined,
   SearchOutlined,
-  SettingOutlined,
   TagsOutlined,
   TeamOutlined,
   UserOutlined,
@@ -15,7 +14,7 @@ import {
 import {Button} from "antd";
 
 import {useAuth} from "../../hooks/useAuth";
-import {DEFAULT_ADMIN_DISPLAY, getAdminDisplayName} from "./adminDefaults";
+import {useAdminProfileDisplay} from "../../pages/admin/AdminProfilePage/useAdminProfileDisplay";
 import styles from "./AdminSidebar.module.css";
 
 const NAV_ITEMS = [
@@ -26,7 +25,7 @@ const NAV_ITEMS = [
   {to: "/admin/search", label: "Search", icon: SearchOutlined, end: false},
   {to: "/admin/analytics", label: "Analytics", icon: BarChartOutlined, end: false},
   {to: "/admin/profile", label: "My Profile", icon: UserOutlined, end: false},
-  {to: "/admin/settings", label: "Settings", icon: SettingOutlined, end: false},
+  // {to: "/admin/settings", label: "Settings", icon: SettingOutlined, end: false},
 ];
 
 interface AdminSidebarProps {
@@ -36,9 +35,9 @@ interface AdminSidebarProps {
 }
 
 export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: AdminSidebarProps) {
-  const {session, logout} = useAuth();
+  const {logout} = useAuth();
   const navigate = useNavigate();
-  const displayName = getAdminDisplayName(session?.user.fullName);
+  const {displayName, avatarUrl, roleLabel} = useAdminProfileDisplay();
 
   const handleLogout = async () => {
     await logout();
@@ -109,10 +108,10 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
         <div className={styles.skylineDecoration} aria-hidden="true" />
         <div className={styles.sidebarFooter}>
           <div className={styles.profileCard}>
-            <img src={DEFAULT_ADMIN_DISPLAY.avatarUrl} alt={displayName} className={styles.avatar} />
+            <img src={avatarUrl} alt={displayName} className={styles.avatar} />
             <div className={styles.profileInfo}>
               <div className={styles.profileName}>{displayName}</div>
-              <div className={styles.profileRole}>{DEFAULT_ADMIN_DISPLAY.role}</div>
+              <div className={styles.profileRole}>{roleLabel}</div>
             </div>
           </div>
           <div className={styles.copyright}>© 2026 Armenia Events</div>

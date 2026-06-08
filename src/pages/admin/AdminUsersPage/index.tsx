@@ -23,7 +23,7 @@ import { CameraOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import AdminCard from '../../../components/admin/AdminCard';
 import AdminPageHeader from '../../../components/admin/AdminPageHeader';
 import type { AdminUser, AdminUserRole, AdminUserStatus } from '../../../components/admin/types';
-import { useAdminUsers, useAdminUsersCount } from '../../../hooks/queries/useAdminUsers';
+import { useAdminUsers } from '../../../hooks/queries/useAdminUsers';
 import {
   deleteAdminUser,
   formatRoleLabel,
@@ -82,7 +82,7 @@ export default function AdminUsersPage() {
   const [form] = Form.useForm<UserEditFormValues>();
   const [messageApi, contextHolder] = message.useMessage();
   const { data: users = [], isLoading, isError, error } = useAdminUsers();
-  const { data: totalUsers = 0, isLoading: isCountLoading } = useAdminUsersCount();
+  const totalUsers = users.length;
   const [tableUsers, setTableUsers] = useState<AdminUser[]>([]);
   const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
   const [modalMode, setModalMode] = useState<UserModalMode>('details');
@@ -353,7 +353,7 @@ export default function AdminUsersPage() {
       <div className={styles.totalUsersBadge} aria-live="polite">
         <span className={styles.totalUsersLabel}>Total registered users</span>
         <strong className={styles.totalUsersCount}>
-          {isCountLoading ? '…' : totalUsers.toLocaleString('en-US')}
+          {isLoading ? '…' : totalUsers.toLocaleString('en-US')}
         </strong>
       </div>
       <AdminCard>

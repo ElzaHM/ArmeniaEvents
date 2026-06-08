@@ -17,7 +17,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 import {useTheme} from "../../hooks/useTheme";
 import {useAuth} from "../../hooks/useAuth";
-import {DEFAULT_ADMIN_DISPLAY, getAdminDisplayName} from "./adminDefaults";
+import {useAdminProfileDisplay} from "../../pages/admin/AdminProfilePage/useAdminProfileDisplay";
 import styles from "./AdminHeader.module.css";
 
 interface AdminHeaderProps {
@@ -39,9 +39,8 @@ export default function AdminHeader({
   onToggleSidebar,
 }: AdminHeaderProps) {
   const {mode, toggleTheme} = useTheme();
-  const {session, logout} = useAuth();
-  const displayName = getAdminDisplayName(session?.user.fullName);
-  const avatarUrl = DEFAULT_ADMIN_DISPLAY.avatarUrl;
+  const {logout} = useAuth();
+  const {displayName, avatarUrl} = useAdminProfileDisplay();
   const navigate = useNavigate();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);

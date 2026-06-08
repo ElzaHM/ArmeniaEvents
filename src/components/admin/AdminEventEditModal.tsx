@@ -23,9 +23,12 @@ import { useQuery } from '@tanstack/react-query';
 
 import {
   adminEventToEditFormValues,
-  fetchAdminCategoryNames,
   type AdminEventEditFormValues,
 } from '../../services/admin-events.service';
+import {
+  fetchActiveCategories,
+  toCategorySelectOptions,
+} from '../../pages/admin/AdminEventsPage/eventCategories';
 import { useUpdateAdminEvent } from '../../hooks/queries/useEvents';
 import { handleAdminEventImageError, EVENT_IMAGE_PLACEHOLDER } from './mapApiEventToAdminEvent';
 import type { AdminEvent, AdminEventStatus } from './types';
@@ -64,21 +67,16 @@ export default function AdminEventEditModal({ event, open, onClose }: AdminEvent
 
   const imageUrlValue = Form.useWatch('imageUrl', form);
 
-  const { data: categoryOptions = [] } = useQuery({
-    queryKey: ['admin', 'category-names'],
-    queryFn: fetchAdminCategoryNames,
+  const { data: activeCategories = [] } = useQuery({
+    queryKey: ['admin', 'active-categories'],
+    queryFn: fetchActiveCategories,
     enabled: open,
   });
 
-  const categorySelectOptions = useMemo(() => {
-    const names = new Set(categoryOptions);
-    if (event?.category) {
-      names.add(event.category);
-    }
-    return [...names]
-      .sort((left, right) => left.localeCompare(right))
-      .map((name) => ({ value: name, label: name }));
-  }, [categoryOptions, event?.category]);
+  const categorySelectOptions = useMemo(
+    () => toCategorySelectOptions(activeCategories, event?.category ? [event.category] : []),
+    [activeCategories, event?.category],
+  );
 
   const previewSrc =
     pendingImage?.url || imageUrlValue?.trim() || event?.imageUrl || EVENT_IMAGE_PLACEHOLDER;
@@ -151,7 +149,7 @@ export default function AdminEventEditModal({ event, open, onClose }: AdminEvent
       title="Edit Event"
       onCancel={handleClose}
       footer={null}
-      destroyOnClose
+      destroyOnHidden
       centered
       width={760}
       className="admin-detail-modal">

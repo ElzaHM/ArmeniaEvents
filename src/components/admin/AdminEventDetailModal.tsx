@@ -56,7 +56,7 @@ export default function AdminEventDetailModal({
       className="admin-detail-modal"
       width={720}
       centered
-      destroyOnClose>
+      destroyOnHidden>
       <div className={styles.modalShell}>
         <div className={styles.scrollContent}>
           <header className={styles.header}>

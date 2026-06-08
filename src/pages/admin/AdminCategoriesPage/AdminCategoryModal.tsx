@@ -65,7 +65,7 @@ export default function AdminCategoryModal({
       title={isEditMode ? 'Edit Category' : 'Add Category'}
       onCancel={handleClose}
       footer={null}
-      destroyOnClose
+      destroyOnHidden
       centered
       width={520}
       className={`admin-detail-modal ${styles.modal}`}>

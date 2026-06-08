@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { getDashboardStats } from '../../components/admin/dashboardStats';
 import {
   getAnalyticsOverview,
   getCategoryDistribution,
-  getDashboardStats,
   getRecentActivityFromEvents,
   fetchEventSearchCount,
 } from '../../services/admin-analytics.service';

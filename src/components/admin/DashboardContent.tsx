@@ -32,48 +32,53 @@ export default function DashboardContent() {
     isCategoriesLoading ||
     isActivityLoading;
 
+  const analyticsSummary =
+    analytics?.summary ?? {
+      views: {id: "views", label: "Views", value: 0, changePercent: 0, icon: "eye" as const},
+      registrations: {
+        id: "registrations",
+        label: "Registrations",
+        value: 0,
+        changePercent: 0,
+        icon: "users" as const,
+      },
+      engagementRate: {
+        id: "engagement",
+        label: "Engagement",
+        value: 0,
+        changePercent: 0,
+        icon: "calendar" as const,
+      },
+    };
+
   return (
-    <Spin spinning={isDashboardLoading}>
+    <Spin spinning={isDashboardLoading} description="Loading dashboard...">
       <div className={styles.dashboard}>
         <AdminPageHeader />
         <StatCards stats={stats} />
 
-        <div className={styles.row}>
-          <div className={styles.upcomingEventsWrapper}>
-            <UpcomingEventsTable events={upcomingEvents} />
-          </div>
+        {!isDashboardLoading ? (
+          <>
+            <div className={styles.row}>
+              <div className={styles.upcomingEventsWrapper}>
+                <UpcomingEventsTable events={upcomingEvents} />
+              </div>
 
-          <div className={styles.analyticsWrapper}>
-            <AnalyticsChart
-              data={analytics?.chartData ?? []}
-              summary={
-                analytics?.summary ?? {
-                  views: {id: "views", label: "Views", value: 0, changePercent: 0, icon: "eye"},
-                  registrations: {
-                    id: "registrations",
-                    label: "Registrations",
-                    value: 0,
-                    changePercent: 0,
-                    icon: "users",
-                  },
-                  engagementRate: {
-                    id: "engagement",
-                    label: "Engagement",
-                    value: 0,
-                    changePercent: 0,
-                    icon: "calendar",
-                  },
-                }
-              }
-            />
-          </div>
-        </div>
+              <div className={styles.analyticsWrapper}>
+                <AnalyticsChart
+                  data={analytics?.chartData ?? []}
+                  summary={analyticsSummary}
+                />
+              </div>
+            </div>
 
-        <div className={styles.bottomRow}>
-          <RecentActivity activities={recentActivity} />
-          <TopCategoriesChart categories={categoryDistribution} />
-          <QuickActions />
-        </div>
+            <div className={styles.bottomRow}>
+              <RecentActivity activities={recentActivity} />
+              <TopCategoriesChart categories={categoryDistribution} />
+              <QuickActions />
+            </div>
+          </>
+        ) : null}
       </div>
     </Spin>
   );
