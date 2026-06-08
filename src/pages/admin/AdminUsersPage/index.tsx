@@ -1,13 +1,38 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Alert, Button, Empty, Form, Input, Modal, Select, Space, Spin, Table, Tag, message } from 'antd';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  Alert,
+  Button,
+  Empty,
+  Form,
+  Input,
+  Modal,
+  Select,
+  Space,
+  Spin,
+  Table,
+  Tag,
+  Upload,
+  message,
+} from 'antd';
 import type { TableColumnsType } from 'antd';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import type { UploadChangeParam } from 'antd/es/upload';
+import { CameraOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 import AdminCard from '../../../components/admin/AdminCard';
 import AdminPageHeader from '../../../components/admin/AdminPageHeader';
 import type { AdminUser, AdminUserRole, AdminUserStatus } from '../../../components/admin/types';
 import { useAdminUsers, useAdminUsersCount } from '../../../hooks/queries/useAdminUsers';
+import {
+  deleteAdminUser,
+  formatRoleLabel,
+  normalizeEditRole,
+  updateAdminUser,
+  uploadUserAvatar,
+  type UserEditPayload,
+  type UserEditRole,
+} from './userApi';
 
 import styles from './AdminUsersPage.module.css';
 
@@ -24,17 +49,46 @@ const STATUS_COLORS: Record<AdminUserStatus, string> = {
   pending: 'warning',
 };
 
+const ROLE_OPTIONS: { value: UserEditRole; label: string }[] = [
+  { value: 'admin', label: 'Admin' },
+  { value: 'user', label: 'User' },
+];
+
+const STATUS_OPTIONS: { value: AdminUserStatus; label: string }[] = [
+  { value: 'active', label: 'Active' },
+  { value: 'inactive', label: 'Inactive' },
+  { value: 'pending', label: 'Pending' },
+];
+
 type UserModalMode = 'details' | 'edit';
+
+type UserEditFormValues = Omit<UserEditPayload, 'avatarUrl'>;
+
+type PendingAvatar = {
+  url: string;
+  file: File;
+  name: string;
+};
+
+function revokeBlobUrl(url?: string | null): void {
+  if (url?.startsWith('blob:')) {
+    URL.revokeObjectURL(url);
+  }
+}
 
 export default function AdminUsersPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [form] = Form.useForm<AdminUser>();
+  const queryClient = useQueryClient();
+  const [form] = Form.useForm<UserEditFormValues>();
   const [messageApi, contextHolder] = message.useMessage();
   const { data: users = [], isLoading, isError, error } = useAdminUsers();
   const { data: totalUsers = 0, isLoading: isCountLoading } = useAdminUsersCount();
   const [tableUsers, setTableUsers] = useState<AdminUser[]>([]);
   const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
   const [modalMode, setModalMode] = useState<UserModalMode>('details');
+  const [pendingAvatar, setPendingAvatar] = useState<PendingAvatar | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const searchQuery = searchParams.get('q')?.trim() ?? '';
 
   useEffect(() => {
@@ -43,9 +97,21 @@ export default function AdminUsersPage() {
 
   useEffect(() => {
     if (selectedUser && modalMode === 'edit') {
-      form.setFieldsValue(selectedUser);
+      form.setFieldsValue({
+        name: selectedUser.name,
+        email: selectedUser.email,
+        role: normalizeEditRole(selectedUser.role),
+        status: selectedUser.status,
+      });
+      setPendingAvatar(null);
     }
   }, [form, modalMode, selectedUser]);
+
+  useEffect(() => {
+    return () => {
+      revokeBlobUrl(pendingAvatar?.url);
+    };
+  }, [pendingAvatar?.url]);
 
   const filteredUsers = useMemo(() => {
     if (!searchQuery) {
@@ -60,18 +126,43 @@ export default function AdminUsersPage() {
     });
   }, [searchQuery, tableUsers]);
 
+  const avatarPreviewUrl =
+    pendingAvatar?.url || selectedUser?.avatarUrl || '';
+
   const clearSearch = () => {
     const nextParams = new URLSearchParams(searchParams);
     nextParams.delete('q');
     setSearchParams(nextParams);
   };
 
+  const clearPendingAvatar = () => {
+    revokeBlobUrl(pendingAvatar?.url);
+    setPendingAvatar(null);
+  };
+
+  const handleAvatarUpload = (info: UploadChangeParam) => {
+    const file = info.file.originFileObj ?? info.file;
+
+    if (!(file instanceof File)) {
+      return;
+    }
+
+    revokeBlobUrl(pendingAvatar?.url);
+    setPendingAvatar({
+      url: URL.createObjectURL(file),
+      file,
+      name: file.name,
+    });
+  };
+
   const openUserModal = (user: AdminUser) => {
     setSelectedUser(user);
     setModalMode('details');
+    clearPendingAvatar();
   };
 
   const closeUserModal = () => {
+    clearPendingAvatar();
     setSelectedUser(null);
     setModalMode('details');
     form.resetFields();
@@ -82,27 +173,70 @@ export default function AdminUsersPage() {
       return;
     }
 
-    form.setFieldsValue(selectedUser);
+    form.setFieldsValue({
+      name: selectedUser.name,
+      email: selectedUser.email,
+      role: normalizeEditRole(selectedUser.role),
+      status: selectedUser.status,
+    });
+    clearPendingAvatar();
     setModalMode('edit');
   };
 
+  const openEditModal = (user: AdminUser) => {
+    setSelectedUser(user);
+    setModalMode('edit');
+    form.setFieldsValue({
+      name: user.name,
+      email: user.email,
+      role: normalizeEditRole(user.role),
+      status: user.status,
+    });
+    clearPendingAvatar();
+  };
+
   const handleSaveUser = async () => {
+    if (!selectedUser) {
+      return;
+    }
+
     const values = await form.validateFields();
-    setTableUsers((currentUsers) =>
-      currentUsers.map((user) =>
-        user.id === selectedUser?.id
-          ? {
-              ...user,
-              name: values.name,
-              email: values.email,
-              role: values.role,
-              status: values.status,
-            }
-          : user,
-      ),
-    );
-    messageApi.success('User changes saved');
-    closeUserModal();
+    setIsSaving(true);
+
+    try {
+      let avatarUrl = selectedUser.avatarUrl;
+
+      if (pendingAvatar) {
+        avatarUrl = await uploadUserAvatar(pendingAvatar.file);
+      }
+
+      const payload: UserEditPayload = {
+        name: values.name,
+        email: values.email,
+        role: values.role,
+        status: values.status,
+        avatarUrl,
+      };
+
+      const updatedUser = await updateAdminUser(selectedUser.id, payload, selectedUser);
+
+      setTableUsers((currentUsers) =>
+        currentUsers.map((user) => (user.id === updatedUser.id ? updatedUser : user)),
+      );
+      setSelectedUser(updatedUser);
+      clearPendingAvatar();
+      messageApi.success('User changes saved');
+      await refreshUsers();
+      closeUserModal();
+    } catch (saveError) {
+      messageApi.error(saveError instanceof Error ? saveError.message : 'Save failed');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const refreshUsers = async () => {
+    await queryClient.invalidateQueries({ queryKey: ['admin', 'users'] });
   };
 
   const handleDeleteUser = (user: AdminUser | null) => {
@@ -112,14 +246,25 @@ export default function AdminUsersPage() {
 
     Modal.confirm({
       title: 'Delete user?',
-      content: `This will remove "${user.name}" from the current admin table.`,
+      content: `This will permanently delete "${user.name}" from Supabase Auth.`,
       okText: 'Delete User',
       okButtonProps: { danger: true },
       cancelText: 'Cancel',
-      onOk: () => {
-        setTableUsers((currentUsers) => currentUsers.filter((item) => item.id !== user.id));
-        messageApi.success('User deleted');
-        closeUserModal();
+      onOk: async () => {
+        setDeletingId(user.id);
+
+        try {
+          await deleteAdminUser(user.id);
+          setTableUsers((currentUsers) => currentUsers.filter((item) => item.id !== user.id));
+          messageApi.success('User deleted');
+          await refreshUsers();
+          closeUserModal();
+        } catch (deleteError) {
+          messageApi.error(deleteError instanceof Error ? deleteError.message : 'Delete failed');
+          throw deleteError;
+        } finally {
+          setDeletingId(null);
+        }
       },
     });
   };
@@ -145,7 +290,7 @@ export default function AdminUsersPage() {
       key: 'role',
       responsive: ['md'],
       render: (role: AdminUserRole) => (
-        <Tag color={ROLE_COLORS[role]}>{role.replace('_', ' ')}</Tag>
+        <Tag color={ROLE_COLORS[role]}>{formatRoleLabel(role)}</Tag>
       ),
     },
     {
@@ -181,11 +326,7 @@ export default function AdminUsersPage() {
             size="small"
             icon={<EditOutlined />}
             className={`admin-btn-edit ${styles.editButton}`}
-            onClick={() => {
-              setSelectedUser(record);
-              setModalMode('edit');
-              form.setFieldsValue(record);
-            }}>
+            onClick={() => openEditModal(record)}>
             Edit
           </Button>
           <Button
@@ -193,6 +334,7 @@ export default function AdminUsersPage() {
             size="small"
             icon={<DeleteOutlined />}
             className="admin-btn-delete"
+            loading={deletingId === record.id}
             onClick={() => handleDeleteUser(record)}>
             Delete
           </Button>
@@ -233,7 +375,7 @@ export default function AdminUsersPage() {
               ) : null}
             </div>
             <div className={styles.tableWrap}>
-              <Spin spinning={isLoading}>
+              <Spin spinning={isLoading || deletingId !== null}>
                 {searchQuery && !isLoading && filteredUsers.length === 0 ? (
                   <div className={styles.emptyWrap}>
                     <Empty description={emptySearchDescription} />
@@ -280,7 +422,7 @@ export default function AdminUsersPage() {
                 <dt>Role</dt>
                 <dd>
                   <Tag color={ROLE_COLORS[selectedUser.role]}>
-                    {selectedUser.role.replace('_', ' ')}
+                    {formatRoleLabel(selectedUser.role)}
                   </Tag>
                 </dd>
               </div>
@@ -307,8 +449,29 @@ export default function AdminUsersPage() {
         ) : null}
         {selectedUser && modalMode === 'edit' ? (
           <div className={styles.modalContent}>
-            <img src={selectedUser.avatarUrl} alt="" className={styles.modalAvatar} />
-            <Form form={form} layout="vertical" initialValues={selectedUser}>
+            <div className={styles.avatarPanel}>
+              <img src={avatarPreviewUrl} alt="" className={styles.modalAvatar} />
+              <Upload
+                accept="image/*"
+                showUploadList={false}
+                beforeUpload={() => false}
+                onChange={handleAvatarUpload}>
+                <Button icon={<CameraOutlined />} size="small">
+                  Change Photo
+                </Button>
+              </Upload>
+              {pendingAvatar ? (
+                <div className={styles.pendingAvatarBar}>
+                  <span className={styles.pendingAvatarName}>{pendingAvatar.name}</span>
+                  <Button type="link" size="small" onClick={clearPendingAvatar}>
+                    Remove
+                  </Button>
+                </div>
+              ) : (
+                <p className={styles.avatarHint}>Upload a square image for the best crop.</p>
+              )}
+            </div>
+            <Form form={form} layout="vertical" className={styles.editForm}>
               <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Name is required' }]}>
                 <Input />
               </Form.Item>
@@ -321,29 +484,18 @@ export default function AdminUsersPage() {
                 ]}>
                 <Input />
               </Form.Item>
-              <Form.Item name="role" label="Role">
-                <Select
-                  options={[
-                    { value: 'super_admin', label: 'Super Admin' },
-                    { value: 'admin', label: 'Admin' },
-                    { value: 'moderator', label: 'Moderator' },
-                    { value: 'user', label: 'User' },
-                  ]}
-                />
+              <Form.Item name="role" label="Role" rules={[{ required: true, message: 'Role is required' }]}>
+                <Select options={ROLE_OPTIONS} />
               </Form.Item>
-              <Form.Item name="status" label="Status">
-                <Select
-                  options={[
-                    { value: 'active', label: 'Active' },
-                    { value: 'inactive', label: 'Inactive' },
-                    { value: 'pending', label: 'Pending' },
-                  ]}
-                />
+              <Form.Item name="status" label="Status" rules={[{ required: true, message: 'Status is required' }]}>
+                <Select options={STATUS_OPTIONS} />
               </Form.Item>
             </Form>
             <div className={styles.modalActions}>
-              <Button onClick={() => setModalMode('details')}>Cancel</Button>
-              <Button type="primary" onClick={handleSaveUser}>
+              <Button onClick={() => setModalMode('details')} disabled={isSaving}>
+                Cancel
+              </Button>
+              <Button type="primary" className="admin-btn-edit" loading={isSaving} onClick={handleSaveUser}>
                 Save Changes
               </Button>
             </div>

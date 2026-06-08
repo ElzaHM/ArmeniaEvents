@@ -147,6 +147,44 @@
   object-fit: cover;
 }
 
+.avatarPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.avatarHint {
+  margin: 0;
+  max-width: 240px;
+  color: var(--admin-text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.pendingAvatarBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.pendingAvatarName {
+  max-width: 180px;
+  overflow: hidden;
+  color: var(--admin-text-secondary);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.editForm {
+  width: 100%;
+}
+
 .editButton {
   background: #1d4ed8 !important;
   border: none !important;
