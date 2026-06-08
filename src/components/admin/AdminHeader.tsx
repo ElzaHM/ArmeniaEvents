@@ -189,6 +189,7 @@ export default function AdminHeader({
             classNames={{root: "admin-user-dropdown"}}>
             <button type="button" className={styles.userSnippet}>
               <img
+                key={avatarUrl}
                 src={avatarUrl}
                 alt={displayName}
                 className={styles.userAvatar}

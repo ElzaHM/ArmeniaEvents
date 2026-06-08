@@ -1,11 +1,16 @@
 import axios from 'axios';
 
 import { supabase } from '../../../lib/supabase';
-import { DEFAULT_ADMIN_DISPLAY } from '../../../components/admin/adminDefaults';
+import { queryClient } from '../../../providers/query-client';
+import { DEFAULT_ADMIN_DISPLAY, getAdminDisplayName } from '../../../components/admin/adminDefaults';
 import type { AdminUserStatus } from '../../../components/admin/types';
+import {
+  getStoredRefreshToken,
+  TOKEN_STORAGE_KEY,
+  updateCachedAuthUser,
+} from '../../../services/auth.service';
 
 const api = axios.create({ baseURL: '/api' });
-const TOKEN_STORAGE_KEY = 'armenia-events-access-token';
 
 const STORAGE_BUCKET =
   import.meta.env.VITE_SUPABASE_EVENT_IMAGES_BUCKET ?? 'EVENT_IMAGES_BUCKET';
@@ -37,7 +42,23 @@ export type ProfileState = ProfileFormValues & {
   status: AdminUserStatus;
 };
 
-export const PROFILE_UPDATED_EVENT = 'admin-profile-updated';
+export type AdminProfileDisplay = {
+  displayName: string;
+  avatarUrl: string;
+  roleLabel: string;
+};
+
+export const adminProfileDisplayQueryKey = ['admin', 'profile-display'] as const;
+export const adminProfileQueryKey = ['admin', 'profile'] as const;
+
+export const adminProfileQueryOptions = {
+  staleTime: 5 * 60 * 1000,
+  gcTime: 5 * 60 * 1000,
+} as const;
+
+export function isIgnorableSupabaseSessionError(message: string): boolean {
+  return /session missing|refresh token|auth session missing/i.test(message);
+}
 
 function authHeaders() {
   const token = localStorage.getItem(TOKEN_STORAGE_KEY);
@@ -131,37 +152,136 @@ function mapUserToProfileState(user: {
   };
 }
 
-export function notifyProfileUpdated(): void {
-  window.dispatchEvent(new CustomEvent(PROFILE_UPDATED_EVENT));
+export function mapProfileStateToDisplay(profile: ProfileState): AdminProfileDisplay {
+  const fullName = buildFullName(profile.firstName, profile.lastName);
+
+  return {
+    displayName: getAdminDisplayName(fullName),
+    avatarUrl: profile.avatarUrl,
+    roleLabel: profile.position || DEFAULT_ADMIN_DISPLAY.role,
+  };
+}
+
+function buildProfileDisplayQueryKey(accessToken: string): readonly [string, string, string] {
+  return [...adminProfileDisplayQueryKey, accessToken];
+}
+
+function buildProfileQueryKey(accessToken: string): readonly [string, string, string] {
+  return [...adminProfileQueryKey, accessToken];
+}
+
+export function updateAdminProfileDisplayCache(
+  accessToken: string,
+  display: AdminProfileDisplay,
+): void {
+  queryClient.setQueryData(buildProfileDisplayQueryKey(accessToken), display);
+}
+
+export function updateAdminProfileCache(accessToken: string, profile: ProfileState): void {
+  queryClient.setQueryData(buildProfileQueryKey(accessToken), profile);
+}
+
+export function syncProfileCaches(accessToken: string, profile: ProfileState): void {
+  updateAdminProfileCache(accessToken, profile);
+  updateAdminProfileDisplayCache(accessToken, mapProfileStateToDisplay(profile));
+
+  const fullName = buildFullName(profile.firstName, profile.lastName);
+  updateCachedAuthUser(accessToken, { fullName });
+}
+
+function buildProfileFromSave(
+  profile: ProfileState,
+  values: ProfileFormValues,
+  avatarUrl: string,
+): ProfileState {
+  return {
+    ...profile,
+    firstName: values.firstName.trim(),
+    lastName: values.lastName.trim(),
+    email: values.email.trim(),
+    phone: values.phone.trim(),
+    position: values.position.trim(),
+    location: values.location.trim(),
+    avatarUrl: avatarUrl.trim(),
+  };
 }
 
 async function ensureSupabaseSession(accessToken: string): Promise<void> {
   const { data: existingSession } = await supabase.auth.getSession();
 
-  if (!existingSession.session) {
-    const { error: sessionError } = await supabase.auth.setSession({
-      access_token: accessToken,
-      refresh_token: '',
-    });
+  if (existingSession.session?.access_token === accessToken) {
+    return;
+  }
 
-    if (sessionError) {
-      throw new Error(sessionError.message);
-    }
+  const refreshToken = getStoredRefreshToken() ?? '';
+  const { error } = await supabase.auth.setSession({
+    access_token: accessToken,
+    refresh_token: refreshToken,
+  });
+
+  if (error && !isIgnorableSupabaseSessionError(error.message)) {
+    throw new Error(error.message);
   }
 }
 
 async function refreshSupabaseSession(): Promise<void> {
   const { error } = await supabase.auth.refreshSession();
 
-  if (error && !/session missing|refresh token/i.test(error.message)) {
+  if (error && !isIgnorableSupabaseSessionError(error.message)) {
     throw new Error(error.message);
   }
 }
 
+async function readProfileFromLocalSupabaseSession(): Promise<ProfileState | null> {
+  const { data: sessionData } = await supabase.auth.getSession();
+
+  if (!sessionData.session?.user) {
+    return null;
+  }
+
+  return mapUserToProfileState(sessionData.session.user);
+}
+
+async function syncSupabaseProfileMetadata(
+  accessToken: string,
+  values: ProfileFormValues,
+  avatarUrl: string,
+): Promise<ProfileState | null> {
+  await ensureSupabaseSession(accessToken);
+
+  const fullName = buildFullName(values.firstName, values.lastName);
+  const { error: updateError } = await supabase.auth.updateUser({
+    data: {
+      [META.fullName]: fullName,
+      [META.avatarUrl]: avatarUrl.trim(),
+      [META.phone]: values.phone.trim(),
+      [META.position]: values.position.trim(),
+      [META.location]: values.location.trim(),
+    },
+  });
+
+  if (updateError && !isIgnorableSupabaseSessionError(updateError.message)) {
+    throw new Error(updateError.message);
+  }
+
+  await refreshSupabaseSession();
+
+  return await readProfileFromLocalSupabaseSession();
+}
+
 export async function fetchAdminProfile(accessToken: string): Promise<ProfileState> {
+  const localProfile = await readProfileFromLocalSupabaseSession();
+  if (localProfile) {
+    return localProfile;
+  }
+
   const { data, error } = await supabase.auth.getUser(accessToken);
 
   if (error) {
+    if (isIgnorableSupabaseSessionError(error.message)) {
+      throw new Error('Failed to load profile.');
+    }
+
     throw new Error(error.message);
   }
 
@@ -233,10 +353,21 @@ export async function saveAdminProfile(
 ): Promise<ProfileState> {
   await patchProfileViaAdminApi(profile, values, avatarUrl);
 
-  await ensureSupabaseSession(accessToken);
-  await refreshSupabaseSession();
+  const fallbackProfile = buildProfileFromSave(profile, values, avatarUrl);
+  let savedProfile: ProfileState = fallbackProfile;
 
-  const savedProfile = await fetchAdminProfile(accessToken);
-  notifyProfileUpdated();
+  try {
+    const syncedProfile = await syncSupabaseProfileMetadata(accessToken, values, avatarUrl);
+    if (syncedProfile) {
+      savedProfile = syncedProfile;
+    }
+  } catch (syncError) {
+    const message = syncError instanceof Error ? syncError.message : String(syncError);
+    if (!isIgnorableSupabaseSessionError(message)) {
+      throw syncError;
+    }
+  }
+
+  syncProfileCaches(accessToken, savedProfile);
   return savedProfile;
 }

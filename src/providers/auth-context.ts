@@ -8,6 +8,7 @@ export type AuthContextValue = {
   login: (payload: LoginPayload) => Promise<void>;
   register: (payload: RegisterPayload) => Promise<void>;
   logout: () => Promise<void>;
+  syncSessionProfile: (fullName: string) => void;
   isAuthenticated: boolean;
 };
 
