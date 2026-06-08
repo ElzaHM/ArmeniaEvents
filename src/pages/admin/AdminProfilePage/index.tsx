@@ -5,7 +5,7 @@ import {CameraOutlined, EyeOutlined, SaveOutlined} from "@ant-design/icons";
 
 import AdminCard from "../../../components/admin/AdminCard";
 import AdminPageHeader from "../../../components/admin/AdminPageHeader";
-import {ADMIN_PROFILE} from "../../../components/admin/mockData";
+import {DEFAULT_ADMIN_DISPLAY} from "../../../components/admin/adminDefaults";
 import {useAuth} from "../../../hooks/useAuth";
 
 import styles from "./AdminProfilePage.module.css";
@@ -31,18 +31,18 @@ export default function AdminProfilePage() {
   const {session} = useAuth();
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm<ProfileFormValues>();
-  const [avatarUrl, setAvatarUrl] = useState(ADMIN_PROFILE.avatarUrl);
+  const [avatarUrl, setAvatarUrl] = useState(DEFAULT_ADMIN_DISPLAY.avatarUrl);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   const initialValues = useMemo<ProfileFormValues>(() => {
-    const nameParts = splitFullName(session?.user.fullName ?? ADMIN_PROFILE.name);
+    const nameParts = splitFullName(session?.user.fullName ?? DEFAULT_ADMIN_DISPLAY.name);
 
     return {
       firstName: nameParts.firstName,
       lastName: nameParts.lastName,
-      email: session?.user.email ?? "admin@armeniaevents.am",
-      phone: "+374 00 000000",
-      position: ADMIN_PROFILE.role,
+      email: session?.user.email ?? "",
+      phone: "",
+      position: DEFAULT_ADMIN_DISPLAY.role,
       location: "Yerevan, Armenia",
     };
   }, [session]);
@@ -63,7 +63,7 @@ export default function AdminProfilePage() {
 
   const handleReset = () => {
     form.resetFields();
-    setAvatarUrl(ADMIN_PROFILE.avatarUrl);
+    setAvatarUrl(DEFAULT_ADMIN_DISPLAY.avatarUrl);
   };
 
   return (

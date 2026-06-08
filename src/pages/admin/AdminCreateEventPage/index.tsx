@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Col, Form, Row, message } from 'antd';
+import { Button, Col, Form, Row, message } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import dayjs, { type Dayjs } from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 
@@ -77,6 +78,10 @@ export default function AdminCreateEventPage() {
   const [eventImage, setEventImage] = useState<{ url: string; name: string } | null>(null);
   const [previewData, setPreviewData] = useState(initialPreviewData);
 
+  const goToEventsList = () => {
+    navigate('/admin/events');
+  };
+
   const handleValuesChange = (_: unknown, allValues: RawCreateEventValues) => {
     setPreviewData({
       title: allValues.title || initialPreviewData.title,
@@ -123,6 +128,13 @@ export default function AdminCreateEventPage() {
 
   return (
     <>
+      <Button
+        type="text"
+        icon={<ArrowLeftOutlined />}
+        onClick={goToEventsList}
+        className={styles.backButton}>
+        Back to Events
+      </Button>
       <AdminPageHeader
         title="Create Event"
         subtitle="Add a new event with live preview before publishing."
@@ -143,7 +155,12 @@ export default function AdminCreateEventPage() {
                 <CreateEventForm image={eventImage} setImage={setEventImage} />
               </Col>
               <Col xs={24} lg={9}>
-                <EventLivePreview data={previewData} image={currentPreviewImage} />
+                <EventLivePreview
+                  data={previewData}
+                  image={currentPreviewImage}
+                  onCancel={goToEventsList}
+                  submitLoading={createAdminEvent.isPending}
+                />
               </Col>
             </Row>
           </Form>

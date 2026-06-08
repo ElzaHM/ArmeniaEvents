@@ -12,7 +12,17 @@ import styles from './CreateEventPage.module.css';
 
 const { Title, Text } = Typography;
 
-export default function EventLivePreview({ data, image }: { data: any, image: string }) {
+export default function EventLivePreview({
+  data,
+  image,
+  onCancel,
+  submitLoading,
+}: {
+  data: Record<string, string>;
+  image: string;
+  onCancel?: () => void;
+  submitLoading?: boolean;
+}) {
   const isFree = !data.price || data.price === 'Free' || data.price === '0';
 
   return (
@@ -61,14 +71,16 @@ export default function EventLivePreview({ data, image }: { data: any, image: st
       </div>
 
       <div className={styles.actionButtons}>
-        <Button size="large" className={styles.cancelBtn}>Cancel</Button>
-        <Button 
-          type="primary" 
-          size="large" 
-          icon={<PlusCircleOutlined />} 
+        <Button size="large" className={styles.cancelBtn} onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button
+          type="primary"
+          size="large"
+          icon={<PlusCircleOutlined />}
           className={styles.submitBtn}
           htmlType="submit"
-        >
+          loading={submitLoading}>
           Create Event
         </Button>
       </div>

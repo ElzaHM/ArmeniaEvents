@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Badge, Button, Dropdown, Input} from "antd";
+import {Button, Dropdown, Input} from "antd";
 import type {MenuProps} from "antd";
 import {
   BellOutlined,
@@ -17,7 +17,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 import {useTheme} from "../../hooks/useTheme";
 import {useAuth} from "../../hooks/useAuth";
-import {ADMIN_PROFILE} from "./mockData";
+import {DEFAULT_ADMIN_DISPLAY, getAdminDisplayName} from "./adminDefaults";
 import styles from "./AdminHeader.module.css";
 
 interface AdminHeaderProps {
@@ -39,7 +39,9 @@ export default function AdminHeader({
   onToggleSidebar,
 }: AdminHeaderProps) {
   const {mode, toggleTheme} = useTheme();
-  const {logout} = useAuth();
+  const {session, logout} = useAuth();
+  const displayName = getAdminDisplayName(session?.user.fullName);
+  const avatarUrl = DEFAULT_ADMIN_DISPLAY.avatarUrl;
   const navigate = useNavigate();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -178,23 +180,21 @@ export default function AdminHeader({
           />
 
           <div className={styles.actionBox}>
-            <Badge count={3} size="small" offset={[2, -2]}>
-              <BellOutlined style={{color: "inherit", fontSize: "18px"}} />
-            </Badge>
+            <BellOutlined style={{color: "inherit", fontSize: "18px"}} />
           </div>
 
           <Dropdown
             menu={{items: USER_MENU_ITEMS, onClick: handleUserMenuClick}}
             trigger={["click"]}
             placement="bottomRight"
-            overlayClassName="admin-user-dropdown">
+            classNames={{root: "admin-user-dropdown"}}>
             <button type="button" className={styles.userSnippet}>
               <img
-                src={ADMIN_PROFILE.avatarUrl}
-                alt={ADMIN_PROFILE.name}
+                src={avatarUrl}
+                alt={displayName}
                 className={styles.userAvatar}
               />
-              <span className={styles.userName}>{ADMIN_PROFILE.name}</span>
+              <span className={styles.userName}>{displayName}</span>
               <DownOutlined className={styles.userArrow} />
             </button>
           </Dropdown>

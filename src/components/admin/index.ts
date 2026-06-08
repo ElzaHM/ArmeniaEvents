@@ -10,5 +10,4 @@ export { default as StatCards } from './StatCards';
 export { default as TopCategoriesChart } from './TopCategoriesChart';
 export { default as UpcomingEventsTable } from './UpcomingEventsTable';
 
-export * from './mockData';
 export * from './types';

@@ -219,7 +219,7 @@ export default function AdminUsersPage() {
           <Alert
             type="error"
             showIcon
-            message="Failed to load users"
+            title="Failed to load users"
             description={error instanceof Error ? error.message : 'Please try again.'}
           />
         ) : (

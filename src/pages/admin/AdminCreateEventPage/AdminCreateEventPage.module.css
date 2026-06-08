@@ -1,3 +1,15 @@
+.backButton {
+  margin-bottom: 8px;
+  padding-inline: 0;
+  color: var(--admin-text-secondary);
+  font-weight: 600;
+}
+
+.backButton:hover {
+  color: var(--admin-gold-strong) !important;
+  background: transparent !important;
+}
+
 .createCard {
   overflow: visible;
 }

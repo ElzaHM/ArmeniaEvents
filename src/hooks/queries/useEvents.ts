@@ -3,7 +3,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { eventsService, type EventsPaginatedResult } from '../../services/events.service';
 import {
   createAdminEvent,
+  updateAdminEvent,
   type AdminCreateEventFormValues,
+  type AdminEventEditFormValues,
 } from '../../services/admin-events.service';
 import { adminDashboardKeys } from './useAdminDashboard';
 
@@ -157,6 +159,26 @@ export function useCreateEvent() {
       void queryClient.invalidateQueries({ queryKey: eventsKeys.all });
       void queryClient.invalidateQueries({ queryKey: adminDashboardKeys.all });
       void queryClient.invalidateQueries({ queryKey: eventsKeys.totalCount });
+    },
+  });
+}
+
+export function useUpdateAdminEvent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      id,
+      values,
+      pendingImage,
+    }: {
+      id: string;
+      values: AdminEventEditFormValues;
+      pendingImage?: { url: string; name: string } | null;
+    }) => updateAdminEvent(id, values, pendingImage),
+    onSuccess: (_, variables) => {
+      void queryClient.invalidateQueries({ queryKey: eventsKeys.all });
+      void queryClient.invalidateQueries({ queryKey: adminDashboardKeys.all });
+      void queryClient.invalidateQueries({ queryKey: eventsKeys.detail(variables.id) });
     },
   });
 }

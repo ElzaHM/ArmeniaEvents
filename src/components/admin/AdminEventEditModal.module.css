@@ -1,0 +1,185 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(85vh - 72px);
+  min-height: 0;
+}
+
+.scrollContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-right: 8px;
+}
+
+.section {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--admin-border);
+  background: var(--admin-surface);
+}
+
+.sectionTitle {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--admin-text-muted);
+}
+
+.section :global(.ant-form-item) {
+  margin-bottom: 12px;
+}
+
+.section :global(.ant-form-item:last-child) {
+  margin-bottom: 0;
+}
+
+.imageBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.imageLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--admin-text-secondary);
+}
+
+.imageUrlField {
+  margin-bottom: 0 !important;
+}
+
+.imagePreview {
+  display: block;
+  width: 100%;
+  max-height: 160px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid var(--admin-border);
+}
+
+.imagePreviewFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  border-radius: 12px;
+  border: 1px dashed var(--admin-border);
+  color: var(--admin-text-muted);
+  font-size: 13px;
+  background: var(--admin-surface);
+}
+
+.imageUpload :global(.ant-upload-drag) {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 2px dashed var(--admin-border) !important;
+  border-radius: 10px !important;
+  padding: 12px 0 !important;
+}
+
+.imageUpload :global(.ant-upload-drag:hover) {
+  border-color: var(--admin-gold-border) !important;
+}
+
+.uploadIcon {
+  color: var(--admin-gold);
+  font-size: 28px;
+}
+
+.uploadHint {
+  color: var(--admin-text-secondary) !important;
+  font-size: 12px !important;
+}
+
+.uploadedFileBar {
+  background: var(--admin-gold-light);
+  border: 1px solid var(--admin-gold-border);
+  border-radius: 10px;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.fileDetails {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.fileIcon {
+  font-size: 20px;
+  color: var(--admin-gold-strong);
+  flex-shrink: 0;
+}
+
+.fileText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fileName {
+  color: var(--admin-text) !important;
+}
+
+.fileMeta {
+  color: var(--admin-text-muted) !important;
+  font-size: 12px !important;
+}
+
+.deleteBtn {
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--admin-text-muted);
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.deleteBtn:hover {
+  color: var(--admin-gold-strong);
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-shrink: 0;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--admin-border);
+}
+
+.footer :global(.ant-btn) {
+  min-width: 120px;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 640px) {
+  .form {
+    max-height: calc(85vh - 56px);
+  }
+
+  .footer {
+    flex-direction: column-reverse;
+  }
+
+  .footer :global(.ant-btn) {
+    width: 100%;
+  }
+}

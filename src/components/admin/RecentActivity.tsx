@@ -1,3 +1,4 @@
+import { Empty } from 'antd';
 import {
   EditOutlined,
   PlusCircleOutlined,
@@ -37,28 +38,32 @@ interface RecentActivityProps {
 export default function RecentActivity({ activities }: RecentActivityProps) {
   return (
     <AdminCard title="Recent Activity">
-      <ul className={styles.list}>
-        {activities.map((activity) => {
-          const Icon = ACTIVITY_ICONS[activity.type];
+      {activities.length === 0 ? (
+        <Empty description="No recent activity yet." />
+      ) : (
+        <ul className={styles.list}>
+          {activities.map((activity) => {
+            const Icon = ACTIVITY_ICONS[activity.type];
 
-          return (
-            <li key={activity.id} className={styles.item}>
-              <span className={styles.iconWrap}>
-                <Icon />
-              </span>
-              <div className={styles.content}>
-                <p className={styles.message}>
-                  {activity.message}{' '}
-                  <span className={styles.highlight}>{activity.highlight}</span>
-                </p>
-                <span className={styles.time}>
-                  {formatRelativeTime(activity.timestamp)}
+            return (
+              <li key={activity.id} className={styles.item}>
+                <span className={styles.iconWrap}>
+                  <Icon />
                 </span>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+                <div className={styles.content}>
+                  <p className={styles.message}>
+                    {activity.message}{' '}
+                    <span className={styles.highlight}>{activity.highlight}</span>
+                  </p>
+                  <span className={styles.time}>
+                    {formatRelativeTime(activity.timestamp)}
+                  </span>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </AdminCard>
   );
 }

@@ -86,8 +86,20 @@
 
 .eventCell {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
+  min-width: 0;
+  max-width: 260px;
+}
+
+.eventTitle {
+  font-weight: 500;
+  color: var(--admin-text);
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+  min-width: 0;
+  flex: 1;
 }
 
 .thumbnail {
@@ -98,9 +110,22 @@
   flex-shrink: 0;
 }
 
-.eventTitle {
-  font-weight: 500;
-  color: var(--admin-text);
+.sourceCell {
+  max-width: 160px;
+}
+
+.sourceTag {
+  white-space: normal !important;
+  word-break: break-word;
+  height: auto !important;
+  line-height: 1.4 !important;
+  text-align: start;
+}
+
+.tableWrap :global(.admin-table-wrap-cell) {
+  white-space: normal !important;
+  word-break: break-word;
+  vertical-align: top;
 }
 
 .viewsCell {

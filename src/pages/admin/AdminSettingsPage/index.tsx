@@ -2,12 +2,12 @@ import { Button, Form, Input, Select, Switch } from 'antd';
 
 import AdminCard from '../../../components/admin/AdminCard';
 import AdminPageHeader from '../../../components/admin/AdminPageHeader';
-import { getAdminSettings } from '../../../components/admin/mockData';
+import { DEFAULT_ADMIN_SETTINGS } from '../../../components/admin/adminDefaults';
 
 import styles from './AdminSettingsPage.module.css';
 
 export default function AdminSettingsPage() {
-  const settings = getAdminSettings();
+  const settings = DEFAULT_ADMIN_SETTINGS;
   const [form] = Form.useForm();
 
   return (

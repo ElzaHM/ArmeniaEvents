@@ -1,4 +1,5 @@
-import {ADMIN_PROFILE} from "./mockData";
+import {useAuth} from "../../hooks/useAuth";
+import {DEFAULT_ADMIN_DISPLAY, getAdminDisplayName} from "./adminDefaults";
 import styles from "./AdminPageHeader.module.css";
 
 interface AdminPageHeaderProps {
@@ -10,6 +11,9 @@ export default function AdminPageHeader({
   title,
   subtitle = "Here is what is happening with your events today.",
 }: AdminPageHeaderProps) {
+  const {session} = useAuth();
+  const greetingName = getAdminDisplayName(session?.user.fullName ?? DEFAULT_ADMIN_DISPLAY.name);
+
   return (
     <div className={styles.pageHeader}>
       <h1 className={`${styles.greeting} ${title ? styles.pageTitle : ""}`}>
@@ -17,7 +21,7 @@ export default function AdminPageHeader({
           title
         ) : (
           <>
-            Welcome back, <span className={styles.goldText}>{ADMIN_PROFILE.name}!</span> 👋
+            Welcome back, <span className={styles.goldText}>{greetingName}!</span> 👋
           </>
         )}
       </h1>

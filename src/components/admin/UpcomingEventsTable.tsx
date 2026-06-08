@@ -1,10 +1,13 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {Button, Dropdown, Modal, Progress, Table, Tag} from "antd";
+import {Dropdown, Modal, Progress, Table, Tag} from "antd";
 import type {MenuProps, TableColumnsType} from "antd";
-import {EditOutlined, MoreOutlined} from "@ant-design/icons";
+import {MoreOutlined} from "@ant-design/icons";
 
 import AdminCard from "./AdminCard";
+import AdminEventDetailModal from "./AdminEventDetailModal";
+import AdminEventImage from "./AdminEventImage";
+import {getSourceTagColor} from "./sourceTagUtils";
 import type {AdminEvent, AdminEventStatus} from "./types";
 
 import styles from "./UpcomingEventsTable.module.css";
@@ -63,9 +66,15 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
       title: "Event",
       dataIndex: "title",
       key: "title",
+      width: 260,
+      onCell: () => ({className: "admin-table-wrap-cell"}),
       render: (_, record) => (
         <div className={styles.eventCell}>
-          <img src={record.imageUrl} alt="" className={styles.thumbnail} />
+          <AdminEventImage
+            imageUrl={record.imageUrl}
+            alt=""
+            className={styles.thumbnail}
+          />
           <span className={styles.eventTitle}>{record.title}</span>
         </div>
       ),
@@ -75,6 +84,25 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
       dataIndex: "date",
       key: "date",
       responsive: ["md"],
+    },
+    {
+      title: "Source",
+      dataIndex: "source",
+      key: "source",
+      width: 160,
+      onCell: () => ({className: "admin-table-wrap-cell"}),
+      responsive: ["lg"],
+      render: (source: string) => (
+        <div className={styles.sourceCell}>
+          {source ? (
+            <Tag color={getSourceTagColor(source)} className={styles.sourceTag}>
+              {source}
+            </Tag>
+          ) : (
+            <Tag className={styles.sourceTag}>Manual</Tag>
+          )}
+        </div>
+      ),
     },
     {
       title: "Category",
@@ -138,7 +166,7 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
             },
           }}
           trigger={["click"]}
-          overlayClassName="admin-dropdown-menu">
+          classNames={{root: "admin-dropdown-menu"}}>
           <button
             type="button"
             aria-label="Actions"
@@ -168,70 +196,14 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
           />
         </div>
       </AdminCard>
-      <Modal
+      <AdminEventDetailModal
+        event={viewingEvent}
         open={Boolean(viewingEvent)}
-        title="Event Details"
-        footer={null}
-        onCancel={closeViewModal}
-        className="admin-detail-modal"
-        width={480}
-        centered>
-        {viewingEvent ? (
-          <div className={styles.detailModal}>
-            <img src={viewingEvent.imageUrl} alt="" className={styles.detailImage} />
-            <dl className={styles.detailList}>
-              <div className={styles.detailRow}>
-                <dt>Title</dt>
-                <dd>{viewingEvent.title}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Organizer</dt>
-                <dd>{viewingEvent.organizerName}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Category</dt>
-                <dd>{viewingEvent.category}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Location</dt>
-                <dd>{viewingEvent.location}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Start Date</dt>
-                <dd>{viewingEvent.date}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>End Date</dt>
-                <dd>{viewingEvent.endDateDisplay}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Status</dt>
-                <dd>
-                  <Tag color={STATUS_CONFIG[viewingEvent.status].color}>
-                    {STATUS_CONFIG[viewingEvent.status].label}
-                  </Tag>
-                </dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Views</dt>
-                <dd>{viewingEvent.views.toLocaleString()}</dd>
-              </div>
-            </dl>
-            <div className={styles.detailActions}>
-              <Button danger onClick={() => handleDeleteEvent(viewingEvent)}>
-                Delete
-              </Button>
-              <Button
-                type="primary"
-                className="admin-btn-edit"
-                icon={<EditOutlined />}
-                onClick={() => navigate("/admin/events")}>
-                Edit
-              </Button>
-            </div>
-          </div>
-        ) : null}
-      </Modal>
+        onClose={closeViewModal}
+        onEdit={() => navigate("/admin/events")}
+        onDelete={() => viewingEvent && handleDeleteEvent(viewingEvent)}
+        editLabel="Open Events"
+      />
     </>
   );
 }

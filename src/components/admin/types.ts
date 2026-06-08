@@ -22,18 +22,33 @@ export interface StatMetric {
 export interface AdminEvent {
   id: string;
   title: string;
+  description: string;
   date: string;
   startDate: string;
   endDate: string;
   endDateDisplay: string;
   category: string;
+  venue: string;
+  address: string;
   location: string;
   organizerName: string;
-  organizerAvatarUrl: string;
+  organizerAvatarUrl: string | null;
   views: number;
   maxViews: number;
   status: AdminEventStatus;
-  imageUrl: string;
+  imageUrl: string | null;
+  storedImageUrl: string;
+  source: string;
+  sourceUrl: string;
+  externalId: string;
+  ticketUrl: string;
+  storedTicketUrl: string;
+  price: string;
+  priceValue: number | null;
+  language: string;
+  ageRange: string;
+  tags: string[];
+  eventType: string;
 }
 
 export interface AdminCategory {

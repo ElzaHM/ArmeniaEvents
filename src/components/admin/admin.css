@@ -665,15 +665,32 @@
   cursor: pointer;
 }
 
+/* Shared admin table cell wrapping */
+.admin-panel .admin-content :global(.admin-table-wrap-cell) {
+  white-space: normal !important;
+  word-break: break-word;
+  vertical-align: top;
+}
+
 /* ── Detail / edit modals ── */
 .admin-panel :global(.ant-modal-mask) {
-  background: rgba(0, 0, 0, 0.8) !important;
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+.admin-panel :global(.admin-detail-modal) {
+  max-height: 85vh;
+  padding-bottom: 0;
 }
 
 .admin-panel :global(.admin-detail-modal) :global(.ant-modal-content) {
   background: var(--admin-card-bg);
   border: 1px solid var(--admin-border);
   box-shadow: var(--admin-shadow);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
 }
 
 .admin-panel :global(.admin-detail-modal) :global(.ant-modal-header) {
@@ -686,8 +703,33 @@
   color: var(--admin-text);
 }
 
+.admin-panel :global(.admin-detail-modal) :global(.ant-modal-close) {
+  position: absolute;
+  top: 10px;
+  inset-inline-end: 36px;
+  z-index: 30;
+  margin: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.admin-panel :global(.admin-detail-modal) :global(.ant-modal-close):hover {
+  background: var(--admin-surface-hover);
+}
+
 .admin-panel :global(.admin-detail-modal) :global(.ant-modal-body) {
   color: var(--admin-text);
+  overflow: hidden;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 44px 36px 24px 24px;
 }
 
 .admin-panel :global(.admin-detail-modal) :global(.ant-modal-footer) {
@@ -702,7 +744,25 @@
 .admin-panel :global(.admin-detail-modal) .admin-btn-add {
   border: none !important;
   box-shadow: none !important;
+  outline: none !important;
   transition: background-color 0.3s, color 0.3s, transform 0.2s !important;
+}
+
+.admin-panel :global(.admin-detail-modal) .ant-btn-primary,
+.admin-panel :global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary {
+  background: var(--admin-button-primary-bg) !important;
+  color: var(--admin-button-primary-text) !important;
+}
+
+.admin-panel :global(.admin-detail-modal) .ant-btn-dangerous,
+.admin-panel :global(.admin-detail-modal) .ant-btn-dangerous.ant-btn-primary {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+.admin-panel :global(.admin-detail-modal) .ant-btn-default:not(.ant-btn-dangerous) {
+  background: var(--admin-surface) !important;
+  color: var(--admin-text) !important;
 }
 
 [data-theme="dark"] .admin-panel :global(.admin-detail-modal) .ant-btn-primary:hover,
@@ -725,8 +785,18 @@
 
 [data-theme="light"] .admin-panel :global(.admin-detail-modal) .ant-btn-primary,
 [data-theme="light"] .admin-panel :global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary {
-  border: 1px solid rgba(255, 255, 255, 0.55) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+  background: var(--admin-button-primary-bg) !important;
+  color: var(--admin-button-primary-text) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[data-theme="light"] .admin-panel :global(.admin-detail-modal) .ant-btn-dangerous,
+[data-theme="light"] .admin-panel :global(.admin-detail-modal) .ant-btn-dangerous.ant-btn-primary {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 [data-theme="light"] .admin-panel :global(.admin-detail-modal) .ant-btn-primary:hover,
@@ -734,14 +804,13 @@
 [data-theme="light"] .admin-panel :global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary:hover,
 [data-theme="light"] .admin-panel :global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary:focus {
   background: var(--admin-button-primary-hover-bg) !important;
-  border-color: rgba(255, 255, 255, 0.72) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58) !important;
+  transform: translateY(-1px);
 }
 
-[data-theme="light"] .admin-panel :global(.admin-detail-modal) .ant-btn-default:hover,
-[data-theme="light"] .admin-panel :global(.admin-detail-modal) .ant-btn-default:focus {
-  background: var(--admin-surface-hover) !important;
-  color: var(--admin-gold-strong) !important;
+[data-theme="light"] .admin-panel :global(.admin-detail-modal) .ant-btn-dangerous:hover,
+[data-theme="light"] .admin-panel :global(.admin-detail-modal) .ant-btn-dangerous:focus {
+  background: rgba(239, 68, 68, 0.22) !important;
+  color: #fff1f2 !important;
 }
 
 @media (max-width: 499px) {

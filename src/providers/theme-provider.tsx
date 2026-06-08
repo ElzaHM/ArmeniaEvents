@@ -13,6 +13,7 @@ function getInitialMode(): ThemeMode {
     return stored;
   }
 
+  // Default to light when no preference is saved.
   return 'light';
 }
 

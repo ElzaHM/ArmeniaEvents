@@ -1,19 +1,21 @@
 import {useMemo, useState} from "react";
-import {Button, Empty, Form, Input, InputNumber, Modal, Select, Table, Tag, message, Space} from "antd";
+import {Button, Empty, Modal, Table, Tag, message, Space, Alert} from "antd";
 import type {TableColumnsType} from "antd";
 import {PlusOutlined, EditOutlined, CloudDownloadOutlined} from "@ant-design/icons";
 import {useQueryClient} from "@tanstack/react-query";
 import {useNavigate, useSearchParams} from "react-router-dom";
 
-import {api} from "../../../api/axios";
 import AdminCard from "../../../components/admin/AdminCard";
+import AdminEventDetailModal from "../../../components/admin/AdminEventDetailModal";
+import AdminEventEditModal from "../../../components/admin/AdminEventEditModal";
 import AdminPageHeader from "../../../components/admin/AdminPageHeader";
+import AdminEventImage from "../../../components/admin/AdminEventImage";
+import AdminOrganizerAvatar from "../../../components/admin/AdminOrganizerAvatar";
+import {getSourceTagColor} from "../../../components/admin/sourceTagUtils";
 import type {AdminEvent, AdminEventStatus} from "../../../components/admin/types";
 import {adminDashboardKeys, useAdminEventsList} from "../../../hooks/queries/useAdminDashboard";
-import {
-  useDeleteEvent,
-  useUpdateEvent,
-} from "../../../hooks/queries/useEvents";
+import {useDeleteEvent} from "../../../hooks/queries/useEvents";
+import {getAiSyncErrorMessage, syncLiveAiEvents} from "../../../services/admin/geminiSyncService";
 
 import styles from "./AdminEventsPage.module.css";
 
@@ -42,11 +44,11 @@ function getEventDate(event: AdminEvent): Date {
 
 export default function AdminEventsPage() {
   const [messageApi, contextHolder] = message.useMessage();
-  const [eventForm] = Form.useForm<AdminEvent>();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<EventSectionKey>("all");
-  const [importing, setImporting] = useState(false);
+  const [aiFetching, setAiFetching] = useState(false);
+  const [aiFetchStatus, setAiFetchStatus] = useState<string | null>(null);
   const [viewingEvent, setViewingEvent] = useState<AdminEvent | null>(null);
   const [editingEvent, setEditingEvent] = useState<AdminEvent | null>(null);
   const queryClient = useQueryClient();
@@ -57,7 +59,6 @@ export default function AdminEventsPage() {
   );
   const isLoading = searchQuery ? isSearchLoading : isAllLoading;
   const deleteEvent = useDeleteEvent();
-  const updateEvent = useUpdateEvent();
 
   const clearSearch = () => {
     const nextParams = new URLSearchParams(searchParams);
@@ -75,7 +76,6 @@ export default function AdminEventsPage() {
 
   const openEditModal = (event: AdminEvent) => {
     setEditingEvent(event);
-    eventForm.setFieldsValue(event);
   };
 
   const openEditFromView = () => {
@@ -90,32 +90,6 @@ export default function AdminEventsPage() {
 
   const closeEditModal = () => {
     setEditingEvent(null);
-    eventForm.resetFields();
-  };
-
-  const handleSaveEvent = async () => {
-    if (!editingEvent) {
-      return;
-    }
-
-    const values = await eventForm.validateFields();
-
-    try {
-      await updateEvent.mutateAsync({
-        id: editingEvent.id,
-        payload: {
-          title: values.title,
-          start_date: values.startDate || editingEvent.startDate,
-          address: values.location,
-          status: values.status,
-          views: values.views,
-        },
-      });
-      messageApi.success("Event updated");
-      closeEditModal();
-    } catch (error) {
-      messageApi.error(error instanceof Error ? error.message : "Update failed");
-    }
   };
 
   const sections: EventSection[] = useMemo(() => {
@@ -197,22 +171,56 @@ export default function AdminEventsPage() {
     {
       title: "Event",
       key: "title",
+      width: 240,
+      onCell: () => ({className: "admin-table-wrap-cell"}),
       sorter: (left, right) => left.title.localeCompare(right.title),
       render: (_, record) => (
         <div className={styles.eventCell}>
-          <img src={record.imageUrl} alt="" className={styles.thumbnail} />
-          <span>{record.title}</span>
+          <AdminEventImage
+            imageUrl={record.imageUrl}
+            alt=""
+            className={styles.thumbnail}
+          />
+          <span className={`${styles.eventTitle} ${styles.clampTwoLines}`}>{record.title}</span>
         </div>
       ),
     },
     {
       title: "Organizer",
       key: "organizer",
+      width: 180,
+      onCell: () => ({className: "admin-table-wrap-cell"}),
       responsive: ["lg"],
       render: (_, record) => (
         <div className={styles.organizerCell}>
-          <img src={record.organizerAvatarUrl} alt="" className={styles.organizerAvatar} />
-          <span>{record.organizerName}</span>
+          <AdminOrganizerAvatar
+            name={record.organizerName}
+            avatarUrl={record.organizerAvatarUrl}
+            avatarClassName={styles.organizerAvatar}
+            fallbackClassName={styles.organizerAvatarFallback}
+          />
+          <span className={`${styles.organizerName} ${styles.clampTwoLines}`}>
+            {record.organizerName}
+          </span>
+        </div>
+      ),
+    },
+    {
+      title: "Source",
+      dataIndex: "source",
+      key: "source",
+      width: 150,
+      onCell: () => ({className: "admin-table-wrap-cell"}),
+      responsive: ["lg"],
+      render: (source: string) => (
+        <div className={styles.sourceCell}>
+          {source ? (
+            <Tag color={getSourceTagColor(source)} className={`${styles.sourceTag} ${styles.clampTwoLines}`}>
+              {source}
+            </Tag>
+          ) : (
+            <Tag className={`${styles.sourceTag} ${styles.clampTwoLines}`}>Manual</Tag>
+          )}
         </div>
       ),
     },
@@ -224,8 +232,18 @@ export default function AdminEventsPage() {
       sorter: (left, right) =>
         new Date(left.startDate || left.date).getTime() - new Date(right.startDate || right.date).getTime(),
     },
-    {title: "Category", dataIndex: "category", key: "category", responsive: ["md"]},
-    {title: "Location", dataIndex: "location", key: "location", responsive: ["md"]},
+    {title: "Category", dataIndex: "category", key: "category", responsive: ["md"], width: 120},
+    {
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+      width: 180,
+      onCell: () => ({className: "admin-table-wrap-cell"}),
+      responsive: ["md"],
+      render: (location: string) => (
+        <span className={`${styles.locationText} ${styles.clampTwoLines}`}>{location}</span>
+      ),
+    },
     {
       title: "Views",
       dataIndex: "views",
@@ -271,29 +289,26 @@ export default function AdminEventsPage() {
     navigate("/admin/events/create");
   };
 
-  const handleImportEventbrite = async () => {
-    setImporting(true);
+  const handleAiFetchLiveData = async () => {
+    setAiFetching(true);
+    setAiFetchStatus("Gemini is searching the web for live events in Armenia...");
 
     try {
-      const { data } = await api.post<{ imported: number; skipped: number }>(
-        "/api/admin/events/import/eventbrite",
-        {},
-      );
+      const result = await syncLiveAiEvents({
+        onRetry: (message) => {
+          setAiFetchStatus(message);
+          messageApi.info(message);
+        },
+      });
 
-      messageApi.success(`Imported: ${data.imported}, Skipped: ${data.skipped}`);
+      setAiFetchStatus(null);
+      messageApi.success(`AI found and imported ${result.imported} new events.`);
       await queryClient.invalidateQueries({ queryKey: adminDashboardKeys.all });
     } catch (error) {
-      const responseMessage =
-        error &&
-        typeof error === "object" &&
-        "response" in error &&
-        (error.response as { data?: { message?: string } } | undefined)?.data?.message;
-
-      messageApi.error(
-        responseMessage ?? (error instanceof Error ? error.message : "Import failed"),
-      );
+      setAiFetchStatus(null);
+      messageApi.error(getAiSyncErrorMessage(error));
     } finally {
-      setImporting(false);
+      setAiFetching(false);
     }
   };
 
@@ -323,6 +338,14 @@ export default function AdminEventsPage() {
         ))}
       </section>
       <AdminCard>
+        {aiFetchStatus ? (
+          <Alert
+            type="info"
+            showIcon
+            title={aiFetchStatus}
+            className={styles.syncAlert}
+          />
+        ) : null}
         <div className={styles.toolbar}>
           <div>
             <p className={styles.tableEyebrow}>{searchQuery ? "Search Results" : "Showing"}</p>
@@ -331,10 +354,10 @@ export default function AdminEventsPage() {
           <Space>
             {searchQuery ? <Button onClick={clearSearch}>Clear Search</Button> : null}
             <Button
-              icon={<CloudDownloadOutlined />}
-              onClick={handleImportEventbrite}
-              loading={importing}>
-              Import from Eventbrite
+              icon={<CloudDownloadOutlined spin={aiFetching} />}
+              onClick={handleAiFetchLiveData}
+              loading={aiFetching}>
+              AI Fetch Live Data
             </Button>
             <Button
               type="primary"
@@ -366,111 +389,18 @@ export default function AdminEventsPage() {
           )}
         </div>
       </AdminCard>
-      <Modal
+      <AdminEventDetailModal
+        event={viewingEvent}
         open={Boolean(viewingEvent)}
-        title="Event Details"
-        footer={null}
-        onCancel={closeViewModal}
-        className="admin-detail-modal"
-        width={480}
-        centered>
-        {viewingEvent ? (
-          <div className={styles.detailModal}>
-            <img src={viewingEvent.imageUrl} alt="" className={styles.detailImage} />
-            <dl className={styles.detailList}>
-              <div className={styles.detailRow}>
-                <dt>Title</dt>
-                <dd>{viewingEvent.title}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Organizer</dt>
-                <dd>
-                  <div className={styles.organizerCell}>
-                    <img src={viewingEvent.organizerAvatarUrl} alt="" className={styles.organizerAvatar} />
-                    <span>{viewingEvent.organizerName}</span>
-                  </div>
-                </dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Category</dt>
-                <dd>{viewingEvent.category}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Location</dt>
-                <dd>{viewingEvent.location}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Start Date</dt>
-                <dd>{viewingEvent.date}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>End Date</dt>
-                <dd>{viewingEvent.endDateDisplay}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Status</dt>
-                <dd>
-                  <Tag color={STATUS_COLORS[viewingEvent.status]}>{viewingEvent.status}</Tag>
-                </dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Views</dt>
-                <dd>{viewingEvent.views.toLocaleString()}</dd>
-              </div>
-            </dl>
-            <div className={styles.detailActions}>
-              <Button danger onClick={() => handleDeleteEvent(viewingEvent)}>
-                Delete
-              </Button>
-              <Button type="primary" className="admin-btn-edit" onClick={openEditFromView}>
-                Edit
-              </Button>
-            </div>
-          </div>
-        ) : null}
-      </Modal>
-      <Modal
+        onClose={closeViewModal}
+        onEdit={openEditFromView}
+        onDelete={() => viewingEvent && handleDeleteEvent(viewingEvent)}
+      />
+      <AdminEventEditModal
+        event={editingEvent}
         open={Boolean(editingEvent)}
-        title="Edit event"
-        okText="Save Changes"
-        cancelText="Cancel"
-        onOk={handleSaveEvent}
-        onCancel={closeEditModal}
-        confirmLoading={updateEvent.isPending}
-        className="admin-detail-modal">
-        <Form form={eventForm} layout="vertical">
-          <Form.Item name="startDate" hidden>
-            <Input />
-          </Form.Item>
-          <Form.Item name="title" label="Name" rules={[{required: true, message: "Name is required"}]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="date" label="Start Date" rules={[{required: true, message: "Date is required"}]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="endDateDisplay" label="End Date">
-            <Input readOnly />
-          </Form.Item>
-          <Form.Item name="category" label="Category">
-            <Input />
-          </Form.Item>
-          <Form.Item name="location" label="Location">
-            <Input />
-          </Form.Item>
-          <Form.Item name="status" label="Status">
-            <Select
-              options={[
-                {value: "published", label: "Published"},
-                {value: "draft", label: "Draft"},
-                {value: "archived", label: "Archived"},
-              ]}
-            />
-          </Form.Item>
-          <Form.Item name="views" label="Views">
-            <InputNumber min={0} style={{width: "100%"}} />
-          </Form.Item>
-        </Form>
-      </Modal>
+        onClose={closeEditModal}
+      />
     </>
   );
 }

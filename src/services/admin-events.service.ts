@@ -1,4 +1,5 @@
 import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import {
   mapApiEventToAdminEvent,
@@ -159,6 +160,95 @@ async function resolveOrganizerId(organizerName: string): Promise<string | null>
   }
 
   return created.id;
+}
+
+export type AdminEventEditFormValues = {
+  title: string;
+  description: string;
+  imageUrl: string;
+  category: string;
+  source: string;
+  status: AdminEvent['status'];
+  venue: string;
+  address: string;
+  startDate: Dayjs;
+  price: number | null;
+  language: string;
+  ageRange: string;
+  ticketUrl: string;
+  views: number;
+  externalId: string;
+};
+
+export function adminEventToEditFormValues(event: AdminEvent): AdminEventEditFormValues {
+  return {
+    title: event.title,
+    description: event.description,
+    imageUrl: event.storedImageUrl || '',
+    category: event.category,
+    source: event.source,
+    status: event.status,
+    venue: event.venue,
+    address: event.address,
+    startDate: event.startDate ? dayjs(event.startDate) : dayjs(),
+    price: event.priceValue,
+    language: event.language,
+    ageRange: event.ageRange,
+    ticketUrl: event.storedTicketUrl || event.ticketUrl,
+    views: event.views,
+    externalId: event.externalId,
+  };
+}
+
+export async function fetchAdminCategoryNames(): Promise<string[]> {
+  const { data, error } = await supabase.from('categories').select('name').order('name');
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return (data ?? []).map((row) => row.name).filter(Boolean);
+}
+
+export async function updateAdminEvent(
+  id: string,
+  values: AdminEventEditFormValues,
+  pendingImage?: { url: string; name: string } | null,
+): Promise<string> {
+  const categoryId = await resolveCategoryId(values.category);
+
+  let imageUrl = values.imageUrl.trim();
+
+  if (pendingImage) {
+    const imageFile = await blobUrlToFile(pendingImage.url, pendingImage.name);
+    imageUrl = await uploadEventImage(imageFile);
+  }
+
+  const { error } = await supabase
+    .from('events')
+    .update({
+      title: values.title.trim(),
+      description: values.description.trim(),
+      image_url: imageUrl || null,
+      venue: values.venue.trim() || null,
+      address: values.address.trim() || null,
+      start_date: values.startDate.toISOString(),
+      status: values.status,
+      views: values.views,
+      source: values.source.trim() || null,
+      ticket_url: values.ticketUrl.trim() || null,
+      price: values.price ?? 0,
+      language: values.language.trim() || null,
+      age_range: values.ageRange.trim() || null,
+      category_id: categoryId,
+    })
+    .eq('id', id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return imageUrl;
 }
 
 export async function createAdminEvent(

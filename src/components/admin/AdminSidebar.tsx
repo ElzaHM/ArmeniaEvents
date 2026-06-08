@@ -15,7 +15,7 @@ import {
 import {Button} from "antd";
 
 import {useAuth} from "../../hooks/useAuth";
-import {ADMIN_PROFILE} from "./mockData";
+import {DEFAULT_ADMIN_DISPLAY, getAdminDisplayName} from "./adminDefaults";
 import styles from "./AdminSidebar.module.css";
 
 const NAV_ITEMS = [
@@ -36,8 +36,9 @@ interface AdminSidebarProps {
 }
 
 export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: AdminSidebarProps) {
-  const {logout} = useAuth();
+  const {session, logout} = useAuth();
   const navigate = useNavigate();
+  const displayName = getAdminDisplayName(session?.user.fullName);
 
   const handleLogout = async () => {
     await logout();
@@ -108,10 +109,10 @@ export default function AdminSidebar({collapsed, mobileOpen, onMobileClose}: Adm
         <div className={styles.skylineDecoration} aria-hidden="true" />
         <div className={styles.sidebarFooter}>
           <div className={styles.profileCard}>
-            <img src={ADMIN_PROFILE.avatarUrl} alt="Admin" className={styles.avatar} />
+            <img src={DEFAULT_ADMIN_DISPLAY.avatarUrl} alt={displayName} className={styles.avatar} />
             <div className={styles.profileInfo}>
-              <div className={styles.profileName}>{ADMIN_PROFILE.name}</div>
-              <div className={styles.profileRole}>Super Administrator</div>
+              <div className={styles.profileName}>{displayName}</div>
+              <div className={styles.profileRole}>{DEFAULT_ADMIN_DISPLAY.role}</div>
             </div>
           </div>
           <div className={styles.copyright}>© 2026 Armenia Events</div>

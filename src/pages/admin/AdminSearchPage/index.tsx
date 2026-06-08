@@ -6,6 +6,7 @@ import {ArrowLeftOutlined} from "@ant-design/icons";
 
 import AdminCard from "../../../components/admin/AdminCard";
 import AdminPageHeader from "../../../components/admin/AdminPageHeader";
+import AdminEventImage from "../../../components/admin/AdminEventImage";
 import type {AdminEvent, AdminUser, AdminUserRole, AdminUserStatus} from "../../../components/admin/types";
 import {
   useAdminEventSearchCount,
@@ -63,7 +64,11 @@ export default function AdminSearchPage() {
       key: "title",
       render: (_, record) => (
         <div className={styles.eventCell}>
-          <img src={record.imageUrl} alt="" className={styles.thumbnail} />
+          <AdminEventImage
+            imageUrl={record.imageUrl}
+            alt=""
+            className={styles.thumbnail}
+          />
           <span>{record.title}</span>
         </div>
       ),
