@@ -1,5 +1,4 @@
 import {
-  BenefitsSection,
   FooterContent,
   HeroSection,
   HeyGenVideoWidget,
@@ -20,7 +19,6 @@ export default function HomePage() {
       <UpcomingEvents />
       <OrganizeEventCTA />
       <TopPicks />
-      <BenefitsSection />
       <FooterContent />
       <HeyGenVideoWidget />
     </div>

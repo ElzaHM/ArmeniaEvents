@@ -4,6 +4,7 @@ import { Button, Layout } from 'antd';
 import {
   CloseOutlined,
   EnvironmentFilled,
+  HeartOutlined,
   MenuOutlined,
   MoonOutlined,
   SunOutlined,
@@ -18,7 +19,7 @@ const { Header: AntHeader } = Layout;
 export default function Header() {
   const { pathname } = useLocation();
   const { mode, toggleTheme } = useTheme();
-  const { isAuthenticated, isAdmin, logout } = useAuth();
+  const { isAuthenticated, isAdmin, loading: authLoading, logout } = useAuth();
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -37,6 +38,14 @@ export default function Header() {
   const handleLogout = async () => {
     await logout();
     navigate('/');
+  };
+
+  const handleFavorites = () => {
+    if (authLoading) {
+      return;
+    }
+
+    navigate(isAuthenticated ? '/favorites' : '/signin');
   };
 
   useEffect(() => {
@@ -111,7 +120,15 @@ export default function Header() {
   <Button
     type="text"
     className="theme-toggle"
+    icon={<HeartOutlined />}
+    aria-label="My Favorite Events"
+    onClick={handleFavorites}
+  />
+  <Button
+    type="text"
+    className="theme-toggle"
     icon={mode === 'light' ? <MoonOutlined /> : <SunOutlined />}
+    aria-label="Toggle theme"
     onClick={toggleTheme}
   />
 
