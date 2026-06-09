@@ -747,7 +747,7 @@ export async function syncLiveAiEvents(options?: AiSyncOptions): Promise<AiSyncR
   }
 
   const externalIds = rows.map((row) => row.external_id);
-  const {data: existingRows, error: existingError} = await supabase
+  const {data: existingRows, error: existingError} = await (supabase as any)
     .from("events")
     .select("external_id")
     .in("external_id", externalIds);
