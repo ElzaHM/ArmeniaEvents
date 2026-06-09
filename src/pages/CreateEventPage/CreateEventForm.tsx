@@ -1,4 +1,3 @@
-
 import {
   Form,
   Input,
@@ -183,18 +182,23 @@ export default function CreateEventForm({
             showUploadList={false}
             beforeUpload={() => false}
             onChange={handleUpload}
-            accept="image/*"
-          >
-            <p className="ant-upload-drag-icon"><InboxOutlined style={{color: '#c08b46'}}/></p>
-            <Text className={styles.uploadHint}>Click or drag image to upload</Text>
+            accept="image/*">
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined style={{color: "#c08b46"}} />
+            </p>
+            <Text style={{color: "white", fontSize: "12px"}}>Click or drag image to upload</Text>
           </Upload.Dragger>
         ) : (
           <div className={styles.uploadedFileBar}>
             <div className={styles.fileDetails}>
               <FileImageOutlined className={styles.fileIcon} />
               <div className={styles.fileText}>
-                <Text strong className={styles.fileName}>{image.name}</Text>
-                <Text className={styles.fileStatus}>Ready for preview</Text>
+                <Text strong style={{color: "white"}}>
+                  {image.name}
+                </Text>
+                <Text style={{color: "rgba(255,255,255,0.45)", fontSize: "12px"}}>
+                  Ready for preview
+                </Text>
               </div>
             </div>
             <DeleteOutlined className={styles.deleteBtn} onClick={() => setImage(null)} />

@@ -187,13 +187,17 @@ export default function AdminHeader({
     }
   };
 
-  const sidebarIcon = isMobile
-    ? mobileOpen
-      ? <MenuFoldOutlined />
-      : <MenuUnfoldOutlined />
-    : sidebarCollapsed
-      ? <MenuUnfoldOutlined />
-      : <MenuFoldOutlined />;
+  const sidebarIcon = isMobile ? (
+    mobileOpen ? (
+      <MenuFoldOutlined />
+    ) : (
+      <MenuUnfoldOutlined />
+    )
+  ) : sidebarCollapsed ? (
+    <MenuUnfoldOutlined />
+  ) : (
+    <MenuFoldOutlined />
+  );
 
   const searchField = (
     <Input

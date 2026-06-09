@@ -241,7 +241,7 @@ export async function updateAdminEvent(
       language: values.language.trim() || null,
       age_range: values.ageRange.trim() || null,
       category_id: categoryId,
-    })
+    } as any)
     .eq('id', id);
 
   if (error) {

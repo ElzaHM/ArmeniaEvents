@@ -1,9 +1,7 @@
-import React from 'react';
 import { Typography, Button } from 'antd';
 import { 
   HeartOutlined, 
   EnvironmentOutlined, 
-  GlobalOutlined, 
   CalendarOutlined, 
   PlusCircleOutlined,
   HomeOutlined // Վայրի համար
