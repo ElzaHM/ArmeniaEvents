@@ -1,7 +1,9 @@
 .pageWrapper {
   min-height: 100vh;
   height: auto;
-  overflow: visible;
+  width: 100%;
+  overflow-x: clip;
+  overflow-y: visible;
   box-sizing: border-box;
   background-image: var(--auth-page-overlay), url('../../assets/eventPageLigthBg.png');
   background-repeat: no-repeat;
@@ -38,9 +40,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 72px 0 32px;
+  width: 100%;
+  min-width: 0;
+  padding: 72px 16px 32px;
   position: relative;
   overflow: visible;
+  box-sizing: border-box;
 }
 
 .arcDecoration {
@@ -129,12 +134,44 @@
   font-size: 12px;
 }
 
+@media (max-width: 1024px) {
+  .pageWrapper {
+    padding-top: 88px;
+  }
+
+  .mainContent {
+    align-items: flex-start;
+    padding: 20px 16px 32px;
+  }
+
+  .arcDecoration {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .mainContent {
+    padding: 16px 16px 28px;
+  }
+}
+
 @media (max-width: 768px) {
   .footerGrid {
     grid-template-columns: 1fr;
   }
 
   .mainContent {
-    padding: 64px 12px 12px;
+    padding: 12px 12px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageWrapper {
+    padding-top: 76px;
+    padding-bottom: 16px;
+  }
+
+  .mainContent {
+    padding: 8px 12px 20px;
   }
 }

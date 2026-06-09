@@ -150,6 +150,8 @@
   object-fit: contain;
   object-position: bottom center;
   opacity: var(--auth-illustration-image-opacity, 1);
+  mix-blend-mode: var(--auth-illustration-blend);
+  filter: var(--auth-illustration-filter, none);
 }
 
 [data-theme='dark'] .sign-in-page .auth-illustration-image img {

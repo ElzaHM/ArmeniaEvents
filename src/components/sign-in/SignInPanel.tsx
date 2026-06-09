@@ -59,6 +59,15 @@ export const SignInPanel: React.FC = () => {
 
       <div className={styles.rightSection}>
         <SignInForm />
+        <div className={`${styles.mobileIllustration} auth-illustration`}>
+          <div className="auth-illustration-image">
+            <img
+              src={signInIllustration}
+              alt="Armenia Events skyline illustration"
+              className={styles.illustrationImage}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

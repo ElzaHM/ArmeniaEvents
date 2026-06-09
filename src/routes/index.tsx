@@ -22,9 +22,13 @@ import AdminSearchPage from '../pages/admin/AdminSearchPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import CreateEventPage from '../pages/CreateEventPage';
 import AboutPage from '../pages/AboutPage';
-import { RequireAuth, RequireGuest } from './guards';
+import { AppRoot } from '../providers/app-root';
+import { RequireAdmin, RequireGuest } from './guards';
 
 export const router = createBrowserRouter([
+  {
+    element: <AppRoot />,
+    children: [
   {
     path: '/',
     element: <PublicLayout />,
@@ -86,9 +90,9 @@ export const router = createBrowserRouter([
   {
     path: '/admin',
     element: (
-      <RequireAuth>
+      <RequireAdmin>
         <AdminLayout />
-      </RequireAuth>
+      </RequireAdmin>
     ),
     children: [
       {
@@ -136,5 +140,7 @@ export const router = createBrowserRouter([
   {
     path: '*',
     element: <NotFoundPage />,
+  },
+    ],
   },
 ]);

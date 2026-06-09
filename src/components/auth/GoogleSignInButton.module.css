@@ -1,0 +1,34 @@
+.wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin-bottom: 6px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.wrapper :global(iframe) {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.wrapper :global(> div) {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@media (max-width: 960px) {
+  .wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .wrapper :global(iframe) {
+    min-width: 0 !important;
+  }
+}

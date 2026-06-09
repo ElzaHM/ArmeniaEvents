@@ -1,9 +1,12 @@
 import axios from 'axios';
 
+export type AuthUserRole = 'super_admin' | 'admin' | 'moderator' | 'user';
+
 export type AuthUser = {
   id: string;
   email: string;
   fullName: string;
+  role: AuthUserRole;
 };
 
 export type AuthSession = {
@@ -210,6 +213,16 @@ export const authService = {
   async resetPassword(payload: ResetPasswordPayload): Promise<void> {
     try {
       await api.post('/auth/reset-password', payload);
+    } catch (error) {
+      throw toApiError(error);
+    }
+  },
+
+  async loginWithGoogle(credential: string): Promise<AuthSession> {
+    try {
+      const { data } = await api.post<AuthSession>('/auth/google', { credential });
+      cacheMeSession(data.accessToken, data);
+      return data;
     } catch (error) {
       throw toApiError(error);
     }
