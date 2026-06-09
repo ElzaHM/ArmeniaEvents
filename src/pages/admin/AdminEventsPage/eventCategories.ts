@@ -10,7 +10,7 @@ export async function fetchActiveCategories(): Promise<EventCategoryOption[]> {
   const { data, error } = await supabase
     .from('categories')
     .select('id, name, slug')
-    .eq('is_active', true)
+    .eq('is_active' as any, true)
     .order('name', { ascending: true });
 
   if (error) {

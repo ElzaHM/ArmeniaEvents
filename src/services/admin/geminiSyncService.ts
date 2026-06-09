@@ -133,13 +133,13 @@ const EVENTS_UPSERT_KEYS: (keyof EventUpsertRow)[] = [
 ];
 
 function sanitizeEventUpsertRow(row: EventUpsertRow): EventUpsertRow {
-  const sanitized = {} as EventUpsertRow;
+  const sanitized: Record<string, any> = {};
 
   for (const key of EVENTS_UPSERT_KEYS) {
     sanitized[key] = row[key];
   }
 
-  return sanitized;
+  return sanitized as EventUpsertRow;
 }
 
 function mapNormalizedEventToUpsertRow(
@@ -614,7 +614,7 @@ function normalizeAiEvent(raw: AiEventRaw): {
   const rawTicket = (raw.ticket_url ?? raw.ticketUrl ?? raw.ticket_link)?.trim();
   const ticket_url = isValidAdminTicketUrl(rawTicket) ? rawTicket! : null;
   const rawSourceUrl = (raw.source_url ?? raw.sourceUrl)?.trim();
-  const source_url = resolveAiSourceUrl(rawSourceUrl, title);
+  const source_url = resolveAiSourceUrl(rawSourceUrl ?? "", title ?? "");
 
   if (!title || !description || !start_date || !venue) {
     return null;
@@ -652,7 +652,7 @@ async function insertNewAiEvents(rows: EventUpsertRow[]): Promise<void> {
 
   const payload = rows.map(sanitizeEventUpsertRow);
 
-  const {error} = await supabase.from("events").insert(payload);
+  const {error} = await supabase.from("events").insert(payload as any);
 
   if (error) {
     throw new Error(error.message);
@@ -756,7 +756,7 @@ export async function syncLiveAiEvents(options?: AiSyncOptions): Promise<AiSyncR
     throw new Error(existingError.message);
   }
 
-  const existingIds = new Set((existingRows ?? []).map((row) => row.external_id));
+  const existingIds = new Set((existingRows ?? []).map((row) => (row as any).external_id));
   const newRows = rows.filter((row) => !existingIds.has(row.external_id));
 
   if (newRows.length === 0) {

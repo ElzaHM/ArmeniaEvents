@@ -169,11 +169,17 @@
   border-bottom: 1px solid var(--admin-table-border, var(--admin-border)) !important;
 }
 
-[data-theme="light"] .admin-panel .admin-content :global(.ant-table-tbody > tr:nth-child(even) > td) {
+[data-theme="light"]
+  .admin-panel
+  .admin-content
+  :global(.ant-table-tbody > tr:nth-child(even) > td) {
   background: var(--admin-table-row-alt-bg) !important;
 }
 
-[data-theme="dark"] .admin-panel .admin-content :global(.ant-table-tbody > tr:nth-child(even) > td) {
+[data-theme="dark"]
+  .admin-panel
+  .admin-content
+  :global(.ant-table-tbody > tr:nth-child(even) > td) {
   background: var(--admin-table-row-alt-bg) !important;
 }
 
@@ -429,12 +435,18 @@
 }
 
 [data-theme="light"] :global(.admin-select-dropdown) :global(.ant-select-item-option-active),
-[data-theme="light"] .admin-panel .admin-content :global(.ant-select-dropdown .ant-select-item-option-active) {
+[data-theme="light"]
+  .admin-panel
+  .admin-content
+  :global(.ant-select-dropdown .ant-select-item-option-active) {
   background: var(--admin-gold-light) !important;
 }
 
 [data-theme="light"] :global(.admin-select-dropdown) :global(.ant-select-item-option-selected),
-[data-theme="light"] .admin-panel .admin-content :global(.ant-select-dropdown .ant-select-item-option-selected) {
+[data-theme="light"]
+  .admin-panel
+  .admin-content
+  :global(.ant-select-dropdown .ant-select-item-option-selected) {
   background: var(--admin-gold-light) !important;
   color: var(--admin-gold) !important;
   font-weight: 600;
@@ -453,16 +465,22 @@
   border-radius: 6px !important;
 }
 
-[data-theme="light"] :global(.admin-dropdown-menu.ant-dropdown) :global(.ant-dropdown-menu-item:hover) {
+[data-theme="light"]
+  :global(.admin-dropdown-menu.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover) {
   background: var(--admin-gold-light) !important;
   color: var(--admin-gold) !important;
 }
 
-[data-theme="light"] :global(.admin-dropdown-menu.ant-dropdown) :global(.ant-dropdown-menu-item-danger) {
+[data-theme="light"]
+  :global(.admin-dropdown-menu.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger) {
   color: #fca5a5 !important;
 }
 
-[data-theme="light"] :global(.admin-dropdown-menu.ant-dropdown) :global(.ant-dropdown-menu-item-danger:hover) {
+[data-theme="light"]
+  :global(.admin-dropdown-menu.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger:hover) {
   background: rgba(239, 68, 68, 0.2) !important;
   color: #fecaca !important;
 }
@@ -609,7 +627,10 @@
   background-color: var(--admin-table-control-gold) !important;
 }
 
-.admin-panel .admin-content .ant-table .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+.admin-panel
+  .admin-content
+  .ant-table
+  .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
   background: var(--admin-table-control-gold-strong) !important;
   background-color: var(--admin-table-control-gold-strong) !important;
 }
@@ -654,7 +675,11 @@
   color: var(--admin-table-control-gold) !important;
 }
 
-.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item-link:hover,
+.admin-panel
+  .admin-content
+  .ant-table-wrapper
+  .ant-table-pagination
+  .ant-pagination-item-link:hover,
 .admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item-link:hover {
   border-color: var(--admin-table-control-gold-border) !important;
   color: var(--admin-table-control-gold) !important;
@@ -745,7 +770,10 @@
   border: none !important;
   box-shadow: none !important;
   outline: none !important;
-  transition: background-color 0.3s, color 0.3s, transform 0.2s !important;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    transform 0.2s !important;
 }
 
 .admin-panel :global(.admin-detail-modal) .ant-btn-primary,
@@ -801,8 +829,14 @@
 
 [data-theme="light"] .admin-panel :global(.admin-detail-modal) .ant-btn-primary:hover,
 [data-theme="light"] .admin-panel :global(.admin-detail-modal) .ant-btn-primary:focus,
-[data-theme="light"] .admin-panel :global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary:hover,
-[data-theme="light"] .admin-panel :global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary:focus {
+[data-theme="light"]
+  .admin-panel
+  :global(.admin-detail-modal)
+  .admin-btn-edit.ant-btn-primary:hover,
+[data-theme="light"]
+  .admin-panel
+  :global(.admin-detail-modal)
+  .admin-btn-edit.ant-btn-primary:focus {
   background: var(--admin-button-primary-hover-bg) !important;
   transform: translateY(-1px);
 }

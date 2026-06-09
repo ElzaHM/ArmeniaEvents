@@ -54,7 +54,7 @@ export async function createAdminCategory(payload: CategoryFormPayload): Promise
       slug: payload.slug.trim(),
       description: payload.description.trim() || null,
       is_active: payload.isActive,
-    })
+    } as any)
     .select('*, events(count)')
     .single();
 
@@ -86,7 +86,7 @@ export async function updateAdminCategory(
 
   const { data, error } = await supabase
     .from('categories')
-    .update(updatePayload)
+    .update(updatePayload as any)
     .eq('id', id)
     .select('*, events(count)')
     .single();

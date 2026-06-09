@@ -22,7 +22,7 @@ type DraftEventRow = {
 export async function fetchAdminNotifications(): Promise<AdminNotificationItem[]> {
   const [users, eventsResult] = await Promise.all([
     adminUsersService.getUsers(),
-    supabase.from('events').select('id, title').eq('status', 'draft'),
+    supabase.from('events').select('id, title').eq('status' as any, 'draft'),
   ]);
 
   if (eventsResult.error) {
