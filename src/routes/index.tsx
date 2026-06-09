@@ -22,6 +22,7 @@ import AdminSearchPage from '../pages/admin/AdminSearchPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import CreateEventPage from '../pages/CreateEventPage';
 import AboutPage from '../pages/AboutPage';
+import FavoritesPage from '../pages/FavoritesPage';
 import { RequireAuth, RequireGuest } from './guards';
 
 export const router = createBrowserRouter([
@@ -48,6 +49,14 @@ export const router = createBrowserRouter([
       {
         path: 'about',
         element: <AboutPage />,
+      },
+      {
+        path: 'favorites',
+        element: (
+          <RequireAuth>
+            <FavoritesPage />
+          </RequireAuth>
+        ),
       },
       {
         path: 'signin',

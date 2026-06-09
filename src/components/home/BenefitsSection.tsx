@@ -22,7 +22,7 @@ const benefitIcons = {
 
 const LOCAL_EVENTS_TITLE = 'Local Events';
 const SHARE_EASILY_TITLE = 'Share Easily';
-const SAVE_FAVORITES_TITLE = 'Save Favorites';
+const SAVE_FAVORITES_TITLE = 'My Favorite Events';
 const SMART_NOTIFICATIONS_TITLE = 'Smart Notifications';
 
 export default function BenefitsSection() {

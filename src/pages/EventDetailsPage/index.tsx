@@ -63,7 +63,7 @@ export default function EventDetailsPage() {
             <aside className={pageStyles.sidebar}>
               {event.isFree || event.ticketUrl ? <TicketPanel event={event} /> : null}
               <OrganizerCard event={event} />
-              <ReminderCard />
+              <ReminderCard eventId={event.id} />
             </aside>
           </div>
 

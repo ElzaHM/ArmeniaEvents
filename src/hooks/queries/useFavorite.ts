@@ -1,15 +1,38 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { api } from '../../api/axios';
+import { favoritesService } from '../../services/favorites.service';
 import { useAuth } from '../useAuth';
 
 type FavoriteStatus = {
   favorited: boolean;
 };
 
-const favoriteKeys = {
+export const favoriteKeys = {
+  list: ['favorites', 'user'] as const,
+  events: ['favorites', 'user', 'events'] as const,
   status: (eventId: string | undefined) => ['event', eventId, 'favorite'] as const,
 };
+
+export function useUserFavoriteIds() {
+  const { isAuthenticated } = useAuth();
+
+  return useQuery({
+    queryKey: favoriteKeys.list,
+    queryFn: () => favoritesService.getUserFavoriteIds(),
+    enabled: isAuthenticated,
+  });
+}
+
+export function useUserFavoriteEvents() {
+  const { isAuthenticated } = useAuth();
+
+  return useQuery({
+    queryKey: favoriteKeys.events,
+    queryFn: () => favoritesService.getUserFavoriteEvents(),
+    enabled: isAuthenticated,
+  });
+}
 
 export function useFavoriteStatus(eventId: string | undefined) {
   const { isAuthenticated } = useAuth();
@@ -40,9 +63,22 @@ export function useToggleFavorite(eventId: string | undefined) {
       const { data } = await api.post<FavoriteStatus>(`/events/${eventId}/favorite`);
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if (eventId) {
+        queryClient.setQueryData(favoriteKeys.status(eventId), data);
+        queryClient.setQueryData<string[]>(favoriteKeys.list, (current = []) => {
+          if (data.favorited) {
+            return current.includes(eventId) ? current : [...current, eventId];
+          }
+
+          return current.filter((id) => id !== eventId);
+        });
+      }
+
+      void queryClient.invalidateQueries({ queryKey: favoriteKeys.list });
+      void queryClient.invalidateQueries({ queryKey: favoriteKeys.events });
       void queryClient.invalidateQueries({ queryKey: ['events'] });
-      void queryClient.invalidateQueries({ queryKey: ['event', eventId] });
+      void queryClient.invalidateQueries({ queryKey: ['events', eventId] });
       void queryClient.invalidateQueries({ queryKey: favoriteKeys.status(eventId) });
     },
   });

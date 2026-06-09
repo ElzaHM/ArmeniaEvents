@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import type { MouseEvent } from 'react';
 import { Button, Typography } from 'antd';
 import {
   ClockCircleOutlined,
@@ -6,8 +7,10 @@ import {
   HeartFilled,
   HeartOutlined,
 } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
+import { useFavoriteStatus, useToggleFavorite } from '../../hooks/queries/useFavorite';
+import { useAuth } from '../../hooks/useAuth';
 import type { EventItem } from '../home/types';
 import { formatDateBadge, formatEventDateTime } from './eventDateUtils';
 
@@ -19,8 +22,24 @@ interface EventListItemProps {
 }
 
 export default function EventListItem({ event, variant = 'list' }: EventListItemProps) {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const { data: favoriteStatus } = useFavoriteStatus(event.id);
+  const toggleFavorite = useToggleFavorite(event.id);
   const { month, day } = useMemo(() => formatDateBadge(event.date), [event.date]);
+  const isFavorite = favoriteStatus?.favorited ?? false;
+
+  const handleFavoriteClick = (clickEvent: MouseEvent) => {
+    clickEvent.preventDefault();
+    clickEvent.stopPropagation();
+
+    if (!isAuthenticated) {
+      navigate('/signin');
+      return;
+    }
+
+    toggleFavorite.mutate();
+  };
 
   return (
     <article className={`${styles.card} ${variant === 'grid' ? styles.cardGrid : ''}`}>
@@ -36,7 +55,8 @@ export default function EventListItem({ event, variant = 'list' }: EventListItem
           aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           icon={isFavorite ? <HeartFilled className={styles.favoriteActive} /> : <HeartOutlined />}
           className={styles.favoriteBtn}
-          onClick={() => setIsFavorite((current) => !current)}
+          onClick={handleFavoriteClick}
+          loading={toggleFavorite.isPending}
         />
       </div>
 

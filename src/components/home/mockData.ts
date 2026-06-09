@@ -179,8 +179,8 @@ export const BENEFITS = [
   },
   {
     id: '2',
-    title: 'Save Favorites',
-    description: 'Save events you love and never miss them',
+    title: 'My Favorite Events',
+    description: 'View and manage all your saved events in one place.',
     icon: 'heart' as const,
   },
   {

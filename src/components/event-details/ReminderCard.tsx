@@ -1,11 +1,31 @@
-import { useState } from 'react';
 import { Button, Typography } from 'antd';
 import { BellOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+
+import { useFavoriteStatus, useToggleFavorite } from '../../hooks/queries/useFavorite';
+import { useAuth } from '../../hooks/useAuth';
 
 import styles from './ReminderCard.module.css';
 
-export default function ReminderCard() {
-  const [isSaved, setIsSaved] = useState(false);
+interface ReminderCardProps {
+  eventId: string;
+}
+
+export default function ReminderCard({ eventId }: ReminderCardProps) {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const { data: favoriteStatus } = useFavoriteStatus(eventId);
+  const toggleFavorite = useToggleFavorite(eventId);
+  const isSaved = favoriteStatus?.favorited ?? false;
+
+  const handleSave = () => {
+    if (!isAuthenticated) {
+      navigate('/signin');
+      return;
+    }
+
+    toggleFavorite.mutate();
+  };
 
   return (
     <aside className={`${styles.card} detailsGlassCard`}>
@@ -24,7 +44,8 @@ export default function ReminderCard() {
         size="large"
         icon={isSaved ? <HeartFilled /> : <HeartOutlined />}
         className={styles.saveBtn}
-        onClick={() => setIsSaved((current) => !current)}
+        onClick={handleSave}
+        loading={toggleFavorite.isPending}
       >
         Save Event
       </Button>

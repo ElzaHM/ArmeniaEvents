@@ -93,6 +93,11 @@
   background: rgba(192, 139, 70, 0.6);
 }
 
+.wishlistBtnActive {
+  background: rgba(192, 139, 70, 0.85);
+  color: #fff;
+}
+
 .content {
   flex: 1;
   display: flex;
