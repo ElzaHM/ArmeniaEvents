@@ -4,16 +4,26 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "dev:api": "node scripts/free-port.mjs 4000 && tsx watch backend/src/index.ts",
-    "start:api": "node scripts/free-port.mjs 4000 && tsx backend/src/index.ts",
-    "build:api": "tsc -p backend/tsconfig.json",
-    "list:db": "node scripts/list-users-events.mjs",
-    "setup:google": "node scripts/setup-google-oauth.mjs",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+  "dev": "vite",
+
+  "dev:api": "node scripts/free-port.mjs 4000 && tsx watch backend/src/index.ts",
+
+  "start": "tsx backend/src/index.ts",
+
+  "start:api": "node scripts/free-port.mjs 4000 && tsx backend/src/index.ts",
+
+  "build:api": "tsc -p backend/tsconfig.json",
+
+  "list:db": "node scripts/list-users-events.mjs",
+
+  "setup:google": "node scripts/setup-google-oauth.mjs",
+
+  "build": "tsc -b && vite build",
+
+  "lint": "eslint .",
+
+  "preview": "vite preview"
+},
   "dependencies": {
     "@ant-design/icons": "^6.2.5",
     "@google/generative-ai": "^0.24.1",
