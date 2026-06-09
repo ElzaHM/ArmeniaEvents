@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Typography, Row, Col, Divider, Space } from 'antd';
 import { LinkedinOutlined, GithubOutlined } from '@ant-design/icons';
 import '../../components/home/home.css';

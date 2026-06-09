@@ -14,7 +14,6 @@ function mapEventDetailsToEventItem(event: EventDetails): EventItem {
     price: event.price,
     isFree: event.isFree,
     imageUrl: event.imageUrl,
-    interestedCount: event.interestedCount,
     startDate: event.date,
   };
 }

@@ -756,7 +756,15 @@ export async function syncLiveAiEvents(options?: AiSyncOptions): Promise<AiSyncR
     throw new Error(existingError.message);
   }
 
-  const existingIds = new Set((existingRows ?? []).map((row) => (row as any).external_id));
+  type ExistingExternalIdRow = {
+    external_id: string;
+  };
+  
+  const existingIds = new Set(
+    ((existingRows ?? []) as ExistingExternalIdRow[]).map(
+      (row) => row.external_id
+    )
+  );
   const newRows = rows.filter((row) => !existingIds.has(row.external_id));
 
   if (newRows.length === 0) {
