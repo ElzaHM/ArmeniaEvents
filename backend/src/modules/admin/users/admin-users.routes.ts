@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { requireAuth } from '../../../middleware/auth.middleware.js';
+import { requireAdmin, requireAuth } from '../../../middleware/auth.middleware.js';
 import {
   deleteAdminUserController,
   listAdminUsersController,
@@ -9,6 +9,6 @@ import {
 
 export const adminUsersRoutes = Router();
 
-adminUsersRoutes.get('/', requireAuth, listAdminUsersController);
-adminUsersRoutes.patch('/:id', requireAuth, updateAdminUserController);
-adminUsersRoutes.delete('/:id', requireAuth, deleteAdminUserController);
+adminUsersRoutes.get('/', requireAuth, requireAdmin, listAdminUsersController);
+adminUsersRoutes.patch('/:id', requireAuth, requireAdmin, updateAdminUserController);
+adminUsersRoutes.delete('/:id', requireAuth, requireAdmin, deleteAdminUserController);

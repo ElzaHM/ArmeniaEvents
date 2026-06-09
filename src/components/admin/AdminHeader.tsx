@@ -17,7 +17,6 @@ import {useQuery} from "@tanstack/react-query";
 import {useLocation, useNavigate} from "react-router-dom";
 
 import {useTheme} from "../../hooks/useTheme";
-import {useAuth} from "../../hooks/useAuth";
 import {useAdminProfileDisplay} from "../../pages/admin/AdminProfilePage/useAdminProfileDisplay";
 import {
   fetchAdminNotifications,
@@ -58,7 +57,6 @@ export default function AdminHeader({
   onToggleSidebar,
 }: AdminHeaderProps) {
   const {mode, toggleTheme} = useTheme();
-  const {logout} = useAuth();
   const {displayName, avatarUrl} = useAdminProfileDisplay();
   const navigate = useNavigate();
   const location = useLocation();
@@ -170,7 +168,7 @@ export default function AdminHeader({
     navigate(`/admin/search?q=${encodeURIComponent(query)}`);
   };
 
-  const handleUserMenuClick: MenuProps["onClick"] = async ({key}) => {
+  const handleUserMenuClick: MenuProps["onClick"] = ({key}) => {
     if (key === "profile") {
       navigate("/admin/profile");
       return;
@@ -182,8 +180,7 @@ export default function AdminHeader({
     }
 
     if (key === "logout") {
-      await logout();
-      navigate("/signin", {replace: true});
+      navigate("/");
     }
   };
 

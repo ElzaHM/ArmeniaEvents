@@ -1,5 +1,8 @@
 import { supabase } from '../../../lib/supabase';
 import type { AdminCategory } from '../../../components/admin/types';
+import type { Database } from '../../../types/database.generated';
+
+type CategoryUpdate = Database['public']['Tables']['categories']['Update'];
 
 type CategoryListRow = {
   id: string;
@@ -69,7 +72,7 @@ export async function updateAdminCategory(
   id: string,
   payload: Partial<CategoryFormPayload>,
 ): Promise<AdminCategory> {
-  const updatePayload: Record<string, string | boolean | null> = {};
+  const updatePayload: CategoryUpdate = {};
 
   if (payload.name !== undefined) {
     updatePayload.name = payload.name.trim();

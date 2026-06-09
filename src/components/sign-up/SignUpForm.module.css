@@ -1,5 +1,14 @@
 .formContainer {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.formContainer :global(.ant-form),
+.formContainer :global(.ant-input-affix-wrapper),
+.formContainer :global(.ant-input) {
+  max-width: 100%;
 }
 
 .title {

@@ -140,6 +140,10 @@
   transform: none;
 }
 
+.mobileIllustration {
+  display: none;
+}
+
 @media (max-width: 992px) {
   .panel {
     flex-direction: column;
@@ -150,7 +154,28 @@
   }
 
   .rightSection {
-    padding: 20px 16px;
+    padding: 20px 16px 16px;
     overflow-y: visible;
+  }
+
+  .mobileIllustration {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    height: var(--auth-illustration-box-height, 168px);
+    margin-top: 8px;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  .rightSection {
+    padding: 20px 16px 12px;
+  }
+
+  .mobileIllustration {
+    height: 140px;
+    margin-top: 4px;
   }
 }

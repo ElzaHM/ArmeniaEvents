@@ -1,5 +1,7 @@
+import { flushSync } from 'react-dom';
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 
+import { isAdminRole } from '../lib/user-roles';
 import type { AuthSession, LoginPayload, RegisterPayload } from '../services/auth.service';
 import {
   authService,
@@ -39,14 +41,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(async (payload: LoginPayload) => {
     const currentSession = await authService.login(payload);
-    setSession(currentSession);
-    persistAuthTokens(currentSession);
+    flushSync(() => {
+      setSession(currentSession);
+      persistAuthTokens(currentSession);
+    });
   }, []);
 
   const register = useCallback(async (payload: RegisterPayload) => {
     const currentSession = await authService.register(payload);
     setSession(currentSession);
     persistAuthTokens(currentSession);
+  }, []);
+
+  const establishSession = useCallback((currentSession: AuthSession) => {
+    flushSync(() => {
+      setSession(currentSession);
+      persistAuthTokens(currentSession);
+    });
   }, []);
 
   const logout = useCallback(async () => {
@@ -76,11 +87,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       loading,
       login,
       register,
+      establishSession,
       logout,
       syncSessionProfile,
       isAuthenticated: Boolean(session?.accessToken),
+      isAdmin: isAdminRole(session?.user.role),
     }),
-    [session, loading, login, register, logout, syncSessionProfile],
+    [session, loading, login, register, establishSession, logout, syncSessionProfile],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

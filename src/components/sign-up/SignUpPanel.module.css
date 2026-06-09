@@ -6,16 +6,18 @@
   border-radius: 12px;
   overflow: hidden;
   max-width: 960px;
-  width: 92%;
+  width: min(92%, 960px);
   max-height: none;
   height: auto;
   margin: 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: none;
+  box-sizing: border-box;
 }
 
 .leftSection {
   flex: 1;
+  min-width: 0;
   padding: 14px 28px 14px;
   background: transparent;
   border-right: 1px solid rgba(255, 255, 255, 0.12);
@@ -24,11 +26,12 @@
   gap: 10px;
   position: relative;
   min-height: 0;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .rightSection {
   flex: 1;
+  min-width: 0;
   padding: 18px 24px;
   background: transparent;
   overflow: visible;
@@ -114,7 +117,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  overflow: visible;
+  overflow: hidden;
   flex-shrink: 0;
   background-color: transparent;
   box-sizing: border-box;
@@ -130,7 +133,7 @@
 
 .illustrationImage {
   display: block;
-  width: 100%;
+  width: auto;
   height: auto;
   max-width: 100%;
   max-height: 100%;
@@ -144,23 +147,80 @@
   transform: none;
 }
 
-@media (max-width: 992px) {
+.mobileIllustration {
+  display: none;
+}
+
+/* Tablet / small laptop: stack form only (sign-up form is taller than sign-in) */
+@media (max-width: 1024px) {
   .panel {
     flex-direction: column;
-    width: 92%;
-    max-width: 600px;
+    width: min(92%, 640px);
+    max-width: 640px;
   }
 
   .leftSection {
-    display: flex;
-    padding: 14px 18px 12px;
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    overflow: visible;
+    display: none;
   }
 
   .rightSection {
-    padding: 16px;
+    width: 100%;
+    padding: 28px 24px 20px;
     overflow: visible;
+  }
+
+  .mobileIllustration {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    height: var(--auth-illustration-box-height, 168px);
+    margin-top: 8px;
+    overflow: hidden;
+  }
+}
+
+/* 481px – 960px tablet range */
+@media (max-width: 960px) {
+  .panel {
+    width: min(92%, calc(100vw - 32px));
+    max-width: none;
+  }
+
+  .rightSection {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .panel {
+    width: min(94%, calc(100vw - 24px));
+  }
+
+  .rightSection {
+    padding: 22px 18px;
+  }
+
+  .joinHeading {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .panel {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 12px;
+  }
+
+  .rightSection {
+    padding: 20px 16px 16px;
+  }
+
+  .mobileIllustration {
+    height: 140px;
+    margin-top: 4px;
   }
 }

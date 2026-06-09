@@ -58,8 +58,9 @@ const sections = [
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className={styles.page}>
-      <div className={`homeSection ${styles.container}`}>
+    <div className={`${styles.page} privacy-page`}>
+      <div className="homeSection">
+        <div className={styles.container}>
         <h1 className={styles.title}>Privacy Policy</h1>
         <p className={styles.updated}>Last updated: June 2, 2026</p>
         <p className={styles.intro}>
@@ -77,6 +78,7 @@ export default function PrivacyPolicyPage() {
         <Link to="/signup" className={styles.backLink}>
           Back to Sign Up
         </Link>
+        </div>
       </div>
     </div>
   );

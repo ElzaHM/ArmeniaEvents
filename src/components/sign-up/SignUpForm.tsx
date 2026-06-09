@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Divider, message } from 'antd';
-import { MailOutlined, LockOutlined, UserOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
+import { MailOutlined, LockOutlined, UserOutlined, FacebookOutlined } from '@ant-design/icons';
 import { useAuth } from '../../hooks/useAuth';
+import { authService } from '../../services/auth.service';
+import { GoogleSignInButton } from '../auth/GoogleSignInButton';
 import styles from './SignUpForm.module.css';
 
 type SignUpValues = {
@@ -62,9 +64,10 @@ function evaluatePasswordStrength(password: string): PasswordStrength {
 }
 
 export const SignUpForm: React.FC = () => {
-  const { register } = useAuth();
+  const { register, establishSession } = useAuth();
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = React.useState(false);
+  const [googleLoading, setGoogleLoading] = React.useState(false);
   const [passwordValue, setPasswordValue] = React.useState('');
   const [form] = Form.useForm<SignUpValues>();
   const strength = evaluatePasswordStrength(passwordValue);
@@ -85,6 +88,21 @@ export const SignUpForm: React.FC = () => {
       messageApi.error(errorMessage);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGoogleCredential = async (credential: string) => {
+    setGoogleLoading(true);
+    try {
+      const session = await authService.loginWithGoogle(credential);
+      establishSession(session);
+      messageApi.success('Sign in successful');
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Google sign in failed. Please try again.';
+      messageApi.error(errorMessage);
+    } finally {
+      setGoogleLoading(false);
     }
   };
 
@@ -213,7 +231,11 @@ export const SignUpForm: React.FC = () => {
 
         <Divider className={styles.divider}>or continue with</Divider>
 
-        <Button className={styles.socialBtn} icon={<GoogleOutlined />}>Continue with Google</Button>
+        <GoogleSignInButton
+          disabled={googleLoading}
+          onCredential={handleGoogleCredential}
+          onError={() => messageApi.error('Google sign in failed. Please try again.')}
+        />
         <Button className={styles.socialBtn} icon={<FacebookOutlined />}>Continue with Facebook</Button>
 
         <div className={styles.signInText}>
