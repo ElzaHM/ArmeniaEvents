@@ -607,12 +607,13 @@ function normalizeAiEvent(raw: AiEventRaw): {
   const image_url = sanitizeAdminImageUrl(rawImage);
   const rawTicket = (raw.ticket_url ?? raw.ticketUrl ?? raw.ticket_link)?.trim();
   const ticket_url = isValidAdminTicketUrl(rawTicket) ? rawTicket! : null;
-  const rawSourceUrl = (raw.source_url ?? raw.sourceUrl)?.trim();
-  const source_url = resolveAiSourceUrl(rawSourceUrl, title);
 
   if (!title || !description || !start_date || !venue) {
     return null;
   }
+
+  const rawSourceUrl = (raw.source_url ?? raw.sourceUrl)?.trim();
+  const source_url = resolveAiSourceUrl(rawSourceUrl, title);
 
   const parsedDate = new Date(start_date);
   if (Number.isNaN(parsedDate.getTime())) {
@@ -750,7 +751,9 @@ export async function syncLiveAiEvents(options?: AiSyncOptions): Promise<AiSyncR
     throw new Error(existingError.message);
   }
 
-  const existingIds = new Set((existingRows ?? []).map((row) => row.external_id));
+  const existingIds = new Set(
+    ((existingRows ?? []) as { external_id: string }[]).map((row) => row.external_id),
+  );
   const newRows = rows.filter((row) => !existingIds.has(row.external_id));
 
   if (newRows.length === 0) {

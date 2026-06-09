@@ -19,61 +19,103 @@ export type Database = {
           id: string
           name: string
           slug: string
+          description: string | null
+          icon: string | null
+          event_count: number | null
+          is_active: boolean | null
         }
         Insert: {
           id?: string
           name: string
           slug: string
+          description?: string | null
+          icon?: string | null
+          event_count?: number | null
+          is_active?: boolean | null
         }
         Update: {
           id?: string
           name?: string
           slug?: string
+          description?: string | null
+          icon?: string | null
+          event_count?: number | null
+          is_active?: boolean | null
         }
         Relationships: []
       }
       events: {
         Row: {
           address: string | null
+          age_range: string | null
           category_id: string | null
           created_at: string | null
           description: string | null
           end_date: string | null
+          event_type: string | null
+          external_id: string | null
           id: string
           image_url: string | null
+          interested_count: number | null
+          language: string | null
           organizer_id: string | null
+          price: number | null
+          source: string | null
+          source_url: string | null
           start_date: string | null
+          status: string | null
           ticket_url: string | null
           title: string
           venue: string | null
+          views: number | null
         }
         Insert: {
           address?: string | null
+          age_range?: string | null
           category_id?: string | null
           created_at?: string | null
           description?: string | null
           end_date?: string | null
+          event_type?: string | null
+          external_id?: string | null
           id?: string
           image_url?: string | null
+          interested_count?: number | null
+          language?: string | null
           organizer_id?: string | null
+          price?: number | null
+          source?: string | null
+          source_url?: string | null
           start_date?: string | null
+          status?: string | null
           ticket_url?: string | null
           title: string
           venue?: string | null
+          views?: number | null
         }
         Update: {
           address?: string | null
+          age_range?: string | null
           category_id?: string | null
           created_at?: string | null
           description?: string | null
           end_date?: string | null
+          event_type?: string | null
+          external_id?: string | null
           id?: string
           image_url?: string | null
+          interested_count?: number | null
+          language?: string | null
           organizer_id?: string | null
+          price?: number | null
+          source?: string | null
+          source_url?: string | null
           start_date?: string | null
+          status?: string | null
           ticket_url?: string | null
           title?: string
           venue?: string | null
+          views?: number | null
         }
         Relationships: [
           {

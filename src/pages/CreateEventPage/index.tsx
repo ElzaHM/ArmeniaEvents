@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Form, Row, Col, Typography, message } from 'antd';
 import dayjs from 'dayjs';
 import CreateEventForm from './CreateEventForm';
