@@ -85,7 +85,20 @@
   --admin-table-control-text-muted: #94a3b8;
 }
 
-/* Background lives on AdminLayout `.layout` only — do not style `body` here (breaks public pages). */
+/* Natural document scroll on admin routes only — scoped via :has() so public pages are unaffected. */
+html:has(.admin-panel),
+body:has(.admin-panel) {
+  height: auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+html:has(.admin-panel) #root {
+  height: auto;
+  min-height: 100vh;
+  overflow-y: visible;
+}
 
 .admin-container {
   display: flex;
@@ -131,9 +144,22 @@
 .admin-panel .admin-content :global(.ant-table-wrapper) {
   border: 1px solid var(--admin-table-border, var(--admin-border));
   border-radius: 12px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
   max-width: 100%;
   width: 100%;
+}
+
+/* Keep horizontal table scroll; disable inner vertical scroll so the page scrolls as one. */
+.admin-panel .admin-content :global(.ant-table-container),
+.admin-panel .admin-content :global(.ant-table-content),
+.admin-panel .admin-content :global(.ant-table-body) {
+  overflow-y: visible !important;
+  max-height: none !important;
+}
+
+.admin-panel .admin-content :global(.ant-table-body) {
+  overflow-x: auto !important;
 }
 
 .admin-panel .admin-content :global(.ant-table-tbody) {
