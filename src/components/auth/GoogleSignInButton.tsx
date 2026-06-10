@@ -29,6 +29,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
         onSuccess={handleSuccess}
         onError={onError}
         text="continue_with"
+        locale="en"
         shape="rectangular"
         theme="outline"
         size="large"
