@@ -12,7 +12,7 @@ export default function PublicLayout() {
   return (
     <>
       {!isAuthPage && <Header />}
-      <main>
+      <main className={isAuthPage ? 'auth-main' : undefined}>
         <Outlet />
       </main>
       {!isAuthPage && <Footer />}

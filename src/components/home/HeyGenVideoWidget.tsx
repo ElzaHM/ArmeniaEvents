@@ -13,7 +13,7 @@ import styles from './HeyGenVideoWidget.module.css';
 
 export default function HeyGenVideoWidget() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [controlsVisible, setControlsVisible] = useState(false);
@@ -71,10 +71,6 @@ export default function HeyGenVideoWidget() {
     const nextMuted = !isMuted;
     video.muted = nextMuted;
     setIsMuted(nextMuted);
-
-    if (!nextMuted && video.paused) {
-      void video.play();
-    }
   };
 
   const handleClose = () => {
@@ -86,9 +82,6 @@ export default function HeyGenVideoWidget() {
   const handleShowVideo = () => {
     setIsOpen(true);
     setControlsVisible(true);
-    requestAnimationFrame(() => {
-      void videoRef.current?.play();
-    });
   };
 
   return (
@@ -114,7 +107,6 @@ export default function HeyGenVideoWidget() {
               ref={videoRef}
               className={styles.video}
               src={aiAssistantVideo}
-              autoPlay
               muted={isMuted}
               loop
               playsInline

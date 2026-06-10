@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Divider, message } from 'antd';
-import { MailOutlined, LockOutlined, UserOutlined, FacebookOutlined } from '@ant-design/icons';
+import { MailOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useAuth } from '../../hooks/useAuth';
 import { authService } from '../../services/auth.service';
 import { GoogleSignInButton } from '../auth/GoogleSignInButton';
@@ -236,7 +236,6 @@ export const SignUpForm: React.FC = () => {
           onCredential={handleGoogleCredential}
           onError={() => messageApi.error('Google sign in failed. Please try again.')}
         />
-        <Button className={styles.socialBtn} icon={<FacebookOutlined />}>Continue with Facebook</Button>
 
         <div className={styles.signInText}>
           Already have an account? <Link to="/signin" className={styles.signInLink}>Sign In</Link>

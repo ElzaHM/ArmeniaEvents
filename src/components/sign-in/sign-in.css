@@ -166,8 +166,11 @@
 .sign-in-page .sign-in-panel {
   max-width: 960px;
   width: 92%;
-  min-height: 560px;
-  max-height: calc(100vh - 48px);
+  min-height: 0;
+  max-height: 100%;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 [data-theme='light'] .sign-in-page .sign-in-panel {
@@ -207,6 +210,22 @@
   -webkit-backdrop-filter: none;
   box-shadow: none;
   border-bottom: none;
+}
+
+body:has(.auth-page) {
+  overflow: hidden;
+}
+
+body:has(.auth-page) #root {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.auth-main {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .sign-in-page .custom-header.scrolled,

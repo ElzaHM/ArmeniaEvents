@@ -7,22 +7,24 @@
 
 .sign-up-page .sign-up-main {
   flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   min-width: 0;
-  overflow: visible;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
 .sign-up-page .sign-up-panel {
   max-width: 960px;
   width: min(92%, 960px);
-  max-height: none;
+  max-height: 100%;
   height: auto;
   border-radius: 12px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
