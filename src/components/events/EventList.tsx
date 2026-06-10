@@ -18,6 +18,7 @@ import EventPagination from './EventPagination';
 import styles from './EventList.module.css';
 
 const PAGE_SIZE = 8;
+const CLIENT_FILTER_FETCH_SIZE = 1000;
 
 type ViewMode = 'list' | 'grid';
 
@@ -171,9 +172,17 @@ export default function EventList({
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [currentPage, setCurrentPage] = useState(1);
 
+  const hasClientFilters =
+    appliedCategories.length > 0 ||
+    Boolean(appliedEventType) ||
+    Boolean(appliedLanguage) ||
+    Boolean(appliedPriceRange) ||
+    Boolean(appliedOrganizer) ||
+    Boolean(appliedDateRange);
+
   const eventsQuery = useEvents({
-    page: currentPage,
-    pageSize: PAGE_SIZE,
+    page: hasClientFilters ? 1 : currentPage,
+    pageSize: hasClientFilters ? CLIENT_FILTER_FETCH_SIZE : PAGE_SIZE,
     q: searchQuery || undefined,
   });
 
@@ -210,6 +219,17 @@ export default function EventList({
   ]);
 
   const filteredCount = filteredEvents.length;
+
+  const visibleEvents = useMemo(() => {
+    if (!hasClientFilters) {
+      return filteredEvents;
+    }
+
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return filteredEvents.slice(start, start + PAGE_SIZE);
+  }, [filteredEvents, currentPage, hasClientFilters]);
+
+  const paginationTotal = hasClientFilters ? filteredCount : apiTotal;
 
   useEffect(() => {
     setCurrentPage(1);
@@ -273,14 +293,14 @@ export default function EventList({
           </div>
 
           <div className={viewMode === 'list' ? styles.list : styles.grid}>
-            {filteredEvents.map((event) => (
+            {visibleEvents.map((event) => (
               <EventListItem key={event.id} event={event} variant={viewMode} />
             ))}
           </div>
 
           <EventPagination
             current={currentPage}
-            total={apiTotal}
+            total={paginationTotal}
             pageSize={PAGE_SIZE}
             onChange={setCurrentPage}
           />

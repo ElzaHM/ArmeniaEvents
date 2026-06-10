@@ -95,6 +95,13 @@
   min-width: 180px;
 }
 
+.cardLink {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
 .navButton {
   position: absolute;
   top: 50%;

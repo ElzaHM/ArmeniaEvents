@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { EventFilters, EventList, EventSearch } from '../../components/events';
 import type { AppliedEventFilters } from '../../components/events/EventFilters';
@@ -9,6 +10,7 @@ import '../../components/events/events.css';
 import pageStyles from '../../components/events/EventsPage.module.css';
 
 export default function EventsPage() {
+  const [searchParams] = useSearchParams();
   const [appliedCategories, setAppliedCategories] = useState<string[]>([]);
   const [appliedEventType, setAppliedEventType] = useState<string | null>(null);
   const [appliedLanguage, setAppliedLanguage] = useState<string | null>(null);
@@ -28,6 +30,11 @@ export default function EventsPage() {
     setAppliedDateRange(filters.dateRange);
     setFiltersOpen(false);
   };
+
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    setAppliedCategories(categoryParam ? [categoryParam] : []);
+  }, [searchParams]);
 
   useEffect(() => {
     document.body.style.overflow = filtersOpen ? 'hidden' : '';

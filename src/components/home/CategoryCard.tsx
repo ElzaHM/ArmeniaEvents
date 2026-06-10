@@ -15,7 +15,7 @@ function formatEventCount(count: number): string {
 export default function CategoryCard({ category }: CategoryCardProps) {
   return (
     <Link
-      to={`/events?q=${encodeURIComponent(category.name)}`}
+      to={`/events?category=${encodeURIComponent(category.name)}`}
       className={styles.card}
       aria-label={`Browse ${category.name} events (${formatEventCount(category.eventCount)})`}
     >
