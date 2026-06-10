@@ -48,7 +48,8 @@ type RawCreateEventValues = {
   startTime?: Dayjs;
   endDate?: Dayjs;
   endTime?: Dayjs;
-  price?: string;
+  price?: string | number;
+  isFree?: boolean;
 };
 
 function toFormValues(values: RawCreateEventValues): AdminCreateEventFormValues {
@@ -101,7 +102,11 @@ export default function AdminCreateEventPage() {
       venue: allValues.venue || initialPreviewData.venue,
       address: allValues.address || initialPreviewData.address,
       organizer: allValues.organizer || initialPreviewData.organizer,
-      price: allValues.price || initialPreviewData.price,
+      price: allValues.isFree
+        ? '0'
+        : allValues.price != null && allValues.price !== ''
+          ? String(allValues.price)
+          : initialPreviewData.price,
       date: allValues.startDate
         ? dayjs(allValues.startDate).format('MMM DD, YYYY')
         : initialPreviewData.date,
@@ -158,7 +163,7 @@ export default function AdminCreateEventPage() {
             layout="vertical"
             onValuesChange={handleValuesChange}
             onFinish={onFinish}
-            initialValues={{ eventType: 'Offline', price: '0' }}
+            initialValues={{ eventType: 'Offline', isFree: true }}
           >
             <Row gutter={[24, 24]}>
               <Col xs={24} lg={15}>

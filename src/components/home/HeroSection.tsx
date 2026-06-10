@@ -1,7 +1,4 @@
-import { Tag, Typography } from 'antd';
-import { Link } from 'react-router-dom';
-import { QueryState } from '../../hooks/queries/query-state';
-import { usePopularTags } from '../../hooks/queries/useEvents';
+import { Typography } from 'antd';
 import SearchBar from './SearchBar';
 import searchBarStyles from './SearchBar.module.css';
 
@@ -12,7 +9,6 @@ import searchBarStyles from './SearchBar.module.css';
 import styles from './HeroSection.module.css';
 
 export default function HeroSection() {
-  const { data: popularTags, isLoading, isError, error } = usePopularTags();
   // const { mode } = useTheme();
 
   // const bgImage = mode === 'light' ? homePageBgLight : homePageBg;
@@ -34,27 +30,6 @@ export default function HeroSection() {
 
           <div className={styles.searchAndTags}>
             <SearchBar className={searchBarStyles.heroSearchBar} />
-
-            <QueryState
-              isLoading={isLoading}
-              isError={isError}
-              error={error}
-              minHeight={48}
-            >
-              {popularTags && (
-                <div className={styles.tags}>
-                  {popularTags.map((tag) => (
-                    <Link
-                      key={tag}
-                      to={`/events?q=${encodeURIComponent(tag)}`}
-                      className={styles.tagLink}
-                    >
-                      <Tag className={styles.tag}>{tag}</Tag>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </QueryState>
           </div>
         </div>
       </div>

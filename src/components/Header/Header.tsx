@@ -37,6 +37,7 @@ export default function Header() {
       (pathname.startsWith('/events/') && !pathname.startsWith('/events/new')));
   const isHomePage = pathname === '/';
   const isAboutPage = pathname === '/about' || pathname.startsWith('/about/');
+  const isContactPage = pathname === '/contact' || pathname.startsWith('/contact/');
 
   const navClass = (active: boolean) => (active ? 'nav-item active' : 'nav-item');
 
@@ -115,6 +116,13 @@ export default function Header() {
             onClick={() => setMenuOpen(false)}
           >
             About
+          </Link>
+          <Link
+            to="/contact"
+            className={navClass(isContactPage)}
+            onClick={() => setMenuOpen(false)}
+          >
+            Contact
           </Link>
         </nav>
 

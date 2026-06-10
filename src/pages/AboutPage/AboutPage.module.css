@@ -1,37 +1,56 @@
 .pageWrapper {
-  padding: 120px 0 80px;
+  padding: 120px 0 0;
   background: transparent;
   min-height: 100vh;
   overflow-x: hidden;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-.container {
-  width: 90%;
-  margin: 0 auto;
-  box-sizing: border-box;
+.pageWrapper :global(.mainContent) {
+  flex: 1;
 }
 
-.goldText { 
-  color: #c08b46; 
+.footer {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: 64px;
+}
+
+.footer :global(section) {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.goldText {
+  color: #c08b46 !important;
 }
 
 /* HEADER */
-.header { 
-  margin-bottom: 60px;
- }
+.header {
+  margin-bottom: 25px;
+}
 
 .aboutLabel { 
   color: white !important; 
-  font-size: 52px !important; 
+  font-size: 44px !important; 
   margin-bottom: 0 !important; 
   opacity: 1;
  }
 
 .mainTitle {
-  font-size: 68px !important; 
-  color: white !important; 
-  margin: -10px 0 15px 0 !important; 
+  font-size: 48px !important;
+  color: white !important;
+  margin-bottom: 10px !important;
+  line-height: 1.1 !important;
+}
+
+.goldUnderline {
+  width: 60px;
+  height: 3px;
+  background-color: #c08b46;
+  margin-bottom: 16px;
 }
 
 .subtitle { 
@@ -535,19 +554,19 @@
 
 @media (max-width: 992px) {
   .pageWrapper {
-    padding: 104px 0 64px;
+    padding: 104px 0 0;
   }
 
   .header {
-    margin-bottom: 48px;
+    margin-bottom: 25px;
   }
 
   .aboutLabel {
-    font-size: 42px !important;
+    font-size: 36px !important;
   }
 
   .mainTitle {
-    font-size: 54px !important;
+    font-size: 40px !important;
   }
 
   .subtitle {
@@ -607,20 +626,19 @@
 
 @media (max-width: 768px) {
   .pageWrapper {
-    padding: 96px 0 56px;
+    padding: 96px 0 0;
   }
 
   .header {
-    margin-bottom: 36px;
+    margin-bottom: 25px;
   }
 
   .aboutLabel {
-    font-size: 32px !important;
+    font-size: 28px !important;
   }
 
   .mainTitle {
     font-size: 40px !important;
-    margin: -6px 0 12px 0 !important;
   }
 
   .subtitle {
@@ -757,15 +775,15 @@
 
 @media (max-width: 576px) {
   .pageWrapper {
-    padding: 88px 0 48px;
+    padding: 88px 0 0;
   }
 
   .aboutLabel {
-    font-size: 28px !important;
+    font-size: 24px !important;
   }
 
   .mainTitle {
-    font-size: 34px !important;
+    font-size: 40px !important;
   }
 
   .subtitle {
@@ -826,11 +844,11 @@
 
 @media (max-width: 480px) {
   .aboutLabel {
-    font-size: 24px !important;
+    font-size: 22px !important;
   }
 
   .mainTitle {
-    font-size: 30px !important;
+    font-size: 40px !important;
   }
 
   .cardTitle {

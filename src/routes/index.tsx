@@ -25,6 +25,8 @@ import CreateEventPage from '../pages/CreateEventPage';
 import AboutPage from '../pages/AboutPage';
 import FavoritesPage from '../pages/FavoritesPage';
 import { RequireAuth, RequireGuest } from './guards';
+import ContactPage from '../pages/ContactPage';
+import { AppRoot } from '../providers/app-root';
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +64,10 @@ export const router = createBrowserRouter([
             <FavoritesPage />
           </RequireAuth>
         ),
+      },
+      {
+        path: 'contact',
+        element: <ContactPage />,
       },
       {
         path: 'signin',
