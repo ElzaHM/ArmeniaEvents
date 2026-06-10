@@ -5,6 +5,7 @@ import AdminLayout from '../layouts/AdminLayout';
 import HomePage from '../pages/HomePage';
 import EventsPage from '../pages/EventsPage';
 import EventDetailsPage from '../pages/EventDetailsPage';
+import EventCheckoutPage from '../pages/EventCheckoutPage';
 import SignInPage from '../pages/SignInPage';
 import SignUpPage from '../pages/SignUpPage';
 import PrivacyPolicyPage from '../pages/PrivacyPolicyPage';
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path: 'events/new',
         element: <CreateEventPage />,
+      },
+      {
+        path: 'events/:id/checkout',
+        element: <EventCheckoutPage />,
       },
       {
         path: 'events/:id',

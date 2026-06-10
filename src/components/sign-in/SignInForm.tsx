@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox, Divider, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { authService } from '../../services/auth.service';
 import { GoogleSignInButton } from '../auth/GoogleSignInButton';
@@ -23,6 +23,9 @@ type PendingNotice = {
 
 export const SignInForm: React.FC = () => {
   const { login, establishSession } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const redirectTo = (location.state as { from?: string } | null)?.from || '/';
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = React.useState(false);
   const [googleLoading, setGoogleLoading] = React.useState(false);
@@ -50,6 +53,7 @@ export const SignInForm: React.FC = () => {
         password: values.password,
       });
       setPendingNotice({ type: 'success', content: 'Sign in successful' });
+      navigate(redirectTo);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Sign in failed. Please try again.';
