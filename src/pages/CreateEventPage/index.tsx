@@ -37,7 +37,11 @@ export default function CreateEventPage() {
       venue: allValues.venue || initialPreviewData.venue,
       address: allValues.address || initialPreviewData.address,
       organizer: allValues.organizer || initialPreviewData.organizer,
-      price: allValues.price || initialPreviewData.price,
+      price: allValues.isFree
+        ? '0'
+        : allValues.price != null && allValues.price !== ''
+          ? String(allValues.price)
+          : initialPreviewData.price,
       date: allValues.startDate ? dayjs(allValues.startDate).format('MMM DD, YYYY') : initialPreviewData.date,
       startTime: allValues.startTime ? dayjs(allValues.startTime).format('hh:mm A') : initialPreviewData.startTime,
       endTime: allValues.endTime ? dayjs(allValues.endTime).format('hh:mm A') : initialPreviewData.endTime,
@@ -63,10 +67,13 @@ export default function CreateEventPage() {
 
   return (
     <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
-      <div className={styles.pageWrapper}>
+      {/* <div className={styles.pageWrapper}> */}
         <div className="homeSection">
+    <div className={`${styles.pageWrapper} create-event-page`}>
+      <div className="mainContent">
           <div className={styles.heroHeader}>
             <Title className={styles.mainTitle}>Create <span className={styles.goldText}>Event</span></Title>
+            <div className={styles.goldUnderline}></div>
             <Paragraph className={styles.heroSubtitle}>Share your experiences across Armenia.</Paragraph>
           </div>
 
@@ -75,7 +82,7 @@ export default function CreateEventPage() {
             layout="vertical" 
             onValuesChange={handleValuesChange} 
             onFinish={onFinish}
-            initialValues={{ eventType: 'Offline', price: '0' }}
+            initialValues={{ eventType: 'Offline', isFree: true }}
           >
             <Row gutter={[24, 24]}>
               <Col xs={24} lg={15}>
@@ -86,6 +93,7 @@ export default function CreateEventPage() {
               </Col>
             </Row>
           </Form>
+        </div>
         </div>
       </div>
     </ConfigProvider>

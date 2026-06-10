@@ -1,141 +1,84 @@
 .card {
-  background: var(--home-glass-bg);
-  border: 1px solid var(--home-glass-border);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 24px;
-  padding: 6px 8px;
-  display: flex;
+  margin: 0;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px) saturate(1.6);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  height: 100%;
-  text-decoration: none;
-  color: inherit;
-}
-
-[data-theme='light'] .card {
-  border: 0.1px solid rgba(255, 255, 255, 0.5) !important;
-  box-shadow:
-    0 0 0 0.3px rgba(255, 255, 255, 0.4),
-    var(--home-card-shadow);
+  gap: 4px;
+  white-space: nowrap;
 }
 
 .card:hover {
   background: var(--home-glass-hover-bg) !important;
+  backdrop-filter: blur(16px) saturate(1.6);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
   border-color: var(--home-accent) !important;
   box-shadow: 0 0 0 1px var(--home-accent), var(--home-card-shadow);
+  color: #ffffff !important;
   transform: translateY(-6px);
 }
 
-[data-theme='light'] .card:hover {
-  background: rgba(255, 255, 255, 0.22) !important;
-  border: 0.3px solid rgba(192, 139, 70, 0.65) !important;
-  box-shadow:
-    0 0 0 0.3px rgba(192, 139, 70, 0.5),
-    0 4px 16px rgba(0, 0, 0, 0.1);
+.card:active {
+  transform: translateY(0);
 }
 
-.iconWrap {
-  margin-bottom: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+[data-theme='light'] .card,
+[data-theme='dark'] .card {
+  color: #ffffff !important;
 }
 
-.icon {
-  font-size: 40px !important;
-  color: var(--home-accent) !important;
+[data-theme='light'] .card {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme='dark'] .card {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .name {
-  color: var(--home-heading) !important;
-  font-size: 16px !important;
-  font-weight: 500 !important;
-  margin-bottom: 4px !important;
-  text-align: center;
-}
-
-.count {
-  color: var(--home-muted-faint) !important;
+  color: #ffffff !important;
   font-size: 14px !important;
-  text-align: center;
+  font-weight: 600 !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
 }
 
-@media (max-width: 992px) {
-  .card {
-    height: auto;
-    border-radius: 12px;
-    padding: 8px 4px;
-    margin-top: 8px;
-  }
+.eventCount {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+}
 
-  .iconWrap {
-    margin-bottom: 2px;
-  }
-
-  .icon {
-    font-size: 24px !important;
-  }
-
-  .name {
-    font-size: 11px !important;
-    margin-bottom: 2px !important;
-    line-height: 1.2 !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-
-  .count {
-    font-size: 9px !important;
-    line-height: 1.2 !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
+[data-theme='light'] .eventCount {
+  color: rgba(255, 255, 255, 0.58) !important;
 }
 
 @media (max-width: 768px) {
   .card {
-    border-radius: 10px;
-    padding: 6px 3px;
-    margin-top: 6px;
-  }
-
-  .icon {
-    font-size: 20px !important;
+    padding: 10px 14px;
+    font-size: 13px;
   }
 
   .name {
-    font-size: 10px !important;
+    font-size: 13px !important;
   }
 
-  .count {
-    font-size: 8px !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .card {
-    border-radius: 8px;
-    padding: 5px 2px;
-    margin-top: 4px;
-  }
-
-  .icon {
-    font-size: 18px !important;
-  }
-
-  .name {
+  .eventCount {
     font-size: 9px !important;
-  }
-
-  .count {
-    font-size: 7px !important;
   }
 }

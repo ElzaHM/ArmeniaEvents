@@ -9,6 +9,7 @@ import { authRoutes } from './modules/auth/auth.routes.js';
 import { categoriesRoutes } from './modules/categories/categories.routes.js';
 import { favoritesRoutes } from './modules/events/favorites/favorites.routes.js';
 import { eventsRoutes } from './modules/events/events.routes.js';
+import { contactRoutes } from './modules/contact/contact.routes.js';
 import { newsletterRoutes } from './modules/newsletter/newsletter.routes.js';
 import axios from 'axios';
 
@@ -63,6 +64,7 @@ app.use('/api/events', eventsRoutes);
 app.use('/api/events', favoritesRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/contact', contactRoutes);
 app.use(errorHandler);
 
 const server = app.listen(env.PORT);

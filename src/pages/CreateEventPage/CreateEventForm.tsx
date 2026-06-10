@@ -1,6 +1,7 @@
 import {
   Form,
   Input,
+  InputNumber,
   AutoComplete,
   DatePicker,
   TimePicker,
@@ -9,6 +10,7 @@ import {
   Typography,
   Space,
   Upload,
+  Radio,
 } from "antd";
 import {
   InfoCircleOutlined,
@@ -18,7 +20,7 @@ import {
   DeleteOutlined,
   FileImageOutlined,
   UserOutlined,
-  LinkOutlined,
+  DollarOutlined,
 } from "@ant-design/icons";
 import styles from "./CreateEventPage.module.css";
 
@@ -156,18 +158,49 @@ export default function CreateEventForm({
         <Title level={5} className={styles.cardHeader}>
           <UserOutlined className={styles.headerIcon} /> Organizer
         </Title>
-        <Row gutter={12}>
-          <Col span={12}>
-            <Form.Item name="organizer" rules={[{required: true}]} className={styles.compactItem}>
-              <Input prefix={<UserOutlined />} className={styles.glassInput} />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item name="ticket_url" rules={[{type: "url"}]} className={styles.compactItem}>
-              <Input prefix={<LinkOutlined />} className={styles.glassInput} />
-            </Form.Item>
-          </Col>
-        </Row>
+        <Form.Item name="organizer" rules={[{required: true}]} className={styles.compactItem}>
+          <Input prefix={<UserOutlined />} className={styles.glassInput} />
+        </Form.Item>
+      </div>
+
+      {/* Pricing Section */}
+      <div className={styles.formCard}>
+        <Title level={5} className={styles.cardHeader}>
+          <DollarOutlined className={styles.headerIcon} /> Pricing
+        </Title>
+        <Form.Item name="isFree" className={styles.compactItem}>
+          <Radio.Group className={styles.priceRadioGroup}>
+            <Radio value={true}>Free</Radio>
+            <Radio value={false}>Paid</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item noStyle shouldUpdate={(prev, cur) => prev.isFree !== cur.isFree}>
+          {({ getFieldValue }) =>
+            !getFieldValue("isFree") ? (
+              <Form.Item
+                label="Price (USD)"
+                name="price"
+                rules={[
+                  { required: true, message: "Please enter a price" },
+                  {
+                    type: "number",
+                    min: 0.01,
+                    message: "Price must be greater than 0",
+                  },
+                ]}
+                className={styles.compactItem}>
+                <InputNumber
+                  min={0.01}
+                  step={0.01}
+                  prefix={<DollarOutlined />}
+                  placeholder="0.00"
+                  className={styles.glassInput}
+                  style={{ width: "100%" }}
+                />
+              </Form.Item>
+            ) : null
+          }
+        </Form.Item>
       </div>
 
       {/* Single Image Upload Section */}

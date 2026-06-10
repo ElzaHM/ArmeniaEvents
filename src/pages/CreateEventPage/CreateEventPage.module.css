@@ -1,9 +1,8 @@
    /* 1. PAGE LAYOUT & HERO HEADER */
 .pageWrapper {
-  padding: 100px 0 60px;
+  padding: 120px 0 80px;
   background: transparent;
   min-height: 100vh;
-  padding-top: 200px;
 }
 
 .heroHeader {
@@ -13,11 +12,19 @@
 .mainTitle {
   font-size: 50px !important;
   color: white !important;
-  margin: 0 !important;
+  margin-bottom: 10px !important;
+  line-height: 1.1 !important;
 }
 
 .goldText {
-  color: #c08b46;
+  color: #c08b46 !important;
+}
+
+.goldUnderline {
+  width: 60px;
+  height: 3px;
+  background-color: #c08b46;
+  margin-bottom: 16px;
 }
 
 .heroSubtitle {
@@ -52,6 +59,7 @@
 
    /* 3. FORM ELEMENTS & WRITABLE INPUTS */
 .glassInput, 
+:global(.ant-input-number),
 :global(.ant-select-selector),
 :global(.ant-picker),
 :global(.ant-input-affix-wrapper) {
@@ -82,6 +90,32 @@
   color: rgba(255, 255, 255, 0.8) !important;
   font-size: 12px;
   height: auto;
+}
+
+.priceRadioGroup :global(.ant-radio-wrapper) {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.priceRadioGroup :global(.ant-radio-checked + span) {
+  color: #ffffff;
+}
+
+:global(.ant-input-number.glassInput) {
+  width: 100%;
+}
+
+:global(.ant-input-number.glassInput .ant-input-number-input) {
+  color: white !important;
+}
+
+:global(.ant-input-number.glassInput .ant-input-number-handler-wrap) {
+  background: rgba(255, 255, 255, 0.08);
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+:global(.ant-input-number.glassInput .ant-input-number-handler),
+:global(.ant-input-number.glassInput .anticon) {
+  color: rgba(255, 255, 255, 0.75);
 }
 
    /* 4. SINGLE IMAGE UPLOAD & DELETE BAR */

@@ -1,0 +1,226 @@
+.pageWrapper {
+  padding: 120px 0 80px;
+  background: transparent;
+  min-height: 100vh;
+}
+
+/* --- HERO HEADER --- */
+.heroHeader {
+  margin-bottom: 25px;
+}
+
+.mainTitle {
+  font-size: 48px !important;
+  color: white !important;
+  margin-bottom: 10px !important;
+  line-height: 1.1 !important;
+}
+
+.goldText {
+  color: #c08b46 !important;
+}
+
+.goldUnderline {
+  width: 60px;
+  height: 3px;
+  background-color: #c08b46;
+  margin-bottom: 16px;
+}
+
+.heroSubtitle {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 16px;
+  max-width: 420px;
+}
+
+/* --- MAIN GLASS CARDS --- */
+.cardsRow :global(.ant-col) {
+  display: flex;
+}
+
+.glassCard {
+  background: rgba(14, 14, 14, 0.3) !important;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 28px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.cardHeaderTitle {
+  color: white !important;
+  margin-bottom: 6px !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px !important;
+}
+
+.goldIcon { color: #c08b46; }
+
+.cardSubtitle {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 13px;
+  margin-bottom: 18px !important;
+}
+
+.customForm :global(.ant-form-item) {
+  margin-bottom: 12px;
+}
+
+.customForm :global(.ant-form-item:last-child) {
+  margin-bottom: 0;
+}
+
+/* --- FORM --- */
+.glassInput {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: white !important;
+  border-radius: 6px !important;
+  padding: 10px 14px !important;
+}
+
+.glassInput:hover,
+.glassInput:focus {
+  border-color: #c08b46 !important;
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+
+.pageWrapper :global(.ant-input::placeholder) {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+.submitBtn {
+  background-color: #c08b46 !important;
+  border: none !important;
+  height: 44px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  margin-top: 4px;
+}
+
+.submitBtn:hover {
+  background-color: #d4a363 !important;
+}
+
+/* --- INFO LIST --- */
+.infoList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: space-between;
+  min-height: 0;
+}
+
+.infoItem {
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+
+.infoIconBox {
+  color: #c08b46;
+  font-size: 20px;
+}
+
+.infoText { display: flex; flex-direction: column; gap: 1px; }
+.infoLabel { color: rgba(255, 255, 255, 0.4); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+.infoValue { color: white; font-size: 14px; line-height: 1.35; }
+
+.socialIcons { margin-top: 2px; font-size: 18px; color: rgba(255, 255, 255, 0.7); cursor: pointer; }
+.socialIcons span:hover { color: white; }
+
+/* Light mode — match Create Event page */
+[data-theme='light'] .pageWrapper {
+  color: var(--home-text-secondary);
+}
+
+[data-theme='light'] .pageWrapper .glassCard {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 0.1px solid rgba(255, 255, 255, 0.65) !important;
+  box-shadow:
+    0 0 0 0.3px rgba(255, 255, 255, 0.55),
+    0 2px 15px rgba(0, 0, 0, 0.06) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+}
+
+[data-theme='light'] .pageWrapper .cardHeaderTitle {
+  color: var(--home-heading) !important;
+}
+
+[data-theme='light'] .pageWrapper .cardSubtitle {
+  color: var(--home-text-secondary) !important;
+}
+
+[data-theme='light'] .pageWrapper .glassInput,
+[data-theme='light'] .pageWrapper :global(.ant-input) {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: var(--home-text) !important;
+}
+
+[data-theme='light'] .pageWrapper :global(.ant-input::placeholder) {
+  color: var(--home-input-placeholder) !important;
+}
+
+[data-theme='light'] .pageWrapper .glassInput:hover,
+[data-theme='light'] .pageWrapper .glassInput:focus {
+  background: rgba(255, 255, 255, 1) !important;
+  border-color: var(--home-accent) !important;
+}
+
+[data-theme='light'] .pageWrapper .infoItem {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme='light'] .pageWrapper .infoLabel {
+  color: var(--home-text-secondary);
+}
+
+[data-theme='light'] .pageWrapper .infoValue {
+  color: var(--home-heading);
+}
+
+[data-theme='light'] .pageWrapper .socialIcons {
+  color: var(--home-text-secondary);
+}
+
+[data-theme='light'] .pageWrapper .socialIcons span:hover {
+  color: var(--home-heading);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+  .mainTitle {
+    font-size: 40px !important;
+  }
+
+  .glassCard {
+    padding: 22px;
+    height: auto;
+  }
+
+  .cardsRow :global(.ant-col) {
+    display: block;
+  }
+
+  .infoList {
+    flex: none;
+    justify-content: flex-start;
+  }
+}

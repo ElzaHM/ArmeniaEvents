@@ -1,11 +1,11 @@
 .widget {
   position: fixed;
   right: 20px;
-  bottom: -140px;
+  bottom: -220px;
   z-index: 900;
   --video-width: min(50vw, calc(100vw - 100px));
   --video-height: calc(var(--video-width) * 9 / 16);
-  width: 80%;
+  width: 75%;
   max-width: calc(100vw - 100px);
   aspect-ratio: 16 / 9;
   margin: 0;
@@ -74,7 +74,7 @@
 
 .playBtn {
   position: absolute;
-  top: 70%;
+  top: 50%;
   right: 10%;
   transform: translate(-50%, -50%);
   display: inline-flex;
