@@ -59,6 +59,8 @@ export const router = createBrowserRouter([
             <FavoritesPage />
           </RequireAuth>
         ),
+      },
+      {
         path: 'contact',
         element: <ContactPage />,
       },

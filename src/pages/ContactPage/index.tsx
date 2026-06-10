@@ -13,6 +13,7 @@ import {
 } from '@ant-design/icons';
 import styles from './ContactPage.module.css';
 import { sendTelegramMessage } from './SendTelegramMessage';
+import FooterContent from '../../components/home/FooterContent';
 import '../../components/home/home.css';
 
 const { Title, Paragraph, Text } = Typography;
@@ -157,6 +158,9 @@ export default function ContactPage() {
               </div>
             </Col>
           </Row>
+        </div>
+        <div className={styles.footer}>
+          <FooterContent />
         </div>
       </div>
     </>

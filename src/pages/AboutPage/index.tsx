@@ -2,6 +2,7 @@
 import { Typography, Row, Col, Divider, Space } from 'antd';
 import { LinkedinOutlined, GithubOutlined } from '@ant-design/icons';
 import '../../components/home/home.css';
+import FooterContent from '../../components/home/FooterContent';
 import styles from './AboutPage.module.css';
 import {
   ABOUT_PAGE_HEADER,
@@ -198,6 +199,9 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
+      </div>
+      <div className={styles.footer}>
+        <FooterContent />
       </div>
     </div>
   );

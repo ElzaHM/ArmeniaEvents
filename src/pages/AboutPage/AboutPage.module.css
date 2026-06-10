@@ -1,9 +1,26 @@
 .pageWrapper {
-  padding: 120px 0 80px;
+  padding: 120px 0 0;
   background: transparent;
   min-height: 100vh;
   overflow-x: hidden;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageWrapper :global(.mainContent) {
+  flex: 1;
+}
+
+.footer {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: 64px;
+}
+
+.footer :global(section) {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .goldText {
@@ -537,7 +554,7 @@
 
 @media (max-width: 992px) {
   .pageWrapper {
-    padding: 104px 0 64px;
+    padding: 104px 0 0;
   }
 
   .header {
@@ -609,7 +626,7 @@
 
 @media (max-width: 768px) {
   .pageWrapper {
-    padding: 96px 0 56px;
+    padding: 96px 0 0;
   }
 
   .header {
@@ -758,7 +775,7 @@
 
 @media (max-width: 576px) {
   .pageWrapper {
-    padding: 88px 0 48px;
+    padding: 88px 0 0;
   }
 
   .aboutLabel {

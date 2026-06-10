@@ -1,7 +1,24 @@
 .pageWrapper {
-  padding: 120px 0 80px;
+  padding: 120px 0 0;
   background: transparent;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageWrapper :global(.mainContent) {
+  flex: 1;
+}
+
+.footer {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: 80px;
+}
+
+.footer :global(section) {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 /* --- HERO HEADER --- */
