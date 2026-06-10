@@ -1,8 +1,10 @@
 import { supabaseAdminClient } from '../../lib/supabase.js';
 
-export type ReserveTicketResult =
-  | { status: 'created'; ticketCode: string; eventId: string }
-  | { status: 'duplicate' };
+export type ReserveTicketResult = {
+  status: 'created';
+  ticketCode: string;
+  eventId: string;
+};
 
 const TICKET_CODE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -14,7 +16,10 @@ function generateTicketCode(): string {
   return `AE-${suffix}`;
 }
 
-export async function reserveTicket(userId: string, eventId: string): Promise<ReserveTicketResult> {
+export async function reserveTicket(
+  userId: string,
+  eventId: string,
+): Promise<ReserveTicketResult> {
   const { data: event, error: eventError } = await supabaseAdminClient
     .from('events')
     .select('id, price')
@@ -30,13 +35,14 @@ export async function reserveTicket(userId: string, eventId: string): Promise<Re
   }
 
   const price = event.price ?? 0;
+
   if (price <= 0) {
     throw new Error('Event is not paid');
   }
 
   const { data: existing, error: lookupError } = await supabaseAdminClient
     .from('event_ticket_reservations')
-    .select('id')
+    .select('ticket_code, status, event_id')
     .eq('user_id', userId)
     .eq('event_id', eventId)
     .maybeSingle();
@@ -46,25 +52,49 @@ export async function reserveTicket(userId: string, eventId: string): Promise<Re
   }
 
   if (existing) {
-    return { status: 'duplicate' };
+    return {
+      status: 'created',
+      ticketCode: existing.ticket_code,
+      eventId: existing.event_id,
+    };
   }
 
   const ticketCode = generateTicketCode();
 
-  const { error: insertError } = await supabaseAdminClient.from('event_ticket_reservations').insert({
-    user_id: userId,
-    event_id: eventId,
-    ticket_code: ticketCode,
-    price,
-    status: 'reserved',
-  });
+  const { error: insertError } = await supabaseAdminClient
+    .from('event_ticket_reservations')
+    .insert({
+      user_id: userId,
+      event_id: eventId,
+      ticket_code: ticketCode,
+      price,
+      status: 'reserved',
+    });
 
   if (insertError) {
     if (insertError.code === '23505') {
-      return { status: 'duplicate' };
+      const { data: duplicateReservation } = await supabaseAdminClient
+        .from('event_ticket_reservations')
+        .select('ticket_code, event_id')
+        .eq('user_id', userId)
+        .eq('event_id', eventId)
+        .maybeSingle();
+
+      if (duplicateReservation) {
+        return {
+          status: 'created',
+          ticketCode: duplicateReservation.ticket_code,
+          eventId: duplicateReservation.event_id,
+        };
+      }
     }
+
     throw new Error(insertError.message);
   }
 
-  return { status: 'created', ticketCode, eventId };
+  return {
+    status: 'created',
+    ticketCode,
+    eventId,
+  };
 }
