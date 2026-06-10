@@ -11,6 +11,11 @@ import {
 } from '@ant-design/icons';
 import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../hooks/useTheme';
+import {
+  getHeaderUserAvatarColor,
+  getHeaderUserDisplayName,
+  getHeaderUserInitials,
+} from './headerUserDisplay';
 import './Header.css';
 import '../home/homeActionButton.css';
 
@@ -19,7 +24,7 @@ const { Header: AntHeader } = Layout;
 export default function Header() {
   const { pathname } = useLocation();
   const { mode, toggleTheme } = useTheme();
-  const { isAuthenticated, isAdmin, loading: authLoading, logout } = useAuth();
+  const { isAuthenticated, isAdmin, loading: authLoading, logout, session } = useAuth();
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -67,6 +72,12 @@ export default function Header() {
       document.body.style.overflow = '';
     };
   }, [menuOpen]);
+
+  const userFullName = session?.user.fullName;
+  const userEmail = session?.user.email;
+  const userDisplayName = getHeaderUserDisplayName(userFullName, userEmail);
+  const userInitials = getHeaderUserInitials(userFullName, userEmail);
+  const userAvatarColor = getHeaderUserAvatarColor(userFullName, userEmail);
 
   return (
     <AntHeader className={`custom-header ${scrolled ? 'scrolled' : ''} ${mode === 'light' ? 'light-mode' : ''}`}>
@@ -139,12 +150,27 @@ export default function Header() {
           <Button className="signin-button homeActionBtn">Go Back</Button>
         </Link>
       ) : null}
-      <Button
-        className="signin-button homeActionBtn"
-        onClick={() => void handleLogout()}
-      >
-        Sign Out
-      </Button>
+      <div className="header-user">
+        <div
+          className="header-user-avatar"
+          style={{ backgroundColor: userAvatarColor }}
+          aria-hidden="true"
+        >
+          {userInitials}
+        </div>
+        <div className="header-user-info">
+          <span className="header-user-name">{userDisplayName}</span>
+          {userFullName?.trim() && userEmail ? (
+            <span className="header-user-email">{userEmail}</span>
+          ) : null}
+        </div>
+        <Button
+          className="signin-button homeActionBtn header-user-signout"
+          onClick={() => void handleLogout()}
+        >
+          Sign Out
+        </Button>
+      </div>
     </>
   ) : (
     <Link to="/signin" className="header-signin-link">
