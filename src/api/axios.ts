@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// Scoped to our backend only (`VITE_API_URL/api`). Gemini and other third-party SDKs
-// use native fetch directly and are not affected by this interceptor.
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 export const api = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}/api`,
+  baseURL: API_URL ? `${API_URL.replace(/\/$/, '')}/api` : '/api',
 });
 
 api.interceptors.request.use((config) => {

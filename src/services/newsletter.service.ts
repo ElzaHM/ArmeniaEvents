@@ -1,12 +1,10 @@
 import axios from 'axios';
 
+import { api } from '../api/axios';
+
 export type NewsletterSubscribeResponse = {
   success: true;
 };
-
-const api = axios.create({
-  baseURL: '/api',
-});
 
 function toNewsletterError(error: unknown): Error {
   if (axios.isAxiosError(error)) {
