@@ -4,13 +4,14 @@
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border-radius: 12px;
-  overflow: hidden;
+  overflow: visible;
   max-width: 960px;
   width: 92%;
   max-height: 100%;
   margin: 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: none;
+  box-sizing: border-box;
 }
 
 .leftSection {
@@ -22,15 +23,19 @@
   flex-direction: column;
   position: relative;
   min-height: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .rightSection {
   flex: 1;
+  min-width: 0;
   padding: 30px 28px;
   background: transparent;
   overflow-y: auto;
+  overflow-x: visible;
   min-height: 0;
+  box-sizing: border-box;
 }
 
 .logoBox {
@@ -100,8 +105,30 @@
   line-height: 1.35;
 }
 
-.illustration {
+.illustrationArea {
+  position: relative;
   margin-top: auto;
+  width: 100%;
+  min-height: 200px;
+  flex-shrink: 0;
+}
+
+.arcDecoration {
+  position: absolute;
+  top: -12px;
+  left: -4px;
+  width: min(78%, 240px);
+  height: 220px;
+  border: 1px solid var(--auth-arc-border);
+  border-bottom: none;
+  border-radius: 150px 150px 0 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.illustration {
+  position: relative;
+  z-index: 1;
   margin-left: auto;
   margin-right: auto;
   padding-top: 8px;
@@ -126,17 +153,17 @@
 
 .illustrationImage {
   display: block;
-  width: auto;
+  width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: 100%;
+  max-height: 180px;
   margin: 0;
   background-color: transparent;
   object-fit: contain;
   object-position: bottom center;
-  mix-blend-mode: var(--auth-illustration-blend);
-  opacity: var(--auth-illustration-image-opacity, 1);
-  filter: var(--auth-illustration-filter, none);
+  mix-blend-mode: screen;
+  opacity: 1;
+  filter: none;
   transform: none;
 }
 
@@ -144,9 +171,12 @@
   display: none;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .panel {
     flex-direction: column;
+    width: 100%;
+    max-width: 360px;
+    overflow: visible;
   }
 
   .leftSection {
@@ -154,7 +184,7 @@
   }
 
   .rightSection {
-    padding: 20px 16px 16px;
+    padding: 20px 18px 16px;
     overflow-y: visible;
   }
 
@@ -165,17 +195,36 @@
     width: 100%;
     height: var(--auth-illustration-box-height, 168px);
     margin-top: 8px;
-    overflow: hidden;
+    overflow: visible;
   }
 }
 
 @media (max-width: 480px) {
+  .panel {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
   .rightSection {
-    padding: 20px 16px 12px;
+    padding: 16px 14px 10px;
+    overflow: visible;
   }
 
   .mobileIllustration {
-    height: 140px;
-    margin-top: 4px;
+    height: var(--auth-illustration-box-height, 180px);
+    margin-top: 8px;
+    overflow: visible;
+  }
+}
+
+@media (max-width: 360px) {
+  .panel {
+    max-width: 100%;
+  }
+
+  .rightSection {
+    padding: 16px 12px 10px;
   }
 }

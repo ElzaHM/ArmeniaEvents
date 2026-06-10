@@ -26,7 +26,8 @@
   gap: 10px;
   position: relative;
   min-height: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .rightSection {
@@ -34,8 +35,10 @@
   min-width: 0;
   padding: 18px 24px;
   background: transparent;
-  overflow: visible;
+  overflow-x: visible;
+  overflow-y: visible;
   min-height: 0;
+  box-sizing: border-box;
 }
 
 .logoBox {
@@ -107,11 +110,33 @@
   line-height: 1.35;
 }
 
-.illustration {
+.illustrationArea {
+  position: relative;
   margin-top: auto;
+  width: 100%;
+  min-height: 200px;
+  flex-shrink: 0;
+}
+
+.arcDecoration {
+  position: absolute;
+  top: -12px;
+  left: -4px;
+  width: min(78%, 240px);
+  height: 220px;
+  border: 1px solid var(--auth-arc-border);
+  border-bottom: none;
+  border-radius: 150px 150px 0 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.illustration {
+  position: relative;
+  z-index: 1;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 12px;
+  padding-top: 8px;
   width: var(--auth-illustration-box-width, 100%);
   height: var(--auth-illustration-box-height, 220px);
   display: flex;
@@ -133,17 +158,17 @@
 
 .illustrationImage {
   display: block;
-  width: auto;
+  width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: 100%;
+  max-height: 180px;
   margin: 0;
   background-color: transparent;
   object-fit: contain;
   object-position: bottom center;
-  mix-blend-mode: var(--auth-illustration-blend);
-  opacity: var(--auth-illustration-image-opacity, 1);
-  filter: var(--auth-illustration-filter, none);
+  mix-blend-mode: screen;
+  opacity: 1;
+  filter: none;
   transform: none;
 }
 
@@ -155,8 +180,9 @@
 @media (max-width: 1024px) {
   .panel {
     flex-direction: column;
-    width: min(92%, 640px);
-    max-width: 640px;
+    width: 100%;
+    max-width: 360px;
+    overflow: visible;
   }
 
   .leftSection {
@@ -165,7 +191,7 @@
 
   .rightSection {
     width: 100%;
-    padding: 28px 24px 20px;
+    padding: 22px 18px 16px;
     overflow: visible;
   }
 
@@ -176,29 +202,35 @@
     width: 100%;
     height: var(--auth-illustration-box-height, 168px);
     margin-top: 8px;
-    overflow: hidden;
+    overflow: visible;
   }
 }
 
 /* 481px – 960px tablet range */
 @media (max-width: 960px) {
   .panel {
-    width: min(92%, calc(100vw - 32px));
-    max-width: none;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    overflow: visible;
   }
 
   .rightSection {
-    padding: 24px 20px;
+    padding: 20px 16px;
+    overflow: visible;
   }
 }
 
 @media (max-width: 768px) {
   .panel {
-    width: min(94%, calc(100vw - 24px));
+    width: 100%;
+    max-width: 300px;
+    overflow: visible;
   }
 
   .rightSection {
-    padding: 22px 18px;
+    padding: 18px 14px;
+    overflow: visible;
   }
 
   .joinHeading {
@@ -209,18 +241,30 @@
 @media (max-width: 480px) {
   .panel {
     width: 100%;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
+    max-width: 280px;
+    margin: 0 auto;
     border-radius: 12px;
+    overflow: visible;
   }
 
   .rightSection {
-    padding: 20px 16px 16px;
+    padding: 16px 14px 12px;
+    overflow: visible;
   }
 
   .mobileIllustration {
-    height: 140px;
-    margin-top: 4px;
+    height: var(--auth-illustration-box-height, 180px);
+    margin-top: 8px;
+    overflow: visible;
+  }
+}
+
+@media (max-width: 360px) {
+  .panel {
+    max-width: 100%;
+  }
+
+  .rightSection {
+    padding: 16px 12px 12px;
   }
 }

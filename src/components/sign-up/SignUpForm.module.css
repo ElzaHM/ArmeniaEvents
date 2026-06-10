@@ -6,9 +6,15 @@
 }
 
 .formContainer :global(.ant-form),
+.formContainer :global(.ant-form-item),
+.formContainer :global(.ant-form-item-control),
+.formContainer :global(.ant-form-item-control-input),
+.formContainer :global(.ant-form-item-control-input-content),
 .formContainer :global(.ant-input-affix-wrapper),
-.formContainer :global(.ant-input) {
+.formContainer :global(.ant-input),
+.formContainer :global(.ant-btn) {
   max-width: 100%;
+  box-sizing: border-box;
 }
 
 .title {
@@ -111,12 +117,14 @@
 }
 
 .submitBtn {
-  width: 100%;
+  width: 100% !important;
+  max-width: 100% !important;
   height: 34px;
   background-color: var(--auth-accent) !important;
   border: none !important;
   font-weight: 600;
   margin-top: 2px;
+  box-sizing: border-box !important;
 }
 
 .divider {

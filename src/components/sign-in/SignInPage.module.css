@@ -46,14 +46,7 @@
 }
 
 .arcDecoration {
-  position: absolute;
-  top: 10%;
-  left: 5%;
-  width: 300px;
-  height: 500px;
-  border: 1px solid var(--auth-arc-border);
-  border-radius: 150px 150px 0 0;
-  pointer-events: none;
+  display: none;
 }
 
 .simplePanel {
@@ -147,12 +140,26 @@
   }
 
   .mainContent {
-    padding: 64px 12px 12px;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 12px 12px;
+    overflow-y: auto;
   }
 }
 
 @media (max-width: 480px) {
   .mainContent {
-    padding: 48px 12px 16px;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0 16px;
+    overflow-x: visible;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 360px) {
+  .mainContent {
+    padding: 12px 0 12px;
   }
 }

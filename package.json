@@ -11,6 +11,8 @@
     "list:db": "node scripts/list-users-events.mjs",
     "setup:google": "node scripts/setup-google-oauth.mjs",
     "build": "tsc -b && vite build",
+    "build:prod": "pnpm build && pnpm build:api",
+    "start:prod": "node backend/dist/index.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },

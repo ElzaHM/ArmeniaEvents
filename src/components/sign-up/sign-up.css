@@ -1,6 +1,6 @@
 .sign-up-page {
   --auth-illustration-box-width: 100%;
-  --auth-illustration-box-height: 168px;
+  --auth-illustration-box-height: 180px;
   width: 100%;
   overflow-x: clip;
 }
@@ -13,7 +13,8 @@
   justify-content: center;
   width: 100%;
   min-width: 0;
-  overflow: hidden;
+  overflow-x: visible;
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
@@ -23,7 +24,7 @@
   max-height: 100%;
   height: auto;
   border-radius: 12px;
-  overflow-x: hidden;
+  overflow-x: visible;
   overflow-y: auto;
   box-sizing: border-box;
 }
@@ -59,7 +60,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  overflow: hidden;
+  overflow: visible;
   flex-shrink: 0;
 }
 
@@ -85,8 +86,10 @@
   filter: var(--auth-illustration-filter, none);
 }
 
-[data-theme='dark'] .sign-up-page .auth-illustration-image img {
-  mix-blend-mode: normal;
+.sign-up-page .auth-illustration-image img {
+  mix-blend-mode: screen !important;
+  filter: none !important;
+  opacity: 1 !important;
 }
 
 .sign-up-page .ant-form-item {
@@ -105,48 +108,99 @@
 
 @media (max-width: 1024px) {
   .sign-up-page .sign-up-main {
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding-inline: 16px;
+    padding-inline: 20px;
+    overflow-x: visible;
+    overflow-y: auto;
+    box-sizing: border-box;
   }
 
   .sign-up-page .sign-up-panel {
-    width: min(92%, 640px) !important;
-    max-width: 640px !important;
+    width: 100% !important;
+    max-width: 360px !important;
+    margin: auto !important;
+    overflow: visible !important;
+  }
+
+  .sign-up-page .ant-input-affix-wrapper,
+  .sign-up-page .ant-btn,
+  .sign-up-page .ant-form-item-control-input-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .sign-up-page .sign-up-panel .rightSection .auth-illustration {
+    height: var(--auth-illustration-box-height, 180px);
+    overflow: visible;
+  }
+
+  .sign-up-page .sign-up-panel .rightSection .auth-illustration-image img {
+    mix-blend-mode: screen !important;
+    filter: none !important;
+    opacity: 1 !important;
+    max-height: 180px;
+    width: 100%;
   }
 }
 
 @media (max-width: 960px) {
   .sign-up-page .sign-up-main {
-    padding-inline: 16px;
+    padding-inline: 20px;
+    overflow-x: visible;
   }
 
   .sign-up-page .sign-up-panel {
-    width: min(92%, calc(100vw - 32px)) !important;
-    max-width: none !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0 auto !important;
+    overflow: visible !important;
   }
 }
 
 @media (max-width: 768px) {
   .sign-up-page .sign-up-main {
-    padding-inline: 12px;
+    padding-inline: 20px;
+    align-items: center;
+    justify-content: center;
+    overflow-x: visible;
+    overflow-y: auto;
   }
 
   .sign-up-page .sign-up-panel {
-    width: min(94%, calc(100vw - 24px)) !important;
+    width: 100% !important;
+    max-width: 300px !important;
+    margin: 0 auto !important;
+    overflow: visible !important;
   }
 }
 
 @media (max-width: 480px) {
   .sign-up-page .sign-up-main {
-    padding-inline: 12px;
+    padding-inline: 20px;
+    overflow-x: visible;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sign-up-page .sign-up-panel {
+    width: 100% !important;
+    max-width: 280px !important;
+    margin: auto !important;
+    border-radius: 12px !important;
+    overflow: visible !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .sign-up-page .sign-up-main {
+    padding-inline: 16px;
   }
 
   .sign-up-page .sign-up-panel {
     width: 100% !important;
     max-width: 100% !important;
-    margin-left: 0;
-    margin-right: 0;
-    border-radius: 12px !important;
+    margin: auto !important;
   }
 }
