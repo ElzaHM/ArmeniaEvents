@@ -2,8 +2,11 @@
   height: 100dvh;
   max-height: 100dvh;
   min-height: 0;
+  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  overflow-x: clip;
   background-image: var(--auth-page-overlay), url('../../assets/eventPageLigthBg.png');
   background-repeat: no-repeat;
   background-position: top;
@@ -40,9 +43,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 16px 20px 8px;
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .arcDecoration {
@@ -134,32 +142,20 @@
   font-size: 12px;
 }
 
-@media (max-width: 768px) {
-  .footerGrid {
-    grid-template-columns: 1fr;
-  }
-
+@media (max-width: 1024px) {
   .mainContent {
     align-items: center;
     justify-content: center;
-    padding: 16px 12px 12px;
-    overflow-y: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .mainContent {
-    align-items: center;
-    justify-content: center;
-    padding: 16px 0 16px;
-    overflow-x: visible;
+    padding: 16px 20px 16px;
+    overflow-x: hidden;
     overflow-y: auto;
     box-sizing: border-box;
   }
 }
 
-@media (max-width: 360px) {
-  .mainContent {
-    padding: 12px 0 12px;
+@media (max-width: 768px) {
+  .footerGrid {
+    grid-template-columns: 1fr;
   }
 }
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox, Divider, message } from 'antd';
+import { Form, Input, Button, Divider, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -10,16 +10,10 @@ import styles from './SignInForm.module.css';
 type SignInValues = {
   email: string;
   password: string;
-  remember?: boolean;
 };
 
 /** Set to true to restore the Google sign-in button on this page. */
 const SHOW_GOOGLE_SIGN_IN = false;
-
-type PendingNotice = {
-  type: 'success' | 'error';
-  content: string;
-};
 
 export const SignInForm: React.FC = () => {
   const { login, establishSession } = useAuth();
@@ -29,21 +23,6 @@ export const SignInForm: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = React.useState(false);
   const [googleLoading, setGoogleLoading] = React.useState(false);
-  const [pendingNotice, setPendingNotice] = React.useState<PendingNotice | null>(null);
-
-  React.useEffect(() => {
-    if (!pendingNotice) {
-      return;
-    }
-
-    if (pendingNotice.type === 'success') {
-      messageApi.success(pendingNotice.content);
-    } else {
-      messageApi.error(pendingNotice.content);
-    }
-
-    setPendingNotice(null);
-  }, [pendingNotice, messageApi]);
 
   const handleSubmit = async (values: SignInValues) => {
     setLoading(true);
@@ -52,12 +31,12 @@ export const SignInForm: React.FC = () => {
         email: values.email,
         password: values.password,
       });
-      setPendingNotice({ type: 'success', content: 'Sign in successful' });
+      messageApi.success('Sign in successful');
       navigate(redirectTo);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Sign in failed. Please try again.';
-      setPendingNotice({ type: 'error', content: errorMessage });
+      messageApi.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -68,18 +47,19 @@ export const SignInForm: React.FC = () => {
     try {
       const session = await authService.loginWithGoogle(credential);
       establishSession(session);
-      setPendingNotice({ type: 'success', content: 'Sign in successful' });
+      messageApi.success('Sign in successful');
+      navigate(redirectTo);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Google sign in failed. Please try again.';
-      setPendingNotice({ type: 'error', content: errorMessage });
+      messageApi.error(errorMessage);
     } finally {
       setGoogleLoading(false);
     }
   };
   const handleGoogleError = React.useCallback(() => {
-    setPendingNotice({ type: 'error', content: 'Google sign in failed. Please try again.' });
-  }, []);
+    messageApi.error('Google sign in failed. Please try again.');
+  }, [messageApi]);
 
   return (
     <div className={styles.formContainer}>
@@ -87,7 +67,7 @@ export const SignInForm: React.FC = () => {
       <h2 className={styles.title}>Sign In</h2>
       <p className={styles.subtitle}>Welcome back! Please sign in to your account.</p>
 
-      <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
+      <Form layout="vertical" requiredMark={false} autoComplete="on" onFinish={handleSubmit}>
         <Form.Item
           label={<span className={styles.label}>Email Address</span>}
           name="email"
@@ -96,10 +76,12 @@ export const SignInForm: React.FC = () => {
             { type: 'email', message: 'Invalid email address' },
           ]}
         >
-          <Input 
-            prefix={<MailOutlined className={styles.inputIcon} />} 
-            placeholder="Enter your email" 
+          <Input
+            prefix={<MailOutlined className={styles.inputIcon} />}
+            placeholder="Enter your email"
             className={styles.inputField}
+            autoComplete="email"
+            name="email"
           />
         </Form.Item>
 
@@ -108,17 +90,16 @@ export const SignInForm: React.FC = () => {
           name="password"
           rules={[{ required: true, message: 'Password is required' }]}
         >
-          <Input.Password 
-            prefix={<LockOutlined className={styles.inputIcon} />} 
-            placeholder="Enter your password" 
+          <Input.Password
+            prefix={<LockOutlined className={styles.inputIcon} />}
+            placeholder="Enter your password"
             className={styles.inputField}
+            autoComplete="current-password"
+            name="password"
           />
         </Form.Item>
 
         <div className={styles.formRow}>
-          <Form.Item name="remember" valuePropName="checked" style={{ marginBottom: 0 }}>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
           <Link to="/forgot-password" className={styles.forgotPassword}>Forgot Password?</Link>
         </div>
 

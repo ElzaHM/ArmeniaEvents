@@ -54,23 +54,32 @@ export const SignInPanel: React.FC = () => {
                 src={signInIllustration}
                 alt="Armenia Events skyline illustration"
                 className={styles.illustrationImage}
+                loading="eager"
+                decoding="async"
+                draggable={false}
               />
             </div>
           </div>
         </div>
       </div>
 
-      <div className={styles.rightSection}>
-        <SignInForm />
-        <div className={`${styles.mobileIllustration} auth-illustration`}>
-          <div className="auth-illustration-image">
-            <img
-              src={signInIllustration}
-              alt="Armenia Events skyline illustration"
-              className={styles.illustrationImage}
-            />
+      <div className={`${styles.rightSection} auth-right-section`}>
+        <div className={styles.mobileIllustrationArea}>
+          <div className={styles.mobileArc} aria-hidden="true" />
+          <div className={`${styles.mobileIllustration} auth-illustration`}>
+            <div className="auth-illustration-image">
+              <img
+                src={signInIllustration}
+                alt="Armenia Events skyline illustration"
+                className={styles.illustrationImage}
+                loading="eager"
+                decoding="async"
+                draggable={false}
+              />
+            </div>
           </div>
         </div>
+        <SignInForm />
       </div>
     </div>
   );

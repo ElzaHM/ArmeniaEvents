@@ -2,6 +2,7 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  overflow-x: clip;
   box-sizing: border-box;
 }
 
@@ -12,9 +13,16 @@
 .formContainer :global(.ant-form-item-control-input-content),
 .formContainer :global(.ant-input-affix-wrapper),
 .formContainer :global(.ant-input),
-.formContainer :global(.ant-btn) {
+.formContainer :global(.ant-btn),
+.formContainer :global(.ant-checkbox-wrapper) {
   max-width: 100%;
   box-sizing: border-box;
+}
+
+.formContainer :global(.ant-checkbox-wrapper) {
+  align-items: flex-start;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .title {

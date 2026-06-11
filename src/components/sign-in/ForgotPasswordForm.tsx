@@ -56,6 +56,8 @@ export const ForgotPasswordForm: React.FC = () => {
               prefix={<MailOutlined className={styles.inputIcon} />}
               placeholder="Enter your email"
               className={styles.inputField}
+              autoComplete="email"
+              name="email"
             />
           </Form.Item>
 

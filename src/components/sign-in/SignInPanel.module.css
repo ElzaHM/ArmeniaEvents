@@ -4,10 +4,11 @@
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border-radius: 12px;
-  overflow: visible;
+  overflow-x: hidden;
+  overflow-y: visible;
   max-width: 960px;
   width: 92%;
-  max-height: 100%;
+  max-height: none;
   margin: 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: none;
@@ -32,8 +33,8 @@
   min-width: 0;
   padding: 30px 28px;
   background: transparent;
-  overflow-y: auto;
-  overflow-x: visible;
+  overflow-y: visible;
+  overflow-x: hidden;
   min-height: 0;
   box-sizing: border-box;
   display: flex;
@@ -112,14 +113,15 @@
   position: relative;
   margin-top: auto;
   width: 100%;
-  min-height: 200px;
+  min-height: var(--auth-illustration-box-height, 110px);
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .arcDecoration {
   position: absolute;
   top: -12px;
-  left: -4px;
+  left: 0;
   width: min(78%, 240px);
   height: 220px;
   border: 1px solid var(--auth-arc-border);
@@ -136,22 +138,25 @@
   margin-right: auto;
   padding-top: 8px;
   width: var(--auth-illustration-box-width, 100%);
-  height: var(--auth-illustration-box-height, 128px);
+  height: var(--auth-illustration-box-height, 110px);
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  overflow: visible;
+  overflow: hidden;
   flex-shrink: 0;
   background-color: transparent;
   box-sizing: border-box;
 }
 
-.illustration :global(.auth-illustration-image) {
+.illustration :global(.auth-illustration-image),
+.mobileIllustration :global(.auth-illustration-image) {
   display: flex;
   justify-content: center;
   align-items: flex-end;
   width: 100%;
   height: 100%;
+  flex-shrink: 0;
+  background-color: transparent;
 }
 
 .illustrationImage {
@@ -159,7 +164,7 @@
   width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: 180px;
+  max-height: var(--auth-illustration-box-height, 110px);
   margin: 0;
   background-color: transparent;
   object-fit: contain;
@@ -168,6 +173,12 @@
   opacity: 1;
   filter: none;
   transform: none;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.mobileIllustrationArea {
+  display: none;
 }
 
 .mobileIllustration {
@@ -177,9 +188,12 @@
 @media (max-width: 1024px) {
   .panel {
     flex-direction: column;
-    width: 100%;
-    max-width: 360px;
-    overflow: visible;
+    width: var(--sign-in-compact-panel-width, var(--auth-panel-fluid-width, 280px));
+    max-width: var(--sign-in-compact-panel-width, var(--auth-panel-fluid-width, 280px));
+    max-height: none;
+    overflow-x: hidden;
+    overflow-y: visible;
+    flex-shrink: 0;
   }
 
   .leftSection {
@@ -187,47 +201,61 @@
   }
 
   .rightSection {
-    padding: 20px 18px 16px;
+    flex: 0 1 auto;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 12px var(--sign-in-panel-padding-x, 14px) 14px;
+    overflow-x: hidden;
     overflow-y: visible;
+  }
+
+  .mobileIllustrationArea {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: var(--auth-illustration-box-height, 80px);
+    min-height: var(--auth-illustration-box-height, 80px);
+    max-height: var(--auth-illustration-box-height, 80px);
+    overflow: hidden;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+  }
+
+  .mobileArc {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(62%, 140px);
+    height: 52px;
+    border: 1px solid var(--auth-arc-border);
+    border-bottom: none;
+    border-radius: 120px 120px 0 0;
+    pointer-events: none;
+    z-index: 0;
   }
 
   .mobileIllustration {
     display: flex;
+    position: relative;
+    z-index: 1;
     justify-content: center;
     align-items: flex-end;
     width: 100%;
-    height: var(--auth-illustration-box-height, 168px);
-    margin-top: 8px;
-    overflow: visible;
-  }
-}
-
-@media (max-width: 480px) {
-  .panel {
-    width: 100%;
-    max-width: 280px;
-    margin: 0 auto;
-    overflow: visible;
-  }
-
-  .rightSection {
-    padding: 16px 14px 10px;
-    overflow: visible;
-  }
-
-  .mobileIllustration {
-    height: var(--auth-illustration-box-height, 180px);
-    margin-top: 8px;
-    overflow: visible;
-  }
-}
-
-@media (max-width: 360px) {
-  .panel {
     max-width: 100%;
+    height: 100%;
+    max-height: var(--auth-illustration-box-height, 80px);
+    min-height: var(--auth-illustration-box-height, 80px);
+    margin: 0;
+    overflow: hidden;
   }
+}
 
-  .rightSection {
-    padding: 16px 12px 10px;
+@media (max-width: 319px) {
+  .panel {
+    width: calc(100vw - 40px);
+    max-width: var(--sign-in-compact-panel-width, 280px);
   }
 }

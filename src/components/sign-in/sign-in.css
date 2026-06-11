@@ -1,6 +1,11 @@
 [data-theme='light'] {
   --auth-panel-shadow: 0 6px 28px rgba(0, 0, 0, 0.1), 0 2px 10px rgba(0, 0, 0, 0.05);
-  --auth-page-overlay: none;
+  --auth-page-overlay: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.24) 50%,
+    rgba(255, 255, 255, 0.28) 100%
+  );
   --auth-panel-bg: rgba(255, 255, 255, 0.95);
   --auth-panel-left-bg: var(--auth-panel-bg);
   --auth-panel-border: var(--home-border);
@@ -94,29 +99,76 @@
   padding: 0 15px !important;
 }
 
-.auth-page .auth-illustration,
-.auth-page .auth-illustration-image {
+.auth-page .auth-illustration {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+  flex-shrink: 0;
+  max-width: 100%;
   background-color: transparent;
 }
 
+.auth-page .auth-right-section {
+  overflow-x: hidden;
+  overflow-y: visible;
+  max-width: 100%;
+  min-width: 0;
+}
+
 .auth-page .auth-illustration-image {
-  display: block;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   width: 100%;
+  height: 100%;
+  max-height: inherit;
+  flex-shrink: 0;
+  background-color: transparent;
+  overflow: hidden;
 }
 
 .auth-page .auth-illustration-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: var(--auth-illustration-box-height, 110px);
+  margin: 0;
+  flex-shrink: 0;
   background-color: transparent;
+  object-fit: contain;
+  object-position: bottom center;
+  mix-blend-mode: screen;
+  opacity: 1;
+  filter: none;
 }
 
 .sign-in-page,
 .sign-up-page {
   --auth-illustration-scale-y: 1.1;
+  /* Fluid panel: 360px @ 1024px → 280px @ 800px */
+  --auth-panel-fluid-min: 280px;
+  --auth-panel-fluid-max: 360px;
+  --auth-panel-fluid-width: clamp(
+    var(--auth-panel-fluid-min),
+    calc(var(--auth-panel-fluid-min) + (100vw - 800px) * 0.35714),
+    var(--auth-panel-fluid-max)
+  );
 }
 
 .sign-in-page {
   --auth-illustration-box-width: 100%;
-  --auth-illustration-box-height: 180px;
+  --auth-illustration-box-height: 110px;
   --auth-left-padding-x: 40px;
+  --sign-in-compact-panel-width: var(--auth-panel-fluid-width);
+  --sign-in-panel-padding-x: 14px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  box-sizing: border-box;
 }
 
 .sign-in-page .auth-illustration {
@@ -124,11 +176,13 @@
   margin-right: auto;
   width: var(--auth-illustration-box-width);
   height: var(--auth-illustration-box-height);
+  min-height: var(--auth-illustration-box-height);
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  overflow: visible;
+  overflow: hidden;
   flex-shrink: 0;
+  max-width: 100%;
 }
 
 .sign-in-page .auth-illustration-image {
@@ -139,22 +193,8 @@
   height: 100%;
 }
 
-.sign-in-page .auth-illustration-image img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  margin: 0;
-  transform: none;
-  object-fit: contain;
-  object-position: bottom center;
-  opacity: var(--auth-illustration-image-opacity, 1);
-  mix-blend-mode: var(--auth-illustration-blend);
-  filter: var(--auth-illustration-filter, none);
-}
-
-.sign-in-page .auth-illustration-image img {
+.sign-in-page .auth-illustration-image img,
+.sign-up-page .auth-illustration-image img {
   mix-blend-mode: screen !important;
   filter: none !important;
   opacity: 1 !important;
@@ -169,10 +209,10 @@
   max-width: 960px;
   width: 92%;
   min-height: 0;
-  max-height: 100%;
+  max-height: none;
   height: auto;
-  overflow-x: visible;
-  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-y: visible;
   box-sizing: border-box;
   flex-shrink: 1;
 }
@@ -224,12 +264,15 @@
 
 body:has(.auth-page) {
   overflow: hidden;
+  overflow-x: clip;
 }
 
 body:has(.auth-page) #root {
   height: 100dvh;
   max-height: 100dvh;
   overflow: hidden;
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 .auth-main {
@@ -255,20 +298,33 @@ body:has(.auth-page) #root {
 }
 
 @media (max-width: 1024px) {
+  .sign-in-page {
+    --auth-illustration-box-height: 80px;
+    --sign-in-compact-panel-width: var(--auth-panel-fluid-width);
+  }
+
+  .sign-up-page {
+    --sign-up-compact-panel-width: var(--auth-panel-fluid-width);
+  }
+
   .sign-in-page .sign-in-main {
     align-items: center;
     justify-content: center;
-    overflow-x: visible;
+    overflow-x: hidden;
     overflow-y: auto;
     box-sizing: border-box;
-    padding-inline: 20px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .sign-in-page .sign-in-panel {
-    width: 100% !important;
-    max-width: 360px !important;
+    width: var(--sign-in-compact-panel-width) !important;
+    max-width: var(--sign-in-compact-panel-width) !important;
+    max-height: none !important;
     margin: auto !important;
-    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    flex-shrink: 0;
   }
 
   .sign-in-page .ant-input-affix-wrapper,
@@ -279,60 +335,43 @@ body:has(.auth-page) #root {
     box-sizing: border-box !important;
   }
 
-  .sign-in-page .sign-in-panel .rightSection .auth-illustration {
-    height: var(--auth-illustration-box-height, 180px);
-    overflow: visible;
+  .sign-in-page .sign-in-panel .auth-right-section .auth-illustration {
+    height: var(--auth-illustration-box-height, 80px);
+    min-height: var(--auth-illustration-box-height, 80px);
+    max-height: var(--auth-illustration-box-height, 80px);
+    overflow: hidden;
+    max-width: 100%;
   }
 
-  .sign-in-page .sign-in-panel .rightSection .auth-illustration-image img {
-    mix-blend-mode: screen !important;
-    filter: none !important;
-    opacity: 1 !important;
-    max-height: 180px;
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .sign-in-page .sign-in-main {
-    padding-inline: 20px;
-    align-items: center;
-    justify-content: center;
+  .sign-in-page .sign-in-panel .auth-right-section .auth-illustration-image {
+    height: 100%;
+    max-height: var(--auth-illustration-box-height, 80px);
+    overflow: hidden;
   }
 
-  .sign-in-page .sign-in-panel {
-    width: 100% !important;
-    max-width: 300px !important;
-    margin: auto !important;
-    overflow: visible !important;
+  .sign-in-page .sign-in-panel .auth-right-section .auth-illustration-image img {
+    max-height: var(--auth-illustration-box-height, 80px);
   }
 }
 
 @media (max-width: 480px) {
-  .sign-in-page .sign-in-main {
-    padding-inline: 20px;
-    overflow-x: visible;
-    align-items: center;
-    justify-content: center;
+  .sign-in-page {
+    --auth-illustration-box-height: 72px;
   }
 
-  .sign-in-page .sign-in-panel {
-    width: 100% !important;
-    max-width: 280px !important;
-    margin: auto !important;
-    overflow: visible !important;
-    border-radius: 12px !important;
+  .sign-in-page .sign-in-panel .auth-right-section .auth-illustration {
+    height: var(--auth-illustration-box-height, 72px);
+    max-height: var(--auth-illustration-box-height, 72px);
+  }
+
+  .sign-in-page .sign-in-panel .auth-right-section .auth-illustration-image img {
+    max-height: var(--auth-illustration-box-height, 72px);
   }
 }
 
-@media (max-width: 360px) {
-  .sign-in-page .sign-in-main {
-    padding-inline: 16px;
-  }
-
+@media (max-width: 319px) {
   .sign-in-page .sign-in-panel {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: auto !important;
+    width: calc(100vw - 40px) !important;
+    max-width: var(--sign-in-compact-panel-width) !important;
   }
 }

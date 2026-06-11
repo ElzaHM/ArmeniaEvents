@@ -1,8 +1,12 @@
 .sign-up-page {
   --auth-illustration-box-width: 100%;
-  --auth-illustration-box-height: 180px;
+  --auth-illustration-box-height: 96px;
+  --sign-up-compact-panel-width: var(--auth-panel-fluid-width, 280px);
+  --sign-up-panel-padding-x: 14px;
   width: 100%;
+  max-width: 100%;
   overflow-x: clip;
+  box-sizing: border-box;
 }
 
 .sign-up-page .sign-up-main {
@@ -13,7 +17,8 @@
   justify-content: center;
   width: 100%;
   min-width: 0;
-  overflow-x: visible;
+  max-width: 100%;
+  overflow-x: hidden;
   overflow-y: auto;
   box-sizing: border-box;
 }
@@ -21,11 +26,11 @@
 .sign-up-page .sign-up-panel {
   max-width: 960px;
   width: min(92%, 960px);
-  max-height: 100%;
+  max-height: none;
   height: auto;
   border-radius: 12px;
-  overflow-x: visible;
-  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-y: visible;
   box-sizing: border-box;
 }
 
@@ -57,11 +62,13 @@
   margin-right: auto;
   width: var(--auth-illustration-box-width);
   height: var(--auth-illustration-box-height);
+  min-height: var(--auth-illustration-box-height);
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  overflow: visible;
+  overflow: hidden;
   flex-shrink: 0;
+  max-width: 100%;
 }
 
 .sign-up-page .auth-illustration-image {
@@ -70,26 +77,22 @@
   align-items: flex-end;
   width: 100%;
   height: 100%;
+  min-height: inherit;
+  overflow: hidden;
 }
 
 .sign-up-page .auth-illustration-image img {
   display: block;
-  width: auto;
+  width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: 100%;
-  margin: 0;
-  opacity: var(--auth-illustration-image-opacity, 1);
+  max-height: var(--auth-illustration-box-height, 96px);
   object-fit: contain;
   object-position: bottom center;
-  mix-blend-mode: var(--auth-illustration-blend);
-  filter: var(--auth-illustration-filter, none);
-}
-
-.sign-up-page .auth-illustration-image img {
   mix-blend-mode: screen !important;
   filter: none !important;
   opacity: 1 !important;
+  background-color: transparent;
 }
 
 .sign-up-page .ant-form-item {
@@ -107,100 +110,83 @@
 }
 
 @media (max-width: 1024px) {
+  .sign-up-page {
+    --auth-illustration-box-width: 90%;
+    --auth-illustration-box-height: 60px;
+    --sign-up-compact-panel-width: var(--auth-panel-fluid-width);
+  }
+
   .sign-up-page .sign-up-main {
     align-items: center;
     justify-content: center;
-    padding-inline: 20px;
-    overflow-x: visible;
+    overflow-x: hidden;
     overflow-y: auto;
     box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
   }
 
   .sign-up-page .sign-up-panel {
-    width: 100% !important;
-    max-width: 360px !important;
+    width: var(--sign-up-compact-panel-width) !important;
+    max-width: var(--sign-up-compact-panel-width) !important;
+    max-height: none !important;
     margin: auto !important;
-    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    flex-shrink: 0;
   }
 
   .sign-up-page .ant-input-affix-wrapper,
   .sign-up-page .ant-btn,
-  .sign-up-page .ant-form-item-control-input-content {
+  .sign-up-page .ant-form-item-control-input-content,
+  .sign-up-page .ant-checkbox-wrapper {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
   }
 
-  .sign-up-page .sign-up-panel .rightSection .auth-illustration {
-    height: var(--auth-illustration-box-height, 180px);
-    overflow: visible;
+  .sign-up-page .sign-up-panel .auth-right-section .auth-illustration {
+    width: var(--auth-illustration-box-width, 88%);
+    max-width: 200px;
+    height: var(--auth-illustration-box-height, 60px);
+    min-height: var(--auth-illustration-box-height, 60px);
+    max-height: var(--auth-illustration-box-height, 60px);
+    margin-inline: auto;
+    overflow: hidden;
   }
 
-  .sign-up-page .sign-up-panel .rightSection .auth-illustration-image img {
-    mix-blend-mode: screen !important;
-    filter: none !important;
-    opacity: 1 !important;
-    max-height: 180px;
-    width: 100%;
-  }
-}
-
-@media (max-width: 960px) {
-  .sign-up-page .sign-up-main {
-    padding-inline: 20px;
-    overflow-x: visible;
+  .sign-up-page .sign-up-panel .auth-right-section .auth-illustration-image {
+    height: 100%;
+    max-height: var(--auth-illustration-box-height, 60px);
+    overflow: hidden;
   }
 
-  .sign-up-page .sign-up-panel {
-    width: 100% !important;
-    max-width: 320px !important;
-    margin: 0 auto !important;
-    overflow: visible !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .sign-up-page .sign-up-main {
-    padding-inline: 20px;
-    align-items: center;
-    justify-content: center;
-    overflow-x: visible;
-    overflow-y: auto;
-  }
-
-  .sign-up-page .sign-up-panel {
-    width: 100% !important;
-    max-width: 300px !important;
-    margin: 0 auto !important;
-    overflow: visible !important;
+  .sign-up-page .sign-up-panel .auth-right-section .auth-illustration-image img {
+    max-height: var(--auth-illustration-box-height, 60px);
   }
 }
 
 @media (max-width: 480px) {
-  .sign-up-page .sign-up-main {
-    padding-inline: 20px;
-    overflow-x: visible;
-    align-items: center;
-    justify-content: center;
+  .sign-up-page {
+    --auth-illustration-box-height: 52px;
+    --auth-illustration-box-width: 86%;
   }
 
-  .sign-up-page .sign-up-panel {
-    width: 100% !important;
-    max-width: 280px !important;
-    margin: auto !important;
-    border-radius: 12px !important;
-    overflow: visible !important;
+  .sign-up-page .sign-up-panel .auth-right-section .auth-illustration {
+    height: var(--auth-illustration-box-height, 52px);
+    min-height: var(--auth-illustration-box-height, 52px);
+    max-height: var(--auth-illustration-box-height, 52px);
+    max-width: 180px;
+  }
+
+  .sign-up-page .sign-up-panel .auth-right-section .auth-illustration-image img {
+    max-height: var(--auth-illustration-box-height, 52px);
   }
 }
 
-@media (max-width: 360px) {
-  .sign-up-page .sign-up-main {
-    padding-inline: 16px;
-  }
-
+@media (max-width: 319px) {
   .sign-up-page .sign-up-panel {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: auto !important;
+    width: calc(100vw - 40px) !important;
+    max-width: var(--sign-up-compact-panel-width) !important;
   }
 }
