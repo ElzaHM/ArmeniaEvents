@@ -348,7 +348,6 @@ export default function AdminUsersPage() {
     {
       title: 'Actions',
       key: 'actions',
-      responsive: ['md'],
       render: (_, record) => (
         <Space size="small" onClick={(event) => event.stopPropagation()}>
           <Button

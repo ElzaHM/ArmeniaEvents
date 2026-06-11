@@ -1318,6 +1318,65 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
   }
 }
 
+/* ===== System-wide admin responsive adjustments ===== */
+@media (max-width: 1024px) {
+  .admin-panel .admin-content :global(.ant-table-thead > tr > th),
+  .admin-panel .admin-content :global(.ant-table-tbody > tr > td) {
+    padding: 10px 12px !important;
+    font-size: 13px;
+  }
+
+  .admin-panel .admin-content :global(.ant-form-item) {
+    margin-bottom: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  :global(.admin-detail-modal) {
+    max-width: min(640px, calc(100vw - 32px)) !important;
+    width: min(640px, calc(100vw - 32px)) !important;
+  }
+
+  :global(.admin-detail-modal) :global(.ant-modal-header) {
+    padding: 16px 20px !important;
+  }
+
+  :global(.admin-detail-modal) :global(.ant-modal-body) {
+    padding: 16px 36px 20px 20px !important;
+  }
+
+  :global(.admin-detail-modal) :global(.ant-modal-footer),
+  :global(.admin-detail-modal) footer {
+    padding: 14px 20px !important;
+  }
+
+  .admin-panel .admin-content :global(.ant-table-thead > tr > th),
+  .admin-panel .admin-content :global(.ant-table-tbody > tr > td) {
+    padding: 8px 10px !important;
+    font-size: 12px;
+  }
+
+  .admin-panel .admin-content :global(.ant-pagination) {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+}
+
+@media (max-height: 800px) {
+  :global(.admin-detail-modal) {
+    max-height: 90vh;
+  }
+
+  :global(.admin-detail-modal) :global(.ant-modal-content) {
+    max-height: 90vh;
+  }
+
+  .admin-panel .admin-content :global(.ant-table-thead > tr > th),
+  .admin-panel .admin-content :global(.ant-table-tbody > tr > td) {
+    padding-block: 8px !important;
+  }
+}
+
 .admin-print-only {
   display: none;
 }

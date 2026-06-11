@@ -129,6 +129,15 @@
 }
 
 @media (max-width: 1024px) {
+  .upcomingEventsWrapper {
+    flex: 1 1 100%;
+  }
+
+  .analyticsWrapper {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
   .bottomRow {
     grid-template-columns: 1fr;
   }
@@ -139,7 +148,7 @@
 
   .bottomCard {
     height: auto;
-    min-height: 380px;
+    min-height: 320px;
     max-height: none;
   }
 
@@ -160,6 +169,47 @@
 
   .dashboard {
     gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .upcomingEventsWrapper {
+    flex: 1 1 100%;
+  }
+
+  .analyticsWrapper {
+    min-width: 0;
+  }
+
+  .bottomCard {
+    min-height: 280px;
+  }
+
+  .row {
+    gap: 14px;
+  }
+
+  .dashboard {
+    gap: 14px;
+  }
+}
+
+@media (max-height: 800px) {
+  .dashboard {
+    gap: 14px;
+  }
+
+  .row {
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .bottomRow {
+    gap: 14px;
+  }
+
+  .bottomCard {
+    min-height: 260px;
   }
 }
 

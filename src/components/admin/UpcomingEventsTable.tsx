@@ -144,6 +144,7 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
     {
       title: "Views",
       key: "views",
+      responsive: ["lg"],
       render: (_, record) => {
         const percent = Math.round((record.views / record.maxViews) * 100);
         return (

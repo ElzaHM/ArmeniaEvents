@@ -61,3 +61,30 @@
   color: var(--admin-text-muted);
   font-size: 12px;
 }
+
+@media (max-width: 768px) {
+  .action {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .iconWrap {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .title {
+    font-size: 13px;
+  }
+
+  .description {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 640px) {
+  .list {
+    gap: 6px;
+  }
+}

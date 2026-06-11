@@ -228,6 +228,7 @@ export default function AdminCategoriesPage() {
       title: 'Events',
       dataIndex: 'eventCount',
       key: 'eventCount',
+      responsive: ['lg'],
       render: (count: number) => count.toLocaleString(),
     },
     {
@@ -235,7 +236,7 @@ export default function AdminCategoriesPage() {
       dataIndex: 'description',
       key: 'description',
       width: 380,
-      responsive: ['lg'],
+      responsive: ['xl'],
       render: (description: string) => (
         <span className={styles.descriptionClamp}>{description}</span>
       ),
@@ -251,6 +252,7 @@ export default function AdminCategoriesPage() {
     {
       title: 'Enabled',
       key: 'toggle',
+      responsive: ['md'],
       render: (_, record) => (
         <Switch
           checked={record.isActive}

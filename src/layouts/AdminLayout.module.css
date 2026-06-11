@@ -100,6 +100,29 @@
   .content {
     padding: 16px;
   }
+
+  .content :global([class*="pageHeader"]) {
+    padding: 16px 20px !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 14px;
+  }
+
+  .content :global([class*="pageHeader"]) {
+    padding: 14px 16px !important;
+    border-radius: 14px;
+  }
+}
+
+@media (max-height: 800px) {
+  .content {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
 }
 
 @media (max-width: 640px) {

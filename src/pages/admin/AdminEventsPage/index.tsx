@@ -276,7 +276,7 @@ export default function AdminEventsPage() {
       title: "Category",
       dataIndex: "category",
       key: "category",
-      responsive: ["md"],
+      responsive: ["lg"],
       width: 120,
       render: (_, record) => {
         if (isUncategorizedEvent(record)) {
@@ -292,7 +292,7 @@ export default function AdminEventsPage() {
       key: "location",
       width: 180,
       onCell: () => WRAP_CELL_PROPS,
-      responsive: ["md"],
+      responsive: ["lg"],
       render: (location: string) => (
         <span className={styles.locationText}>{location}</span>
       ),
@@ -301,7 +301,7 @@ export default function AdminEventsPage() {
       title: "Views",
       dataIndex: "views",
       key: "views",
-      responsive: ["md"],
+      responsive: ["lg"],
       render: (views: number) => views.toLocaleString(),
     },
     {
@@ -315,7 +315,6 @@ export default function AdminEventsPage() {
       title: "Actions",
       key: "actions",
       width: 140,
-      responsive: ["md"],
       render: (_, record) => (
         <Space size="small" onClick={(event) => event.stopPropagation()}>
           <Button

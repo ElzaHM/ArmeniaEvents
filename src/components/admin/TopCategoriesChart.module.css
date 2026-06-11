@@ -97,6 +97,30 @@
   font-size: 11px;
 }
 
+@media (max-width: 768px) {
+  .chartArea {
+    height: 160px;
+    min-height: 160px;
+    max-height: 160px;
+  }
+
+  .centerValue {
+    font-size: 18px;
+  }
+
+  .wrap {
+    gap: 10px;
+  }
+}
+
+@media (max-height: 800px) {
+  .chartArea {
+    height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+  }
+}
+
 @media (max-width: 640px) {
   .legend {
     grid-template-columns: 1fr;

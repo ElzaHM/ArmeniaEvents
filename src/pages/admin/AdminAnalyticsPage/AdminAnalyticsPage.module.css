@@ -71,6 +71,40 @@
   }
 }
 
+@media (max-width: 768px) {
+  .page {
+    gap: 14px;
+  }
+
+  .headerRow {
+    gap: 12px;
+  }
+
+  .exportButton {
+    height: 36px;
+    padding-inline: 14px !important;
+    font-size: 13px;
+  }
+
+  .interactiveReport {
+    gap: 12px;
+  }
+
+  .grid {
+    gap: 12px;
+  }
+}
+
+@media (max-height: 800px) {
+  .page {
+    gap: 14px;
+  }
+
+  .interactiveReport {
+    gap: 12px;
+  }
+}
+
 @media (max-width: 640px) {
   .page {
     gap: 16px;

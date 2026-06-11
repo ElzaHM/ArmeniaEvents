@@ -95,6 +95,21 @@
   object-fit: contain;
 }
 
+@media (max-width: 768px) {
+  .profileLayout {
+    gap: 20px;
+  }
+
+  .photoPanel {
+    padding: 16px;
+  }
+
+  .avatar {
+    width: 112px;
+    height: 112px;
+  }
+}
+
 @media (max-width: 820px) {
   .profileLayout {
     grid-template-columns: 1fr;

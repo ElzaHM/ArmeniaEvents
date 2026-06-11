@@ -7,6 +7,8 @@
 .topActions {
   display: flex;
   justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 16px;
 }
 
@@ -35,6 +37,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .thumbnail {
@@ -42,6 +45,7 @@
   height: 40px;
   border-radius: 8px;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .avatar {
@@ -49,4 +53,67 @@
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1024px) {
+  .sectionTitle {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .sections {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: 17px;
+  }
+
+  .loadingWrap,
+  .emptyWrap {
+    min-height: 140px;
+  }
+
+  .topActions {
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sections {
+    gap: 14px;
+  }
+
+  .sectionTitle {
+    font-size: 16px;
+  }
+
+  .eventCell,
+  .userCell {
+    gap: 10px;
+  }
+
+  .thumbnail {
+    width: 36px;
+    height: 36px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-height: 800px) {
+  .sections {
+    gap: 14px;
+  }
+
+  .loadingWrap,
+  .emptyWrap {
+    min-height: 120px;
+  }
 }

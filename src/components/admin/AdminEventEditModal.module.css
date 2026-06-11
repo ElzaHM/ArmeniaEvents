@@ -165,6 +165,38 @@
   min-width: 120px;
 }
 
+@media (max-width: 768px) {
+  .scrollContent {
+    gap: 12px;
+    padding-right: 4px;
+  }
+
+  .section {
+    padding: 12px 14px;
+  }
+
+  .sectionTitle {
+    margin-bottom: 10px;
+    font-size: 11px;
+  }
+
+  .footer {
+    margin-top: 12px;
+    padding-top: 12px;
+    gap: 10px;
+  }
+}
+
+@media (max-height: 800px) {
+  .form {
+    max-height: calc(88vh - 56px);
+  }
+
+  .scrollContent {
+    gap: 12px;
+  }
+}
+
 @media (max-width: 640px) {
   .form {
     max-height: calc(85vh - 56px);

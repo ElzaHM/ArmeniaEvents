@@ -40,5 +40,38 @@
 .toolbar {
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .totalCategoriesBadge {
+    margin: -8px 0 16px;
+    padding: 8px 14px;
+  }
+
+  .totalCategoriesCount {
+    font-size: 16px;
+  }
+
+  .toolbar {
+    justify-content: stretch;
+    margin-bottom: 12px;
+  }
+
+  .toolbar :global(.ant-btn) {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .totalCategoriesLabel {
+    font-size: 12px;
+  }
+
+  .detailSection {
+    padding: 12px;
+  }
 }
