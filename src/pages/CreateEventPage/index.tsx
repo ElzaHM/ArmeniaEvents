@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Form, Row, Col, ConfigProvider, theme, Typography, message } from 'antd';
 import dayjs from 'dayjs';
 import CreateEventForm from './CreateEventForm';
 import EventLivePreview from './EventLivePreview';
 import FooterContent from '../../components/home/FooterContent';
+import { useCategories } from '../../hooks/queries/useCategories';
 import styles from './CreateEventPage.module.css';
 import '../../components/home/home.css';
 import CreateEventDefault from '../../assets/createEventDefault.png';
@@ -29,6 +30,11 @@ export default function CreateEventPage() {
   const [form] = Form.useForm();
   const [eventImage, setEventImage] = useState<{ url: string; name: string } | null>(null);
   const [previewData, setPreviewData] = useState(initialPreviewData);
+  const { data: categories } = useCategories();
+  const categoryOptions = useMemo(
+    () => categories?.map((category) => ({ value: category.name })) ?? [],
+    [categories],
+  );
 
   const handleValuesChange = (_: unknown, allValues: Record<string, unknown>) => {
     setPreviewData({
@@ -93,7 +99,11 @@ export default function CreateEventPage() {
           >
             <Row gutter={[24, 24]}>
               <Col xs={24} lg={15}>
-                <CreateEventForm image={eventImage} setImage={setEventImage} />
+                <CreateEventForm
+                  image={eventImage}
+                  setImage={setEventImage}
+                  categoryOptions={categoryOptions}
+                />
               </Col>
               <Col xs={24} lg={9}>
                 <EventLivePreview data={previewData} image={currentPreviewImage} />

@@ -27,16 +27,17 @@ import styles from "./CreateEventPage.module.css";
 const {Title, Text} = Typography;
 const {TextArea} = Input;
 
-const defaultCategoryOptions = [
-  {value: "Programming"},
-  {value: "Business"},
-  {value: "Music"},
-  {value: "AI & Tech"},
-];
 const addressOptions = [
-  {value: "Yerevan, Armenia"},
-  {value: "Gyumri, Armenia"},
-  {value: "Dilijan, Armenia"},
+  { value: 'Yerevan, Armenia' },
+  { value: 'Gyumri, Armenia' },
+  { value: 'Vanadzor, Armenia' },
+  { value: 'Dilijan, Armenia' },
+  { value: 'Vagharshapat, Armenia' },
+  { value: 'Abovyan, Armenia' },
+  { value: 'Kapan, Armenia' },
+  { value: 'Hrazdan, Armenia' },
+  { value: 'Sevan, Armenia' },
+  { value: 'Goris, Armenia' },
 ];
 const EVENT_FORM_PICKER_POPUP = { popupClassName: "event-form-picker-dropdown" };
 
@@ -49,7 +50,7 @@ interface Props {
 export default function CreateEventForm({
   image,
   setImage,
-  categoryOptions = defaultCategoryOptions,
+  categoryOptions = [],
 }: Props) {
   const handleUpload = (info: any) => {
     const file = info.file.originFileObj || info.file;
@@ -80,8 +81,13 @@ export default function CreateEventForm({
           name="category"
           rules={[{required: true}]}
           className={styles.compactItem}>
-          <AutoComplete options={categoryOptions} filterOption={true}>
-            <Input className={styles.glassInput} />
+          <AutoComplete
+            options={categoryOptions}
+            filterOption={(input, option) =>
+              (option?.value ?? '').toString().toLowerCase().includes(input.toLowerCase())
+            }
+          >
+            <Input placeholder="Select category" className={styles.glassInput} />
           </AutoComplete>
         </Form.Item>
         <Form.Item
@@ -148,10 +154,15 @@ export default function CreateEventForm({
           />
         </Form.Item>
         <Form.Item name="address" rules={[{required: true}]} className={styles.compactItem}>
-          <AutoComplete options={addressOptions} filterOption={true}>
+          <AutoComplete
+            options={addressOptions}
+            filterOption={(input, option) =>
+              (option?.value ?? '').toString().toLowerCase().includes(input.toLowerCase())
+            }
+          >
             <Input
               prefix={<EnvironmentOutlined />}
-              placeholder="Address"
+              placeholder="Select address"
               className={styles.glassInput}
             />
           </AutoComplete>
