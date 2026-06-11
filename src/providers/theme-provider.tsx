@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { ConfigProvider, theme } from 'antd';
+import { App, ConfigProvider, theme } from 'antd';
 
 import { ThemeContext, type ThemeMode } from './theme-context';
 
@@ -52,7 +52,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   return (
     <ThemeContext.Provider value={value}>
-      <ConfigProvider theme={antTheme}>{children}</ConfigProvider>
+      <ConfigProvider theme={antTheme}>
+        <App>{children}</App>
+      </ConfigProvider>
     </ThemeContext.Provider>
   );
 }

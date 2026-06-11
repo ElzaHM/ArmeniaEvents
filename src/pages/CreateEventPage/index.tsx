@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Row, Col, ConfigProvider, theme, Typography, message } from 'antd';
+import { App, Form, Row, Col, ConfigProvider, theme, Typography } from 'antd';
 import dayjs, { type Dayjs } from 'dayjs';
 import CreateEventForm from './CreateEventForm';
 import EventLivePreview from './EventLivePreview';
@@ -146,6 +146,7 @@ function toFormValues(values: RawCreateEventValues): AdminCreateEventFormValues 
 }
 
 export default function CreateEventPage() {
+  const { message } = App.useApp();
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { isAuthenticated, loading: authLoading } = useAuth();
