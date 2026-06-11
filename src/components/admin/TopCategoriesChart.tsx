@@ -24,7 +24,7 @@ export default function TopCategoriesChart({ categories }: TopCategoriesChartPro
     <AdminCard title="Top Categories">
       <div className={styles.wrap}>
         <div className={styles.chartArea}>
-          <ResponsiveContainer width="100%" height={220} minHeight={220}>
+          <ResponsiveContainer width="100%" height={180} minHeight={180}>
             <PieChart>
               <Pie
                 data={categories}

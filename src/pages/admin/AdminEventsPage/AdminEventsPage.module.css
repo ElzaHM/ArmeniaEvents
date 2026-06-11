@@ -5,11 +5,6 @@
   margin-top: 8px;
 }
 
-.detailActions :global(.ant-btn) {
-  border: none !important;
-  box-shadow: none !important;
-}
-
 .detailModal {
   display: flex;
   flex-direction: column;
@@ -93,12 +88,6 @@
     transform 0.2s ease;
 }
 
-[data-theme="light"] .workflowCard {
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  background: rgba(34, 36, 42, 0.88);
-}
-
 .workflowCard:hover,
 .workflowCard:focus-visible,
 .workflowCardActive {
@@ -142,58 +131,6 @@
   color: var(--admin-text-secondary);
 }
 
-/* Card + table wrappers must not clip vertically (overflow-x: hidden forces overflow-y: auto). */
-.eventsTableCard,
-.eventsTableCard > div {
-  overflow: visible !important;
-  height: auto !important;
-  max-height: none !important;
-}
-
-.tableWrap {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  overflow: visible;
-  height: auto;
-  max-height: none;
-  background: var(--admin-table-row-bg);
-}
-
-.tableWrap :global(.ant-table-wrapper),
-.tableWrap :global(.ant-table),
-.tableWrap :global(.ant-table-container),
-.tableWrap :global(.ant-table-content),
-.tableWrap :global(.ant-table-body),
-.tableWrap :global(.ant-table-wrapper .ant-spin-nested-loading),
-.tableWrap :global(.ant-table-wrapper .ant-spin-container) {
-  overflow-y: visible !important;
-  height: auto !important;
-  max-height: none !important;
-}
-
-.tableWrap :global(.ant-table-wrapper) {
-  max-width: 100%;
-  overflow: visible !important;
-}
-
-/* Horizontal scroll only on the table body — never vertical. */
-.tableWrap :global(.ant-table-body) {
-  overflow-x: auto !important;
-  overflow-y: visible !important;
-}
-
-.tableWrap :global(.admin-btn-edit),
-.tableWrap :global(.admin-btn-edit:hover),
-.tableWrap :global(.admin-btn-edit:focus),
-.tableWrap :global(.admin-btn-delete),
-.tableWrap :global(.admin-btn-delete:hover),
-.tableWrap :global(.admin-btn-delete:focus) {
-  border: none !important;
-  box-shadow: none !important;
-}
-
 .emptyWrap {
   display: flex;
   min-height: 220px;
@@ -220,45 +157,6 @@
 .syncAlert :global(.ant-alert-message),
 .syncAlert :global(.ant-alert-title) {
   color: var(--admin-text);
-}
-
-:global([data-theme="light"]) .syncAlert:global(.ant-alert-info) :global(.ant-alert-message),
-:global([data-theme="light"]) .syncAlert:global(.ant-alert-info) :global(.ant-alert-title),
-:global([data-theme="light"]) .syncAlert:global(.ant-alert-info) :global(.ant-alert-icon) {
-  color: #0958d9 !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-close) {
-  top: 14px !important;
-  inset-inline-end: 14px !important;
-  width: 36px !important;
-  height: 36px !important;
-  margin: 0 !important;
-  border-radius: 50% !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  color: #ffffff !important;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-:global([data-theme="dark"]) .workflowCard:hover,
-:global([data-theme="dark"]) .workflowCard:focus-visible,
-:global([data-theme="dark"]) .workflowCardActive {
-  border-color: rgba(255, 210, 122, 0.52) !important;
-}
-
-:global([data-theme="dark"]) .workflowCardActive {
-  background:
-    linear-gradient(180deg, rgba(255, 210, 122, 0.24), transparent 62%),
-    rgba(42, 44, 52, 0.94) !important;
-  box-shadow:
-    inset 0 3px 0 #ffd27a,
-    var(--admin-hover-shadow) !important;
-}
-
-:global([data-theme="dark"]) .workflowCount {
-  color: #ffd27a !important;
 }
 
 .tableEyebrow {
@@ -371,39 +269,8 @@
   flex-shrink: 0;
 }
 
-.tableWrap :global(.admin-table-wrap-cell) {
-  white-space: normal !important;
-  word-break: break-word;
-  vertical-align: top !important;
-}
-
 .tableWrap :global(.ant-table-tbody > tr > td) {
   vertical-align: top;
-}
-
-.statusPublished {
-  color: var(--admin-success);
-  background: var(--admin-success-bg);
-  border: none;
-}
-
-.statusDraft {
-  color: var(--admin-warning);
-  background: var(--admin-warning-bg);
-  border: none;
-}
-
-.statusArchived {
-  color: var(--admin-text-muted);
-  background: var(--admin-gold-light);
-  border: none;
-}
-
-.uncategorizedTag {
-  margin-inline-end: 0;
-  background: #374151 !important;
-  border: none !important;
-  color: #d1d5db !important;
 }
 
 @media (max-width: 1200px) {

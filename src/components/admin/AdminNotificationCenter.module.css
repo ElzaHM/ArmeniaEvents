@@ -4,16 +4,17 @@
   padding: 0 !important;
   border-radius: 10px !important;
   backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
   transition: all 0.3s ease !important;
 }
 
-[data-theme='dark'] .bellButton {
+[data-theme="dark"] .bellButton {
   background-color: rgba(255, 255, 255, 0.12) !important;
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
   color: #ffffff !important;
 }
 
-[data-theme='light'] .bellButton {
+[data-theme="light"] .bellButton {
   background-color: rgba(255, 255, 255, 0.7) !important;
   border: 1px solid rgba(0, 0, 0, 0.05) !important;
   color: #000000 !important;
@@ -30,8 +31,6 @@
 .popover :global(.ant-popover-inner) {
   background: var(--admin-card-bg) !important;
   border: 1px solid var(--admin-border);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
   box-shadow: var(--admin-shadow);
 }
 
@@ -83,7 +82,7 @@
   padding: 10px 12px;
   border: 1px solid var(--admin-border);
   border-radius: 10px;
-  background: var(--admin-surface-hover);
+  background: var(--admin-surface-solid, #1c1e24);
   color: inherit;
   text-align: left;
   cursor: pointer;

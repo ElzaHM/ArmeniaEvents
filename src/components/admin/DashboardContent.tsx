@@ -79,11 +79,13 @@ export default function DashboardContent() {
             </div>
 
             <div className={styles.bottomRow}>
-              <div className="admin-no-print">
+              <div className={`${styles.bottomCard} admin-no-print`}>
                 <RecentActivity activities={recentActivity} />
               </div>
-              <TopCategoriesChart categories={categoryDistribution} />
-              <div className="admin-no-print">
+              <div className={styles.bottomCard}>
+                <TopCategoriesChart categories={categoryDistribution} />
+              </div>
+              <div className={`${styles.bottomCard} admin-no-print`}>
                 <QuickActions />
               </div>
             </div>

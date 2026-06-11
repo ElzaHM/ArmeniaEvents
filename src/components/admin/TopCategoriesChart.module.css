@@ -1,16 +1,19 @@
 .wrap {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  gap: 12px;
+  height: 100%;
+  min-height: 0;
 }
 
 .chartArea {
   position: relative;
   width: 100%;
   min-width: 0;
-  height: 220px;
-  min-height: 220px;
+  height: 180px;
+  min-height: 180px;
+  max-height: 180px;
+  flex-shrink: 0;
 }
 
 .centerLabel {
@@ -30,14 +33,14 @@
 
 .centerValue {
   display: block;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
   color: var(--admin-text);
 }
 
 .centerText {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--admin-text-muted);
 }
 
@@ -46,20 +49,24 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 10px;
+  flex: 1;
+  min-height: 0;
+  align-content: start;
 }
 
 .legendItem {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  padding: 6px 8px;
-  border-radius: 10px;
+  gap: 8px;
+  font-size: 12px;
+  padding: 5px 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease;
+  min-width: 0;
 }
 
 .legendItem:hover,
@@ -68,18 +75,30 @@
 }
 
 .dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
 .legendName {
   flex: 1;
+  min-width: 0;
   color: var(--admin-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .legendStats {
+  flex-shrink: 0;
   color: var(--admin-text);
   font-weight: 500;
+  font-size: 11px;
+}
+
+@media (max-width: 640px) {
+  .legend {
+    grid-template-columns: 1fr;
+  }
 }

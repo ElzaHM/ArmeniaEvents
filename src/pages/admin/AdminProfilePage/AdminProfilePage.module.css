@@ -87,43 +87,6 @@
   margin-top: 8px;
 }
 
-.actions :global(.ant-btn) {
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-.actions :global(.ant-btn-default) {
-  background: var(--admin-input-bg) !important;
-  color: var(--admin-text) !important;
-}
-
-.actions :global(.ant-btn-default):hover,
-.actions :global(.ant-btn-default):focus-visible {
-  background: var(--admin-surface-hover) !important;
-  color: var(--admin-gold-strong) !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.actions :global(.ant-btn-primary) {
-  background: var(--admin-button-primary-bg) !important;
-  color: var(--admin-button-primary-text) !important;
-  border: none !important;
-}
-
-.actions :global(.ant-btn-primary):hover,
-.actions :global(.ant-btn-primary):focus-visible {
-  background: var(--admin-button-primary-hover-bg) !important;
-  color: var(--admin-button-primary-text) !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-:global([data-theme="light"]) .actions :global(.ant-btn::after) {
-  display: none !important;
-}
-
 .previewImage {
   display: block;
   width: 100%;

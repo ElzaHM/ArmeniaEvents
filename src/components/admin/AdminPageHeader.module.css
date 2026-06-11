@@ -3,59 +3,56 @@
   width: fit-content;
   max-width: 100%;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
 }
 
 [data-theme="light"] .pageHeader {
-  background: rgba(20, 22, 28, 0.44);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  background: rgba(20, 22, 28, 0.36);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
   padding: 16px 28px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 12px 40px rgba(15, 23, 42, 0.1);
 }
 
 [data-theme="dark"] .pageHeader {
-  background: transparent;
-  backdrop-filter: none;
-  padding: 0;
-  border: none;
+  background: rgba(20, 22, 28, 0.38);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  padding: 16px 28px;
+  border: 1px solid rgba(217, 163, 74, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 12px 40px rgba(0, 0, 0, 0.18);
 }
 
 .greeting {
   margin: 0 0 4px;
   font-size: 28px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--admin-text);
   letter-spacing: -0.02em;
   line-height: 1.2;
-}
-
-[data-theme="light"] .greeting {
-  color: #ffffff;
 }
 
 .pageTitle {
   color: var(--admin-gold) !important;
 }
 
-[data-theme="light"] .pageTitle {
-  color: #ffd27a !important;
-}
-
 .goldText {
   color: var(--admin-gold) !important;
-}
-
-[data-theme="light"] .goldText {
-  color: #ffd27a !important;
 }
 
 .subtitle {
   margin: 0;
   font-size: 16px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--admin-text-secondary);
 }
 
 @media (max-width: 640px) {
@@ -73,6 +70,11 @@
 
   [data-theme="light"] .pageHeader {
     padding: 12px 20px;
-    background: rgba(20, 22, 28, 0.38);
+    background: rgba(20, 22, 28, 0.34);
+  }
+
+  [data-theme="dark"] .pageHeader {
+    padding: 12px 20px;
+    background: rgba(20, 22, 28, 0.34);
   }
 }

@@ -20,8 +20,6 @@
 .section {
   padding: 14px 16px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #1e1e22;
 }
 
 .sectionTitle {
@@ -30,7 +28,6 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--admin-text-muted);
 }
 
 .section :global(.ant-form-item) {
@@ -42,7 +39,7 @@
 }
 
 .section :global(.ant-radio-wrapper) {
-  color: var(--admin-text);
+  color: inherit;
 }
 
 .imageBlock {
@@ -55,7 +52,7 @@
 .imageLabel {
   font-size: 12px;
   font-weight: 600;
-  color: var(--admin-text-secondary);
+  color: rgba(255, 255, 255, 0.62);
 }
 
 .imageUrlField {
@@ -68,7 +65,7 @@
   max-height: 160px;
   border-radius: 12px;
   object-fit: cover;
-  border: 1px solid var(--admin-border);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .imagePreviewFallback {
@@ -77,36 +74,32 @@
   justify-content: center;
   min-height: 120px;
   border-radius: 12px;
-  border: 1px dashed var(--admin-border);
-  color: var(--admin-text-muted);
   font-size: 13px;
-  background: var(--admin-surface);
 }
 
 .imageUpload :global(.ant-upload-drag) {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border: 2px dashed var(--admin-border) !important;
+  border: 2px dashed rgba(255, 255, 255, 0.12) !important;
   border-radius: 10px !important;
   padding: 12px 0 !important;
 }
 
 .imageUpload :global(.ant-upload-drag:hover) {
-  border-color: var(--admin-gold-border) !important;
+  border-color: rgba(242, 194, 0, 0.45) !important;
 }
 
 .uploadIcon {
-  color: var(--admin-gold);
+  color: #ffd27a;
   font-size: 28px;
 }
 
 .uploadHint {
-  color: var(--admin-text-secondary) !important;
+  color: rgba(255, 255, 255, 0.72) !important;
   font-size: 12px !important;
 }
 
 .uploadedFileBar {
-  background: var(--admin-gold-light);
-  border: 1px solid var(--admin-gold-border);
+  background: rgba(242, 194, 0, 0.12);
+  border: 1px solid rgba(242, 194, 0, 0.35);
   border-radius: 10px;
   padding: 12px 15px;
   display: flex;
@@ -124,7 +117,7 @@
 
 .fileIcon {
   font-size: 20px;
-  color: var(--admin-gold-strong);
+  color: #ffd27a;
   flex-shrink: 0;
 }
 
@@ -135,11 +128,11 @@
 }
 
 .fileName {
-  color: var(--admin-text) !important;
+  color: #ffffff !important;
 }
 
 .fileMeta {
-  color: var(--admin-text-muted) !important;
+  color: rgba(255, 255, 255, 0.62) !important;
   font-size: 12px !important;
 }
 
@@ -148,14 +141,14 @@
   background: transparent;
   padding: 4px;
   cursor: pointer;
-  color: var(--admin-text-muted);
+  color: rgba(255, 255, 255, 0.62);
   font-size: 18px;
   line-height: 1;
   flex-shrink: 0;
 }
 
 .deleteBtn:hover {
-  color: var(--admin-gold-strong);
+  color: #ffd27a;
 }
 
 .footer {
@@ -165,13 +158,11 @@
   flex-shrink: 0;
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid var(--admin-border);
+  border-top: 1px solid var(--admin-table-border);
 }
 
 .footer :global(.ant-btn) {
   min-width: 120px;
-  border: none !important;
-  box-shadow: none !important;
 }
 
 @media (max-width: 640px) {

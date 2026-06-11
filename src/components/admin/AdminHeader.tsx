@@ -42,6 +42,7 @@ interface AdminHeaderProps {
   sidebarCollapsed: boolean;
   mobileOpen: boolean;
   onToggleSidebar: () => void;
+  isContentScrolled?: boolean;
 }
 
 const USER_MENU_ITEMS: MenuProps["items"] = [
@@ -55,12 +56,12 @@ export default function AdminHeader({
   sidebarCollapsed,
   mobileOpen,
   onToggleSidebar,
+  isContentScrolled = false,
 }: AdminHeaderProps) {
   const {mode, toggleTheme} = useTheme();
   const {displayName, avatarUrl} = useAdminProfileDisplay();
   const navigate = useNavigate();
   const location = useLocation();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isCompactSearch, setIsCompactSearch] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -113,14 +114,6 @@ export default function AdminHeader({
       )}
     </div>
   );
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     const mobileQuery = window.matchMedia("(max-width: 1024px)");
@@ -227,7 +220,7 @@ export default function AdminHeader({
 
   return (
     <header
-      className={`admin-no-print ${styles.header} ${isScrolled ? styles.headerScrolled : ""} ${isCompactSearch ? styles.headerCompact : ""}`}>
+      className={`admin-no-print ${styles.header} ${isContentScrolled ? styles.headerScrolled : ""} ${isCompactSearch ? styles.headerCompact : ""}`}>
       <div className={styles.headerMain}>
         <Button
           type="text"

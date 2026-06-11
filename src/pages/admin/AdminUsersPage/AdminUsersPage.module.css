@@ -1,55 +1,7 @@
-/* Card + table wrappers must not clip vertically (overflow-x: hidden forces overflow-y: auto). */
-.adminTableCard,
-.adminTableCard > div {
-  overflow: visible !important;
-  height: auto !important;
-  max-height: none !important;
-}
-
-.tableWrap {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  overflow: visible;
-  height: auto;
-  max-height: none;
-  background: var(--admin-table-row-bg);
-}
-
-.tableWrap :global(.ant-table-wrapper),
-.tableWrap :global(.ant-table),
-.tableWrap :global(.ant-table-container),
-.tableWrap :global(.ant-table-content),
-.tableWrap :global(.ant-table-body),
-.tableWrap :global(.ant-table-wrapper .ant-spin-nested-loading),
-.tableWrap :global(.ant-table-wrapper .ant-spin-container),
-.tableWrap :global(.ant-spin-nested-loading),
-.tableWrap :global(.ant-spin-container) {
-  overflow-y: visible !important;
-  height: auto !important;
-  max-height: none !important;
-}
-
-.tableWrap :global(.ant-table-wrapper) {
-  max-width: 100%;
-  overflow: visible !important;
-}
-
-/* Horizontal scroll only on the table body — never vertical. */
-.tableWrap :global(.ant-table-body) {
-  overflow-x: auto !important;
-  overflow-y: visible !important;
-}
-
-.tableWrap :global(.admin-btn-edit),
-.tableWrap :global(.admin-btn-edit:hover),
-.tableWrap :global(.admin-btn-edit:focus),
-.tableWrap :global(.admin-btn-delete),
-.tableWrap :global(.admin-btn-delete:hover),
-.tableWrap :global(.admin-btn-delete:focus) {
-  border: none !important;
-  box-shadow: none !important;
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
 }
 
 .tableHeader {
@@ -102,12 +54,6 @@
   color: var(--admin-text-secondary);
 }
 
-.toolbar {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 16px;
-}
-
 .userCell {
   display: flex;
   align-items: center;
@@ -153,34 +99,6 @@
 .userModal :global(.ant-modal-content) {
   max-width: 420px;
   margin: 0 auto;
-}
-
-.userModal .detailRow dt {
-  color: rgba(255, 255, 255, 0.62);
-}
-
-.userModal .detailRow dd,
-.userModal .avatarHint,
-.userModal .pendingAvatarName {
-  color: #e0e0e0;
-}
-
-.userModal :global(.ant-modal-close) {
-  top: 14px !important;
-  inset-inline-end: 14px !important;
-  width: 36px !important;
-  height: 36px !important;
-  margin: 0 !important;
-  border-radius: 50% !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  color: #ffffff !important;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.userModal :global(.ant-modal-body) {
-  padding: 18px;
 }
 
 .modalContent {
@@ -237,21 +155,6 @@
   width: 100%;
 }
 
-.editButton {
-  background: #1d4ed8 !important;
-  border: none !important;
-  box-shadow: none !important;
-  color: #eff6ff !important;
-}
-
-.editButton:hover,
-.editButton:focus {
-  background: #2563eb !important;
-  border: none !important;
-  box-shadow: none !important;
-  color: #ffffff !important;
-}
-
 .modalContent :global(.ant-form) {
   width: 100%;
 }
@@ -261,31 +164,6 @@
   width: 100%;
   justify-content: space-between;
   gap: 12px;
-}
-
-.modalActions :global(.ant-btn:not(.ant-btn-dangerous)),
-.modalContent :global(.ant-btn:not(.ant-btn-dangerous)) {
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.modalDeleteButton {
-  border: 1px solid rgba(239, 68, 68, 0.45) !important;
-  background: rgba(239, 68, 68, 0.15) !important;
-  color: #ef4444 !important;
-  box-shadow: none !important;
-  font-weight: 600;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.modalDeleteButton:hover,
-.modalDeleteButton:focus-visible {
-  border-color: #ef4444 !important;
-  background: #ef4444 !important;
-  color: #ffffff !important;
 }
 
 @media (max-width: 520px) {
@@ -300,9 +178,5 @@
   .detailRow {
     grid-template-columns: 1fr;
     gap: 4px;
-  }
-
-  .userModal :global(.ant-modal-body) {
-    padding: 14px;
   }
 }

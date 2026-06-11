@@ -280,7 +280,7 @@ export default function AdminEventsPage() {
       width: 120,
       render: (_, record) => {
         if (isUncategorizedEvent(record)) {
-          return <Tag className={styles.uncategorizedTag}>Uncategorized</Tag>;
+          return <Tag color="default">Uncategorized</Tag>;
         }
 
         return record.category;

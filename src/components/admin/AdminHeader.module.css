@@ -40,13 +40,14 @@
 
 [data-theme="dark"] .headerScrolled {
   backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
   background: rgba(15, 15, 18, 0.45);
 }
 
 [data-theme="light"] .headerScrolled {
   backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
   background: rgba(42, 39, 43, 0.5);
-  color: #1a1a1a;
 }
 
 .sidebarToggle {
@@ -85,6 +86,7 @@
 .actionBox,
 .userSnippet {
   backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
   border-radius: 10px !important;
   display: flex;
   align-items: center;
@@ -113,6 +115,13 @@
 [data-theme="light"] .searchIcon,
 [data-theme="light"] .searchShortcut {
   color: rgba(0, 0, 0, 0.58) !important;
+}
+
+:global(.ant-input-affix-wrapper).searchInput input,
+:global(.ant-input-affix-wrapper).searchInput input::placeholder,
+.searchIcon,
+.searchShortcut {
+  color: var(--admin-text-muted, rgba(255, 255, 255, 0.62)) !important;
 }
 
 .searchButton {
@@ -146,8 +155,6 @@
   color: var(--admin-gold-strong) !important;
 }
 
-[data-theme="light"] .sidebarToggle:hover,
-[data-theme="light"] .sidebarToggle:focus-visible,
 [data-theme="light"] .actionBox:hover,
 [data-theme="light"] .actionBox:focus-visible,
 [data-theme="light"] .userSnippet:hover,
@@ -155,14 +162,6 @@
   background: rgba(15, 23, 42, 0.08) !important;
   border-color: rgba(15, 23, 42, 0.14) !important;
   color: #1f2937 !important;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
-}
-
-[data-theme="light"] .sidebarToggle:hover,
-[data-theme="light"] .sidebarToggle:focus-visible {
-  color: #ffffff !important;
-  background: rgba(255, 210, 122, 0.28) !important;
-  border-color: rgba(255, 210, 122, 0.55) !important;
 }
 
 .actions {
@@ -212,11 +211,43 @@
 :global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item {
   border-radius: 8px;
   padding: 8px 12px;
+  color: var(--admin-text, #fff) !important;
 }
 
-:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item:hover {
+:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item .anticon {
+  color: inherit !important;
+}
+
+:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item:hover,
+:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item-active {
   background: var(--admin-gold-hover) !important;
   color: var(--admin-gold-strong) !important;
+}
+
+[data-theme="light"] :global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12) !important;
+}
+
+[data-theme="light"] :global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item {
+  color: #1f2937 !important;
+}
+
+[data-theme="light"] :global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item:hover,
+[data-theme="light"] :global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item-active {
+  background: rgba(242, 194, 0, 0.18) !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="light"]
+  :global(.admin-user-dropdown).ant-dropdown
+  .ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover,
+[data-theme="light"]
+  :global(.admin-user-dropdown).ant-dropdown
+  .ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #b91c1c !important;
 }
 
 .userAvatar {
@@ -264,6 +295,7 @@
   padding: 0 !important;
   border-radius: 10px !important;
   backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
   transition: all 0.3s ease !important;
 }
 
@@ -292,54 +324,52 @@
   background: rgba(15, 23, 42, 0.08) !important;
   border-color: rgba(15, 23, 42, 0.14) !important;
   color: #1f2937 !important;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
 }
 
 .notificationPopover :global(.ant-popover-inner) {
-  background: rgba(30, 30, 30, 0.85) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  background: var(--admin-card-bg, #22242a) !important;
+  border: 1px solid var(--admin-border) !important;
+  box-shadow: var(--admin-shadow);
+}
+
+[data-theme="light"] .notificationPopover :global(.ant-popover-inner) {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12) !important;
 }
 
 .notificationPopover :global(.ant-popover-title) {
-  color: var(--notification-popover-title, #f8fafc) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: var(--admin-text) !important;
+  border-bottom: 1px solid var(--admin-border) !important;
   font-weight: 700;
 }
 
-.notificationPopover :global(.ant-popover-arrow::before) {
-  background: rgba(30, 30, 30, 0.85) !important;
-}
-
-:global([data-theme="light"]) .notificationPopover :global(.ant-popover-inner) {
-  background: rgba(255, 255, 255, 0.96) !important;
-  border: 1px solid rgba(15, 23, 42, 0.1) !important;
-}
-
-:global([data-theme="light"]) .notificationPopover :global(.ant-popover-title) {
+[data-theme="light"] .notificationPopover :global(.ant-popover-title) {
   color: #1f2937 !important;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.1) !important;
+  border-bottom-color: rgba(15, 23, 42, 0.1) !important;
 }
 
-:global([data-theme="light"]) .notificationPopover :global(.ant-popover-arrow::before) {
-  background: rgba(255, 255, 255, 0.96) !important;
+.notificationPopover :global(.ant-popover-arrow::before) {
+  background: var(--admin-card-bg, #22242a) !important;
+}
+
+[data-theme="light"] .notificationPopover :global(.ant-popover-arrow::before) {
+  background: rgba(255, 255, 255, 0.98) !important;
 }
 
 .notificationPanel {
-  --notification-text: #f8fafc;
-  --notification-text-muted: rgba(248, 250, 252, 0.75);
-  --notification-item-border: rgba(255, 255, 255, 0.12);
-  --notification-item-bg: rgba(255, 255, 255, 0.06);
+  --notification-text: var(--admin-text, #fff);
+  --notification-text-muted: var(--admin-text-secondary, rgba(255, 255, 255, 0.82));
+  --notification-item-border: transparent;
+  --notification-item-bg: transparent;
   width: min(320px, 72vw);
 }
 
-:global([data-theme="light"]) .notificationPanel {
+[data-theme="light"] .notificationPanel {
   --notification-text: #1f2937;
-  --notification-text-muted: #4b5563;
-  --notification-item-border: rgba(15, 23, 42, 0.12);
-  --notification-item-bg: rgba(15, 23, 42, 0.04);
+  --notification-text-muted: rgba(31, 41, 55, 0.72);
+  --notification-item-border: transparent;
+  --notification-item-bg: transparent;
 }
 
 .notificationStateWrap {
@@ -363,7 +393,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
   max-height: 320px;
   overflow-y: auto;
 }
@@ -374,18 +404,38 @@
   gap: 10px;
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid var(--notification-item-border);
-  border-radius: 10px;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
   background: var(--notification-item-bg);
   color: var(--notification-text);
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.notificationList li:last-child .notificationItemButton {
+  border-bottom: none;
 }
 
 .notificationItemButton:hover {
-  border-color: var(--admin-gold-border);
-  background: var(--admin-gold-light);
+  background: rgba(255, 210, 122, 0.14);
+  color: var(--notification-text);
+}
+
+[data-theme="light"] .notificationItemButton {
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+  color: #1f2937;
+}
+
+[data-theme="light"] .notificationItemButton:hover {
+  background: rgba(242, 194, 0, 0.16);
+  color: #1f2937;
+}
+
+[data-theme="light"] .notificationItemIcon,
+[data-theme="light"] .notificationItemText {
+  color: inherit;
 }
 
 .notificationItemIcon {

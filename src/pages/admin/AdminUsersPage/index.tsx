@@ -355,7 +355,7 @@ export default function AdminUsersPage() {
             type="primary"
             size="small"
             icon={<EditOutlined />}
-            className={`admin-btn-edit ${styles.editButton}`}
+            className="admin-btn-edit"
             onClick={() => openEditModal(record)}>
             Edit
           </Button>

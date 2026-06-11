@@ -122,6 +122,8 @@
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--admin-border) transparent;
 }
 
 .nav::-webkit-scrollbar {
@@ -235,16 +237,8 @@
   mask-position: bottom center;
 
   transition: opacity 0.3s ease;
-}
-
-[data-theme="dark"] .skylineDecoration {
   background-color: var(--admin-gold);
-  opacity: 0.42;
-}
-
-[data-theme="light"] .skylineDecoration {
-  background-color: #ffd27a;
-  opacity: 0.72;
+  opacity: 0.52;
 }
 
 .sidebarFooter {
@@ -376,6 +370,99 @@
   }
 }
 
+/* Shorter viewports — compact nav, hide skyline, scrollable menu */
+@media (max-height: 820px) {
+  .brand {
+    min-height: 64px;
+    padding: 12px 12px;
+  }
+
+  .brandIcon {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+
+  .sidebarBody {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .nav {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 6px 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .navList {
+    gap: 2px;
+  }
+
+  .navLink,
+  .collapsed .navLink {
+    padding: 9px 12px;
+    border-radius: 10px;
+  }
+
+  .navIcon {
+    font-size: 18px;
+  }
+
+  .logoutLink {
+    margin-top: 4px;
+  }
+
+  .skylineDecoration,
+  .collapsed .skylineDecoration {
+    display: none !important;
+    min-height: 0 !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  .sidebarFooter {
+    padding: 8px 12px 6px;
+  }
+
+  .profileCard {
+    padding: 4px;
+  }
+
+  .copyright {
+    margin-top: 4px;
+    font-size: 9px;
+  }
+}
+
+@media (max-height: 680px) {
+  .brand {
+    min-height: 56px;
+    padding: 8px 10px;
+  }
+
+  .nav {
+    padding: 4px 8px;
+  }
+
+  .navLink,
+  .collapsed .navLink {
+    padding: 7px 10px;
+  }
+
+  .navList {
+    gap: 1px;
+  }
+
+  .sidebarFooter {
+    padding: 6px 10px 4px;
+  }
+}
+
 @media (max-width: 640px), (max-height: 420px) {
   .brand {
     min-height: 62px;
@@ -400,29 +487,15 @@
     font-size: 18px;
   }
 
-  .skylineDecoration {
-    min-height: 80px;
-    height: min(120px, 18vh);
-    max-height: 120px;
-  }
-
   .sidebarFooter {
     padding: 4px 12px 0;
   }
 }
 
-@media (max-height: 650px) {
-  .skylineDecoration,
-  .collapsed .skylineDecoration {
-    min-height: 48px;
-    height: min(72px, 12vh);
-    max-height: 72px;
-  }
-}
-
-@media (max-height: 500px) {
-  .skylineDecoration,
-  .collapsed .skylineDecoration {
-    display: none !important;
+@media (max-width: 640px) and (min-height: 821px) {
+  .skylineDecoration {
+    min-height: 80px;
+    height: min(120px, 18vh);
+    max-height: 120px;
   }
 }

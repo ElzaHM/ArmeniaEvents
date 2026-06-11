@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ConfigProvider } from 'antd';
 import { Outlet } from 'react-router-dom';
 
@@ -14,6 +14,8 @@ export default function AdminLayout() {
   const { mode } = useTheme();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isContentScrolled, setIsContentScrolled] = useState(false);
+  const [scrollContainer, setScrollContainer] = useState<HTMLElement | null>(null);
 
   const handleToggleSidebar = () => {
     if (window.matchMedia('(max-width: 1024px)').matches) {
@@ -35,6 +37,24 @@ export default function AdminLayout() {
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    if (!scrollContainer) {
+      return;
+    }
+
+    const handleScroll = () => {
+      setIsContentScrolled(scrollContainer.scrollTop > 10);
+    };
+
+    handleScroll();
+    scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
+    return () => scrollContainer.removeEventListener('scroll', handleScroll);
+  }, [scrollContainer]);
+
+  const setContentRef = useCallback((node: HTMLElement | null) => {
+    setScrollContainer(node);
+  }, []);
+
   return (
     <div className={`${styles.layout} admin-panel`} data-theme={mode}>
       <AdminSidebar
@@ -49,9 +69,10 @@ export default function AdminLayout() {
           sidebarCollapsed={sidebarCollapsed}
           mobileOpen={mobileOpen}
           onToggleSidebar={handleToggleSidebar}
+          isContentScrolled={isContentScrolled}
         />
-        <ConfigProvider theme={mode === 'light' ? adminLightContentTheme : undefined}>
-          <main className={`${styles.content} admin-content`}>
+        <ConfigProvider theme={adminLightContentTheme}>
+          <main ref={setContentRef} className={`${styles.content} admin-content`}>
             <Outlet />
           </main>
         </ConfigProvider>

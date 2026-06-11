@@ -1,9 +1,10 @@
 import type { ThemeConfig } from 'antd';
 
-/** Same shade as Profile / Settings input fields */
-const INPUT_BG = 'rgba(34, 36, 42, 0.88)';
-const INPUT_BG_HOVER = 'rgba(42, 44, 52, 0.92)';
-const INPUT_BG_ALT = 'rgba(34, 36, 42, 0.82)';
+/** Solid admin surfaces — aligned with table row/header palette */
+const INPUT_BG = '#22242a';
+const INPUT_BG_HOVER = '#2a2c34';
+const INPUT_BG_ALT = '#1f2127';
+const HEADER_BG = '#1c1e24';
 
 export const adminLightContentTheme: ThemeConfig = {
   token: {
@@ -47,13 +48,26 @@ export const adminLightContentTheme: ThemeConfig = {
       defaultHoverColor: '#ffd27a',
       defaultHoverBorderColor: 'rgba(255, 210, 122, 0.52)',
       primaryColor: '#14161c',
+      colorPrimary: '#f2c200',
+      colorPrimaryHover: '#e6b800',
+      colorPrimaryActive: '#e6b800',
+      colorError: '#ef4444',
+      colorErrorHover: '#fca5a5',
+      colorErrorActive: '#fca5a5',
+      colorErrorBorder: 'rgba(239, 68, 68, 0.45)',
+      colorErrorBg: 'rgba(239, 68, 68, 0.12)',
+      colorErrorBgHover: 'rgba(239, 68, 68, 0.22)',
+      dangerColor: '#fca5a5',
+      dangerShadow: '0 0 0 0 transparent',
+      defaultShadow: '0 0 0 0 transparent',
+      primaryShadow: '0 0 0 0 transparent',
     },
     Table: {
-      colorBgContainer: INPUT_BG,
-      headerBg: 'rgba(28, 30, 36, 0.96)',
+      colorBgContainer: '#22242a',
+      headerBg: HEADER_BG,
       headerColor: 'rgba(255, 255, 255, 0.82)',
       rowHoverBg: INPUT_BG_HOVER,
-      borderColor: 'rgba(255, 255, 255, 0.12)',
+      borderColor: 'rgba(255, 255, 255, 0.25)',
       colorText: '#ffffff',
       colorTextHeading: 'rgba(255, 255, 255, 0.82)',
     },
@@ -65,8 +79,8 @@ export const adminLightContentTheme: ThemeConfig = {
       colorPrimaryHover: '#ffd27a',
     },
     Modal: {
-      contentBg: INPUT_BG,
-      headerBg: INPUT_BG,
+      contentBg: '#22242a',
+      headerBg: '#22242a',
       titleColor: '#ffffff',
       colorIcon: 'rgba(255, 255, 255, 0.72)',
     },
@@ -83,7 +97,7 @@ export const adminLightContentTheme: ThemeConfig = {
     },
     Tag: {
       defaultBg: '#374151',
-      defaultColor: '#f3f4f6',
+      defaultColor: '#ffffff',
       colorSuccessBg: '#15803d',
       colorSuccess: '#ecfdf5',
       colorWarningBg: '#b45309',
@@ -91,7 +105,7 @@ export const adminLightContentTheme: ThemeConfig = {
       colorErrorBg: '#b91c1c',
       colorError: '#fef2f2',
       colorInfoBg: '#1d4ed8',
-      colorInfo: '#eff6ff',
+      colorInfo: '#ffffff',
     },
   },
 };

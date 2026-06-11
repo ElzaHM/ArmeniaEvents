@@ -60,7 +60,7 @@ export default function ExportReportModal({
       onCancel={onClose}
       centered
       destroyOnHidden
-      className={styles.modal}
+      className="admin-detail-modal"
       width={720}
     >
       <p className={styles.lead}>
