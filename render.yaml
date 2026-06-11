@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: armeniaevents-develop-hasmik
+    runtime: node
+    branch: develop-Hasmik
+    plan: free
+    buildCommand: pnpm install && pnpm build:prod
+    startCommand: pnpm start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: CLIENT_ORIGIN
+        sync: false
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+      - key: VITE_GOOGLE_CLIENT_ID
+        sync: false
+      - key: VITE_GEMINI_API_KEY
+        sync: false
+      - key: EVENTBRITE_API_TOKEN
+        sync: false

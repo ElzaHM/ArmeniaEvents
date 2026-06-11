@@ -1,5 +1,8 @@
 import cors from 'cors';
 import express from 'express';
+import { existsSync } from 'fs';
+import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
 
 import { env } from './config/env.js';
 import { errorHandler } from './middleware/error.middleware.js';
@@ -67,6 +70,15 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/tickets', ticketsRoutes);
+
+const frontendDist = resolve(dirname(fileURLToPath(import.meta.url)), '../../dist');
+if (process.env.NODE_ENV === 'production' && existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+  app.get(/^(?!\/api).*/, (_req, res) => {
+    res.sendFile(resolve(frontendDist, 'index.html'));
+  });
+}
+
 app.use(errorHandler);
 
 const server = app.listen(env.PORT);

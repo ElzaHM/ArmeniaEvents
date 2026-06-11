@@ -106,22 +106,28 @@ export const SignUpForm: React.FC = () => {
     }
   };
 
+  const handleGoogleError = React.useCallback(() => {
+    messageApi.error('Google sign in failed. Please try again.');
+  }, [messageApi]);
+
   return (
     <div className={styles.formContainer}>
       {contextHolder}
       <h2 className={styles.title}>Sign Up</h2>
       <p className={styles.subtitle}>Create your account to get started.</p>
 
-      <Form form={form} layout="vertical" requiredMark={false} onFinish={handleSubmit}>
+      <Form form={form} layout="vertical" requiredMark={false} autoComplete="on" onFinish={handleSubmit}>
         <Form.Item
           label={<span className={styles.label}>Full Name</span>}
           name="fullName"
           rules={[{ required: true, message: 'Full name is required' }]}
         >
-          <Input 
-            prefix={<UserOutlined className={styles.inputIcon} />} 
-            placeholder="Enter your full name" 
+          <Input
+            prefix={<UserOutlined className={styles.inputIcon} />}
+            placeholder="Enter your full name"
             className={styles.inputField}
+            autoComplete="name"
+            name="fullName"
           />
         </Form.Item>
 
@@ -133,10 +139,12 @@ export const SignUpForm: React.FC = () => {
             { type: 'email', message: 'Invalid email address' },
           ]}
         >
-          <Input 
-            prefix={<MailOutlined className={styles.inputIcon} />} 
-            placeholder="Enter your email" 
+          <Input
+            prefix={<MailOutlined className={styles.inputIcon} />}
+            placeholder="Enter your email"
             className={styles.inputField}
+            autoComplete="email"
+            name="email"
           />
         </Form.Item>
 
@@ -152,6 +160,8 @@ export const SignUpForm: React.FC = () => {
             prefix={<LockOutlined className={styles.inputIcon} />}
             placeholder="Create a password"
             className={styles.inputField}
+            autoComplete="new-password"
+            name="new-password"
             onChange={(event) => setPasswordValue(event.target.value)}
           />
         </Form.Item>
@@ -199,10 +209,12 @@ export const SignUpForm: React.FC = () => {
             }),
           ]}
         >
-          <Input.Password 
-            prefix={<LockOutlined className={styles.inputIcon} />} 
-            placeholder="Confirm your password" 
+          <Input.Password
+            prefix={<LockOutlined className={styles.inputIcon} />}
+            placeholder="Confirm your password"
             className={styles.inputField}
+            autoComplete="new-password"
+            name="confirm-password"
           />
         </Form.Item>
 
@@ -234,7 +246,7 @@ export const SignUpForm: React.FC = () => {
         <GoogleSignInButton
           disabled={googleLoading}
           onCredential={handleGoogleCredential}
-          onError={() => messageApi.error('Google sign in failed. Please try again.')}
+          onError={handleGoogleError}
         />
 
         <div className={styles.signInText}>

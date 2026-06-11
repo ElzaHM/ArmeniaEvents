@@ -87,6 +87,8 @@ export const ResetPasswordForm: React.FC = () => {
             prefix={<LockOutlined className={styles.inputIcon} />}
             placeholder="Enter new password"
             className={styles.inputField}
+            autoComplete="new-password"
+            name="new-password"
           />
         </Form.Item>
 
@@ -110,6 +112,8 @@ export const ResetPasswordForm: React.FC = () => {
             prefix={<LockOutlined className={styles.inputIcon} />}
             placeholder="Confirm new password"
             className={styles.inputField}
+            autoComplete="new-password"
+            name="confirm-password"
           />
         </Form.Item>
 

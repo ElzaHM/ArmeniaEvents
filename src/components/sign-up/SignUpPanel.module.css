@@ -4,7 +4,8 @@
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border-radius: 12px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
   max-width: 960px;
   width: min(92%, 960px);
   max-height: none;
@@ -26,7 +27,8 @@
   gap: 10px;
   position: relative;
   min-height: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .rightSection {
@@ -34,8 +36,10 @@
   min-width: 0;
   padding: 18px 24px;
   background: transparent;
-  overflow: visible;
+  overflow-x: hidden;
+  overflow-y: visible;
   min-height: 0;
+  box-sizing: border-box;
 }
 
 .logoBox {
@@ -107,13 +111,36 @@
   line-height: 1.35;
 }
 
-.illustration {
+.illustrationArea {
+  position: relative;
   margin-top: auto;
+  width: 100%;
+  min-height: var(--auth-illustration-box-height, 96px);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.arcDecoration {
+  position: absolute;
+  top: -12px;
+  left: 0;
+  width: min(78%, 240px);
+  height: 220px;
+  border: 1px solid var(--auth-arc-border);
+  border-bottom: none;
+  border-radius: 150px 150px 0 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.illustration {
+  position: relative;
+  z-index: 1;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 12px;
+  padding-top: 8px;
   width: var(--auth-illustration-box-width, 100%);
-  height: var(--auth-illustration-box-height, 220px);
+  height: var(--auth-illustration-box-height, 96px);
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -123,28 +150,38 @@
   box-sizing: border-box;
 }
 
-.illustration :global(.auth-illustration-image) {
+.illustration :global(.auth-illustration-image),
+.mobileIllustration :global(.auth-illustration-image) {
   display: flex;
   justify-content: center;
   align-items: flex-end;
   width: 100%;
   height: 100%;
+  flex-shrink: 0;
+  background-color: transparent;
+  overflow: hidden;
 }
 
 .illustrationImage {
   display: block;
-  width: auto;
+  width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: 100%;
+  max-height: var(--auth-illustration-box-height, 96px);
   margin: 0;
   background-color: transparent;
   object-fit: contain;
   object-position: bottom center;
-  mix-blend-mode: var(--auth-illustration-blend);
-  opacity: var(--auth-illustration-image-opacity, 1);
-  filter: var(--auth-illustration-filter, none);
+  mix-blend-mode: screen;
+  opacity: 1;
+  filter: none;
   transform: none;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.mobileIllustrationArea {
+  display: none;
 }
 
 .mobileIllustration {
@@ -155,8 +192,12 @@
 @media (max-width: 1024px) {
   .panel {
     flex-direction: column;
-    width: min(92%, 640px);
-    max-width: 640px;
+    width: var(--sign-up-compact-panel-width, var(--auth-panel-fluid-width, 280px));
+    max-width: var(--sign-up-compact-panel-width, var(--auth-panel-fluid-width, 280px));
+    max-height: none;
+    overflow-x: hidden;
+    overflow-y: visible;
+    flex-shrink: 0;
   }
 
   .leftSection {
@@ -164,63 +205,62 @@
   }
 
   .rightSection {
+    flex: 0 1 auto;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    padding: 28px 24px 20px;
-    overflow: visible;
+    padding: 12px var(--sign-up-panel-padding-x, 14px) 14px;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  .mobileIllustrationArea {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: var(--auth-illustration-box-height, 60px);
+    min-height: var(--auth-illustration-box-height, 60px);
+    max-height: var(--auth-illustration-box-height, 60px);
+    overflow: hidden;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+  }
+
+  .mobileArc {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(54%, 120px);
+    height: 40px;
+    border: 1px solid var(--auth-arc-border);
+    border-bottom: none;
+    border-radius: 120px 120px 0 0;
+    pointer-events: none;
+    z-index: 0;
   }
 
   .mobileIllustration {
     display: flex;
+    position: relative;
+    z-index: 1;
     justify-content: center;
     align-items: flex-end;
-    width: 100%;
-    height: var(--auth-illustration-box-height, 168px);
-    margin-top: 8px;
+    width: var(--auth-illustration-box-width, 88%);
+    max-width: 200px;
+    height: 100%;
+    max-height: var(--auth-illustration-box-height, 60px);
+    min-height: var(--auth-illustration-box-height, 60px);
+    margin: 0 auto;
     overflow: hidden;
   }
 }
 
-/* 481px – 960px tablet range */
-@media (max-width: 960px) {
+@media (max-width: 319px) {
   .panel {
-    width: min(92%, calc(100vw - 32px));
-    max-width: none;
-  }
-
-  .rightSection {
-    padding: 24px 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .panel {
-    width: min(94%, calc(100vw - 24px));
-  }
-
-  .rightSection {
-    padding: 22px 18px;
-  }
-
-  .joinHeading {
-    font-size: 24px;
-  }
-}
-
-@media (max-width: 480px) {
-  .panel {
-    width: 100%;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    border-radius: 12px;
-  }
-
-  .rightSection {
-    padding: 20px 16px 16px;
-  }
-
-  .mobileIllustration {
-    height: 140px;
-    margin-top: 4px;
+    width: calc(100vw - 40px);
+    max-width: var(--sign-up-compact-panel-width, 280px);
   }
 }

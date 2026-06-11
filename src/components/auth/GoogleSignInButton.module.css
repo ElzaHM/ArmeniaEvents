@@ -5,30 +5,26 @@
   margin-bottom: 6px;
   overflow: hidden;
   box-sizing: border-box;
-}
-
-.wrapper :global(iframe) {
-  width: 100% !important;
-  max-width: 100% !important;
+  display: flex;
+  justify-content: center;
 }
 
 .wrapper :global(> div) {
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.wrapper :global(iframe) {
+  max-width: 100% !important;
+  min-width: 0 !important;
+  display: block;
+  margin: 0 auto;
 }
 
 .disabled {
   pointer-events: none;
   opacity: 0.6;
-}
-
-@media (max-width: 960px) {
-  .wrapper {
-    display: flex;
-    justify-content: center;
-  }
-
-  .wrapper :global(iframe) {
-    min-width: 0 !important;
-  }
 }

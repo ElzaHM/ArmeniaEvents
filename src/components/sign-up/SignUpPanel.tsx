@@ -53,28 +53,40 @@ export const SignUpPanel: React.FC = () => {
           </div>
         </div>
 
-        <div className={`${styles.illustration} auth-illustration`}>
-          <div className="auth-illustration-image">
-            <img
-              src={signUpIllustration}
-              alt="Armenia Events skyline illustration"
-              className={styles.illustrationImage}
-            />
+        <div className={styles.illustrationArea}>
+          <div className={styles.arcDecoration} aria-hidden="true" />
+          <div className={`${styles.illustration} auth-illustration`}>
+            <div className="auth-illustration-image">
+              <img
+                src={signUpIllustration}
+                alt="Armenia Events skyline illustration"
+                className={styles.illustrationImage}
+                loading="eager"
+                decoding="async"
+                draggable={false}
+              />
+            </div>
           </div>
         </div>
       </div>
 
-      <div className={styles.rightSection}>
-        <SignUpForm />
-        <div className={`${styles.mobileIllustration} auth-illustration`}>
-          <div className="auth-illustration-image">
-            <img
-              src={signUpIllustration}
-              alt="Armenia Events skyline illustration"
-              className={styles.illustrationImage}
-            />
+      <div className={`${styles.rightSection} auth-right-section`}>
+        <div className={styles.mobileIllustrationArea}>
+          <div className={styles.mobileArc} aria-hidden="true" />
+          <div className={`${styles.mobileIllustration} auth-illustration`}>
+            <div className="auth-illustration-image">
+              <img
+                src={signUpIllustration}
+                alt="Armenia Events skyline illustration"
+                className={styles.illustrationImage}
+                loading="eager"
+                decoding="async"
+                draggable={false}
+              />
+            </div>
           </div>
         </div>
+        <SignUpForm />
       </div>
     </div>
   );
