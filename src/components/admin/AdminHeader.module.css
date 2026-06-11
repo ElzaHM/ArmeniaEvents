@@ -199,54 +199,131 @@
   opacity: 1;
 }
 
-:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu {
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu) {
   min-width: 180px;
   padding: 6px;
   border-radius: 12px;
-  background: var(--admin-surface-solid);
-  border: 1px solid var(--admin-border);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  background: #141416 !important;
+  background-color: #141416 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
-:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item {
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item) {
   border-radius: 8px;
   padding: 8px 12px;
-  color: var(--admin-text, #fff) !important;
+  color: #ffffff !important;
 }
 
-:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item .anticon {
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item .anticon),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item .anticon) {
   color: inherit !important;
 }
 
-:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item:hover,
-:global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item-active {
-  background: var(--admin-gold-hover) !important;
-  color: var(--admin-gold-strong) !important;
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item-active),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item-active) {
+  background: rgba(217, 163, 74, 0.15) !important;
+  background-color: rgba(217, 163, 74, 0.15) !important;
+  color: #ffffff !important;
 }
 
-[data-theme="light"] :global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu {
+:global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active),
+:global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active) {
+  background: rgba(239, 68, 68, 0.15) !important;
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  color: #fff1f2 !important;
+}
+
+[data-theme="dark"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu),
+[data-theme="dark"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu) {
+  background: #141416 !important;
+  background-color: #141416 !important;
+}
+
+[data-theme="dark"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu-item:hover),
+[data-theme="dark"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item:hover),
+[data-theme="dark"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu-item-active),
+[data-theme="dark"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item-active) {
+  background: rgba(217, 163, 74, 0.15) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu),
+[data-theme="light"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu) {
   background: rgba(255, 255, 255, 0.96) !important;
   border: 1px solid rgba(15, 23, 42, 0.1) !important;
   box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12) !important;
 }
 
-[data-theme="light"] :global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item {
+[data-theme="light"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu-item),
+[data-theme="light"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item),
+[data-theme="light"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item .anticon),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item .anticon) {
   color: #1f2937 !important;
 }
 
-[data-theme="light"] :global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item:hover,
-[data-theme="light"] :global(.admin-user-dropdown).ant-dropdown .ant-dropdown-menu-item-active {
-  background: rgba(242, 194, 0, 0.18) !important;
-  color: #1f2937 !important;
+[data-theme="light"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu-item:hover),
+[data-theme="light"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item:hover),
+[data-theme="light"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu-item-active),
+[data-theme="light"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item-active) {
+  background: rgba(242, 194, 0, 0.14) !important;
+  color: #111827 !important;
 }
 
 [data-theme="light"]
-  :global(.admin-user-dropdown).ant-dropdown
-  .ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover,
+  :global(.admin-user-dropdown .ant-dropdown-menu-item:hover .anticon),
 [data-theme="light"]
-  :global(.admin-user-dropdown).ant-dropdown
-  .ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active {
+  :global(.admin-user-dropdown.ant-dropdown .ant-dropdown-menu-item:hover .anticon),
+[data-theme="light"]
+  :global(.admin-user-dropdown .ant-dropdown-menu-item-active .anticon),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown .ant-dropdown-menu-item-active .anticon) {
+  color: #111827 !important;
+}
+
+[data-theme="light"]
+  :global(
+    .admin-user-dropdown.ant-dropdown
+      .ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover
+  ),
+[data-theme="light"]
+  :global(
+    .admin-user-dropdown.ant-dropdown
+      .ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active
+  ) {
   background: rgba(239, 68, 68, 0.1) !important;
+  color: #b91c1c !important;
+}
+
+[data-theme="light"]
+  :global(
+    .admin-user-dropdown.ant-dropdown
+      .ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover
+      .anticon
+  ),
+[data-theme="light"]
+  :global(
+    .admin-user-dropdown.ant-dropdown
+      .ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active
+      .anticon
+  ) {
   color: #b91c1c !important;
 }
 

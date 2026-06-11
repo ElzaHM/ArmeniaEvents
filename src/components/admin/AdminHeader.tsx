@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {Badge, Button, Dropdown, Input, Popover, Spin} from "antd";
-import type {MenuProps} from "antd";
+import {useEffect, useMemo, useState} from "react";
+import {Badge, Button, ConfigProvider, Dropdown, Input, Popover, Spin} from "antd";
+import type {MenuProps, ThemeConfig} from "antd";
 import {
   BellOutlined,
   LogoutOutlined,
@@ -75,6 +75,25 @@ export default function AdminHeader({
     staleTime: 30_000,
   });
   const notificationCount = notifications.length;
+
+  const profileDropdownTheme = useMemo<ThemeConfig>(
+    () => ({
+      components: {
+        Dropdown: {
+          colorBgElevated: mode === "light" ? "#ffffff" : "#141416",
+          colorText: mode === "light" ? "#1f2937" : "#ffffff",
+          controlItemBgHover:
+            mode === "light" ? "rgba(242, 194, 0, 0.14)" : "rgba(217, 163, 74, 0.15)",
+          controlItemBgActive:
+            mode === "light" ? "rgba(242, 194, 0, 0.14)" : "rgba(217, 163, 74, 0.15)",
+          colorError: mode === "light" ? "#b91c1c" : "#fff1f2",
+          colorErrorBg: "rgba(239, 68, 68, 0.15)",
+          colorErrorBgHover: "rgba(239, 68, 68, 0.22)",
+        },
+      },
+    }),
+    [mode],
+  );
 
   const handleNotificationClick = (item: AdminNotificationItem) => {
     if (item.type === "user") {
@@ -256,22 +275,24 @@ export default function AdminHeader({
             </Badge>
           </Popover>
 
-          <Dropdown
-            menu={{items: USER_MENU_ITEMS, onClick: handleUserMenuClick}}
-            trigger={["click"]}
-            placement="bottomRight"
-            classNames={{root: "admin-user-dropdown"}}>
-            <button type="button" className={styles.userSnippet}>
-              <img
-                key={avatarUrl}
-                src={avatarUrl}
-                alt={displayName}
-                className={styles.userAvatar}
-              />
-              <span className={styles.userName}>{displayName}</span>
-              <DownOutlined className={styles.userArrow} />
-            </button>
-          </Dropdown>
+          <ConfigProvider theme={profileDropdownTheme}>
+            <Dropdown
+              menu={{items: USER_MENU_ITEMS, onClick: handleUserMenuClick}}
+              trigger={["click"]}
+              placement="bottomRight"
+              classNames={{root: "admin-user-dropdown"}}>
+              <button type="button" className={styles.userSnippet}>
+                <img
+                  key={avatarUrl}
+                  src={avatarUrl}
+                  alt={displayName}
+                  className={styles.userAvatar}
+                />
+                <span className={styles.userName}>{displayName}</span>
+                <DownOutlined className={styles.userArrow} />
+              </button>
+            </Dropdown>
+          </ConfigProvider>
         </div>
       </div>
 

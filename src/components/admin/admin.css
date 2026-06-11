@@ -5,11 +5,248 @@
     linear-gradient(rgba(13, 13, 15, 0.6), rgba(13, 13, 15, 0.85)),
     url("../../assets/adminPage/admin_bg.png");
 }
+
+/* Dark theme — profile dropdown (portaled outside .admin-panel; use literal colors) */
+[data-theme="dark"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu),
+[data-theme="dark"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu) {
+  background: #141416 !important;
+  background-color: #141416 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-title-content) {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item:hover),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-active),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item.ant-dropdown-menu-item-active),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item.ant-dropdown-menu-item-active) {
+  background: rgba(217, 163, 74, 0.15) !important;
+  background-color: rgba(217, 163, 74, 0.15) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.ant-dropdown-menu-title-content) {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item)
+  :global(.anticon) {
+  color: #fca5a5 !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active) {
+  background: rgba(239, 68, 68, 0.15) !important;
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  color: #fff1f2 !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active)
+  :global(.ant-dropdown-menu-title-content) {
+  color: #fff1f2 !important;
+}
 [data-theme="light"] {
   --admin-bg: #eef3f7;
   --admin-bg-image:
     linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
     url("../../assets/adminPage/admin_bg.png");
+}
+
+/* Light theme — profile dropdown (portaled; needs global selectors + dark hover text) */
+[data-theme="light"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu),
+[data-theme="light"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu) {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12) !important;
+}
+
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item)
+  :global(.anticon),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-title-content) {
+  color: #1f2937 !important;
+}
+
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item.ant-dropdown-menu-item-active) {
+  background: rgba(242, 194, 0, 0.14) !important;
+  color: #111827 !important;
+}
+
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.anticon),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.ant-dropdown-menu-title-content) {
+  color: #111827 !important;
+}
+
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active) {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #b91c1c !important;
+}
+
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active)
+  :global(.anticon) {
+  color: #b91c1c !important;
 }
 
 /* Static admin palette — tables, forms, chrome (never follows theme toggle) */
@@ -486,25 +723,51 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
 
 :global(.admin-select-dropdown),
 .admin-panel .admin-content :global(.ant-select-dropdown),
-:global(.admin-dropdown-menu) :global(.ant-dropdown-menu) {
+:global(.admin-dropdown-menu) :global(.ant-dropdown-menu),
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu) {
   background: var(--admin-input-bg) !important;
-  border: 1px solid var(--admin-border) !important;
+  background-color: var(--admin-input-bg) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 10px !important;
   padding: 4px !important;
   box-shadow: var(--admin-shadow) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 :global(.admin-select-dropdown) :global(.ant-select-item),
-:global(.admin-dropdown-menu) :global(.ant-dropdown-menu-item) {
-  color: var(--admin-text) !important;
+:global(.admin-dropdown-menu) :global(.ant-dropdown-menu-item),
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item) {
+  color: #ffffff !important;
   border-radius: 6px !important;
 }
 
 :global(.admin-select-dropdown) :global(.ant-select-item-option-active),
 :global(.admin-select-dropdown) :global(.ant-select-item-option-selected),
-:global(.admin-dropdown-menu) :global(.ant-dropdown-menu-item:hover) {
-  background: var(--admin-gold-light) !important;
-  color: var(--admin-gold) !important;
+:global(.admin-dropdown-menu) :global(.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item-active),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item-active) {
+  background: rgba(217, 163, 74, 0.15) !important;
+  background-color: rgba(217, 163, 74, 0.15) !important;
+  color: #ffffff !important;
+}
+
+:global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active),
+:global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active) {
+  background: rgba(239, 68, 68, 0.15) !important;
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  color: #fff1f2 !important;
 }
 
 /* Action buttons — static dark styling, never follows site theme */
