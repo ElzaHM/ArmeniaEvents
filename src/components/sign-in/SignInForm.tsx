@@ -12,9 +12,6 @@ type SignInValues = {
   password: string;
 };
 
-/** Set to true to restore the Google sign-in button on this page. */
-const SHOW_GOOGLE_SIGN_IN = false;
-
 export const SignInForm: React.FC = () => {
   const { login, establishSession } = useAuth();
   const location = useLocation();
@@ -109,13 +106,11 @@ export const SignInForm: React.FC = () => {
 
         <Divider className={styles.divider}>or continue with</Divider>
 
-        {SHOW_GOOGLE_SIGN_IN ? (
-          <GoogleSignInButton
+        <GoogleSignInButton
           disabled={googleLoading}
           onCredential={handleGoogleCredential}
           onError={handleGoogleError}
         />
-        ) : null}
 
         <div className={styles.signUpText}>
           Don't have an account? <Link to="/signup" className={styles.signUpLink}>Sign Up</Link>
