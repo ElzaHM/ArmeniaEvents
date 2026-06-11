@@ -15,7 +15,10 @@
 .upcomingEventsWrapper,
 .analyticsWrapper {
   display: flex;
+  flex-direction: column;
+  align-self: stretch;
   min-width: 0;
+  min-height: 0;
 }
 
 .upcomingEventsWrapper {
@@ -28,28 +31,43 @@
   transition: all 0.3s ease;
 }
 
-.upcomingEventsWrapper > section,
-.analyticsWrapper > section {
-  flex: 1;
+.upcomingEventsWrapper > :global(section),
+.analyticsWrapper > :global(section) {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 100%;
+  min-height: 0;
 }
 
-/* Analytics Overview — compact card + chart height */
+/* Analytics Overview — grow with row, never scroll internally */
 .analyticsWrapper :global([class*="card"]) {
   display: flex;
   flex-direction: column;
-  height: 380px;
-  max-height: 380px;
-  overflow: hidden;
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  overflow: visible;
 }
 
 .analyticsWrapper :global([class*="body"]) {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 1 1 auto;
   min-height: 0;
-  padding-top: 16px;
+  overflow: visible;
+  padding-top: 12px;
   padding-bottom: 20px;
+}
+
+.analyticsWrapper :global([class*="body"]) > :global(div:first-child) {
+  flex: 1 1 auto;
+  min-height: 220px;
+}
+
+.analyticsWrapper :global([class*="body"]) > :global(div:last-child) {
+  flex-shrink: 0;
 }
 
 .bottomRow {
@@ -98,6 +116,16 @@
   .analyticsWrapper {
     flex: 1 1 100%;
   }
+
+  .upcomingEventsWrapper > :global(section),
+  .analyticsWrapper > :global(section) {
+    height: auto;
+  }
+
+  .analyticsWrapper :global([class*="body"]) > :global(div:first-child) {
+    flex: none;
+    min-height: 240px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -117,7 +145,12 @@
 
   .analyticsWrapper :global([class*="card"]) {
     height: auto;
-    max-height: none;
+    overflow: visible;
+  }
+
+  .upcomingEventsWrapper > :global(section),
+  .analyticsWrapper > :global(section) {
+    height: auto;
   }
 
   .row {
