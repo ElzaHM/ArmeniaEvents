@@ -58,7 +58,7 @@ const sections = [
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className={`${styles.page} privacy-page`}>
+    <div className={`publicPageShell ${styles.page} privacy-page`}>
       <div className="homeSection">
         <div className={styles.container}>
         <h1 className={styles.title}>Privacy Policy</h1>

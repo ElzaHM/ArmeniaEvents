@@ -93,6 +93,27 @@
   color: inherit;
 }
 
+.moreWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.moreBtn {
+  min-width: 160px;
+  background-color: #c08b46 !important;
+  border: none !important;
+  height: 44px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+}
+
+.moreBtn:hover {
+  background-color: #d4a363 !important;
+  color: #1a1a1a !important;
+}
+
 @media (max-width: 992px) {
   .mainTitle {
     font-size: 40px !important;
