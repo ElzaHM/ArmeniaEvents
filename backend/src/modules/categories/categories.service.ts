@@ -17,8 +17,7 @@ type CategoryListRow = {
 function withComputedEventCount(category: CategoryListRow) {
   const { events, ...rest } = category;
   const aggregatedCount = events?.[0]?.count;
-  const event_count =
-    typeof aggregatedCount === 'number' ? aggregatedCount : (rest.event_count ?? 0);
+  const event_count = typeof aggregatedCount === 'number' ? aggregatedCount : 0;
 
   return { ...rest, event_count };
 }
@@ -26,7 +25,8 @@ function withComputedEventCount(category: CategoryListRow) {
 export async function listCategories() {
   const { data, error } = await supabaseAdminClient
     .from('categories')
-    .select(`${CATEGORY_SELECT}, events(count)`);
+    .select(`${CATEGORY_SELECT}, events(count)`)
+    .eq('events.status', 'published');
 
   if (error) throw new Error(error.message);
 

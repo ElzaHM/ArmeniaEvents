@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useFavoriteStatus, useToggleFavorite } from '../../hooks/queries/useFavorite';
 import { useAuth } from '../../hooks/useAuth';
+import { formatDateBadge } from '../events/eventDateUtils';
 import type { EventItem } from './types';
 import styles from './EventCard.module.css';
 
@@ -24,6 +25,7 @@ export default function EventCard({ event }: EventCardProps) {
   const toggleFavorite = useToggleFavorite(event.id);
   const isFree = event.isFree || event.price === 'Free';
   const isSaved = favoriteStatus?.favorited ?? false;
+  const { month, day } = formatDateBadge(event.date);
 
   const handleSave = (clickEvent: MouseEvent) => {
     clickEvent.preventDefault();
@@ -47,8 +49,8 @@ export default function EventCard({ event }: EventCardProps) {
         />
 
         <div className={styles.dateBadge}>
-          <span className={styles.month}>MAY</span>
-          <span className={styles.day}>24</span>
+          <span className={styles.month}>{month}</span>
+          <span className={styles.day}>{day}</span>
         </div>
 
         <button
