@@ -168,9 +168,6 @@ export default function Header() {
         </div>
         <div className="header-user-info">
           <span className="header-user-name">{userDisplayName}</span>
-          {userFullName?.trim() && userEmail ? (
-            <span className="header-user-email">{userEmail}</span>
-          ) : null}
         </div>
         <Button
           className="signin-button homeActionBtn header-user-signout"
