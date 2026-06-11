@@ -63,7 +63,8 @@ export type ApiEventRow = {
   age_range?: string | null;
   tags?: string[] | null;
   event_type?: string | null;
-  categories?: { name: string } | null;
+  category_id?: string | null;
+  categories?: { name: string; is_active?: boolean | null } | null;
   organizers?: { name: string; avatar_url?: string | null } | null;
 };
 
@@ -132,16 +133,27 @@ export function formatAdminEventDate(value?: string | null): string {
   const date = parseEventDate(value);
 
   if (!date) {
+    return '';
+  }
+
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${day}.${month}.${year}`;
+}
+
+export function formatAdminEventDateTime(value?: string | null): string {
+  const date = parseEventDate(value);
+
+  if (!date) {
     return 'N/A';
   }
 
-  return date.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+
+  return `${formatAdminEventDate(value)}, ${hours}:${minutes}`;
 }
 
 export function formatAdminPrice(price?: number | null): string {
@@ -165,7 +177,9 @@ export function mapApiEventToAdminEvent(api: ApiEventRow): AdminEvent {
   const endDate = api.end_date ?? '';
   const venue = api.venue?.trim() ?? '';
   const address = api.address?.trim() ?? '';
-  const category = api.categories?.name ?? 'General';
+  const categoryId = api.category_id ?? null;
+  const categoryIsActive = api.categories?.is_active ?? null;
+  const category = api.categories?.name?.trim() ?? '';
   const rawImageUrl = getRawImageUrl(api);
   const imageUrl = resolveStoredEventImageUrl(rawImageUrl);
   const organizerName = api.organizers?.name?.trim() || 'Independent Organizer';
@@ -175,11 +189,13 @@ export function mapApiEventToAdminEvent(api: ApiEventRow): AdminEvent {
     id: api.id,
     title: api.title,
     description: api.description?.trim() ?? '',
-    date: formatAdminEventDate(api.start_date),
+    date: formatAdminEventDateTime(api.start_date),
     startDate,
     endDate,
-    endDateDisplay: formatAdminEventDate(api.end_date),
+    endDateDisplay: formatAdminEventDateTime(api.end_date),
     category,
+    categoryId,
+    categoryIsActive,
     venue,
     address,
     location: [venue, address].filter(Boolean).join(', ') || 'Armenia',

@@ -37,7 +37,6 @@ export default function EventLivePreview({
             <span className={styles.badgeDay}>24</span>
           </div>
           <div className={styles.heartCircle}><HeartOutlined /></div>
-          <div className={styles.typeBadgeOnImage}>{data.eventType}</div>
         </div>
 
         <div className={styles.previewContent}>

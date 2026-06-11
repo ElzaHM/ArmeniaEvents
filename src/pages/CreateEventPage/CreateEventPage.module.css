@@ -465,3 +465,61 @@
 [data-theme='light'] .pageWrapper .detailIcon {
   color: var(--home-icon-muted);
 }
+
+/* Event form DatePicker / TimePicker dropdowns (portaled to body) */
+:global(.ant-picker-dropdown.event-form-picker-dropdown),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel-container),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-date-panel),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel-column),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ranges),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-header),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-body),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-content) {
+  background: #141416 !important;
+  background-color: #141416 !important;
+}
+
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-cell-selected .ant-picker-cell-inner),
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown
+    .ant-picker-cell-selected:hover
+    .ant-picker-cell-inner
+),
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown
+    .ant-picker-cell-in-view.ant-picker-cell-selected
+    .ant-picker-cell-inner
+) {
+  color: #000000 !important;
+}
+
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer .ant-btn-primary),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok button),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok .ant-btn-primary) {
+  background: #c08b46 !important;
+  border-color: #c08b46 !important;
+  color: #141416 !important;
+  box-shadow: none !important;
+}
+
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer .ant-btn-primary:hover
+),
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer .ant-btn-primary:focus
+),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok button:hover),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok button:focus),
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok .ant-btn-primary:hover
+),
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok .ant-btn-primary:focus
+) {
+  background: #d4a05a !important;
+  border-color: #d4a05a !important;
+  color: #141416 !important;
+}

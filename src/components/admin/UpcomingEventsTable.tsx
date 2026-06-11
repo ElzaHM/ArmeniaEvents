@@ -7,6 +7,7 @@ import {MoreOutlined} from "@ant-design/icons";
 import AdminCard from "./AdminCard";
 import AdminEventDetailModal from "./AdminEventDetailModal";
 import AdminEventImage from "./AdminEventImage";
+import AdminEventTableDateCell from "./AdminEventTableDateCell";
 import {getSourceTagColor} from "./sourceTagUtils";
 import type {AdminEvent, AdminEventStatus} from "./types";
 
@@ -89,6 +90,15 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
       dataIndex: "date",
       key: "date",
       responsive: ["md"],
+      onCell: () => ({
+        className: `${WRAP_CELL_PROPS.className} ${styles.dateTableCell}`,
+        style: { ...WRAP_CELL_PROPS.style, verticalAlign: "top" },
+      }),
+      render: (_, record) => (
+        <div className={styles.dateCellTop}>
+          <AdminEventTableDateCell value={record.startDate || record.date} />
+        </div>
+      ),
     },
     {
       title: "Source",

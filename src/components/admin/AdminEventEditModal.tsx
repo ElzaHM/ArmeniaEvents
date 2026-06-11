@@ -7,6 +7,7 @@ import {
   Input,
   InputNumber,
   Modal,
+  Radio,
   Row,
   Select,
   Typography,
@@ -25,8 +26,11 @@ import {
   adminEventToEditFormValues,
   type AdminEventEditFormValues,
 } from '../../services/admin-events.service';
+import { fetchAdminCategories } from '../../pages/admin/AdminCategoriesPage/categoryApi';
 import {
-  fetchActiveCategories,
+  adminCategoriesQueryKey,
+  isUncategorizedEvent,
+  selectActiveEventCategories,
   toCategorySelectOptions,
 } from '../../pages/admin/AdminEventsPage/eventCategories';
 import { useUpdateAdminEvent } from '../../hooks/queries/useEvents';
@@ -36,6 +40,8 @@ import type { AdminEvent, AdminEventStatus } from './types';
 import styles from './AdminEventEditModal.module.css';
 
 const { Text } = Typography;
+
+const EVENT_FORM_PICKER_POPUP = { popupClassName: 'event-form-picker-dropdown' };
 
 const STATUS_OPTIONS: { value: AdminEventStatus; label: string }[] = [
   { value: 'published', label: 'Published' },
@@ -65,21 +71,24 @@ export default function AdminEventEditModal({ event, open, onClose }: AdminEvent
   const updateAdminEvent = useUpdateAdminEvent();
   const [pendingImage, setPendingImage] = useState<PendingImage | null>(null);
 
-  const imageUrlValue = Form.useWatch('imageUrl', form);
-
   const { data: activeCategories = [] } = useQuery({
-    queryKey: ['admin', 'active-categories'],
-    queryFn: fetchActiveCategories,
+    queryKey: adminCategoriesQueryKey,
+    queryFn: fetchAdminCategories,
+    select: selectActiveEventCategories,
     enabled: open,
   });
 
   const categorySelectOptions = useMemo(
-    () => toCategorySelectOptions(activeCategories, event?.category ? [event.category] : []),
-    [activeCategories, event?.category],
+    () =>
+      toCategorySelectOptions(
+        activeCategories,
+        event && !isUncategorizedEvent(event) && event.category ? [event.category] : [],
+      ),
+    [activeCategories, event],
   );
 
   const previewSrc =
-    pendingImage?.url || imageUrlValue?.trim() || event?.imageUrl || EVENT_IMAGE_PLACEHOLDER;
+    pendingImage?.url || event?.storedImageUrl || EVENT_IMAGE_PLACEHOLDER;
 
   useEffect(() => {
     if (open && event) {
@@ -126,15 +135,12 @@ export default function AdminEventEditModal({ event, open, onClose }: AdminEvent
     }
 
     try {
-      const savedImageUrl = await updateAdminEvent.mutateAsync({
+      await updateAdminEvent.mutateAsync({
         id: event.id,
         values,
         pendingImage,
+        existingImageUrl: event.storedImageUrl,
       });
-
-      if (savedImageUrl) {
-        form.setFieldValue('imageUrl', savedImageUrl);
-      }
 
       message.success('Event updated successfully');
       handleClose();
@@ -187,10 +193,6 @@ export default function AdminEventEditModal({ event, open, onClose }: AdminEvent
               ) : (
                 <div className={styles.imagePreviewFallback}>No image selected</div>
               )}
-
-              <Form.Item name="imageUrl" label="Image URL" className={styles.imageUrlField}>
-                <Input placeholder="https://... or upload a file below" />
-              </Form.Item>
 
               {!pendingImage ? (
                 <Upload.Dragger
@@ -256,6 +258,57 @@ export default function AdminEventEditModal({ event, open, onClose }: AdminEvent
             <Form.Item name="source" label="Source">
               <Input placeholder="Organizer or website name" />
             </Form.Item>
+            <Form.Item
+              name="sourceUrl"
+              label="Original Source URL"
+              rules={[
+                {
+                  validator: async (_, value?: string) => {
+                    const trimmed = value?.trim();
+                    if (!trimmed) {
+                      return;
+                    }
+
+                    try {
+                      new URL(trimmed);
+                    } catch {
+                      throw new Error('Enter a valid URL');
+                    }
+                  },
+                },
+              ]}>
+              <Input placeholder="https://..." />
+            </Form.Item>
+          </section>
+
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>Schedule</h3>
+            <Row gutter={12}>
+              <Col xs={24} md={12}>
+                <Form.Item
+                  name="startDate"
+                  label="Start Date"
+                  rules={[{ required: true, message: 'Start date is required' }]}>
+                  <DatePicker
+                    showTime
+                    format="DD.MM.YYYY, HH:mm"
+                    style={{ width: '100%' }}
+                    {...EVENT_FORM_PICKER_POPUP}
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={24} md={12}>
+                <Form.Item name="endDate" label="End Date">
+                  <DatePicker
+                    showTime
+                    format="DD.MM.YYYY, HH:mm"
+                    style={{ width: '100%' }}
+                    allowClear
+                    {...EVENT_FORM_PICKER_POPUP}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
           </section>
 
           <section className={styles.section}>
@@ -275,22 +328,42 @@ export default function AdminEventEditModal({ event, open, onClose }: AdminEvent
           </section>
 
           <section className={styles.section}>
-            <h3 className={styles.sectionTitle}>Details</h3>
-            <Row gutter={12}>
-              <Col xs={24} md={12}>
-                <Form.Item
-                  name="startDate"
-                  label="Start Date"
-                  rules={[{ required: true, message: 'Start date is required' }]}>
-                  <DatePicker showTime style={{ width: '100%' }} />
-                </Form.Item>
-              </Col>
-              <Col xs={24} md={12}>
-                <Form.Item name="price" label="Price (USD)">
-                  <InputNumber min={0} precision={2} style={{ width: '100%' }} placeholder="0 = Free" />
-                </Form.Item>
-              </Col>
-            </Row>
+            <h3 className={styles.sectionTitle}>Organizer</h3>
+            <Form.Item
+              name="organizer"
+              label="Organizer Name"
+              rules={[{ required: true, message: 'Organizer is required' }]}>
+              <Input placeholder="Organizer or host name" />
+            </Form.Item>
+          </section>
+
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>Pricing</h3>
+            <Form.Item name="isFree" label="Pricing">
+              <Radio.Group>
+                <Radio value={true}>Free</Radio>
+                <Radio value={false}>Paid</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item noStyle shouldUpdate={(prev, cur) => prev.isFree !== cur.isFree}>
+              {({ getFieldValue }) =>
+                !getFieldValue('isFree') ? (
+                  <Form.Item
+                    name="price"
+                    label="Price (USD)"
+                    rules={[
+                      { required: true, message: 'Please enter a price' },
+                      { type: 'number', min: 0.01, message: 'Price must be greater than 0' },
+                    ]}>
+                    <InputNumber min={0.01} step={0.01} precision={2} style={{ width: '100%' }} />
+                  </Form.Item>
+                ) : null
+              }
+            </Form.Item>
+          </section>
+
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>Audience</h3>
             <Row gutter={12}>
               <Col xs={24} md={12}>
                 <Form.Item name="language" label="Language">
@@ -303,18 +376,13 @@ export default function AdminEventEditModal({ event, open, onClose }: AdminEvent
                 </Form.Item>
               </Col>
             </Row>
-            <Row gutter={12}>
-              <Col xs={24} md={12}>
-                <Form.Item name="ticketUrl" label="Ticket URL">
-                  <Input placeholder="https://..." />
-                </Form.Item>
-              </Col>
-              <Col xs={24} md={12}>
-                <Form.Item name="views" label="Views">
-                  <InputNumber min={0} style={{ width: '100%' }} />
-                </Form.Item>
-              </Col>
-            </Row>
+          </section>
+
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>Admin Controls</h3>
+            <Form.Item name="views" label="Views">
+              <InputNumber min={0} style={{ width: '100%' }} />
+            </Form.Item>
           </section>
         </div>
 

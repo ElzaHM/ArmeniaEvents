@@ -32,9 +32,38 @@ export const GEMINI_PARSE_ERROR_MESSAGE =
 /** @deprecated Use GEMINI_AUTH_MISSING_MESSAGE or GEMINI_AUTH_REJECTED_MESSAGE */
 export const GEMINI_AUTH_ERROR_MESSAGE = GEMINI_AUTH_REJECTED_MESSAGE;
 
+const VALID_AI_CATEGORIES = [
+  "Science",
+  "Education",
+  "Lifestyle",
+  "Food & Drink",
+  "Art",
+  "Entertainment",
+  "Business",
+  "Tech",
+  "Society",
+  "Family",
+] as const;
+
+type CanonicalCategory = (typeof VALID_AI_CATEGORIES)[number];
+
 const BASE_AI_PROMPT = `Search Google for 10 REAL and VERIFIED upcoming events in Armenia for 2026.
 
 For each event provide: title, description, venue, address, start_date (ISO 8601), source (website or organizer name), category_name, source_url, and ticket_url when available.
+
+CRITICAL — category_name rules:
+- The category_name must be exactly one of these 10 categories (copy the name exactly, including capitalization and punctuation):
+  - Science
+  - Education
+  - Lifestyle
+  - Food & Drink
+  - Art
+  - Entertainment
+  - Business
+  - Tech
+  - Society
+  - Family
+- CRITICAL - The category_name must be exactly one of the 10 categories listed above. Do NOT combine categories (e.g., do NOT generate 'Business & Tech' or 'Lifestyle & Food'). Choose the single most appropriate category from the list above depending on the event's main focus.
 
 CRITICAL — source_url rules:
 - DO NOT provide grounding or technical links from google.com (no google.com/grounding-api-redirect URLs).
@@ -61,18 +90,86 @@ function getGoogleSearchTools(): import("@google/generative-ai").Tool[] {
   return [{google_search: {}} as unknown as import("@google/generative-ai").Tool];
 }
 
+/** Maps legacy or synonym labels to canonical Supabase category keys (lowercase). */
 const CATEGORY_ALIASES: Record<string, string[]> = {
-  general: ["misc", "other", "uncategorized"],
-  theater: ["theatre", "opera", "drama", "performing arts", "ballet", "play"],
-  concerts: ["concert", "music", "live music"],
-  music: ["concert", "concerts", "live music", "jazz", "symphony"],
-  festivals: ["festival", "celebration", "outdoors", "film festival", "film"],
-  film: ["cinema", "movie", "film festival"],
-  tech: ["technology", "expo", "conference", "startup", "meetup"],
-  technology: ["tech", "technology", "expo", "startup"],
-  sports: ["sport", "match", "athletics", "hiking"],
-  culture: ["cultural", "heritage", "museum"],
-  exhibitions: ["exhibition", "expo", "gallery", "museum", "art"],
+  science: ["scientific", "research", "stem", "laboratory", "physics", "chemistry", "biology"],
+  education: [
+    "learning",
+    "workshop",
+    "seminar",
+    "training",
+    "lecture",
+    "course",
+    "school",
+    "university",
+    "academic",
+  ],
+  lifestyle: [
+    "wellness",
+    "fashion",
+    "beauty",
+    "fitness",
+    "yoga",
+    "health",
+    "sport",
+    "sports",
+    "outdoors",
+    "hiking",
+    "match",
+    "athletics",
+  ],
+  "food & drink": [
+    "food",
+    "drink",
+    "culinary",
+    "restaurant",
+    "wine",
+    "beer",
+    "gastronomy",
+    "cooking",
+    "dining",
+  ],
+  art: [
+    "arts",
+    "gallery",
+    "museum",
+    "exhibition",
+    "exhibitions",
+    "painting",
+    "sculpture",
+    "photography",
+    "craft",
+    "cultural",
+    "heritage",
+    "culture",
+  ],
+  entertainment: [
+    "concert",
+    "concerts",
+    "music",
+    "live music",
+    "jazz",
+    "symphony",
+    "theater",
+    "theatre",
+    "opera",
+    "drama",
+    "performing arts",
+    "ballet",
+    "play",
+    "festival",
+    "festivals",
+    "film",
+    "cinema",
+    "movie",
+    "comedy",
+    "show",
+    "celebration",
+  ],
+  business: ["corporate", "networking", "entrepreneur", "finance", "economy", "trade"],
+  tech: ["technology", "expo", "meetup", "software", "digital", "innovation", "startup"],
+  society: ["community", "charity", "social", "civic", "general", "misc", "other", "uncategorized"],
+  family: ["kids", "children", "parenting", "family-friendly", "youth"],
 };
 
 type AiEventRaw = {
@@ -419,8 +516,8 @@ async function loadCategoryLookup(): Promise<{
   }
 
   const defaultId =
-    byName.get("general") ??
-    byName.get("culture") ??
+    byName.get("society") ??
+    byName.get("entertainment") ??
     (data?.[0] as CategoryRow | undefined)?.id ??
     null;
 
@@ -437,43 +534,53 @@ function resolveCategoryId(
     return lookup.defaultId;
   }
 
+  // 1. Exact case-insensitive match against Supabase category names.
   if (lookup.byName.has(normalized)) {
     return lookup.byName.get(normalized) ?? lookup.defaultId;
   }
 
-  for (const [key, aliases] of Object.entries(CATEGORY_ALIASES)) {
-    const matchesAlias =
-      normalized === key ||
-      aliases.some((alias) => normalized.includes(alias) || alias.includes(normalized));
+  // 2. Combined labels (e.g. "Business & Tech") — try each segment as an exact match.
+  const segments = normalized
+    .split(/\s*(?:&|\/|,|\band\b|\+)\s*/i)
+    .map((segment) => segment.trim())
+    .filter(Boolean);
 
-    if (matchesAlias && lookup.byName.has(key)) {
-      return lookup.byName.get(key) ?? lookup.defaultId;
+  if (segments.length > 1) {
+    for (const segment of segments) {
+      if (lookup.byName.has(segment)) {
+        return lookup.byName.get(segment) ?? lookup.defaultId;
+      }
     }
   }
 
-  for (const [name, id] of lookup.byName.entries()) {
-    if (name.includes(normalized) || normalized.includes(name)) {
-      return id;
+  // 3. Legacy/synonym aliases mapped to the 10 canonical categories.
+  for (const [canonical, aliases] of Object.entries(CATEGORY_ALIASES)) {
+    const canonicalKey = canonical.toLowerCase();
+    const matchesCanonical =
+      normalized === canonicalKey ||
+      aliases.some((alias) => normalized === alias.toLowerCase());
+
+    if (matchesCanonical && lookup.byName.has(canonicalKey)) {
+      return lookup.byName.get(canonicalKey) ?? lookup.defaultId;
     }
   }
 
-  const words = normalized.split(/[\s,/|-]+/).filter((word) => word.length > 2);
+  // 4. Token-level exact match (e.g. "tech expo" → "tech").
+  const words = normalized.split(/[\s,/|+-]+/).filter((word) => word.length > 2);
   for (const word of words) {
     if (lookup.byName.has(word)) {
       return lookup.byName.get(word) ?? lookup.defaultId;
     }
 
-    for (const [key, aliases] of Object.entries(CATEGORY_ALIASES)) {
-      if (word === key || aliases.some((alias) => word.includes(alias) || alias.includes(word))) {
-        if (lookup.byName.has(key)) {
-          return lookup.byName.get(key) ?? lookup.defaultId;
+    for (const [canonical, aliases] of Object.entries(CATEGORY_ALIASES)) {
+      const canonicalKey = canonical.toLowerCase();
+      if (
+        word === canonicalKey ||
+        aliases.some((alias) => word === alias.toLowerCase())
+      ) {
+        if (lookup.byName.has(canonicalKey)) {
+          return lookup.byName.get(canonicalKey) ?? lookup.defaultId;
         }
-      }
-    }
-
-    for (const [name, id] of lookup.byName.entries()) {
-      if (name.includes(word) || word.includes(name)) {
-        return id;
       }
     }
   }
@@ -539,28 +646,117 @@ async function resolveOrCreateOrganizerId(
   return created.id;
 }
 
-function inferCategoryName(event: AiEventRaw): string {
-  const explicit = event.category_name ?? event.category;
-  if (explicit?.trim()) {
-    return explicit.trim();
+function findCanonicalByKey(key: string): CanonicalCategory | null {
+  const normalizedKey = key.trim().toLowerCase();
+
+  for (const canonical of VALID_AI_CATEGORIES) {
+    if (canonical.toLowerCase() === normalizedKey) {
+      return canonical;
+    }
   }
 
+  return null;
+}
+
+function resolveCanonicalCategoryName(categoryName: string): CanonicalCategory {
+  const normalized = categoryName.trim().toLowerCase();
+
+  if (!normalized) {
+    return "Society";
+  }
+
+  const exactMatch = findCanonicalByKey(normalized);
+  if (exactMatch) {
+    return exactMatch;
+  }
+
+  const segments = normalized
+    .split(/\s*(?:&|\/|,|\band\b|\+)\s*/i)
+    .map((segment) => segment.trim())
+    .filter(Boolean);
+
+  if (segments.length > 1) {
+    for (const segment of segments) {
+      const segmentMatch = findCanonicalByKey(segment);
+      if (segmentMatch) {
+        return segmentMatch;
+      }
+    }
+  }
+
+  for (const [canonical, aliases] of Object.entries(CATEGORY_ALIASES)) {
+    const matchesCanonical =
+      normalized === canonical ||
+      aliases.some((alias) => normalized === alias.toLowerCase());
+
+    if (matchesCanonical) {
+      return findCanonicalByKey(canonical) ?? "Society";
+    }
+  }
+
+  const words = normalized.split(/[\s,/|+-]+/).filter((word) => word.length > 2);
+  for (const word of words) {
+    const wordMatch = findCanonicalByKey(word);
+    if (wordMatch) {
+      return wordMatch;
+    }
+
+    for (const [canonical, aliases] of Object.entries(CATEGORY_ALIASES)) {
+      if (word === canonical || aliases.some((alias) => word === alias.toLowerCase())) {
+        return findCanonicalByKey(canonical) ?? "Society";
+      }
+    }
+  }
+
+  return "Society";
+}
+
+function inferCategoryNameFromContent(event: AiEventRaw): CanonicalCategory {
   const haystack = `${event.title ?? ""} ${event.description ?? ""}`.toLowerCase();
 
-  if (/concert|music|jazz|symphony|band/.test(haystack)) {
-    return "Concerts";
+  if (
+    /concert|music|jazz|symphony|band|theater|theatre|opera|ballet|play|drama|festival|fest\b|film|cinema|comedy|show/.test(
+      haystack,
+    )
+  ) {
+    return "Entertainment";
   }
-  if (/festival|fest\b|film/.test(haystack)) {
-    return "Festivals";
+  if (/exhibition|gallery|museum|painting|sculpture|\bart\b/.test(haystack)) {
+    return "Art";
   }
-  if (/exhibition|gallery|museum|expo/.test(haystack)) {
-    return "Exhibitions";
+  if (/food|wine|beer|restaurant|culinary|gastronomy|cooking|dining/.test(haystack)) {
+    return "Food & Drink";
   }
-  if (/theater|theatre|opera|ballet|play|drama/.test(haystack)) {
-    return "Theater";
+  if (/tech|technology|software|digital|hackathon|startup/.test(haystack)) {
+    return "Tech";
+  }
+  if (/business|corporate|entrepreneur|networking|finance/.test(haystack)) {
+    return "Business";
+  }
+  if (/education|workshop|seminar|training|lecture|course|school|university/.test(haystack)) {
+    return "Education";
+  }
+  if (/science|research|stem|laboratory|physics|chemistry|biology/.test(haystack)) {
+    return "Science";
+  }
+  if (/kids|children|family|youth|parenting/.test(haystack)) {
+    return "Family";
+  }
+  if (/wellness|fitness|yoga|sport|hiking|lifestyle|fashion|beauty/.test(haystack)) {
+    return "Lifestyle";
   }
 
-  return "Culture";
+  return "Society";
+}
+
+function inferCategoryName(event: AiEventRaw): CanonicalCategory {
+  const explicit = (event.category_name ?? event.category)?.trim();
+
+  if (explicit) {
+    return resolveCanonicalCategoryName(explicit);
+  }
+
+  return inferCategoryNameFromContent(event);
 }
 
 function isGroundingOrTechnicalSourceUrl(url: string): boolean {
@@ -608,7 +804,7 @@ function normalizeAiEvent(raw: AiEventRaw): {
   const start_date = (raw.start_date ?? raw.startDate)?.trim();
   const venue = raw.venue?.trim();
   const source = (raw.source ?? raw.source_website)?.trim() || "Gemini AI";
-  const category_name = (raw.category_name ?? raw.category)?.trim() || inferCategoryName(raw);
+  const category_name = inferCategoryName(raw);
   const rawImage = (raw.image_url ?? raw.imageUrl)?.trim();
   const image_url = sanitizeAdminImageUrl(rawImage);
   const rawTicket = (raw.ticket_url ?? raw.ticketUrl ?? raw.ticket_link)?.trim();

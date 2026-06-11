@@ -1,13 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ComponentType } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Modal, Space, Switch, Table, Tag, message } from 'antd';
 import type { TableColumnsType } from 'antd';
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  BookOutlined,
+  ProjectOutlined,
+  CodeOutlined,
+  CoffeeOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  ExperimentOutlined,
+  FolderOutlined,
+  HeartOutlined,
+  PictureOutlined,
+  PlayCircleOutlined,
+  PlusOutlined,
+  SmileOutlined,
+  TeamOutlined,
+} from '@ant-design/icons';
 
 import AdminCard from '../../../components/admin/AdminCard';
 import AdminPageHeader from '../../../components/admin/AdminPageHeader';
 import type { AdminCategory } from '../../../components/admin/types';
 import AdminCategoryModal from './AdminCategoryModal';
+import {
+  adminCategoriesQueryKey,
+  invalidateAdminCategoryRelatedCaches,
+} from '../AdminEventsPage/eventCategories';
 import {
   createAdminCategory,
   deleteAdminCategory,
@@ -18,27 +37,50 @@ import {
 
 import styles from './AdminCategoriesPage.module.css';
 
-const adminCategoriesQueryKey = ['admin', 'categories'] as const;
+type CategoryIconProps = {
+  className?: string;
+  style?: React.CSSProperties;
+};
+
+const CATEGORY_ICON_MAP: Record<string, ComponentType<CategoryIconProps>> = {
+  Science: ExperimentOutlined,
+  Education: BookOutlined,
+  Lifestyle: SmileOutlined,
+  'Food & Drink': CoffeeOutlined,
+  Art: PictureOutlined,
+  Entertainment: PlayCircleOutlined,
+  Business: ProjectOutlined,
+  Tech: CodeOutlined,
+  Society: TeamOutlined,
+  Family: HeartOutlined,
+};
+
+function getCategoryIcon(name: string): ComponentType<CategoryIconProps> {
+  return CATEGORY_ICON_MAP[name] ?? FolderOutlined;
+}
 
 export default function AdminCategoriesPage() {
   const [messageApi, contextHolder] = message.useMessage();
   const queryClient = useQueryClient();
   const [categories, setCategories] = useState<AdminCategory[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<AdminCategory | null>(null);
+  const [viewingCategory, setViewingCategory] = useState<AdminCategory | null>(null);
   const [togglingId, setTogglingId] = useState<string | null>(null);
 
   const { data: categoriesData = [], isLoading } = useQuery({
     queryKey: adminCategoriesQueryKey,
     queryFn: fetchAdminCategories,
   });
+  const totalCategories = categories.length;
 
   useEffect(() => {
     setCategories(categoriesData);
   }, [categoriesData]);
 
   const refreshCategories = async () => {
-    await queryClient.invalidateQueries({ queryKey: adminCategoriesQueryKey });
+    await invalidateAdminCategoryRelatedCaches(queryClient);
   };
 
   const createMutation = useMutation({
@@ -74,7 +116,18 @@ export default function AdminCategoriesPage() {
     setModalOpen(true);
   };
 
+  const openDetailModal = (category: AdminCategory) => {
+    setViewingCategory(category);
+    setDetailModalOpen(true);
+  };
+
+  const closeDetailModal = () => {
+    setDetailModalOpen(false);
+    setViewingCategory(null);
+  };
+
   const openEditModal = (category: AdminCategory) => {
+    closeDetailModal();
     setEditingCategory(category);
     setModalOpen(true);
   };
@@ -134,13 +187,14 @@ export default function AdminCategoriesPage() {
   const handleDeleteCategory = (category: AdminCategory) => {
     Modal.confirm({
       title: 'Delete category?',
-      content: `This will permanently delete "${category.name}".`,
+      content: `This will permanently delete "${category.name}". Events in this category will become uncategorized.`,
       okText: 'Delete',
       okButtonProps: { danger: true },
       cancelText: 'Cancel',
       onOk: async () => {
         try {
           await deleteMutation.mutateAsync(category.id);
+          closeDetailModal();
           messageApi.success('Category deleted');
           await refreshCategories();
         } catch (error) {
@@ -151,7 +205,24 @@ export default function AdminCategoriesPage() {
   };
 
   const columns: TableColumnsType<AdminCategory> = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (name: string) => {
+        const Icon = getCategoryIcon(name);
+
+        return (
+          <Space size={8} align="center">
+            <Icon
+              aria-hidden
+              style={{ color: 'var(--admin-gold)', fontSize: 16, flexShrink: 0 }}
+            />
+            <span>{name}</span>
+          </Space>
+        );
+      },
+    },
     { title: 'Slug', dataIndex: 'slug', key: 'slug', responsive: ['md'] },
     {
       title: 'Events',
@@ -163,8 +234,11 @@ export default function AdminCategoriesPage() {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
+      width: 380,
       responsive: ['lg'],
-      ellipsis: true,
+      render: (description: string) => (
+        <span className={styles.descriptionClamp}>{description}</span>
+      ),
     },
     {
       title: 'Status',
@@ -221,7 +295,13 @@ export default function AdminCategoriesPage() {
     <>
       {contextHolder}
       <AdminPageHeader title="Categories" subtitle="Organize events into meaningful categories." />
-      <AdminCard>
+      <div className={styles.totalCategoriesBadge} aria-live="polite">
+        <span className={styles.totalCategoriesLabel}>Total categories</span>
+        <strong className={styles.totalCategoriesCount}>
+          {isLoading ? '…' : totalCategories.toLocaleString('en-US')}
+        </strong>
+      </div>
+      <AdminCard className={styles.adminTableCard}>
         <div className={styles.toolbar}>
           <Button
             type="primary"
@@ -233,19 +313,200 @@ export default function AdminCategoriesPage() {
         </div>
         <div className={styles.tableWrap}>
           <Table
+            size="middle"
             columns={columns}
             dataSource={categories}
             rowKey="id"
             loading={isLoading || deleteMutation.isPending}
             onRow={(record) => ({
-              onClick: () => openEditModal(record),
+              onClick: () => openDetailModal(record),
               className: 'admin-table-row-clickable',
             })}
-            pagination={{ pageSize: 8 }}
+            pagination={{
+              defaultPageSize: 10,
+              showSizeChanger: true,
+              pageSizeOptions: ['10', '20', '50', '100'],
+              hideOnSinglePage: true,
+            }}
             scroll={{ x: 'max-content' }}
+            styles={{
+              content: {
+                overflowY: 'visible',
+                maxHeight: 'none',
+                height: 'auto',
+              },
+              body: {
+                wrapper: {
+                  overflowY: 'visible',
+                  maxHeight: 'none',
+                  height: 'auto',
+                },
+              },
+            }}
           />
         </div>
       </AdminCard>
+
+      <Modal
+        open={detailModalOpen}
+        title={null}
+        footer={null}
+        onCancel={closeDetailModal}
+        className="admin-detail-modal"
+        width={560}
+        centered
+        destroyOnHidden>
+        {viewingCategory ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <header style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                {(() => {
+                  const Icon = getCategoryIcon(viewingCategory.name);
+                  return (
+                    <Icon
+                      aria-hidden
+                      style={{ color: 'var(--admin-gold)', fontSize: 22, flexShrink: 0 }}
+                    />
+                  );
+                })()}
+                <h2
+                  style={{
+                    margin: 0,
+                    fontSize: 24,
+                    fontWeight: 700,
+                    lineHeight: 1.35,
+                    color: 'var(--admin-text)',
+                    wordBreak: 'break-word',
+                  }}>
+                  {viewingCategory.name}
+                </h2>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                <Tag color={viewingCategory.isActive ? 'success' : 'default'}>
+                  {viewingCategory.isActive ? 'Active' : 'Disabled'}
+                </Tag>
+                <Tag color="gold">{viewingCategory.eventCount.toLocaleString()} events</Tag>
+              </div>
+            </header>
+
+            <section className={styles.detailSection}>
+              <dl style={{ display: 'flex', flexDirection: 'column', gap: 12, margin: 0 }}>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '92px 1fr',
+                    gap: 10,
+                    alignItems: 'start',
+                  }}>
+                  <dt
+                    style={{
+                      margin: 0,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: 'var(--admin-text-muted)',
+                    }}>
+                    Slug
+                  </dt>
+                  <dd style={{ margin: 0, color: 'var(--admin-text)', wordBreak: 'break-word' }}>
+                    {viewingCategory.slug}
+                  </dd>
+                </div>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '92px 1fr',
+                    gap: 10,
+                    alignItems: 'start',
+                  }}>
+                  <dt
+                    style={{
+                      margin: 0,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: 'var(--admin-text-muted)',
+                    }}>
+                    Status
+                  </dt>
+                  <dd style={{ margin: 0, color: 'var(--admin-text)' }}>
+                    {viewingCategory.isActive ? 'Enabled' : 'Disabled'}
+                  </dd>
+                </div>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '92px 1fr',
+                    gap: 10,
+                    alignItems: 'start',
+                  }}>
+                  <dt
+                    style={{
+                      margin: 0,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: 'var(--admin-text-muted)',
+                    }}>
+                    Events
+                  </dt>
+                  <dd style={{ margin: 0, color: 'var(--admin-text)' }}>
+                    {viewingCategory.eventCount.toLocaleString()}
+                  </dd>
+                </div>
+              </dl>
+            </section>
+
+            {viewingCategory.description ? (
+              <section>
+                <h3
+                  style={{
+                    margin: '0 0 8px',
+                    fontSize: 12,
+                    fontWeight: 700,
+                    letterSpacing: '0.04em',
+                    textTransform: 'uppercase',
+                    color: 'var(--admin-text-muted)',
+                  }}>
+                  Description
+                </h3>
+                <p
+                  style={{
+                    margin: 0,
+                    color: 'var(--admin-text-secondary)',
+                    lineHeight: 1.5,
+                    whiteSpace: 'pre-wrap',
+                    wordBreak: 'break-word',
+                  }}>
+                  {viewingCategory.description}
+                </p>
+              </section>
+            ) : null}
+
+            <footer
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: 12,
+                marginTop: 4,
+                paddingTop: 16,
+                borderTop: '1px solid var(--admin-border)',
+              }}>
+              <Button
+                danger
+                className="admin-btn-delete"
+                icon={<DeleteOutlined />}
+                onClick={() => handleDeleteCategory(viewingCategory)}>
+                Delete
+              </Button>
+              <Button
+                type="primary"
+                className="admin-btn-edit"
+                icon={<EditOutlined />}
+                onClick={() => openEditModal(viewingCategory)}>
+                Edit
+              </Button>
+            </footer>
+          </div>
+        ) : null}
+      </Modal>
 
       <AdminCategoryModal
         open={modalOpen}
