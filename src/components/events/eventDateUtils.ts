@@ -52,6 +52,19 @@ export function formatEventDateTime(dateString?: string | null, time?: string): 
   return `${formattedDate} • ${formattedTime}`;
 }
 
+export function formatEventDate(dateString?: string | null): string {
+  const date = parseEventDate(dateString);
+  if (!date) {
+    return DATE_FALLBACK;
+  }
+
+  return date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
 export function formatFullDate(dateString?: string | null, time?: string): string {
   const date = parseEventDate(dateString);
   if (!date) {

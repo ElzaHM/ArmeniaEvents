@@ -1,10 +1,8 @@
 .pageWrapper {
-  min-height: 100vh;
-  height: auto;
-  width: 100%;
-  overflow-x: clip;
-  overflow-y: visible;
-  box-sizing: border-box;
+  height: 100dvh;
+  max-height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
   background-image: var(--auth-page-overlay), url('../../assets/eventPageLigthBg.png');
   background-repeat: no-repeat;
   background-position: top;
@@ -13,8 +11,8 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-top: 110px;
-  padding-bottom: 30px;
+  padding-top: 80px;
+  padding-bottom: 0;
 }
 
 .logo {
@@ -37,15 +35,13 @@
 
 .mainContent {
   flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  min-width: 0;
-  padding: 72px 16px 32px;
+  padding: 12px 20px;
   position: relative;
-  overflow: visible;
-  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .arcDecoration {
@@ -134,44 +130,18 @@
   font-size: 12px;
 }
 
-@media (max-width: 1024px) {
-  .pageWrapper {
-    padding-top: 88px;
-  }
-
-  .mainContent {
-    align-items: flex-start;
-    padding: 20px 16px 32px;
-  }
-
-  .arcDecoration {
-    display: none;
-  }
-}
-
-@media (max-width: 960px) {
-  .mainContent {
-    padding: 16px 16px 28px;
-  }
-}
-
 @media (max-width: 768px) {
   .footerGrid {
     grid-template-columns: 1fr;
   }
 
   .mainContent {
-    padding: 12px 12px 24px;
+    padding: 8px 12px;
   }
 }
 
 @media (max-width: 480px) {
-  .pageWrapper {
-    padding-top: 76px;
-    padding-bottom: 16px;
-  }
-
   .mainContent {
-    padding: 8px 12px 20px;
+    padding: 8px 12px;
   }
 }

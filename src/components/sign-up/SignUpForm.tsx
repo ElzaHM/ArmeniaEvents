@@ -15,6 +15,9 @@ type SignUpValues = {
   agree: boolean;
 };
 
+/** Set to true to restore the Google sign-up button on this page. */
+const SHOW_GOOGLE_SIGN_IN = false;
+
 type PasswordStrength = {
   level: 'weak' | 'medium' | 'strong' | null;
   label: string;
@@ -208,6 +211,7 @@ export const SignUpForm: React.FC = () => {
 
         <Form.Item
           name="agree"
+          className="agreeItem"
           valuePropName="checked"
           rules={[
             {
@@ -229,13 +233,17 @@ export const SignUpForm: React.FC = () => {
           Create Account
         </Button>
 
-        <Divider className={styles.divider}>or continue with</Divider>
+        {SHOW_GOOGLE_SIGN_IN ? (
+          <>
+            <Divider className={styles.divider}>or continue with</Divider>
 
-        <GoogleSignInButton
-          disabled={googleLoading}
-          onCredential={handleGoogleCredential}
-          onError={() => messageApi.error('Google sign in failed. Please try again.')}
-        />
+            <GoogleSignInButton
+              disabled={googleLoading}
+              onCredential={handleGoogleCredential}
+              onError={() => messageApi.error('Google sign in failed. Please try again.')}
+            />
+          </>
+        ) : null}
 
         <div className={styles.signInText}>
           Already have an account? <Link to="/signin" className={styles.signInLink}>Sign In</Link>

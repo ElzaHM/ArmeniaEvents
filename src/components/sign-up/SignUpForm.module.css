@@ -1,14 +1,5 @@
 .formContainer {
   width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.formContainer :global(.ant-form),
-.formContainer :global(.ant-input-affix-wrapper),
-.formContainer :global(.ant-input) {
-  max-width: 100%;
 }
 
 .title {
@@ -52,8 +43,8 @@
 }
 
 .strengthContainer {
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .strengthLabel {
@@ -108,6 +99,7 @@
 
 .termsLink {
   color: var(--auth-accent);
+  font-weight: 600;
 }
 
 .submitBtn {
@@ -123,20 +115,6 @@
   border-color: var(--auth-input-border) !important;
   color: var(--home-text-secondary) !important;
   font-size: 12px;
-}
-
-.socialBtn {
-  width: 100%;
-  height: 34px;
-  background: var(--auth-social-bg) !important;
-  border: 1px solid var(--auth-social-border) !important;
-  color: var(--home-text) !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 6px;
-  font-size: 13px;
 }
 
 .signInText {

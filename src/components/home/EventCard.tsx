@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useFavoriteStatus, useToggleFavorite } from '../../hooks/queries/useFavorite';
 import { useAuth } from '../../hooks/useAuth';
-import { formatDateBadge } from '../events/eventDateUtils';
+import { formatDateBadge, formatEventDateTime } from '../events/eventDateUtils';
 import type { EventItem } from './types';
 import styles from './EventCard.module.css';
 
@@ -78,7 +78,7 @@ export default function EventCard({ event }: EventCardProps) {
 
         <div className={styles.infoRow}>
           <CalendarOutlined className={styles.icon} />
-          <span className={styles.infoText}>{event.date} • {event.time}</span>
+          <span className={styles.infoText}>{formatEventDateTime(event.date, event.time)}</span>
         </div>
 
         <div className={`${styles.price} ${isFree ? styles.freePrice : ''}`}>

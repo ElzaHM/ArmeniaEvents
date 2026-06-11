@@ -8,6 +8,7 @@ import styles from './EventTabs.module.css';
 const ADD_TO_CALENDAR_TAB = 'Add to Calendar';
 const VENUE_TAB = 'Venue';
 const OPEN_IN_MAPS_TAB = 'Open in Maps';
+const GALLERY_TAB = 'Gallery';
 const EVENT_VENUE_SECTION_ID = 'event-venue';
 const SCROLL_OFFSET = 96;
 
@@ -92,7 +93,9 @@ export default function EventTabs({ event }: EventTabsProps) {
     <QueryState isLoading={isLoading} isError={isError} error={error} minHeight={48}>
       {eventTabs && (
         <nav className={styles.tabs} aria-label="Event sections">
-          {eventTabs.map((tab, index) => (
+          {eventTabs
+            .filter((tab) => tab !== GALLERY_TAB)
+            .map((tab, index) => (
             <button
               key={tab}
               type="button"

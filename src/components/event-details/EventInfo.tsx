@@ -7,7 +7,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 
-import { formatFullDate, openGoogleCalendarEvent, parseEventDate } from '../events/eventDateUtils';
+import { formatEventDate, formatEventTime, formatFullDate, openGoogleCalendarEvent, parseEventDate } from '../events/eventDateUtils';
 import type { EventDetails } from './types';
 
 import styles from './EventInfo.module.css';
@@ -28,6 +28,13 @@ type InfoItem = {
 export default function EventInfo({ event }: EventInfoProps) {
   const hasEndDate = Boolean(event.endDate && parseEventDate(event.endDate));
   const hasValidStartDate = Boolean(parseEventDate(event.date));
+  const durationValue =
+    event.duration?.trim() ||
+    (hasValidStartDate && event.time && event.time !== 'Date TBD'
+      ? event.time
+      : hasValidStartDate
+        ? formatEventTime(event.date)
+        : 'Not specified');
 
   const handleAddToCalendar = () => {
     openGoogleCalendarEvent({
@@ -42,8 +49,8 @@ export default function EventInfo({ event }: EventInfoProps) {
   const infoItems: InfoItem[] = [
     {
       icon: CalendarOutlined,
-      label: 'Date & Time',
-      value: formatFullDate(event.date, event.time),
+      label: 'Date',
+      value: formatEventDate(event.date),
       extra: 'Add to Calendar',
       onExtraClick: handleAddToCalendar,
       extraDisabled: !hasValidStartDate,
@@ -59,8 +66,8 @@ export default function EventInfo({ event }: EventInfoProps) {
       : []),
     {
       icon: ClockCircleOutlined,
-      label: 'Duration',
-      value: event.duration ?? 'N/A',
+      label: 'Start Time',
+      value: durationValue,
     },
     {
       icon: TeamOutlined,

@@ -6,24 +6,20 @@
   border-radius: 12px;
   overflow: hidden;
   max-width: 960px;
-  width: min(92%, 960px);
-  max-height: none;
-  height: auto;
+  width: 92%;
+  max-height: 100%;
   margin: 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: none;
-  box-sizing: border-box;
 }
 
 .leftSection {
   flex: 1;
-  min-width: 0;
-  padding: 14px 28px 14px;
+  padding: 26px 28px 26px;
   background: transparent;
   border-right: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   flex-direction: column;
-  gap: 10px;
   position: relative;
   min-height: 0;
   overflow: hidden;
@@ -31,31 +27,33 @@
 
 .rightSection {
   flex: 1;
-  min-width: 0;
-  padding: 18px 24px;
+  padding: 24px 28px;
   background: transparent;
-  overflow: visible;
+  overflow: hidden;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .logoBox {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   background: var(--auth-logo-box-bg);
   border: 1px solid var(--auth-accent);
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0;
+  margin-bottom: 8px;
   color: var(--auth-accent);
 }
 
 .joinHeading {
-  font-size: 26px;
+  font-size: 22px;
   line-height: 1.2;
   color: var(--home-text);
-  margin-bottom: 0;
+  margin-bottom: 6px;
   font-weight: 600;
 }
 
@@ -66,14 +64,14 @@
 .desc {
   color: var(--home-text-secondary);
   line-height: 1.4;
-  margin-bottom: 0;
+  margin-bottom: 8px;
   font-size: 12px;
 }
 
 .featureList {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .featureItem {
@@ -82,8 +80,8 @@
 }
 
 .iconWrapper {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   flex-shrink: 0;
   background: var(--auth-feature-icon-bg);
   border: 1px solid var(--auth-feature-icon-border);
@@ -111,13 +109,13 @@
   margin-top: auto;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 12px;
+  padding-top: 8px;
   width: var(--auth-illustration-box-width, 100%);
-  height: var(--auth-illustration-box-height, 220px);
+  height: var(--auth-illustration-box-height, 128px);
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  overflow: hidden;
+  overflow: visible;
   flex-shrink: 0;
   background-color: transparent;
   box-sizing: border-box;
@@ -151,12 +149,9 @@
   display: none;
 }
 
-/* Tablet / small laptop: stack form only (sign-up form is taller than sign-in) */
-@media (max-width: 1024px) {
+@media (max-width: 992px) {
   .panel {
     flex-direction: column;
-    width: min(92%, 640px);
-    max-width: 640px;
   }
 
   .leftSection {
@@ -164,9 +159,8 @@
   }
 
   .rightSection {
-    width: 100%;
-    padding: 28px 24px 20px;
-    overflow: visible;
+    padding: 20px 16px 16px;
+    overflow-y: visible;
   }
 
   .mobileIllustration {
@@ -180,43 +174,9 @@
   }
 }
 
-/* 481px – 960px tablet range */
-@media (max-width: 960px) {
-  .panel {
-    width: min(92%, calc(100vw - 32px));
-    max-width: none;
-  }
-
-  .rightSection {
-    padding: 24px 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .panel {
-    width: min(94%, calc(100vw - 24px));
-  }
-
-  .rightSection {
-    padding: 22px 18px;
-  }
-
-  .joinHeading {
-    font-size: 24px;
-  }
-}
-
 @media (max-width: 480px) {
-  .panel {
-    width: 100%;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    border-radius: 12px;
-  }
-
   .rightSection {
-    padding: 20px 16px 16px;
+    padding: 20px 16px 12px;
   }
 
   .mobileIllustration {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox, Divider, message } from 'antd';
+import { Form, Input, Button, Divider, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -115,10 +115,7 @@ export const SignInForm: React.FC = () => {
           />
         </Form.Item>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-          <Form.Item name="remember" valuePropName="checked" style={{ marginBottom: 0 }}>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
           <Link to="/forgot-password" className={styles.forgotPassword}>Forgot Password?</Link>
         </div>
 
