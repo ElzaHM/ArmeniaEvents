@@ -31,17 +31,17 @@ export default function ExportReportModal({
       <div className={styles.optionGrid}>
         <button
           type="button"
-          className={styles.optionCard}
+          className={styles.exportOptionCard}
           onClick={() => {
             onSummaryPdf();
             onClose();
           }}
         >
-          <span className={styles.optionIcon}>
+          <span className={styles.exportOptionIcon}>
             <FileTextOutlined />
           </span>
-          <span className={styles.optionTitle}>Simplified Summary PDF</span>
-          <span className={styles.optionDescription}>
+          <span className={styles.exportOptionTitle}>Simplified Summary PDF</span>
+          <span className={styles.exportOptionDescription}>
             Print a clean, minimalist summary table — ideal for sharing.
           </span>
         </button>
