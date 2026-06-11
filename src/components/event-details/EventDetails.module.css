@@ -1,22 +1,40 @@
 .detailsPage {
   width: 100%;
+  min-height: 100vh;
   text-align: left;
   color: var(--home-text);
-  background: var(--home-section-bg);
-  padding-bottom: 56px;
+  background: transparent;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.detailsPage::before {
+.pageBody {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.footer {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: 64px;
+}
+
+.footer :global(section) {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.detailsPage::after {
   content: '';
-  position: absolute;
-  inset: 0 0 auto;
-  height: 520px;
-  background:
-    radial-gradient(ellipse at 20% 0%, var(--details-hero-glow), transparent 55%),
-    radial-gradient(ellipse at 80% 10%, var(--details-hero-glow), transparent 45%);
-  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
   z-index: 0;
+  pointer-events: none;
 }
 
 .detailsPage > * {
@@ -85,10 +103,6 @@
 }
 
 @media (max-width: 768px) {
-  .detailsPage {
-    padding-bottom: 40px;
-  }
-
   .backBar {
     padding-top: 88px;
     padding-bottom: 16px;

@@ -16,6 +16,33 @@ function generateTicketCode(): string {
   return `AE-${suffix}`;
 }
 
+export type EventTicketDetails = {
+  id: string;
+  title: string;
+  start_date: string | null;
+  address: string | null;
+  venue: string | null;
+  price: number | null;
+};
+
+export async function getEventTicketDetails(eventId: string): Promise<EventTicketDetails> {
+  const { data, error } = await supabaseAdminClient
+    .from('events')
+    .select('id, title, start_date, address, venue, price')
+    .eq('id', eventId)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  if (!data) {
+    throw new Error('Event not found');
+  }
+
+  return data;
+}
+
 export async function reserveTicket(
   userId: string,
   eventId: string,

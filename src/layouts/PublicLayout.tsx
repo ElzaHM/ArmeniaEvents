@@ -9,7 +9,12 @@ const PAGES_WITH_OWN_FOOTER = ['/', '/favorites', '/contact', '/about', '/events
 export default function PublicLayout() {
   const { pathname } = useLocation();
   const isAuthPage = AUTH_PATHS.includes(pathname);
-  const showLayoutFooter = !isAuthPage && !PAGES_WITH_OWN_FOOTER.includes(pathname);
+  const isEventDetailPage = /^\/events\/[^/]+$/.test(pathname);
+  const hasOwnFooter =
+    PAGES_WITH_OWN_FOOTER.includes(pathname) ||
+    pathname.endsWith('/checkout') ||
+    isEventDetailPage;
+  const showLayoutFooter = !isAuthPage && !hasOwnFooter;
 
   return (
     <>

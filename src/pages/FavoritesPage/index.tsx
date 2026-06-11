@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Typography } from 'antd';
+import { Button, Typography } from 'antd';
 
 import EventCard from '../../components/home/EventCard';
 import FooterContent from '../../components/home/FooterContent';
@@ -10,10 +11,16 @@ import { useUserFavoriteEvents } from '../../hooks/queries/useFavorite';
 import styles from './FavoritesPage.module.css';
 
 const { Title, Paragraph } = Typography;
+const INITIAL_VISIBLE_COUNT = 10;
 
 export default function FavoritesPage() {
+  const [showAll, setShowAll] = useState(false);
   const favoriteEventsQuery = useUserFavoriteEvents();
   const favoriteEvents = favoriteEventsQuery.data ?? [];
+  const hasMore = favoriteEvents.length > INITIAL_VISIBLE_COUNT;
+  const visibleEvents = showAll
+    ? favoriteEvents
+    : favoriteEvents.slice(0, INITIAL_VISIBLE_COUNT);
 
   return (
     <div className={`${styles.pageWrapper} favorites-page`}>
@@ -40,15 +47,29 @@ export default function FavoritesPage() {
               Start exploring events and click the heart icon to save events here.
             </Typography.Paragraph>
           ) : (
-            <div className={styles.grid}>
-              {favoriteEvents.map((event) => (
-                <div key={event.id} className={styles.cardWrap}>
-                  <Link to={`/events/${event.id}`} className={styles.cardLink}>
-                    <EventCard event={event} />
-                  </Link>
+            <>
+              <div className={styles.grid}>
+                {visibleEvents.map((event) => (
+                  <div key={event.id} className={styles.cardWrap}>
+                    <Link to={`/events/${event.id}`} className={styles.cardLink}>
+                      <EventCard event={event} />
+                    </Link>
+                  </div>
+                ))}
+              </div>
+              {hasMore && !showAll ? (
+                <div className={styles.moreWrap}>
+                  <Button
+                    type="primary"
+                    size="large"
+                    className={styles.moreBtn}
+                    onClick={() => setShowAll(true)}
+                  >
+                    More
+                  </Button>
                 </div>
-              ))}
-            </div>
+              ) : null}
+            </>
           )}
         </QueryState>
       </div>
