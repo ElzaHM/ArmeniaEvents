@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Button, Select, Typography } from 'antd';
 import {
@@ -17,10 +17,56 @@ import EventPagination from './EventPagination';
 
 import styles from './EventList.module.css';
 
-const PAGE_SIZE = 8;
+const BASE_PAGE_SIZE = 8;
 const CLIENT_FILTER_FETCH_SIZE = 1000;
+const LIST_SECTION_PADDING = 48;
+const TOOLBAR_MARGIN_BOTTOM = 20;
+const PAGINATION_MARGIN_TOP = 32;
+const PAGINATION_PADDING_TOP = 8;
+const CARD_GAP = 16;
+const DESKTOP_FILTERS_BREAKPOINT = '(min-width: 993px)';
+const LIST_CARD_HEIGHT_ESTIMATE = 162;
+const GRID_CARD_HEIGHT_ESTIMATE = 380;
 
 type ViewMode = 'list' | 'grid';
+
+function getGridColumnCount(): number {
+  if (window.matchMedia('(max-width: 576px)').matches) {
+    return 1;
+  }
+
+  if (window.matchMedia('(max-width: 992px)').matches) {
+    return 2;
+  }
+
+  return 3;
+}
+
+function calculatePageSizeForHeight(
+  sectionHeight: number,
+  toolbarHeight: number,
+  paginationHeight: number,
+  cardHeight: number,
+  viewMode: ViewMode,
+): number {
+  const paginationBlock = paginationHeight + PAGINATION_MARGIN_TOP + PAGINATION_PADDING_TOP;
+  const available =
+    sectionHeight - toolbarHeight - TOOLBAR_MARGIN_BOTTOM - paginationBlock - LIST_SECTION_PADDING;
+
+  if (available <= 0) {
+    return BASE_PAGE_SIZE;
+  }
+
+  const slotHeight = Math.max(cardHeight, 1);
+
+  if (viewMode === 'list') {
+    return Math.max(BASE_PAGE_SIZE, Math.floor((available + CARD_GAP) / (slotHeight + CARD_GAP)));
+  }
+
+  const columns = getGridColumnCount();
+  const rows = Math.max(1, Math.floor((available + CARD_GAP) / (slotHeight + CARD_GAP)));
+  return Math.max(BASE_PAGE_SIZE, rows * columns);
+}
 
 type EventWithFilterFields = EventItem & {
   eventType?: string;
@@ -171,6 +217,13 @@ export default function EventList({
   const [sortBy, setSortBy] = useState('date-newest');
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(BASE_PAGE_SIZE);
+
+  const listSectionRef = useRef<HTMLElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
+  const paginationRef = useRef<HTMLDivElement>(null);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
+  const previousPageRef = useRef<number | null>(null);
 
   const hasClientFilters =
     appliedCategories.length > 0 ||
@@ -182,7 +235,7 @@ export default function EventList({
 
   const eventsQuery = useEvents({
     page: hasClientFilters ? 1 : currentPage,
-    pageSize: hasClientFilters ? CLIENT_FILTER_FETCH_SIZE : PAGE_SIZE,
+    pageSize: hasClientFilters ? CLIENT_FILTER_FETCH_SIZE : pageSize,
     q: searchQuery || undefined,
   });
 
@@ -225,11 +278,103 @@ export default function EventList({
       return filteredEvents;
     }
 
-    const start = (currentPage - 1) * PAGE_SIZE;
-    return filteredEvents.slice(start, start + PAGE_SIZE);
-  }, [filteredEvents, currentPage, hasClientFilters]);
+    const start = (currentPage - 1) * pageSize;
+    return filteredEvents.slice(start, start + pageSize);
+  }, [filteredEvents, currentPage, hasClientFilters, pageSize]);
 
   const paginationTotal = hasClientFilters ? filteredCount : apiTotal;
+
+  const updatePageSizeFromLayout = useCallback(() => {
+    if (!window.matchMedia(DESKTOP_FILTERS_BREAKPOINT).matches) {
+      setPageSize((current) => (current === BASE_PAGE_SIZE ? current : BASE_PAGE_SIZE));
+      return;
+    }
+
+    const section = listSectionRef.current;
+    if (!section || section.offsetHeight <= 0) {
+      return;
+    }
+
+    const sidebar = section.parentElement?.previousElementSibling as HTMLElement | null;
+    const targetHeight =
+      sidebar && sidebar.offsetHeight > 0 ? sidebar.offsetHeight : section.offsetHeight;
+
+    const toolbarHeight = toolbarRef.current?.offsetHeight ?? 0;
+    const paginationHeight = paginationRef.current?.offsetHeight ?? 40;
+    const firstCard = cardsContainerRef.current?.firstElementChild as HTMLElement | null;
+    const measuredCardHeight = firstCard?.offsetHeight ?? 0;
+    const cardHeight =
+      measuredCardHeight > 0
+        ? measuredCardHeight
+        : viewMode === 'list'
+          ? LIST_CARD_HEIGHT_ESTIMATE
+          : GRID_CARD_HEIGHT_ESTIMATE;
+
+    const nextPageSize = calculatePageSizeForHeight(
+      targetHeight,
+      toolbarHeight,
+      paginationHeight,
+      cardHeight,
+      viewMode,
+    );
+
+    setPageSize((current) => (current === nextPageSize ? current : nextPageSize));
+  }, [viewMode]);
+
+  useLayoutEffect(() => {
+    if (!eventsQuery.isSuccess) {
+      return;
+    }
+
+    updatePageSizeFromLayout();
+  }, [eventsQuery.isSuccess, updatePageSizeFromLayout, visibleEvents.length, viewMode]);
+
+  useEffect(() => {
+    const section = listSectionRef.current;
+    if (!section) {
+      return;
+    }
+
+    const sidebar = section.parentElement?.previousElementSibling;
+
+    const resizeObserver = new ResizeObserver(() => {
+      updatePageSizeFromLayout();
+    });
+
+    resizeObserver.observe(section);
+    if (sidebar instanceof HTMLElement) {
+      resizeObserver.observe(sidebar);
+    }
+
+    const handleViewportChange = () => {
+      updatePageSizeFromLayout();
+    };
+
+    window.addEventListener('resize', handleViewportChange);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', handleViewportChange);
+    };
+  }, [updatePageSizeFromLayout, eventsQuery.isSuccess]);
+
+  useEffect(() => {
+    if (!eventsQuery.isSuccess || eventsQuery.isFetching) {
+      return;
+    }
+
+    if (previousPageRef.current === null) {
+      previousPageRef.current = currentPage;
+      return;
+    }
+
+    if (previousPageRef.current === currentPage) {
+      return;
+    }
+
+    previousPageRef.current = currentPage;
+    listSectionRef.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
+  }, [currentPage, eventsQuery.isSuccess, eventsQuery.isFetching]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -247,10 +392,10 @@ export default function EventList({
   return (
     <QueryState isLoading={isLoading} isError={isError} error={error}>
       {eventsQuery.isSuccess ? (
-        <section className={`${styles.listSection} eventsListPanel`}>
-          <div className={styles.toolbar}>
+        <section ref={listSectionRef} className={`${styles.listSection} eventsListPanel`}>
+          <div ref={toolbarRef} className={styles.toolbar}>
             <Typography.Text className={styles.resultCount}>
-              Found <strong>{filteredCount}</strong> events
+              Found <strong>{hasClientFilters ? filteredCount : apiTotal}</strong> events
             </Typography.Text>
 
             <div className={styles.toolbarActions}>
@@ -292,18 +437,23 @@ export default function EventList({
             </div>
           </div>
 
-          <div className={viewMode === 'list' ? styles.list : styles.grid}>
+          <div
+            ref={cardsContainerRef}
+            className={viewMode === 'list' ? styles.list : styles.grid}
+          >
             {visibleEvents.map((event) => (
               <EventListItem key={event.id} event={event} variant={viewMode} />
             ))}
           </div>
 
-          <EventPagination
-            current={currentPage}
-            total={paginationTotal}
-            pageSize={PAGE_SIZE}
-            onChange={setCurrentPage}
-          />
+          <div ref={paginationRef}>
+            <EventPagination
+              current={currentPage}
+              total={paginationTotal}
+              pageSize={pageSize}
+              onChange={setCurrentPage}
+            />
+          </div>
         </section>
       ) : null}
     </QueryState>
