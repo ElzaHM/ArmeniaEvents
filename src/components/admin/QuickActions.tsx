@@ -29,13 +29,6 @@ const QUICK_ACTIONS: QuickAction[] = [
   },
   {
     id: '3',
-    title: 'Send Notification',
-    description: 'Notify users about events.',
-    icon: 'notification',
-    path: '/admin/settings',
-  },
-  {
-    id: '4',
     title: 'Export Reports',
     description: 'View analytics and download reports.',
     icon: 'export',
