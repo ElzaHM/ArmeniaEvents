@@ -1,7 +1,56 @@
+.totalCategoriesBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: -12px 0 20px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--admin-border);
+  background: var(--admin-card-bg);
+  color: var(--admin-text);
+}
+
+.totalCategoriesLabel {
+  font-size: 13px;
+  color: var(--admin-text-secondary);
+}
+
+.totalCategoriesCount {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--admin-gold);
+}
+
+.detailSection {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #1e1e22;
+}
+
+.descriptionClamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
 .toolbar {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 16px;
+}
+
+/* Card + table wrappers must not clip vertically (overflow-x: hidden forces overflow-y: auto). */
+.adminTableCard,
+.adminTableCard > div {
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
 }
 
 .tableWrap {
@@ -9,13 +58,35 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
+  height: auto;
+  max-height: none;
   background: var(--admin-table-row-bg);
-  -webkit-overflow-scrolling: touch;
+}
+
+.tableWrap :global(.ant-table-wrapper),
+.tableWrap :global(.ant-table),
+.tableWrap :global(.ant-table-container),
+.tableWrap :global(.ant-table-content),
+.tableWrap :global(.ant-table-body),
+.tableWrap :global(.ant-table-wrapper .ant-spin-nested-loading),
+.tableWrap :global(.ant-table-wrapper .ant-spin-container),
+.tableWrap :global(.ant-spin-nested-loading),
+.tableWrap :global(.ant-spin-container) {
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
 }
 
 .tableWrap :global(.ant-table-wrapper) {
   max-width: 100%;
+  overflow: visible !important;
+}
+
+/* Horizontal scroll only on the table body — never vertical. */
+.tableWrap :global(.ant-table-body) {
+  overflow-x: auto !important;
+  overflow-y: visible !important;
 }
 
 .tableWrap :global(.admin-btn-edit),

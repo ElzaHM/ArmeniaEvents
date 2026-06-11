@@ -138,7 +138,25 @@
 .tableWrap :global(.admin-table-wrap-cell) {
   white-space: normal !important;
   word-break: break-word;
-  vertical-align: top;
+  vertical-align: top !important;
+}
+
+.tableWrap :global(.ant-table-tbody > tr > td) {
+  vertical-align: top !important;
+}
+
+.dateTableCell {
+  vertical-align: top !important;
+}
+
+.dateCellTop {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: flex-start;
+  width: 100%;
+  min-height: 0;
 }
 
 .viewsCell {

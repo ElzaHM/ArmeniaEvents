@@ -274,7 +274,8 @@ export default function AdminProfilePage() {
         footer={null}
         onCancel={() => setIsPreviewOpen(false)}
         centered
-        className={`admin-detail-modal ${styles.previewModal}`}>
+        className="admin-detail-modal"
+        rootClassName={styles.previewModal}>
         <img src={avatarPreviewUrl} alt="Admin profile preview" className={styles.previewImage} />
       </Modal>
     </>

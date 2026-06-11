@@ -7,8 +7,6 @@ import {
 } from '../components/admin/mapApiEventToAdminEvent';
 import type { AdminEvent } from '../components/admin/types';
 import { supabase } from '../lib/supabase';
-import { eventsService } from './events.service';
-
 const EVENT_IMAGES_BUCKET =
   import.meta.env.VITE_SUPABASE_EVENT_IMAGES_BUCKET ?? 'EVENT_IMAGES_BUCKET';
 
@@ -16,11 +14,14 @@ export type AdminCreateEventFormValues = {
   title: string;
   description: string;
   category: string;
-  eventType: string;
   venue: string;
   address: string;
   organizer: string;
   ticket_url?: string;
+  language?: string;
+  ageRange?: string;
+  isFree: boolean;
+  price: number;
   startDate: Dayjs;
   startTime: Dayjs;
   endDate?: Dayjs;
@@ -28,7 +29,7 @@ export type AdminCreateEventFormValues = {
 };
 
 export const ADMIN_EVENT_SELECT =
-  '*, categories(name), organizers(name, avatar_url)';
+  '*, categories(name, is_active), organizers(name, avatar_url)';
 
 export async function fetchAdminEvents(searchQuery?: string): Promise<AdminEvent[]> {
   let query = supabase
@@ -114,6 +115,7 @@ async function resolveCategoryId(categoryName: string): Promise<string | null> {
     .from('categories')
     .select('id')
     .ilike('name', normalized)
+    .eq('is_active' as any, true)
     .limit(1)
     .maybeSingle();
 
@@ -125,6 +127,7 @@ async function resolveCategoryId(categoryName: string): Promise<string | null> {
     .from('categories')
     .select('id')
     .ilike('name', `%${normalized}%`)
+    .eq('is_active' as any, true)
     .limit(1)
     .maybeSingle();
 
@@ -165,17 +168,19 @@ async function resolveOrganizerId(organizerName: string): Promise<string | null>
 export type AdminEventEditFormValues = {
   title: string;
   description: string;
-  imageUrl: string;
   category: string;
   source: string;
   status: AdminEvent['status'];
+  organizer: string;
   venue: string;
   address: string;
   startDate: Dayjs;
+  endDate: Dayjs | null;
+  isFree: boolean;
   price: number | null;
   language: string;
   ageRange: string;
-  ticketUrl: string;
+  sourceUrl: string;
   views: number;
   externalId: string;
 };
@@ -184,17 +189,20 @@ export function adminEventToEditFormValues(event: AdminEvent): AdminEventEditFor
   return {
     title: event.title,
     description: event.description,
-    imageUrl: event.storedImageUrl || '',
-    category: event.category,
+    category:
+      event.categoryId && event.categoryIsActive !== false ? event.category : '',
     source: event.source,
     status: event.status,
+    organizer: event.organizerName,
     venue: event.venue,
     address: event.address,
     startDate: event.startDate ? dayjs(event.startDate) : dayjs(),
-    price: event.priceValue,
+    endDate: event.endDate ? dayjs(event.endDate) : null,
+    isFree: event.priceValue == null || event.priceValue === 0,
+    price: event.priceValue && event.priceValue > 0 ? event.priceValue : null,
     language: event.language,
     ageRange: event.ageRange,
-    ticketUrl: event.storedTicketUrl || event.ticketUrl,
+    sourceUrl: event.sourceUrl,
     views: event.views,
     externalId: event.externalId,
   };
@@ -214,10 +222,14 @@ export async function updateAdminEvent(
   id: string,
   values: AdminEventEditFormValues,
   pendingImage?: { url: string; name: string } | null,
-): Promise<string> {
-  const categoryId = await resolveCategoryId(values.category);
+  existingImageUrl?: string | null,
+): Promise<string | null> {
+  const [categoryId, organizerId] = await Promise.all([
+    resolveCategoryId(values.category),
+    resolveOrganizerId(values.organizer),
+  ]);
 
-  let imageUrl = values.imageUrl.trim();
+  let imageUrl = existingImageUrl?.trim() || null;
 
   if (pendingImage) {
     const imageFile = await blobUrlToFile(pendingImage.url, pendingImage.name);
@@ -229,18 +241,21 @@ export async function updateAdminEvent(
     .update({
       title: values.title.trim(),
       description: values.description.trim(),
-      image_url: imageUrl || null,
+      image_url: imageUrl,
       venue: values.venue.trim() || null,
       address: values.address.trim() || null,
       start_date: values.startDate.toISOString(),
+      end_date: values.endDate ? values.endDate.toISOString() : null,
       status: values.status,
       views: values.views,
       source: values.source.trim() || null,
-      ticket_url: values.ticketUrl.trim() || null,
-      price: values.price ?? 0,
+      source_url: values.sourceUrl.trim() || null,
+      price: values.isFree ? 0 : (values.price ?? 0),
       language: values.language.trim() || null,
       age_range: values.ageRange.trim() || null,
       category_id: categoryId,
+      organizer_id: organizerId,
+      event_type: 'Offline',
     } as any)
     .eq('id', id);
 
@@ -271,7 +286,7 @@ export async function createAdminEvent(
         ? combineDateAndTime(values.endDate, values.startTime)
         : null;
 
-  await eventsService.createEvent({
+  const { error } = await supabase.from('events').insert({
     title: values.title.trim(),
     description: values.description.trim(),
     image_url: imageUrl,
@@ -280,9 +295,17 @@ export async function createAdminEvent(
     start_date: startDate,
     end_date: endDate,
     ticket_url: values.ticket_url?.trim() || null,
+    price: values.isFree ? 0 : values.price,
+    language: values.language?.trim() || null,
+    age_range: values.ageRange?.trim() || null,
     category_id: categoryId,
     organizer_id: organizerId,
     status: 'published',
     views: 0,
-  });
+    event_type: 'Offline',
+  } as any);
+
+  if (error) {
+    throw new Error(error.message);
+  }
 }

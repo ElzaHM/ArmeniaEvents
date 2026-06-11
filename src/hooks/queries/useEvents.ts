@@ -170,11 +170,13 @@ export function useUpdateAdminEvent() {
       id,
       values,
       pendingImage,
+      existingImageUrl,
     }: {
       id: string;
       values: AdminEventEditFormValues;
       pendingImage?: { url: string; name: string } | null;
-    }) => updateAdminEvent(id, values, pendingImage),
+      existingImageUrl?: string | null;
+    }) => updateAdminEvent(id, values, pendingImage, existingImageUrl),
     onSuccess: (_, variables) => {
       void queryClient.invalidateQueries({ queryKey: eventsKeys.all });
       void queryClient.invalidateQueries({ queryKey: adminDashboardKeys.all });

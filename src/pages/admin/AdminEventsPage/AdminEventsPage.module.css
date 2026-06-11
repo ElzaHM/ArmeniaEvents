@@ -142,19 +142,46 @@
   color: var(--admin-text-secondary);
 }
 
+/* Card + table wrappers must not clip vertically (overflow-x: hidden forces overflow-y: auto). */
+.eventsTableCard,
+.eventsTableCard > div {
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
 .tableWrap {
   display: block;
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  overflow-x: hidden;
-  overflow-y: visible;
+  overflow: visible;
+  height: auto;
+  max-height: none;
   background: var(--admin-table-row-bg);
-  -webkit-overflow-scrolling: touch;
+}
+
+.tableWrap :global(.ant-table-wrapper),
+.tableWrap :global(.ant-table),
+.tableWrap :global(.ant-table-container),
+.tableWrap :global(.ant-table-content),
+.tableWrap :global(.ant-table-body),
+.tableWrap :global(.ant-table-wrapper .ant-spin-nested-loading),
+.tableWrap :global(.ant-table-wrapper .ant-spin-container) {
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
 }
 
 .tableWrap :global(.ant-table-wrapper) {
   max-width: 100%;
+  overflow: visible !important;
+}
+
+/* Horizontal scroll only on the table body — never vertical. */
+.tableWrap :global(.ant-table-body) {
+  overflow-x: auto !important;
+  overflow-y: visible !important;
 }
 
 .tableWrap :global(.admin-btn-edit),
@@ -232,21 +259,6 @@
 
 :global([data-theme="dark"]) .workflowCount {
   color: #ffd27a !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-btn-dangerous) {
-  border: 1px solid rgba(239, 68, 68, 0.55) !important;
-  background: rgba(239, 68, 68, 0.12) !important;
-  color: #ef4444 !important;
-  box-shadow: none !important;
-  font-weight: 600;
-}
-
-:global(.admin-detail-modal) :global(.ant-btn-dangerous):hover,
-:global(.admin-detail-modal) :global(.ant-btn-dangerous):focus-visible {
-  border-color: #ef4444 !important;
-  background: #ef4444 !important;
-  color: #ffffff !important;
 }
 
 .tableEyebrow {
@@ -362,6 +374,10 @@
 .tableWrap :global(.admin-table-wrap-cell) {
   white-space: normal !important;
   word-break: break-word;
+  vertical-align: top !important;
+}
+
+.tableWrap :global(.ant-table-tbody > tr > td) {
   vertical-align: top;
 }
 
@@ -381,6 +397,13 @@
   color: var(--admin-text-muted);
   background: var(--admin-gold-light);
   border: none;
+}
+
+.uncategorizedTag {
+  margin-inline-end: 0;
+  background: #374151 !important;
+  border: none !important;
+  color: #d1d5db !important;
 }
 
 @media (max-width: 1200px) {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Col, Form, Row, message } from 'antd';
+import { Button, Col, Form, Input, Row, message } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import dayjs, { type Dayjs } from 'dayjs';
 import { useNavigate } from 'react-router-dom';
@@ -12,8 +12,10 @@ import EventLivePreview from '../../CreateEventPage/EventLivePreview';
 import CreateEventDefault from '../../../assets/createEventDefault.png';
 import type { AdminCreateEventFormValues } from '../../../services/admin-events.service';
 import { useCreateAdminEvent } from '../../../hooks/queries/useEvents';
+import { fetchAdminCategories } from '../AdminCategoriesPage/categoryApi';
 import {
-  fetchActiveCategories,
+  adminCategoriesQueryKey,
+  selectActiveEventCategories,
   toCategoryAutoCompleteOptions,
 } from '../AdminEventsPage/eventCategories';
 
@@ -39,11 +41,12 @@ type RawCreateEventValues = {
   title?: string;
   description?: string;
   category?: string;
-  eventType?: string;
   venue?: string;
   address?: string;
   organizer?: string;
   ticket_url?: string;
+  language?: string;
+  ageRange?: string;
   startDate?: Dayjs;
   startTime?: Dayjs;
   endDate?: Dayjs;
@@ -53,7 +56,7 @@ type RawCreateEventValues = {
 };
 
 function toFormValues(values: RawCreateEventValues): AdminCreateEventFormValues {
-  if (!values.title || !values.description || !values.category || !values.eventType) {
+  if (!values.title || !values.description || !values.category) {
     throw new Error('Please complete all required fields.');
   }
 
@@ -61,15 +64,25 @@ function toFormValues(values: RawCreateEventValues): AdminCreateEventFormValues 
     throw new Error('Please complete all required fields.');
   }
 
+  const isFree = values.isFree ?? true;
+  const rawPrice = values.price == null || values.price === '' ? 0 : Number(values.price);
+
+  if (!isFree && (!Number.isFinite(rawPrice) || rawPrice <= 0)) {
+    throw new Error('Please enter a valid price for paid events.');
+  }
+
   return {
     title: values.title,
     description: values.description,
     category: values.category,
-    eventType: values.eventType,
     venue: values.venue,
     address: values.address,
     organizer: values.organizer,
     ticket_url: values.ticket_url,
+    language: values.language,
+    ageRange: values.ageRange,
+    isFree,
+    price: isFree ? 0 : rawPrice,
     startDate: values.startDate,
     startTime: values.startTime,
     endDate: values.endDate,
@@ -84,8 +97,9 @@ export default function AdminCreateEventPage() {
   const [eventImage, setEventImage] = useState<{ url: string; name: string } | null>(null);
   const [previewData, setPreviewData] = useState(initialPreviewData);
   const { data: activeCategories = [] } = useQuery({
-    queryKey: ['admin', 'active-categories'],
-    queryFn: fetchActiveCategories,
+    queryKey: adminCategoriesQueryKey,
+    queryFn: fetchAdminCategories,
+    select: selectActiveEventCategories,
   });
   const categoryOptions = toCategoryAutoCompleteOptions(activeCategories);
 
@@ -98,7 +112,7 @@ export default function AdminCreateEventPage() {
       title: allValues.title || initialPreviewData.title,
       description: allValues.description || initialPreviewData.description,
       category: allValues.category || initialPreviewData.category,
-      eventType: allValues.eventType || initialPreviewData.eventType,
+      eventType: 'Offline',
       venue: allValues.venue || initialPreviewData.venue,
       address: allValues.address || initialPreviewData.address,
       organizer: allValues.organizer || initialPreviewData.organizer,
@@ -163,7 +177,7 @@ export default function AdminCreateEventPage() {
             layout="vertical"
             onValuesChange={handleValuesChange}
             onFinish={onFinish}
-            initialValues={{ eventType: 'Offline', isFree: true }}
+            initialValues={{ isFree: true }}
           >
             <Row gutter={[24, 24]}>
               <Col xs={24} lg={15}>
@@ -172,6 +186,42 @@ export default function AdminCreateEventPage() {
                   setImage={setEventImage}
                   categoryOptions={categoryOptions}
                 />
+                <div className={styles.extraFields}>
+                  <h3 className={styles.extraFieldsTitle}>Additional Details</h3>
+                  <Row gutter={12}>
+                    <Col xs={24} md={12}>
+                      <Form.Item name="language" label="Language">
+                        <Input placeholder="English" />
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24} md={12}>
+                      <Form.Item name="ageRange" label="Age Range">
+                        <Input placeholder="All ages" />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                  <Form.Item
+                    name="ticket_url"
+                    label="Registration / Ticket URL"
+                    rules={[
+                      {
+                        validator: async (_, value?: string) => {
+                          const trimmed = value?.trim();
+                          if (!trimmed) {
+                            return;
+                          }
+
+                          try {
+                            new URL(trimmed);
+                          } catch {
+                            throw new Error('Enter a valid URL');
+                          }
+                        },
+                      },
+                    ]}>
+                    <Input placeholder="https://..." />
+                  </Form.Item>
+                </div>
               </Col>
               <Col xs={24} lg={9}>
                 <EventLivePreview

@@ -38,7 +38,7 @@ const addressOptions = [
   {value: "Gyumri, Armenia"},
   {value: "Dilijan, Armenia"},
 ];
-const typeOptions = [{value: "Online"}, {value: "Offline"}];
+const EVENT_FORM_PICKER_POPUP = { popupClassName: "event-form-picker-dropdown" };
 
 interface Props {
   image: {url: string; name: string} | null;
@@ -75,30 +75,15 @@ export default function CreateEventForm({
           className={styles.compactItem}>
           <Input placeholder="AI Conference" className={styles.glassInput} />
         </Form.Item>
-        <Row gutter={12}>
-          <Col span={12}>
-            <Form.Item
-              label="Category"
-              name="category"
-              rules={[{required: true}]}
-              className={styles.compactItem}>
-              <AutoComplete options={categoryOptions} filterOption={true}>
-                <Input className={styles.glassInput} />
-              </AutoComplete>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              label="Event Type"
-              name="eventType"
-              rules={[{required: true}]}
-              className={styles.compactItem}>
-              <AutoComplete options={typeOptions} filterOption={true}>
-                <Input className={styles.glassInput} />
-              </AutoComplete>
-            </Form.Item>
-          </Col>
-        </Row>
+        <Form.Item
+          label="Category"
+          name="category"
+          rules={[{required: true}]}
+          className={styles.compactItem}>
+          <AutoComplete options={categoryOptions} filterOption={true}>
+            <Input className={styles.glassInput} />
+          </AutoComplete>
+        </Form.Item>
         <Form.Item
           label="Description"
           name="description"
@@ -116,22 +101,42 @@ export default function CreateEventForm({
         <Row gutter={8}>
           <Col span={6}>
             <Form.Item name="startDate" rules={[{required: true}]} className={styles.compactItem}>
-              <DatePicker className={styles.glassInput} style={{width: "100%"}} />
+              <DatePicker
+                format="DD.MM.YYYY"
+                className={styles.glassInput}
+                style={{width: "100%"}}
+                {...EVENT_FORM_PICKER_POPUP}
+              />
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item name="startTime" rules={[{required: true}]} className={styles.compactItem}>
-              <TimePicker format="HH:mm" className={styles.glassInput} style={{width: "100%"}} />
+              <TimePicker
+                format="HH:mm"
+                className={styles.glassInput}
+                style={{width: "100%"}}
+                {...EVENT_FORM_PICKER_POPUP}
+              />
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item name="endDate" className={styles.compactItem}>
-              <DatePicker className={styles.glassInput} style={{width: "100%"}} />
+              <DatePicker
+                format="DD.MM.YYYY"
+                className={styles.glassInput}
+                style={{width: "100%"}}
+                {...EVENT_FORM_PICKER_POPUP}
+              />
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item name="endTime" className={styles.compactItem}>
-              <TimePicker format="HH:mm" className={styles.glassInput} style={{width: "100%"}} />
+              <TimePicker
+                format="HH:mm"
+                className={styles.glassInput}
+                style={{width: "100%"}}
+                {...EVENT_FORM_PICKER_POPUP}
+              />
             </Form.Item>
           </Col>
         </Row>

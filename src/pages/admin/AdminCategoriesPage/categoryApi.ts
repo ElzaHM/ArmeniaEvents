@@ -102,6 +102,15 @@ export async function updateAdminCategory(
 }
 
 export async function deleteAdminCategory(id: string): Promise<void> {
+  const { error: orphanError } = await supabase
+    .from('events')
+    .update({ category_id: null })
+    .eq('category_id', id);
+
+  if (orphanError) {
+    throw new Error(orphanError.message);
+  }
+
   const { error } = await supabase.from('categories').delete().eq('id', id);
 
   if (error) {

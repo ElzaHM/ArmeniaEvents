@@ -12,11 +12,13 @@ import AdminEventEditModal from "../../../components/admin/AdminEventEditModal";
 import AdminPageHeader from "../../../components/admin/AdminPageHeader";
 import AdminEventImage from "../../../components/admin/AdminEventImage";
 import AdminOrganizerAvatar from "../../../components/admin/AdminOrganizerAvatar";
+import AdminEventTableDateCell from "../../../components/admin/AdminEventTableDateCell";
 import {getSourceTagColor} from "../../../components/admin/sourceTagUtils";
 import type {AdminEvent, AdminEventStatus} from "../../../components/admin/types";
 import {adminDashboardKeys, useAdminEventsList} from "../../../hooks/queries/useAdminDashboard";
 import {useDeleteEvent} from "../../../hooks/queries/useEvents";
 import {getAiSyncErrorMessage, syncLiveAiEvents} from "../../../services/admin/geminiSyncService";
+import {eventNeedsReview, isUncategorizedEvent} from "./eventCategories";
 
 import styles from "./AdminEventsPage.module.css";
 
@@ -117,7 +119,7 @@ export default function AdminEventsPage() {
     }
 
     handledEditEventId.current = editEventId;
-    setActiveSection(event.status === "draft" ? "needsReview" : "all");
+    setActiveSection(eventNeedsReview(event) ? "needsReview" : "all");
     openEditModal(event);
 
     const nextParams = new URLSearchParams(searchParams);
@@ -131,7 +133,7 @@ export default function AdminEventsPage() {
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
 
-    const needsReview = allEvents.filter((event) => event.status === "draft");
+    const needsReview = allEvents.filter((event) => eventNeedsReview(event));
     const liveToday = allEvents.filter((event) => {
       const eventDate = getEventDate(event);
       return eventDate >= today && eventDate < tomorrow && event.status === "published";
@@ -143,7 +145,7 @@ export default function AdminEventsPage() {
       {
         key: "needsReview",
         title: "Needs Review",
-        description: "New events that should be added",
+        description: "Drafts and events needing category review",
         events: needsReview,
       },
       {
@@ -263,10 +265,27 @@ export default function AdminEventsPage() {
       dataIndex: "date",
       key: "date",
       responsive: ["md"],
+      onCell: () => WRAP_CELL_PROPS,
+      render: (_, record) => (
+        <AdminEventTableDateCell value={record.startDate || record.date} />
+      ),
       sorter: (left, right) =>
         new Date(left.startDate || left.date).getTime() - new Date(right.startDate || right.date).getTime(),
     },
-    {title: "Category", dataIndex: "category", key: "category", responsive: ["md"], width: 120},
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      responsive: ["md"],
+      width: 120,
+      render: (_, record) => {
+        if (isUncategorizedEvent(record)) {
+          return <Tag className={styles.uncategorizedTag}>Uncategorized</Tag>;
+        }
+
+        return record.category;
+      },
+    },
     {
       title: "Location",
       dataIndex: "location",
@@ -377,7 +396,7 @@ export default function AdminEventsPage() {
           </button>
         ))}
       </section>
-      <AdminCard>
+      <AdminCard className={styles.eventsTableCard}>
         {aiFetchStatus ? (
           <Alert
             type="info"
@@ -415,12 +434,32 @@ export default function AdminEventsPage() {
             </div>
           ) : (
             <Table
+              size="middle"
               columns={columns}
               dataSource={tableEvents}
               rowKey="id"
               loading={isLoading || deleteEvent.isPending}
-              pagination={{pageSize: 8}}
-              scroll={{x: "max-content"}}
+              pagination={{
+                defaultPageSize: 10,
+                showSizeChanger: true,
+                pageSizeOptions: ['10', '20', '50', '100'],
+                hideOnSinglePage: true,
+              }}
+              scroll={{ x: "max-content" }}
+              styles={{
+                content: {
+                  overflowY: "visible",
+                  maxHeight: "none",
+                  height: "auto",
+                },
+                body: {
+                  wrapper: {
+                    overflowY: "visible",
+                    maxHeight: "none",
+                    height: "auto",
+                  },
+                },
+              }}
               onRow={(record) => ({
                 onClick: () => openViewModal(record),
                 className: "admin-table-row-clickable",
