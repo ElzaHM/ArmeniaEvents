@@ -1,4 +1,6 @@
 import axios from 'axios';
+
+import { api } from '../api/axios';
 import {
   BENEFITS,
   FOOTER_QUICK_LINKS,
@@ -86,7 +88,6 @@ type EventCrudPayload = {
   views?: number;
 };
 
-const api = axios.create({ baseURL: '/api' });
 const TOKEN_STORAGE_KEY = 'armenia-events-access-token';
 
 function authHeaders() {

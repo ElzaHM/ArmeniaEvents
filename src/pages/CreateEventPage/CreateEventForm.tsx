@@ -1,6 +1,7 @@
 import {
   Form,
   Input,
+  InputNumber,
   AutoComplete,
   DatePicker,
   TimePicker,
@@ -9,6 +10,7 @@ import {
   Typography,
   Space,
   Upload,
+  Radio,
 } from "antd";
 import {
   InfoCircleOutlined,
@@ -18,7 +20,7 @@ import {
   DeleteOutlined,
   FileImageOutlined,
   UserOutlined,
-  LinkOutlined,
+  DollarOutlined,
 } from "@ant-design/icons";
 import styles from "./CreateEventPage.module.css";
 
@@ -36,7 +38,7 @@ const addressOptions = [
   {value: "Gyumri, Armenia"},
   {value: "Dilijan, Armenia"},
 ];
-const typeOptions = [{value: "Online"}, {value: "Offline"}];
+const EVENT_FORM_PICKER_POPUP = { popupClassName: "event-form-picker-dropdown" };
 
 interface Props {
   image: {url: string; name: string} | null;
@@ -73,30 +75,15 @@ export default function CreateEventForm({
           className={styles.compactItem}>
           <Input placeholder="AI Conference" className={styles.glassInput} />
         </Form.Item>
-        <Row gutter={12}>
-          <Col span={12}>
-            <Form.Item
-              label="Category"
-              name="category"
-              rules={[{required: true}]}
-              className={styles.compactItem}>
-              <AutoComplete options={categoryOptions} filterOption={true}>
-                <Input className={styles.glassInput} />
-              </AutoComplete>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              label="Event Type"
-              name="eventType"
-              rules={[{required: true}]}
-              className={styles.compactItem}>
-              <AutoComplete options={typeOptions} filterOption={true}>
-                <Input className={styles.glassInput} />
-              </AutoComplete>
-            </Form.Item>
-          </Col>
-        </Row>
+        <Form.Item
+          label="Category"
+          name="category"
+          rules={[{required: true}]}
+          className={styles.compactItem}>
+          <AutoComplete options={categoryOptions} filterOption={true}>
+            <Input className={styles.glassInput} />
+          </AutoComplete>
+        </Form.Item>
         <Form.Item
           label="Description"
           name="description"
@@ -114,22 +101,42 @@ export default function CreateEventForm({
         <Row gutter={8}>
           <Col span={6}>
             <Form.Item name="startDate" rules={[{required: true}]} className={styles.compactItem}>
-              <DatePicker className={styles.glassInput} style={{width: "100%"}} />
+              <DatePicker
+                format="DD.MM.YYYY"
+                className={styles.glassInput}
+                style={{width: "100%"}}
+                {...EVENT_FORM_PICKER_POPUP}
+              />
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item name="startTime" rules={[{required: true}]} className={styles.compactItem}>
-              <TimePicker format="HH:mm" className={styles.glassInput} style={{width: "100%"}} />
+              <TimePicker
+                format="HH:mm"
+                className={styles.glassInput}
+                style={{width: "100%"}}
+                {...EVENT_FORM_PICKER_POPUP}
+              />
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item name="endDate" className={styles.compactItem}>
-              <DatePicker className={styles.glassInput} style={{width: "100%"}} />
+              <DatePicker
+                format="DD.MM.YYYY"
+                className={styles.glassInput}
+                style={{width: "100%"}}
+                {...EVENT_FORM_PICKER_POPUP}
+              />
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item name="endTime" className={styles.compactItem}>
-              <TimePicker format="HH:mm" className={styles.glassInput} style={{width: "100%"}} />
+              <TimePicker
+                format="HH:mm"
+                className={styles.glassInput}
+                style={{width: "100%"}}
+                {...EVENT_FORM_PICKER_POPUP}
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -156,18 +163,49 @@ export default function CreateEventForm({
         <Title level={5} className={styles.cardHeader}>
           <UserOutlined className={styles.headerIcon} /> Organizer
         </Title>
-        <Row gutter={12}>
-          <Col span={12}>
-            <Form.Item name="organizer" rules={[{required: true}]} className={styles.compactItem}>
-              <Input prefix={<UserOutlined />} className={styles.glassInput} />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item name="ticket_url" rules={[{type: "url"}]} className={styles.compactItem}>
-              <Input prefix={<LinkOutlined />} className={styles.glassInput} />
-            </Form.Item>
-          </Col>
-        </Row>
+        <Form.Item name="organizer" rules={[{required: true}]} className={styles.compactItem}>
+          <Input prefix={<UserOutlined />} className={styles.glassInput} />
+        </Form.Item>
+      </div>
+
+      {/* Pricing Section */}
+      <div className={styles.formCard}>
+        <Title level={5} className={styles.cardHeader}>
+          <DollarOutlined className={styles.headerIcon} /> Pricing
+        </Title>
+        <Form.Item name="isFree" className={styles.compactItem}>
+          <Radio.Group className={styles.priceRadioGroup}>
+            <Radio value={true}>Free</Radio>
+            <Radio value={false}>Paid</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item noStyle shouldUpdate={(prev, cur) => prev.isFree !== cur.isFree}>
+          {({ getFieldValue }) =>
+            !getFieldValue("isFree") ? (
+              <Form.Item
+                label="Price (USD)"
+                name="price"
+                rules={[
+                  { required: true, message: "Please enter a price" },
+                  {
+                    type: "number",
+                    min: 0.01,
+                    message: "Price must be greater than 0",
+                  },
+                ]}
+                className={styles.compactItem}>
+                <InputNumber
+                  min={0.01}
+                  step={0.01}
+                  prefix={<DollarOutlined />}
+                  placeholder="0.00"
+                  className={styles.glassInput}
+                  style={{ width: "100%" }}
+                />
+              </Form.Item>
+            ) : null
+          }
+        </Form.Item>
       </div>
 
       {/* Single Image Upload Section */}

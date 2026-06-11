@@ -66,6 +66,19 @@
   box-sizing: border-box;
 }
 
+/* Stop background page scroll while any Ant Design modal is open */
+:global(body.ant-modal-open) :global(.admin-content),
+:global(body.ant-modal-open) .content,
+:global(body:has(.ant-modal-wrap)) :global(.admin-content),
+:global(body:has(.ant-modal-wrap)) .content {
+  overflow: hidden !important;
+}
+
+:global(body.ant-modal-open:has(.admin-panel)),
+:global(body:has(.admin-panel):has(.ant-modal-wrap)) {
+  overflow: hidden !important;
+}
+
 .content :global([class*="pageHeader"]) {
   padding: 20px 24px !important;
   border-radius: 16px;
@@ -92,19 +105,32 @@
   color: rgba(255, 255, 255, 0.88) !important;
 }
 
-/* Admin modals: always dark glass in both themes */
+/* Admin modals: unified opaque charcoal panel (portaled to body) */
+:global(.admin-detail-modal) {
+  --admin-modal-surface: #161618;
+  --admin-modal-section: #1e1e22;
+  --admin-modal-divider: rgba(255, 255, 255, 0.08);
+}
+
 :global(.admin-detail-modal) :global(.ant-modal-content) {
-  background: rgba(20, 20, 22, 0.95) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.45) !important;
+  background: var(--admin-modal-surface) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+  border: 1px solid #2a2a2e !important;
+  box-shadow: 0 24px 56px rgb(0 0 0 / 45%) !important;
 }
 
 :global(.admin-detail-modal) :global(.ant-modal-body),
-:global(.admin-detail-modal) :global(.ant-modal-header) {
-  background: transparent !important;
+:global(.admin-detail-modal) :global(.ant-modal-header),
+:global(.admin-detail-modal) :global(.ant-modal-footer) {
+  background: var(--admin-modal-surface) !important;
+  opacity: 1 !important;
   color: #e0e0e0 !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-modal-body) {
+  overscroll-behavior: contain;
 }
 
 :global(.admin-detail-modal) :global(.ant-modal-title),
@@ -113,23 +139,33 @@
 }
 
 :global(.admin-detail-modal) :global(.ant-modal-header) {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  margin-bottom: 0 !important;
+  border-bottom: 1px solid var(--admin-modal-divider) !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-modal-footer) {
+  border-top: 1px solid var(--admin-modal-divider) !important;
+}
+
+:global(.admin-detail-modal) footer {
+  background: var(--admin-modal-surface) !important;
+  border-top: 1px solid var(--admin-modal-divider) !important;
 }
 
 :global(.admin-detail-modal) :global(.ant-modal-mask) {
   background: rgba(0, 0, 0, 0.72) !important;
 }
 
-/* Light theme: fully opaque modal + stronger mask to block sunset bleed-through */
-:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-content) {
-  background: #202227b3 !important;
+/* Light theme: same solid opaque surface as dark theme */
+:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-content),
+:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-body),
+:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-header),
+:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-footer),
+:global([data-theme="light"]) :global(.admin-detail-modal) footer {
+  background: var(--admin-modal-surface) !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-}
-
-:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-body),
-:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-header) {
-  background: #202227b3 !important;
+  opacity: 1 !important;
 }
 
 :global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-mask) {
@@ -137,8 +173,9 @@
 }
 
 :global(.admin-detail-modal) section[class*="section"] {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: var(--admin-modal-section) !important;
+  border: 1px solid var(--admin-modal-divider) !important;
+  border-radius: 12px;
 }
 
 :global(.admin-detail-modal) h2,
@@ -169,6 +206,56 @@
 :global(.admin-detail-modal) :global(.ant-modal-close):focus-visible {
   background: rgba(255, 255, 255, 0.1) !important;
   color: #ffffff !important;
+}
+
+/* Modal action buttons */
+:global(.admin-detail-modal) :global(.ant-btn-dangerous),
+:global(.admin-detail-modal) .admin-btn-delete,
+:global(.admin-detail-modal) .admin-btn-delete.ant-btn-dangerous {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #ef4444 !important;
+  border: 1px solid rgba(239, 68, 68, 0.45) !important;
+  box-shadow: none !important;
+  font-weight: 600;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-btn-dangerous):hover,
+:global(.admin-detail-modal) :global(.ant-btn-dangerous):focus-visible,
+:global(.admin-detail-modal) .admin-btn-delete:hover,
+:global(.admin-detail-modal) .admin-btn-delete:focus-visible,
+:global(.admin-detail-modal) .admin-btn-delete.ant-btn-dangerous:hover,
+:global(.admin-detail-modal) .admin-btn-delete.ant-btn-dangerous:focus-visible {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-btn-primary),
+:global(.admin-detail-modal) .admin-btn-edit,
+:global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary {
+  background: var(--admin-button-primary-bg, #f2c200) !important;
+  color: var(--admin-button-primary-text, #14161c) !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-weight: 600;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-btn-primary):hover,
+:global(.admin-detail-modal) :global(.ant-btn-primary):focus-visible,
+:global(.admin-detail-modal) .admin-btn-edit:hover,
+:global(.admin-detail-modal) .admin-btn-edit:focus-visible,
+:global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary:hover,
+:global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary:focus-visible {
+  background: var(--admin-button-primary-hover-bg, #e6b800) !important;
+  color: var(--admin-button-primary-text, #14161c) !important;
+  transform: translateY(-1px);
 }
 
 /* Add Event button: same golden gradient in dark theme */

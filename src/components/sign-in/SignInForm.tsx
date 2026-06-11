@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox, Divider, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { authService } from '../../services/auth.service';
 import { GoogleSignInButton } from '../auth/GoogleSignInButton';
@@ -13,11 +13,37 @@ type SignInValues = {
   remember?: boolean;
 };
 
+/** Set to true to restore the Google sign-in button on this page. */
+const SHOW_GOOGLE_SIGN_IN = false;
+
+type PendingNotice = {
+  type: 'success' | 'error';
+  content: string;
+};
+
 export const SignInForm: React.FC = () => {
   const { login, establishSession } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const redirectTo = (location.state as { from?: string } | null)?.from || '/';
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = React.useState(false);
   const [googleLoading, setGoogleLoading] = React.useState(false);
+  const [pendingNotice, setPendingNotice] = React.useState<PendingNotice | null>(null);
+
+  React.useEffect(() => {
+    if (!pendingNotice) {
+      return;
+    }
+
+    if (pendingNotice.type === 'success') {
+      messageApi.success(pendingNotice.content);
+    } else {
+      messageApi.error(pendingNotice.content);
+    }
+
+    setPendingNotice(null);
+  }, [pendingNotice, messageApi]);
 
   const handleSubmit = async (values: SignInValues) => {
     setLoading(true);
@@ -26,11 +52,12 @@ export const SignInForm: React.FC = () => {
         email: values.email,
         password: values.password,
       });
-      messageApi.success('Sign in successful');
+      setPendingNotice({ type: 'success', content: 'Sign in successful' });
+      navigate(redirectTo);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Sign in failed. Please try again.';
-      messageApi.error(errorMessage);
+      setPendingNotice({ type: 'error', content: errorMessage });
     } finally {
       setLoading(false);
     }
@@ -41,15 +68,18 @@ export const SignInForm: React.FC = () => {
     try {
       const session = await authService.loginWithGoogle(credential);
       establishSession(session);
-      messageApi.success('Sign in successful');
+      setPendingNotice({ type: 'success', content: 'Sign in successful' });
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Google sign in failed. Please try again.';
-      messageApi.error(errorMessage);
+      setPendingNotice({ type: 'error', content: errorMessage });
     } finally {
       setGoogleLoading(false);
     }
   };
+  const handleGoogleError = React.useCallback(() => {
+    setPendingNotice({ type: 'error', content: 'Google sign in failed. Please try again.' });
+  }, []);
 
   return (
     <div className={styles.formContainer}>
@@ -98,11 +128,13 @@ export const SignInForm: React.FC = () => {
 
         <Divider className={styles.divider}>or continue with</Divider>
 
-        <GoogleSignInButton
+        {SHOW_GOOGLE_SIGN_IN ? (
+          <GoogleSignInButton
           disabled={googleLoading}
           onCredential={handleGoogleCredential}
-          onError={() => messageApi.error('Google sign in failed. Please try again.')}
+          onError={handleGoogleError}
         />
+        ) : null}
 
         <div className={styles.signUpText}>
           Don't have an account? <Link to="/signup" className={styles.signUpLink}>Sign Up</Link>

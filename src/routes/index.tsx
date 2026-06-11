@@ -5,6 +5,7 @@ import AdminLayout from '../layouts/AdminLayout';
 import HomePage from '../pages/HomePage';
 import EventsPage from '../pages/EventsPage';
 import EventDetailsPage from '../pages/EventDetailsPage';
+import EventCheckoutPage from '../pages/EventCheckoutPage';
 import SignInPage from '../pages/SignInPage';
 import SignUpPage from '../pages/SignUpPage';
 import PrivacyPolicyPage from '../pages/PrivacyPolicyPage';
@@ -24,6 +25,7 @@ import CreateEventPage from '../pages/CreateEventPage';
 import AboutPage from '../pages/AboutPage';
 import FavoritesPage from '../pages/FavoritesPage';
 import { RequireAuth, RequireGuest } from './guards';
+import ContactPage from '../pages/ContactPage';
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +45,10 @@ export const router = createBrowserRouter([
         element: <CreateEventPage />,
       },
       {
+        path: 'events/:id/checkout',
+        element: <EventCheckoutPage />,
+      },
+      {
         path: 'events/:id',
         element: <EventDetailsPage />,
       },
@@ -57,6 +63,10 @@ export const router = createBrowserRouter([
             <FavoritesPage />
           </RequireAuth>
         ),
+      },
+      {
+        path: 'contact',
+        element: <ContactPage />,
       },
       {
         path: 'signin',

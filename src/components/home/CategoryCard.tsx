@@ -1,8 +1,6 @@
-import { Typography } from 'antd';
 import { Link } from 'react-router-dom';
 
 import type { Category } from './types';
-import { CategoryIcon } from './CategoryIcon';
 
 import styles from './CategoryCard.module.css';
 
@@ -10,22 +8,19 @@ interface CategoryCardProps {
   category: Category;
 }
 
+function formatEventCount(count: number): string {
+  return `${count}-${count === 1 ? 'event' : 'events'}`;
+}
+
 export default function CategoryCard({ category }: CategoryCardProps) {
   return (
     <Link
-      to={`/events?q=${encodeURIComponent(category.name)}`}
+      to={`/events?category=${encodeURIComponent(category.name)}`}
       className={styles.card}
-      aria-label={`Browse ${category.name} events`}
+      aria-label={`Browse ${category.name} events (${formatEventCount(category.eventCount)})`}
     >
-      <div className={styles.iconWrap}>
-        <CategoryIcon name={category.icon} categoryName={category.name} className={styles.icon} />
-      </div>
-      <Typography.Text strong className={styles.name}>
-        {category.name}
-      </Typography.Text>
-      <Typography.Text type="secondary" className={styles.count}>
-        {category.eventCount} events
-      </Typography.Text>
+      <span className={styles.name}>{category.name}</span>
+      <span className={styles.eventCount}>{formatEventCount(category.eventCount)}</span>
     </Link>
   );
 }

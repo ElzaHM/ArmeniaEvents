@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Button, Typography } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
@@ -10,6 +11,8 @@ interface TicketPanelProps {
 }
 
 export default function TicketPanel({ event }: TicketPanelProps) {
+  const navigate = useNavigate();
+
   if (event.isFree) {
     return (
       <aside className={`${styles.panel} detailsGlassCard`}>
@@ -23,8 +26,53 @@ export default function TicketPanel({ event }: TicketPanelProps) {
     );
   }
 
-  if (!event.ticketUrl) {
-    return null;
+  if (event.ticketUrl) {
+    return (
+      <aside className={`${styles.panel} detailsGlassCard`}>
+        <Typography.Title level={5} className={styles.title}>
+          Tickets
+        </Typography.Title>
+
+        <div className={styles.tickets}>
+          <article className={styles.ticketCard}>
+            <div className={styles.ticketInfo}>
+              <Typography.Text strong className={styles.ticketName}>
+                General Admission
+              </Typography.Text>
+              <Typography.Text type="secondary" className={styles.ticketDescription}>
+                Get your ticket for {event.title}
+              </Typography.Text>
+            </div>
+            <div className={styles.ticketActions}>
+              <Typography.Text className={`${styles.ticketPrice} ${styles.priceFree}`}>
+                {event.price}
+              </Typography.Text>
+              <Button
+                type="primary"
+                size="small"
+                className={styles.getTicketBtn}
+                href={event.ticketUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get Ticket
+              </Button>
+            </div>
+          </article>
+        </div>
+
+        <Button
+          type="link"
+          className={styles.viewAll}
+          href={event.ticketUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          icon={<ArrowRightOutlined />}
+        >
+          View All Tickets
+        </Button>
+      </aside>
+    );
   }
 
   return (
@@ -44,33 +92,20 @@ export default function TicketPanel({ event }: TicketPanelProps) {
             </Typography.Text>
           </div>
           <div className={styles.ticketActions}>
-            <Typography.Text className={`${styles.ticketPrice} ${styles.priceFree}`}>
+            <Typography.Text className={`${styles.ticketPrice} ${styles.pricePaid}`}>
               {event.price}
             </Typography.Text>
             <Button
               type="primary"
               size="small"
               className={styles.getTicketBtn}
-              href={event.ticketUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={() => navigate(`/events/${event.id}/checkout`)}
             >
               Get Ticket
             </Button>
           </div>
         </article>
       </div>
-
-      <Button
-        type="link"
-        className={styles.viewAll}
-        href={event.ticketUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        icon={<ArrowRightOutlined />}
-      >
-        View All Tickets
-      </Button>
     </aside>
   );
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { api } from '../../../api/axios';
 import { supabase } from '../../../lib/supabase';
 import { queryClient } from '../../../providers/query-client';
 import { DEFAULT_ADMIN_DISPLAY, getAdminDisplayName } from '../../../components/admin/adminDefaults';
@@ -9,8 +10,6 @@ import {
   TOKEN_STORAGE_KEY,
   updateCachedAuthUser,
 } from '../../../services/auth.service';
-
-const api = axios.create({ baseURL: '/api' });
 
 const STORAGE_BUCKET =
   import.meta.env.VITE_SUPABASE_EVENT_IMAGES_BUCKET ?? 'EVENT_IMAGES_BUCKET';

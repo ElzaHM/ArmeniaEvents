@@ -1,9 +1,29 @@
 .eventsPage {
   width: 100%;
   max-width: 100%;
+  min-height: 100vh;
   overflow-x: hidden;
   text-align: left;
   color: var(--home-text);
+  display: flex;
+  flex-direction: column;
+}
+
+.pageBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: 64px;
+}
+
+.footer :global(section) {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .eventsSection {
@@ -20,7 +40,7 @@
   gap: 32px;
   width: 90%;
   margin: 0 auto;
-  padding: 32px 24px 56px;
+  padding: 32px 24px 0;
   box-sizing: border-box;
   align-items: stretch;
 }
@@ -102,6 +122,6 @@
 
   .main {
     padding-top: 24px;
-    padding-bottom: 40px;
+    padding-bottom: 0;
   }
 }

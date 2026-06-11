@@ -13,8 +13,9 @@
 }
 
 :global([data-theme="dark"]) .modalShell {
-  --event-detail-section-bg: rgba(255, 255, 255, 0.05);
-  --event-detail-section-border: rgba(255, 255, 255, 0.1);
+  --event-detail-section-bg: #1e1e22;
+  --event-detail-section-border: rgba(255, 255, 255, 0.08);
+  --event-detail-footer-border: rgba(255, 255, 255, 0.08);
 }
 
 :global([data-theme="light"]) .modalShell {

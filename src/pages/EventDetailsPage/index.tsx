@@ -13,6 +13,7 @@ import {
   ReminderCard,
   TicketPanel,
 } from '../../components/event-details';
+import FooterContent from '../../components/home/FooterContent';
 import '../../components/home/home.css';
 import '../../components/event-details/event-details.css';
 import { QueryState } from '../../hooks/queries/query-state';
@@ -32,9 +33,11 @@ export default function EventDetailsPage() {
   const { data: event, isLoading, isError, error } = useEvent(id);
 
   return (
-    <QueryState isLoading={isLoading} isError={isError} error={error} minHeight={240}>
-      {event && (
-        <div className={pageStyles.detailsPage}>
+    <div className={pageStyles.detailsPage}>
+      <div className={pageStyles.pageBody}>
+        <QueryState isLoading={isLoading} isError={isError} error={error} minHeight={240}>
+          {event && (
+            <>
           <div className={`detailsSection ${pageStyles.backBar}`}>
             <Link to="/events" className={pageStyles.backLink}>
               <LeftOutlined />
@@ -61,15 +64,22 @@ export default function EventDetailsPage() {
             </div>
 
             <aside className={pageStyles.sidebar}>
-              {event.isFree || event.ticketUrl ? <TicketPanel event={event} /> : null}
+              {event.isFree || event.ticketUrl || (!event.isFree && !event.ticketUrl) ? (
+                <TicketPanel event={event} />
+              ) : null}
               <OrganizerCard event={event} />
               <ReminderCard eventId={event.id} />
             </aside>
           </div>
 
           <RelatedEvents eventId={event.id} category={event.category} />
-        </div>
-      )}
-    </QueryState>
+            </>
+          )}
+        </QueryState>
+      </div>
+      <div className={pageStyles.footer}>
+        <FooterContent />
+      </div>
+    </div>
   );
 }

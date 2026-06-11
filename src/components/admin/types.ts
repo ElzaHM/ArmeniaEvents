@@ -28,6 +28,8 @@ export interface AdminEvent {
   endDate: string;
   endDateDisplay: string;
   category: string;
+  categoryId: string | null;
+  categoryIsActive: boolean | null;
   venue: string;
   address: string;
   location: string;

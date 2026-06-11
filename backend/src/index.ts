@@ -12,7 +12,9 @@ import { authRoutes } from './modules/auth/auth.routes.js';
 import { categoriesRoutes } from './modules/categories/categories.routes.js';
 import { favoritesRoutes } from './modules/events/favorites/favorites.routes.js';
 import { eventsRoutes } from './modules/events/events.routes.js';
+import { contactRoutes } from './modules/contact/contact.routes.js';
 import { newsletterRoutes } from './modules/newsletter/newsletter.routes.js';
+import { ticketsRoutes } from './modules/tickets/tickets.routes.js';
 import axios from 'axios';
 
 const app = express();
@@ -66,6 +68,8 @@ app.use('/api/events', eventsRoutes);
 app.use('/api/events', favoritesRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/tickets', ticketsRoutes);
 
 const frontendDist = resolve(dirname(fileURLToPath(import.meta.url)), '../../dist');
 if (process.env.NODE_ENV === 'production' && existsSync(frontendDist)) {

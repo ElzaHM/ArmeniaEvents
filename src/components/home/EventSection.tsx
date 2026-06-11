@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
@@ -59,7 +60,9 @@ export default function EventSection({ title, events, viewAllHref }: EventSectio
         <div ref={scrollRef} className={styles.scrollContainer}>
           {events.map((event) => (
             <div key={event.id} className={styles.cardWrap}>
-              <EventCard event={event} />
+              <Link to={`/events/${event.id}`} className={styles.cardLink}>
+                <EventCard event={event} />
+              </Link>
             </div>
           ))}
         </div>

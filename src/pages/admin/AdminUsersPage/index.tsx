@@ -22,6 +22,7 @@ import { CameraOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons'
 
 import AdminCard from '../../../components/admin/AdminCard';
 import { adminPendingNotificationsKey } from '../../../components/admin/AdminHeader';
+import { formatAdminEventDate } from '../../../components/admin/mapApiEventToAdminEvent';
 import AdminPageHeader from '../../../components/admin/AdminPageHeader';
 import type { AdminUser, AdminUserRole, AdminUserStatus } from '../../../components/admin/types';
 import { useAdminUsers } from '../../../hooks/queries/useAdminUsers';
@@ -341,6 +342,7 @@ export default function AdminUsersPage() {
       dataIndex: 'joinedAt',
       key: 'joinedAt',
       responsive: ['md'],
+      render: (joinedAt: string) => formatAdminEventDate(joinedAt),
       sorter: (left, right) => left.joinedAt.localeCompare(right.joinedAt),
     },
     {
@@ -384,7 +386,7 @@ export default function AdminUsersPage() {
           {isLoading ? '…' : totalUsers.toLocaleString('en-US')}
         </strong>
       </div>
-      <AdminCard>
+      <AdminCard className={styles.adminTableCard}>
         {isError ? (
           <Alert
             type="error"
@@ -410,6 +412,7 @@ export default function AdminUsersPage() {
                   </div>
                 ) : (
                   <Table
+                    size="middle"
                     columns={columns}
                     dataSource={filteredUsers}
                     rowKey="id"
@@ -417,8 +420,27 @@ export default function AdminUsersPage() {
                       onClick: () => openUserModal(record),
                       className: 'admin-table-row-clickable',
                     })}
-                    pagination={{ pageSize: 8 }}
+                    pagination={{
+                      defaultPageSize: 10,
+                      showSizeChanger: true,
+                      pageSizeOptions: ['10', '20', '30', '50', '100'],
+                      hideOnSinglePage: true,
+                    }}
                     scroll={{ x: 'max-content' }}
+                    styles={{
+                      content: {
+                        overflowY: 'visible',
+                        maxHeight: 'none',
+                        height: 'auto',
+                      },
+                      body: {
+                        wrapper: {
+                          overflowY: 'visible',
+                          maxHeight: 'none',
+                          height: 'auto',
+                        },
+                      },
+                    }}
                   />
                 )}
               </Spin>
@@ -433,7 +455,8 @@ export default function AdminUsersPage() {
         width={420}
         centered
         onCancel={closeUserModal}
-        className={`admin-detail-modal ${styles.userModal}`}>
+        className="admin-detail-modal"
+        rootClassName={styles.userModal}>
         {selectedUser && modalMode === 'details' ? (
           <div className={styles.modalContent}>
             <img src={selectedUser.avatarUrl} alt="" className={styles.modalAvatar} />
@@ -462,7 +485,7 @@ export default function AdminUsersPage() {
               </div>
               <div className={styles.detailRow}>
                 <dt>Joined</dt>
-                <dd>{selectedUser.joinedAt}</dd>
+                <dd>{formatAdminEventDate(selectedUser.joinedAt)}</dd>
               </div>
             </dl>
             <div className={styles.modalActions}>

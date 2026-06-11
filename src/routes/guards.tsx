@@ -46,7 +46,7 @@ export function RequireGuest({ children }: { children: ReactElement }) {
       return <Navigate to={adminTarget} replace />;
     }
 
-    return <Navigate to="/" replace />;
+    return <Navigate to={redirectFrom || '/'} replace />;
   }
 
   return children;

@@ -20,8 +20,8 @@
 .section {
   padding: 14px 16px;
   border-radius: 12px;
-  border: 1px solid var(--admin-border);
-  background: var(--admin-surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #1e1e22;
 }
 
 .sectionTitle {
@@ -39,6 +39,10 @@
 
 .section :global(.ant-form-item:last-child) {
   margin-bottom: 0;
+}
+
+.section :global(.ant-radio-wrapper) {
+  color: var(--admin-text);
 }
 
 .imageBlock {

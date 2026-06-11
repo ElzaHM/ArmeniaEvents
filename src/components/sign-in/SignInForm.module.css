@@ -83,20 +83,6 @@
   font-size: 12px;
 }
 
-.socialBtn {
-  width: 100%;
-  height: 34px;
-  background: var(--auth-social-bg) !important;
-  border: 1px solid var(--auth-social-border) !important;
-  color: var(--home-text) !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 6px;
-  font-size: 13px;
-}
-
 .signUpText {
   text-align: center;
   margin-top: 6px;

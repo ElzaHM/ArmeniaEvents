@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { EventFilters, EventList, EventSearch } from '../../components/events';
 import type { AppliedEventFilters } from '../../components/events/EventFilters';
+import FooterContent from '../../components/home/FooterContent';
 import '../../components/home/home.css';
 import '../../components/events/events.css';
 
 import pageStyles from '../../components/events/EventsPage.module.css';
 
 export default function EventsPage() {
+  const [searchParams] = useSearchParams();
   const [appliedCategories, setAppliedCategories] = useState<string[]>([]);
   const [appliedEventType, setAppliedEventType] = useState<string | null>(null);
   const [appliedLanguage, setAppliedLanguage] = useState<string | null>(null);
@@ -29,6 +32,11 @@ export default function EventsPage() {
   };
 
   useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    setAppliedCategories(categoryParam ? [categoryParam] : []);
+  }, [searchParams]);
+
+  useEffect(() => {
     document.body.style.overflow = filtersOpen ? 'hidden' : '';
 
     return () => {
@@ -38,35 +46,40 @@ export default function EventsPage() {
 
   return (
     <div className={`${pageStyles.eventsPage} eventsPage`}>
-      <EventSearch />
-      <div className={pageStyles.main}>
-        {filtersOpen && (
-          <button
-            type="button"
-            className={pageStyles.filtersBackdrop}
-            aria-label="Close filters"
-            onClick={() => setFiltersOpen(false)}
-          />
-        )}
-        <div
-          className={`${pageStyles.sidebar} ${filtersOpen ? pageStyles.sidebarOpen : ''}`}
-        >
-          <EventFilters
-            onApply={handleApplyFilters}
-            onClose={() => setFiltersOpen(false)}
-          />
+      <div className={pageStyles.pageBody}>
+        <EventSearch />
+        <div className={pageStyles.main}>
+          {filtersOpen && (
+            <button
+              type="button"
+              className={pageStyles.filtersBackdrop}
+              aria-label="Close filters"
+              onClick={() => setFiltersOpen(false)}
+            />
+          )}
+          <div
+            className={`${pageStyles.sidebar} ${filtersOpen ? pageStyles.sidebarOpen : ''}`}
+          >
+            <EventFilters
+              onApply={handleApplyFilters}
+              onClose={() => setFiltersOpen(false)}
+            />
+          </div>
+          <div className={pageStyles.content}>
+            <EventList
+              appliedCategories={appliedCategories}
+              appliedEventType={appliedEventType}
+              appliedLanguage={appliedLanguage}
+              appliedPriceRange={appliedPriceRange}
+              appliedOrganizer={appliedOrganizer}
+              appliedDateRange={appliedDateRange}
+              onOpenFilters={() => setFiltersOpen(true)}
+            />
+          </div>
         </div>
-        <div className={pageStyles.content}>
-          <EventList
-            appliedCategories={appliedCategories}
-            appliedEventType={appliedEventType}
-            appliedLanguage={appliedLanguage}
-            appliedPriceRange={appliedPriceRange}
-            appliedOrganizer={appliedOrganizer}
-            appliedDateRange={appliedDateRange}
-            onOpenFilters={() => setFiltersOpen(true)}
-          />
-        </div>
+      </div>
+      <div className={pageStyles.footer}>
+        <FooterContent />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@
 import { Typography, Row, Col, Divider, Space } from 'antd';
 import { LinkedinOutlined, GithubOutlined } from '@ant-design/icons';
 import '../../components/home/home.css';
+import FooterContent from '../../components/home/FooterContent';
 import styles from './AboutPage.module.css';
 import {
   ABOUT_PAGE_HEADER,
@@ -43,15 +44,13 @@ export default function AboutPage() {
 
   return (
     <div className={`${styles.pageWrapper} about-page`}>
-      <div className={styles.container}>
+      <div className="mainContent">
         <div className={styles.header}>
-          <Title level={2} className={styles.aboutLabel}>
-            {ABOUT_PAGE_HEADER.label}
-          </Title>
           <Title level={1} className={styles.mainTitle}>
             {ABOUT_PAGE_HEADER.title}{' '}
             <span className={styles.goldText}>{ABOUT_PAGE_HEADER.titleAccent}</span>
           </Title>
+          <div className={styles.goldUnderline}></div>
           <Paragraph className={styles.subtitle}>{ABOUT_PAGE_HEADER.subtitle}</Paragraph>
         </div>
 
@@ -200,6 +199,9 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
+      </div>
+      <div className={styles.footer}>
+        <FooterContent />
       </div>
     </div>
   );

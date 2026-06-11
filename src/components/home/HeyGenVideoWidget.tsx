@@ -11,18 +11,38 @@ import aiAssistantVideo from '../../assets/AiAssistantVideo/Ai Assistant.webm';
 
 import styles from './HeyGenVideoWidget.module.css';
 
+const HOME_VIDEO_RETURN_CLOSED_KEY = 'armeniaEvents.homeVideoReturnClosed';
+
+function getInitialIsOpen() {
+  if (typeof window === 'undefined') {
+    return true;
+  }
+
+  return sessionStorage.getItem(HOME_VIDEO_RETURN_CLOSED_KEY) !== '1';
+}
+
 export default function HeyGenVideoWidget() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(getInitialIsOpen);
   const [isMuted, setIsMuted] = useState(false);
   const [controlsVisible, setControlsVisible] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      sessionStorage.setItem(HOME_VIDEO_RETURN_CLOSED_KEY, '1');
+      videoRef.current?.pause();
+    };
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !isOpen) {
       return;
     }
+
+    video.pause();
+    setIsPlaying(false);
 
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
@@ -33,6 +53,7 @@ export default function HeyGenVideoWidget() {
     return () => {
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
+      video.pause();
     };
   }, [isOpen]);
 
@@ -75,6 +96,7 @@ export default function HeyGenVideoWidget() {
 
   const handleClose = () => {
     videoRef.current?.pause();
+    setIsPlaying(false);
     setControlsVisible(false);
     setIsOpen(false);
   };
@@ -110,6 +132,7 @@ export default function HeyGenVideoWidget() {
               muted={isMuted}
               loop
               playsInline
+              preload="metadata"
             />
 
             <button

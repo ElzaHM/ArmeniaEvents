@@ -4,6 +4,7 @@ import { LinkOutlined, SearchOutlined } from '@ant-design/icons';
 import AdminEventImage from './AdminEventImage';
 import AdminOrganizerAvatar from './AdminOrganizerAvatar';
 import {
+  formatAdminEventDateTime,
   isAdminLinkButtonVisible,
   isGoogleSearchFallbackUrl,
 } from './mapApiEventToAdminEvent';
@@ -39,7 +40,6 @@ export default function AdminEventDetailModal({
     return null;
   }
 
-  const showTicketButton = isAdminLinkButtonVisible(event.ticketUrl);
   const showVerifySourceButton = isAdminLinkButtonVisible(event.sourceUrl);
   const showSearchButton =
     !showVerifySourceButton && isGoogleSearchFallbackUrl(event.sourceUrl);
@@ -83,11 +83,11 @@ export default function AdminEventDetailModal({
               <dl className={styles.detailList}>
                 <div className={styles.detailRow}>
                   <dt>Starts</dt>
-                  <dd>{event.date}</dd>
+                  <dd>{formatAdminEventDateTime(event.startDate)}</dd>
                 </div>
                 <div className={styles.detailRow}>
                   <dt>Ends</dt>
-                  <dd>{event.endDateDisplay}</dd>
+                  <dd>{formatAdminEventDateTime(event.endDate)}</dd>
                 </div>
               </dl>
             </section>
@@ -169,7 +169,7 @@ export default function AdminEventDetailModal({
             <p className={styles.sourceLabel}>Source: {event.source}</p>
           ) : null}
 
-          {showVerifySourceButton || showTicketButton || showSearchButton ? (
+          {showVerifySourceButton || showSearchButton ? (
             <div className={styles.linkRow}>
               {showVerifySourceButton ? (
                 <Button
@@ -187,17 +187,6 @@ export default function AdminEventDetailModal({
                   target="_blank"
                   rel="noopener noreferrer">
                   Search on Google
-                </Button>
-              ) : null}
-              {showTicketButton ? (
-                <Button
-                  type="primary"
-                  icon={<LinkOutlined />}
-                  href={event.ticketUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="admin-btn-edit">
-                  Get Tickets
                 </Button>
               ) : null}
             </div>

@@ -1,7 +1,7 @@
 import { FILTER_CATEGORIES } from '../components/events/mockData';
 import type { Category } from '../components/home/types';
 import { resolveCategoryIconName } from '../components/home/categoryIconUtils';
-import axios from 'axios';
+import { api } from '../api/axios';
 import { supabase } from '../lib/supabase';
 
 type CategoryRow = {
@@ -23,7 +23,6 @@ type CategoryCrudPayload = {
   is_active?: boolean;
 };
 
-const api = axios.create({ baseURL: '/api' });
 const TOKEN_STORAGE_KEY = 'armenia-events-access-token';
 
 function authHeaders() {

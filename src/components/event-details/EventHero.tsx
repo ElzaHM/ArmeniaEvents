@@ -87,6 +87,15 @@ export default function EventHero({ event }: EventHeroProps) {
                 >
                   Get Tickets
                 </Button>
+              ) : !event.isFree ? (
+                <Button
+                  type="primary"
+                  size="large"
+                  className={styles.primaryBtn}
+                  onClick={() => navigate(`/events/${event.id}/checkout`)}
+                >
+                  Get Tickets
+                </Button>
               ) : null}
               <Button
                 size="large"

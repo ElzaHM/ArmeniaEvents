@@ -68,7 +68,7 @@ export default function AdminCategoryModal({
       destroyOnHidden
       centered
       width={520}
-      className={`admin-detail-modal ${styles.modal}`}>
+      className="admin-detail-modal">
       <Form
         form={form}
         layout="vertical"

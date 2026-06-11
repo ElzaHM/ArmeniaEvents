@@ -21,7 +21,7 @@ if (!googleClientId) {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <GoogleOAuthProvider clientId={googleClientId}>
+      <GoogleOAuthProvider clientId={googleClientId} locale="en">
         <QueryClientProvider client={queryClient}>
           <ThemeProvider>
             <RouterProvider router={router} />

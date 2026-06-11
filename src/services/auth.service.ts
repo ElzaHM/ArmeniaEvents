@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { api } from '../api/axios';
+
 export type AuthUserRole = 'super_admin' | 'admin' | 'moderator' | 'user';
 
 export type AuthUser = {
@@ -33,10 +35,6 @@ export type ResetPasswordPayload = {
   password: string;
   confirmPassword: string;
 };
-
-const api = axios.create({
-  baseURL: '/api',
-});
 
 export const TOKEN_STORAGE_KEY = 'armenia-events-access-token';
 export const REFRESH_TOKEN_STORAGE_KEY = 'armenia-events-refresh-token';

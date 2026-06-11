@@ -1,9 +1,25 @@
    /* 1. PAGE LAYOUT & HERO HEADER */
 .pageWrapper {
-  padding: 100px 0 60px;
+  padding: 120px 0 0;
   background: transparent;
   min-height: 100vh;
-  padding-top: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageWrapper :global(.mainContent) {
+  flex: 1;
+}
+
+.footer {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: 64px;
+}
+
+.footer :global(section) {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .heroHeader {
@@ -13,11 +29,19 @@
 .mainTitle {
   font-size: 50px !important;
   color: white !important;
-  margin: 0 !important;
+  margin-bottom: 10px !important;
+  line-height: 1.1 !important;
 }
 
 .goldText {
-  color: #c08b46;
+  color: #c08b46 !important;
+}
+
+.goldUnderline {
+  width: 60px;
+  height: 3px;
+  background-color: #c08b46;
+  margin-bottom: 16px;
 }
 
 .heroSubtitle {
@@ -52,6 +76,7 @@
 
    /* 3. FORM ELEMENTS & WRITABLE INPUTS */
 .glassInput, 
+:global(.ant-input-number),
 :global(.ant-select-selector),
 :global(.ant-picker),
 :global(.ant-input-affix-wrapper) {
@@ -82,6 +107,32 @@
   color: rgba(255, 255, 255, 0.8) !important;
   font-size: 12px;
   height: auto;
+}
+
+.priceRadioGroup :global(.ant-radio-wrapper) {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.priceRadioGroup :global(.ant-radio-checked + span) {
+  color: #ffffff;
+}
+
+:global(.ant-input-number.glassInput) {
+  width: 100%;
+}
+
+:global(.ant-input-number.glassInput .ant-input-number-input) {
+  color: white !important;
+}
+
+:global(.ant-input-number.glassInput .ant-input-number-handler-wrap) {
+  background: rgba(255, 255, 255, 0.08);
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+:global(.ant-input-number.glassInput .ant-input-number-handler),
+:global(.ant-input-number.glassInput .anticon) {
+  color: rgba(255, 255, 255, 0.75);
 }
 
    /* 4. SINGLE IMAGE UPLOAD & DELETE BAR */
@@ -413,4 +464,62 @@
 
 [data-theme='light'] .pageWrapper .detailIcon {
   color: var(--home-icon-muted);
+}
+
+/* Event form DatePicker / TimePicker dropdowns (portaled to body) */
+:global(.ant-picker-dropdown.event-form-picker-dropdown),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel-container),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-date-panel),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel-column),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ranges),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-header),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-body),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-content) {
+  background: #141416 !important;
+  background-color: #141416 !important;
+}
+
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-cell-selected .ant-picker-cell-inner),
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown
+    .ant-picker-cell-selected:hover
+    .ant-picker-cell-inner
+),
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown
+    .ant-picker-cell-in-view.ant-picker-cell-selected
+    .ant-picker-cell-inner
+) {
+  color: #000000 !important;
+}
+
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer .ant-btn-primary),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok button),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok .ant-btn-primary) {
+  background: #c08b46 !important;
+  border-color: #c08b46 !important;
+  color: #141416 !important;
+  box-shadow: none !important;
+}
+
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer .ant-btn-primary:hover
+),
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer .ant-btn-primary:focus
+),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok button:hover),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok button:focus),
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok .ant-btn-primary:hover
+),
+:global(
+  .ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok .ant-btn-primary:focus
+) {
+  background: #d4a05a !important;
+  border-color: #d4a05a !important;
+  color: #141416 !important;
 }

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
+import { api } from '../../../api/axios';
 import { supabase } from '../../../lib/supabase';
 import type { AdminUser, AdminUserStatus } from '../../../components/admin/types';
 
-const api = axios.create({ baseURL: '/api' });
 const TOKEN_STORAGE_KEY = 'armenia-events-access-token';
 
 const STORAGE_BUCKET =

@@ -36,6 +36,9 @@
   overflow-x: visible;
   min-height: 0;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .logoBox {

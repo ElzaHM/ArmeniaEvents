@@ -1,9 +1,8 @@
-import axios from 'axios';
+import { api } from '../api/axios';
 
 import type { AdminUser } from '../components/admin/types';
 import { supabase } from '../lib/supabase';
 
-const api = axios.create({ baseURL: '/api' });
 const TOKEN_STORAGE_KEY = 'armenia-events-access-token';
 
 function authHeaders() {

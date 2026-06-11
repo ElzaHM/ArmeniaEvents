@@ -174,6 +174,7 @@
   overflow-x: visible;
   overflow-y: auto;
   box-sizing: border-box;
+  flex-shrink: 1;
 }
 
 [data-theme='light'] .sign-in-page .sign-in-panel {
@@ -204,6 +205,12 @@
 
 .sign-in-page .ant-divider {
   margin: 8px 0 !important;
+}
+
+@media (max-width: 992px) {
+  .sign-in-page .sign-in-panel > div:last-child > .auth-illustration {
+    display: none;
+  }
 }
 
 .sign-in-page .custom-header,
