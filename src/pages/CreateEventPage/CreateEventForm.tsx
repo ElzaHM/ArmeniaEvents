@@ -39,6 +39,9 @@ const addressOptions = [
   { value: 'Sevan, Armenia' },
   { value: 'Goris, Armenia' },
 ];
+const EVENT_FORM_DATE_PICKER_POPUP = {
+  classNames: { popup: { root: "event-form-picker-dropdown" } },
+};
 const EVENT_FORM_PICKER_POPUP = { popupClassName: "event-form-picker-dropdown" };
 
 interface Props {
@@ -111,7 +114,7 @@ export default function CreateEventForm({
                 format="DD.MM.YYYY"
                 className={styles.glassInput}
                 style={{width: "100%"}}
-                {...EVENT_FORM_PICKER_POPUP}
+                {...EVENT_FORM_DATE_PICKER_POPUP}
               />
             </Form.Item>
           </Col>
@@ -131,7 +134,7 @@ export default function CreateEventForm({
                 format="DD.MM.YYYY"
                 className={styles.glassInput}
                 style={{width: "100%"}}
-                {...EVENT_FORM_PICKER_POPUP}
+                {...EVENT_FORM_DATE_PICKER_POPUP}
               />
             </Form.Item>
           </Col>

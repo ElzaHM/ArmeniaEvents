@@ -26,6 +26,7 @@ export type AdminCreateEventFormValues = {
   startTime: Dayjs;
   endDate?: Dayjs;
   endTime?: Dayjs;
+  status?: AdminEvent['status'];
 };
 
 export const ADMIN_EVENT_SELECT =
@@ -300,7 +301,7 @@ export async function createAdminEvent(
     age_range: values.ageRange?.trim() || null,
     category_id: categoryId,
     organizer_id: organizerId,
-    status: 'published',
+    status: values.status ?? 'published',
     views: 0,
     event_type: 'Offline',
   } as any);

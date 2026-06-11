@@ -2,19 +2,13 @@ import { Button, Typography } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuth } from '../../hooks/useAuth';
 import styles from './OrganizeEventCTA.module.css';
 
 export default function OrganizeEventCTA() {
   const navigate = useNavigate();
-  const { isAuthenticated, loading } = useAuth();
 
   const handleAddYourEvent = () => {
-    if (loading) {
-      return;
-    }
-
-    navigate(isAuthenticated ? '/events/new' : '/signin');
+    navigate('/events/new');
   };
 
   return (
@@ -40,7 +34,6 @@ export default function OrganizeEventCTA() {
             size="large"
             className={`homeActionBtn ${styles.button}`}
             onClick={handleAddYourEvent}
-            disabled={loading}
           >
             Add Your Event
           </Button>
