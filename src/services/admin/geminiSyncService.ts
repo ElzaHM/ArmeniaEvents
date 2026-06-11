@@ -14,6 +14,9 @@ function getSanitizedGeminiKey(): string {
 
 const GEMINI_MODEL = "gemini-2.5-flash";
 
+/** All Gemini-imported events must enter the database as drafts for admin review. */
+const AI_IMPORTED_EVENT_STATUS = "draft" as const;
+
 export const GEMINI_BUSY_RETRY_MESSAGE =
   "Google servers are busy. Retrying in 10 seconds...";
 
@@ -203,7 +206,7 @@ type EventUpsertRow = {
   ticket_url: string | null;
   category_id: string | null;
   organizer_id: string | null;
-  status: "published";
+  status: typeof AI_IMPORTED_EVENT_STATUS;
   views: number;
   source: string;
   external_id: string;
@@ -256,7 +259,7 @@ function mapNormalizedEventToUpsertRow(
     ticket_url: event.ticket_url,
     category_id: categoryId,
     organizer_id: organizerId,
-    status: "published",
+    status: AI_IMPORTED_EVENT_STATUS,
     views: 0,
     source: event.source.trim(),
     external_id,
@@ -846,7 +849,9 @@ async function insertNewAiEvents(rows: EventUpsertRow[]): Promise<void> {
     return;
   }
 
-  const payload = rows.map(sanitizeEventUpsertRow);
+  const payload = rows.map((row) =>
+    sanitizeEventUpsertRow({...row, status: AI_IMPORTED_EVENT_STATUS}),
+  );
 
   const {error} = await supabase.from("events").insert(payload as any);
 
