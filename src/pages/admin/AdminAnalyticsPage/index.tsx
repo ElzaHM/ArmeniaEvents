@@ -11,7 +11,7 @@ import {
   useAdminCategoryDistribution,
   useAdminDashboardStats,
 } from "../../../hooks/queries/useAdminDashboard";
-import {downloadAnalyticsReportCsv, printAnalyticsReport} from "./analyticsExport";
+import {printAnalyticsReport} from "./analyticsExport";
 import ExportReportModal from "./ExportReportModal";
 import SimplifiedSummaryReport from "./SimplifiedSummaryReport";
 
@@ -27,11 +27,6 @@ export default function AdminAnalyticsPage() {
   const analyticsStats = stats.filter((stat) =>
     ["total-events", "active-users", "page-views"].includes(stat.id),
   );
-
-  const exportData = {
-    stats: analyticsStats,
-    categories: categoryDistribution,
-  };
 
   return (
     <Spin spinning={isStatsLoading || isAnalyticsLoading || isCategoriesLoading}>
@@ -90,9 +85,7 @@ export default function AdminAnalyticsPage() {
         <ExportReportModal
           open={exportModalOpen}
           onClose={() => setExportModalOpen(false)}
-          onFullPdf={() => printAnalyticsReport("full")}
           onSummaryPdf={() => printAnalyticsReport("summary")}
-          onCsv={() => downloadAnalyticsReportCsv(exportData)}
         />
       </div>
     </Spin>

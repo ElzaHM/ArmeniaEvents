@@ -15,7 +15,10 @@
 .upcomingEventsWrapper,
 .analyticsWrapper {
   display: flex;
+  flex-direction: column;
+  align-self: stretch;
   min-width: 0;
+  min-height: 0;
 }
 
 .upcomingEventsWrapper {
@@ -28,40 +31,135 @@
   transition: all 0.3s ease;
 }
 
-.upcomingEventsWrapper > section,
-.analyticsWrapper > section {
-  flex: 1;
+.upcomingEventsWrapper > :global(section),
+.analyticsWrapper > :global(section) {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 100%;
+  min-height: 0;
 }
 
-@media (max-width: 1350px) {
-  .analyticsWrapper {
-    flex: 1 1 100%;
-  }
+/* Analytics Overview — grow with row, never scroll internally */
+.analyticsWrapper :global([class*="card"]) {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  overflow: visible;
+}
+
+.analyticsWrapper :global([class*="body"]) {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: visible;
+  padding-top: 12px;
+  padding-bottom: 20px;
+}
+
+.analyticsWrapper :global([class*="body"]) > :global(div:first-child) {
+  flex: 1 1 auto;
+  min-height: 220px;
+}
+
+.analyticsWrapper :global([class*="body"]) > :global(div:last-child) {
+  flex-shrink: 0;
 }
 
 .bottomRow {
   display: grid;
   grid-template-columns: 1fr 1fr 340px;
   gap: 24px;
+  align-items: stretch;
+}
+
+.bottomCard {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 440px;
+  min-height: 440px;
+  max-height: 440px;
+}
+
+.bottomCard > :global(section) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.bottomCard > :global(section) > :global([class*="body"]) {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 @media (max-width: 1400px) {
   .bottomRow {
     grid-template-columns: 1fr 1fr;
   }
+
   .bottomRow > :last-child {
     grid-column: 1 / -1;
   }
 }
 
+@media (max-width: 1350px) {
+  .analyticsWrapper {
+    flex: 1 1 100%;
+  }
+
+  .upcomingEventsWrapper > :global(section),
+  .analyticsWrapper > :global(section) {
+    height: auto;
+  }
+
+  .analyticsWrapper :global([class*="body"]) > :global(div:first-child) {
+    flex: none;
+    min-height: 240px;
+  }
+}
+
 @media (max-width: 1024px) {
+  .upcomingEventsWrapper {
+    flex: 1 1 100%;
+  }
+
+  .analyticsWrapper {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
   .bottomRow {
     grid-template-columns: 1fr;
   }
 
   .bottomRow > :last-child {
     grid-column: auto;
+  }
+
+  .bottomCard {
+    height: auto;
+    min-height: 320px;
+    max-height: none;
+  }
+
+  .analyticsWrapper :global([class*="card"]) {
+    height: auto;
+    overflow: visible;
+  }
+
+  .upcomingEventsWrapper > :global(section),
+  .analyticsWrapper > :global(section) {
+    height: auto;
   }
 
   .row {
@@ -71,6 +169,47 @@
 
   .dashboard {
     gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .upcomingEventsWrapper {
+    flex: 1 1 100%;
+  }
+
+  .analyticsWrapper {
+    min-width: 0;
+  }
+
+  .bottomCard {
+    min-height: 280px;
+  }
+
+  .row {
+    gap: 14px;
+  }
+
+  .dashboard {
+    gap: 14px;
+  }
+}
+
+@media (max-height: 800px) {
+  .dashboard {
+    gap: 14px;
+  }
+
+  .row {
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .bottomRow {
+    gap: 14px;
+  }
+
+  .bottomCard {
+    min-height: 260px;
   }
 }
 

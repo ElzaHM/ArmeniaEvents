@@ -1,28 +1,11 @@
 .layout {
   position: relative;
   display: flex;
-  height: auto;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100dvh;
   max-width: 100%;
-  overflow-x: hidden;
-  overflow-y: visible;
+  overflow: hidden;
   color: var(--admin-text);
   isolation: isolate;
-}
-
-/* Unify vibrant golden-yellow accents in dark theme (match light theme palette) */
-:global([data-theme="dark"]).layout {
-  --admin-gold: #ffd27a;
-  --admin-gold-strong: #ffd27a;
-  --admin-gold-light: rgba(255, 210, 122, 0.2);
-  --admin-gold-hover: rgba(255, 210, 122, 0.24);
-  --admin-gold-border: rgba(255, 210, 122, 0.52);
-  --admin-button-primary-bg: #f2c200;
-  --admin-button-primary-hover-bg: #e6b800;
-  --admin-button-primary-border: #9f7600;
-  --admin-button-primary-hover-border: #8a6400;
-  --admin-card-hover-bg: rgba(42, 44, 52, 0.94);
 }
 
 .layout::before {
@@ -44,11 +27,9 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
   max-width: 100%;
-  height: auto;
-  overflow-x: hidden;
-  overflow-y: visible;
-  min-height: 100dvh;
+  overflow: hidden;
   margin-left: 260px;
   transition: margin-left 0.25s ease;
 }
@@ -58,216 +39,56 @@
 }
 
 .content {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  min-height: 0;
   padding: 24px;
   overflow-x: hidden;
-  overflow-y: visible;
+  overflow-y: auto;
   width: 100%;
   box-sizing: border-box;
-}
-
-/* Stop background page scroll while any Ant Design modal is open */
-:global(body.ant-modal-open) :global(.admin-content),
-:global(body.ant-modal-open) .content,
-:global(body:has(.ant-modal-wrap)) :global(.admin-content),
-:global(body:has(.ant-modal-wrap)) .content {
-  overflow: hidden !important;
-}
-
-:global(body.ant-modal-open:has(.admin-panel)),
-:global(body:has(.admin-panel):has(.ant-modal-wrap)) {
-  overflow: hidden !important;
+  overscroll-behavior: contain;
 }
 
 .content :global([class*="pageHeader"]) {
   padding: 20px 24px !important;
   border-radius: 16px;
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  transition:
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
 }
 
 :global([data-theme="dark"]) .content :global([class*="pageHeader"]) {
-  background: rgba(34, 37, 46, 0.99) !important;
-  border: 1px solid rgba(217, 163, 74, 0.34);
-  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.38);
+  background: rgba(20, 22, 28, 0.38) !important;
+  background-color: rgba(20, 22, 28, 0.38) !important;
+  border: 1px solid rgba(217, 163, 74, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+:global([data-theme="light"]) .content :global([class*="pageHeader"]) {
+  background: rgba(20, 22, 28, 0.36) !important;
+  background-color: rgba(20, 22, 28, 0.36) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 12px 40px rgba(15, 23, 42, 0.1);
 }
 
 .content :global([class*="pageHeader"]) :global([class*="greeting"]) {
-  color: #ffffff !important;
+  color: var(--admin-text, #fff) !important;
 }
 
 .content :global([class*="pageHeader"]) :global([class*="pageTitle"]),
 .content :global([class*="pageHeader"]) :global([class*="goldText"]) {
-  color: #ffd27a !important;
+  color: var(--admin-gold, #ffd27a) !important;
 }
 
 .content :global([class*="pageHeader"]) :global([class*="subtitle"]) {
-  color: rgba(255, 255, 255, 0.88) !important;
-}
-
-/* Admin modals: unified opaque charcoal panel (portaled to body) */
-:global(.admin-detail-modal) {
-  --admin-modal-surface: #161618;
-  --admin-modal-section: #1e1e22;
-  --admin-modal-divider: rgba(255, 255, 255, 0.08);
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-content) {
-  background: var(--admin-modal-surface) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  opacity: 1 !important;
-  border: 1px solid #2a2a2e !important;
-  box-shadow: 0 24px 56px rgb(0 0 0 / 45%) !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-body),
-:global(.admin-detail-modal) :global(.ant-modal-header),
-:global(.admin-detail-modal) :global(.ant-modal-footer) {
-  background: var(--admin-modal-surface) !important;
-  opacity: 1 !important;
-  color: #e0e0e0 !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-body) {
-  overscroll-behavior: contain;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-title),
-:global(.admin-detail-modal) :global(.ant-modal-close) {
-  color: #ffffff !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-header) {
-  margin-bottom: 0 !important;
-  border-bottom: 1px solid var(--admin-modal-divider) !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-footer) {
-  border-top: 1px solid var(--admin-modal-divider) !important;
-}
-
-:global(.admin-detail-modal) footer {
-  background: var(--admin-modal-surface) !important;
-  border-top: 1px solid var(--admin-modal-divider) !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-mask) {
-  background: rgba(0, 0, 0, 0.72) !important;
-}
-
-/* Light theme: same solid opaque surface as dark theme */
-:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-content),
-:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-body),
-:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-header),
-:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-footer),
-:global([data-theme="light"]) :global(.admin-detail-modal) footer {
-  background: var(--admin-modal-surface) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  opacity: 1 !important;
-}
-
-:global([data-theme="light"]) :global(.admin-detail-modal) :global(.ant-modal-mask) {
-  background: rgba(0, 0, 0, 0.75) !important;
-}
-
-:global(.admin-detail-modal) section[class*="section"] {
-  background: var(--admin-modal-section) !important;
-  border: 1px solid var(--admin-modal-divider) !important;
-  border-radius: 12px;
-}
-
-:global(.admin-detail-modal) h2,
-:global(.admin-detail-modal) h3,
-:global(.admin-detail-modal) [class*="organizerName"] {
-  color: #ffffff !important;
-}
-
-:global(.admin-detail-modal) [class*="sectionTitle"] {
-  color: rgba(255, 255, 255, 0.62) !important;
-}
-
-:global(.admin-detail-modal) dt,
-:global(.admin-detail-modal) [class*="detailRow"] dt {
-  color: rgba(255, 255, 255, 0.62) !important;
-}
-
-:global(.admin-detail-modal) dd,
-:global(.admin-detail-modal) [class*="detailRow"] dd,
-:global(.admin-detail-modal) [class*="description"],
-:global(.admin-detail-modal) [class*="sourceLabel"],
-:global(.admin-detail-modal) [class*="avatarHint"],
-:global(.admin-detail-modal) [class*="pendingAvatarName"] {
-  color: #e0e0e0 !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-close):hover,
-:global(.admin-detail-modal) :global(.ant-modal-close):focus-visible {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: #ffffff !important;
-}
-
-/* Modal action buttons */
-:global(.admin-detail-modal) :global(.ant-btn-dangerous),
-:global(.admin-detail-modal) .admin-btn-delete,
-:global(.admin-detail-modal) .admin-btn-delete.ant-btn-dangerous {
-  background: rgba(239, 68, 68, 0.15) !important;
-  color: #ef4444 !important;
-  border: 1px solid rgba(239, 68, 68, 0.45) !important;
-  box-shadow: none !important;
-  font-weight: 600;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-btn-dangerous):hover,
-:global(.admin-detail-modal) :global(.ant-btn-dangerous):focus-visible,
-:global(.admin-detail-modal) .admin-btn-delete:hover,
-:global(.admin-detail-modal) .admin-btn-delete:focus-visible,
-:global(.admin-detail-modal) .admin-btn-delete.ant-btn-dangerous:hover,
-:global(.admin-detail-modal) .admin-btn-delete.ant-btn-dangerous:focus-visible {
-  background: #ef4444 !important;
-  color: #ffffff !important;
-  border-color: #ef4444 !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-btn-primary),
-:global(.admin-detail-modal) .admin-btn-edit,
-:global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary {
-  background: var(--admin-button-primary-bg, #f2c200) !important;
-  color: var(--admin-button-primary-text, #14161c) !important;
-  border: none !important;
-  box-shadow: none !important;
-  font-weight: 600;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-btn-primary):hover,
-:global(.admin-detail-modal) :global(.ant-btn-primary):focus-visible,
-:global(.admin-detail-modal) .admin-btn-edit:hover,
-:global(.admin-detail-modal) .admin-btn-edit:focus-visible,
-:global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary:hover,
-:global(.admin-detail-modal) .admin-btn-edit.ant-btn-primary:focus-visible {
-  background: var(--admin-button-primary-hover-bg, #e6b800) !important;
-  color: var(--admin-button-primary-text, #14161c) !important;
-  transform: translateY(-1px);
-}
-
-/* Add Event button: same golden gradient in dark theme */
-:global([data-theme="dark"]).layout :global(.admin-content) :global(.admin-btn-add) {
-  background: linear-gradient(135deg, #ffd84d 0%, #f2c200 52%, #c89412 100%) !important;
-  color: #141006 !important;
-}
-
-:global([data-theme="dark"]).layout :global(.admin-content) :global(.admin-btn-add):hover,
-:global([data-theme="dark"]).layout :global(.admin-content) :global(.admin-btn-add):focus-visible {
-  background: linear-gradient(135deg, #f5c900 0%, #e6b800 52%, #b9850f 100%) !important;
-  color: #141006 !important;
+  color: var(--admin-text-secondary, rgba(255, 255, 255, 0.82)) !important;
 }
 
 @media (max-width: 1024px) {
@@ -279,11 +100,44 @@
   .content {
     padding: 16px;
   }
+
+  .content :global([class*="pageHeader"]) {
+    padding: 16px 20px !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 14px;
+  }
+
+  .content :global([class*="pageHeader"]) {
+    padding: 14px 16px !important;
+    border-radius: 14px;
+  }
+}
+
+@media (max-height: 800px) {
+  .content {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
 }
 
 @media (max-width: 640px) {
   .content :global([class*="pageHeader"]) {
     padding: 16px 20px !important;
+  }
+
+  :global([data-theme="light"]) .content :global([class*="pageHeader"]) {
+    background: rgba(20, 22, 28, 0.34) !important;
+    background-color: rgba(20, 22, 28, 0.34) !important;
+  }
+
+  :global([data-theme="dark"]) .content :global([class*="pageHeader"]) {
+    background: rgba(20, 22, 28, 0.34) !important;
+    background-color: rgba(20, 22, 28, 0.34) !important;
   }
 }
 

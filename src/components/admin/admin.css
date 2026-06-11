@@ -1,103 +1,311 @@
+/* Backdrop — only layer that reacts to site theme */
 [data-theme="dark"] {
   --admin-bg: #0b0b0d;
   --admin-bg-image:
     linear-gradient(rgba(13, 13, 15, 0.6), rgba(13, 13, 15, 0.85)),
     url("../../assets/adminPage/admin_bg.png");
-
-  --admin-surface: rgba(255, 255, 255, 0.08);
-  --admin-surface-solid: #1c1c20;
-  --admin-surface-hover: rgba(255, 255, 255, 0.12);
-  --admin-card-bg: rgba(22, 22, 26, 0.94);
-  --admin-card-hover-bg: rgba(35, 31, 25, 0.96);
-  --admin-input-bg: rgba(255, 255, 255, 0.08);
-  --admin-table-header-bg: rgba(18, 18, 22, 0.98);
-  --admin-table-row-bg: rgba(26, 26, 32, 0.94);
-  --admin-table-row-alt-bg: rgba(22, 22, 28, 0.94);
-  --admin-table-row-hover: rgba(38, 38, 46, 0.96);
-  --admin-table-text: #f1f5f9;
-  --admin-table-text-secondary: #94a3b8;
-  --admin-table-border: rgba(255, 255, 255, 0.1);
-  --admin-sidebar: rgba(14, 14, 17, 0.55);
-  --admin-text: #ffffff;
-  --admin-text-secondary: #d1d1d6;
-  --admin-text-muted: #8e8e93;
-  --admin-border: rgba(255, 255, 255, 0.1);
-  --admin-gold: #d9a34a;
-  --admin-gold-strong: #f0b85a;
-  --admin-gold-light: rgba(217, 163, 74, 0.15);
-  --admin-gold-hover: rgba(217, 163, 74, 0.18);
-  --admin-gold-border: rgba(217, 163, 74, 0.48);
-  --admin-button-primary-bg: #d9a34a;
-  --admin-button-primary-hover-bg: #f0b85a;
-  --admin-button-primary-border: #d9a34a;
-  --admin-button-primary-hover-border: #f0b85a;
-  --admin-button-primary-text: #14161c;
-  --admin-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-  --admin-hover-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
-  --admin-chart-grid: rgba(255, 255, 255, 0.03);
 }
 
+/* Dark theme — profile dropdown (portaled outside .admin-panel; use literal colors) */
+[data-theme="dark"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu),
+[data-theme="dark"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu) {
+  background: #141416 !important;
+  background-color: #141416 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-title-content) {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item:hover),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-active),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item.ant-dropdown-menu-item-active),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item.ant-dropdown-menu-item-active) {
+  background: rgba(217, 163, 74, 0.15) !important;
+  background-color: rgba(217, 163, 74, 0.15) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.ant-dropdown-menu-title-content) {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item)
+  :global(.anticon) {
+  color: #fca5a5 !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active) {
+  background: rgba(239, 68, 68, 0.15) !important;
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  color: #fff1f2 !important;
+}
+
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active)
+  :global(.anticon),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active)
+  :global(.ant-dropdown-menu-title-content) {
+  color: #fff1f2 !important;
+}
 [data-theme="light"] {
   --admin-bg: #eef3f7;
   --admin-bg-image:
     linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
     url("../../assets/adminPage/admin_bg.png");
+}
 
-  --admin-surface: rgba(34, 36, 42, 0.72);
-  --admin-surface-solid: rgba(28, 30, 36, 0.96);
-  --admin-surface-hover: rgba(42, 44, 52, 0.92);
-  --admin-card-bg: rgba(34, 36, 42, 0.88);
-  --admin-card-hover-bg: rgba(42, 44, 52, 0.94);
-  --admin-input-bg: rgba(34, 36, 42, 0.88);
-  --admin-table-header-bg: rgba(28, 30, 36, 0.96);
-  --admin-table-row-bg: var(--admin-input-bg);
-  --admin-table-row-alt-bg: rgba(34, 36, 42, 0.82);
-  --admin-table-row-hover: var(--admin-surface-hover);
-  --admin-table-text: var(--admin-text);
-  --admin-table-text-secondary: var(--admin-text-secondary);
-  --admin-table-border: var(--admin-border);
-  --admin-text: #ffffff;
+/* Light theme — profile dropdown (portaled; needs global selectors + dark hover text) */
+[data-theme="light"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu),
+[data-theme="light"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu) {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12) !important;
+}
+
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item)
+  :global(.anticon),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-title-content) {
+  color: #1f2937 !important;
+}
+
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item.ant-dropdown-menu-item-active) {
+  background: rgba(242, 194, 0, 0.14) !important;
+  color: #111827 !important;
+}
+
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.anticon),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item:hover)
+  :global(.ant-dropdown-menu-title-content),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-active)
+  :global(.ant-dropdown-menu-title-content) {
+  color: #111827 !important;
+}
+
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active) {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #b91c1c !important;
+}
+
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover)
+  :global(.anticon),
+[data-theme="light"]
+  :global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active)
+  :global(.anticon) {
+  color: #b91c1c !important;
+}
+
+/* Static admin palette — tables, forms, chrome (never follows theme toggle) */
+.admin-panel {
+  --admin-input-bg: #22242a;
+  --admin-surface-hover: #2a2c34;
+  --admin-card-bg: #22242a;
+  --admin-card-hover-bg: #2a2c34;
+  --admin-sidebar: #22242a;
+  --admin-surface-solid: #1c1e24;
+  --admin-text: #fff;
   --admin-text-secondary: rgba(255, 255, 255, 0.82);
   --admin-text-muted: rgba(255, 255, 255, 0.62);
   --admin-border: rgba(255, 255, 255, 0.25);
   --admin-gold: #ffd27a;
   --admin-gold-strong: #ffd27a;
   --admin-gold-light: rgba(255, 210, 122, 0.2);
-  --admin-gold-hover: rgba(255, 210, 122, 0.24);
   --admin-gold-border: rgba(255, 210, 122, 0.52);
+  --admin-gold-hover: rgba(255, 210, 122, 0.24);
+  --admin-success: #86efac;
+  --admin-success-bg: rgba(21, 128, 61, 0.35);
+  --admin-warning: #fcd34d;
+  --admin-warning-bg: rgba(180, 83, 9, 0.35);
   --admin-button-primary-bg: #f2c200;
   --admin-button-primary-hover-bg: #e6b800;
   --admin-button-primary-border: #9f7600;
   --admin-button-primary-hover-border: #8a6400;
   --admin-button-primary-text: #14161c;
-  --admin-sidebar: rgba(34, 36, 42, 0.88);
-  --admin-shadow: 0 16px 42px rgba(15, 23, 42, 0.14);
-  --admin-hover-shadow: 0 20px 48px rgba(15, 23, 42, 0.2);
-  --admin-chart-grid: rgba(255, 255, 255, 0.12);
+  --admin-btn-edit-bg: rgba(217, 163, 74, 0.14);
+  --admin-btn-edit-hover-bg: rgba(217, 163, 74, 0.28);
+  --admin-btn-edit-text: #ffd27a;
+  --admin-btn-edit-hover-text: #fff4d6;
+  --admin-btn-delete-bg: rgba(239, 68, 68, 0.12);
+  --admin-btn-delete-hover-bg: rgba(239, 68, 68, 0.22);
+  --admin-btn-delete-text: #fca5a5;
+  --admin-btn-delete-hover-text: #fff1f2;
+  --admin-btn-delete-border: rgba(239, 68, 68, 0.45);
+  --admin-shadow: 0 16px 42px rgba(0, 0, 0, 0.35);
+  --admin-hover-shadow: 0 20px 48px rgba(0, 0, 0, 0.32);
+  --admin-chart-grid: rgba(255, 255, 255, 0.08);
+  --admin-table-header-bg: #1c1e24;
+  --admin-table-row-bg: #22242a;
+  --admin-table-row-alt-bg: #1f2127;
+  --admin-table-row-hover: #2a2c34;
+  --admin-table-text: #fff;
+  --admin-table-text-secondary: rgba(255, 255, 255, 0.82);
+  --admin-table-border: rgba(255, 255, 255, 0.25);
 }
 
-/* Table controls — always dark-theme look (light & dark mode) */
-.admin-panel {
-  --admin-table-control-gold: #d9a34a;
-  --admin-table-control-gold-strong: #f0b85a;
-  --admin-table-control-gold-bg: rgba(217, 163, 74, 0.15);
-  --admin-table-control-gold-border: rgba(217, 163, 74, 0.48);
-  --admin-table-control-text-muted: #94a3b8;
-}
-
-/* Natural document scroll on admin routes only — scoped via :has() so public pages are unaffected. */
+/* One vertical scrollbar: .admin-content only (see AdminLayout.module.css flex chain) */
 html:has(.admin-panel),
-body:has(.admin-panel) {
-  height: auto;
-  min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: visible;
+body:has(.admin-panel),
+html:has(.admin-panel) #root {
+  height: 100%;
+  overflow: hidden;
 }
 
-/* Re-lock document scroll when an admin modal is open */
-html:has(.admin-panel):has(body.ant-modal-open),
-html:has(.admin-panel):has(.ant-modal-wrap),
 body.ant-modal-open:has(.admin-panel),
+html:has(.admin-panel):has(.ant-modal-wrap),
 body:has(.admin-panel):has(.ant-modal-wrap) {
   overflow: hidden !important;
 }
@@ -106,125 +314,75 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
   overflow: hidden !important;
 }
 
-html:has(.admin-panel) #root {
-  height: auto;
-  min-height: 100vh;
-  overflow-y: visible;
+/* Table page shells — one scroll on .admin-content, not inside tables */
+.admin-panel .admin-content :global([class*="adminTableCard"]),
+.admin-panel .admin-content :global([class*="adminTableCard"]) > div,
+.admin-panel .admin-content :global([class*="eventsTableCard"]),
+.admin-panel .admin-content :global([class*="eventsTableCard"]) > div {
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
 }
 
-.admin-container {
-  display: flex;
+.admin-panel .admin-content :global([class*="tableWrap"]) {
+  display: block;
   width: 100%;
-  min-height: 100vh;
-}
-
-.admin-main {
-  flex: 1;
+  max-width: 100%;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  background: var(--admin-table-row-bg);
 }
 
-.admin-main.collapsed-padding {
-  padding-left: 80px;
+/* Tables — static warm grey palette, no inner vertical scroll */
+.admin-panel .admin-content :global(.ant-table-wrapper) {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--admin-table-border);
+  border-radius: 12px;
+  overflow-x: hidden;
 }
 
-.admin-main.expanded-padding {
-  padding-left: 260px;
-}
-
-@media (max-width: 1024px) {
-  .admin-main.collapsed-padding,
-  .admin-main.expanded-padding {
-    padding-left: 0;
-  }
-}
-
-/* ── Admin content: tables (header bar untouched) ── */
 .admin-panel .admin-content :global(.ant-table-wrapper),
 .admin-panel .admin-content :global(.ant-table),
 .admin-panel .admin-content :global(.ant-table-container),
 .admin-panel .admin-content :global(.ant-table-content),
 .admin-panel .admin-content :global(.ant-table-body),
 .admin-panel .admin-content :global(.ant-table-header),
+.admin-panel .admin-content :global(.ant-table-footer),
 .admin-panel .admin-content :global(.ant-table-wrapper .ant-spin-container),
-.admin-panel .admin-content :global(.ant-table-footer) {
+.admin-panel .admin-content :global(.ant-table-placeholder),
+.admin-panel .admin-content :global(.ant-table-wrapper .ant-pagination) {
   background: var(--admin-table-row-bg) !important;
-}
-
-.admin-panel .admin-content :global(.ant-table-wrapper) {
-  border: 1px solid var(--admin-table-border, var(--admin-border));
-  border-radius: 12px;
-  overflow-x: hidden;
-  overflow-y: visible !important;
-  height: auto !important;
-  max-height: none !important;
-  max-width: 100%;
-  width: 100%;
-}
-
-/* Bulletproof: never allow an inner vertical scrollbar — page scroll only. */
-.admin-panel .admin-content :global(.ant-table-wrapper),
-.admin-panel .admin-content :global(.ant-table-container),
-.admin-panel .admin-content :global(.ant-table-content),
-.admin-panel .admin-content :global(.ant-table-body),
-.admin-panel .admin-content :global(.ant-table-wrapper .ant-spin-nested-loading),
-.admin-panel .admin-content :global(.ant-table-wrapper .ant-spin-container) {
   overflow-y: visible !important;
   height: auto !important;
   max-height: none !important;
 }
 
-/* Preserve horizontal scrolling for wide tables. */
 .admin-panel .admin-content :global(.ant-table-body) {
   overflow-x: auto !important;
 }
 
-.admin-panel .admin-content :global(.ant-table-tbody) {
-  --admin-text: var(--admin-table-text, #ffffff);
-  --admin-text-secondary: var(--admin-table-text-secondary, #d1d1d6);
-  --admin-text-muted: var(--admin-table-text-secondary, #8e8e93);
-}
-
 .admin-panel .admin-content :global(.ant-table-thead > tr > th),
 .admin-panel .admin-content :global(.ant-table-thead > tr > td),
-.admin-panel .admin-content :global(.ant-table-header .ant-table-thead > tr > th) {
-  background: var(--admin-table-header-bg) !important;
-  color: var(--admin-table-text-secondary, var(--admin-text-secondary)) !important;
-  border-bottom: 1px solid var(--admin-table-border, var(--admin-border)) !important;
-  font-weight: 600 !important;
-  font-size: 13px !important;
-}
-
-/* Sticky header — keep dark header bg while scrolling (light theme) */
 .admin-panel .admin-content :global(.ant-table-sticky-holder),
 .admin-panel .admin-content :global(.ant-table-sticky-holder .ant-table-thead > tr > th),
 .admin-panel .admin-content :global(.ant-table-cell-fix-sticky) {
   background: var(--admin-table-header-bg) !important;
-}
-
-.admin-panel .admin-content :global(.ant-table-sticky-scroll) {
-  background: var(--admin-table-row-bg) !important;
+  color: var(--admin-table-text-secondary) !important;
+  border-bottom: 1px solid var(--admin-table-border) !important;
+  font-weight: 600;
+  font-size: 13px;
 }
 
 .admin-panel .admin-content :global(.ant-table-tbody > tr > td) {
   background: var(--admin-table-row-bg) !important;
-  color: var(--admin-table-text, var(--admin-text)) !important;
-  border-bottom: 1px solid var(--admin-table-border, var(--admin-border)) !important;
+  color: var(--admin-table-text) !important;
+  border-bottom: 1px solid var(--admin-table-border) !important;
 }
 
-[data-theme="light"]
-  .admin-panel
-  .admin-content
-  :global(.ant-table-tbody > tr:nth-child(even) > td) {
-  background: var(--admin-table-row-alt-bg) !important;
-}
-
-[data-theme="dark"]
-  .admin-panel
-  .admin-content
-  :global(.ant-table-tbody > tr:nth-child(even) > td) {
+.admin-panel .admin-content :global(.ant-table-tbody > tr:nth-child(even) > td) {
   background: var(--admin-table-row-alt-bg) !important;
 }
 
@@ -234,59 +392,230 @@ html:has(.admin-panel) #root {
 
 .admin-panel .admin-content :global(.ant-table-placeholder),
 .admin-panel .admin-content :global(.ant-table-placeholder .ant-table-cell) {
-  background: var(--admin-table-row-bg) !important;
   color: var(--admin-text-muted) !important;
 }
 
-.admin-panel .admin-content :global(.ant-table-pagination),
-.admin-panel .admin-content :global(.ant-table-wrapper + .ant-pagination),
-.admin-panel .admin-content :global(.ant-table-wrapper .ant-table-pagination) {
-  margin: 16px 0 0 !important;
+.admin-panel .admin-content :global(.ant-table-wrapper .ant-pagination) {
+  margin-top: 16px !important;
   padding: 12px 4px 0;
-  border-top: 1px solid var(--admin-table-border, var(--admin-border));
-  background: var(--admin-table-row-bg) !important;
+  border-top: 1px solid var(--admin-table-border);
 }
 
-.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item a) {
-  color: var(--admin-table-text-secondary, var(--admin-text-secondary)) !important;
-}
-
-.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item-link) {
-  color: var(--admin-table-text-secondary, var(--admin-text-secondary)) !important;
-  border-color: var(--admin-table-border, var(--admin-border)) !important;
+.admin-panel .admin-content :global(.ant-table-wrapper .ant-pagination .ant-pagination-item),
+.admin-panel .admin-content :global(.ant-table-wrapper .ant-pagination .ant-pagination-item-link) {
+  border-color: var(--admin-table-border) !important;
   background: transparent !important;
 }
 
-.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item) {
-  border-color: var(--admin-table-border, var(--admin-border)) !important;
-  background: transparent !important;
+.admin-panel .admin-content :global(.ant-table-wrapper .ant-pagination .ant-pagination-item a),
+.admin-panel .admin-content :global(.ant-table-wrapper .ant-pagination .ant-pagination-item-link) {
+  color: var(--admin-table-text-secondary) !important;
 }
 
-.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item-active) {
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-item-active) {
   border-color: var(--admin-gold) !important;
   background: var(--admin-gold-light) !important;
 }
 
-.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item-active a) {
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-item-active a) {
   color: var(--admin-gold) !important;
+  font-weight: 600;
 }
 
-.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item:hover) {
-  border-color: var(--admin-gold-border) !important;
-}
-
-.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item:hover a) {
-  color: var(--admin-gold) !important;
-}
-
-.admin-panel .admin-content :global(.ant-pagination .ant-pagination-item-link:hover) {
+.admin-panel .admin-content :global(.ant-table-wrapper .ant-pagination .ant-pagination-item:hover),
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-item-link:hover) {
   border-color: var(--admin-gold-border) !important;
   color: var(--admin-gold) !important;
 }
 
-/* ── Admin content: forms & inputs ── */
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-item:hover a) {
+  color: var(--admin-gold) !important;
+}
+
+/* Pagination prev/next arrows — visible icons + gold hover */
+.admin-panel .admin-content :global(.ant-table-wrapper .ant-pagination .ant-pagination-prev),
+.admin-panel .admin-content :global(.ant-table-wrapper .ant-pagination .ant-pagination-next) {
+  transition: border-color 0.2s ease;
+}
+
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-prev .ant-pagination-item-link),
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-next .ant-pagination-item-link) {
+  color: var(--admin-text-muted) !important;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-prev .ant-pagination-item-link .anticon),
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-next .ant-pagination-item-link .anticon),
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-prev .ant-pagination-item-link svg),
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-next .ant-pagination-item-link svg) {
+  color: var(--admin-text-muted) !important;
+  fill: currentColor !important;
+  transition: color 0.2s ease, fill 0.2s ease;
+}
+
+.admin-panel
+  .admin-content
+  :global(
+    .ant-table-wrapper
+      .ant-pagination
+      .ant-pagination-prev:not(.ant-pagination-disabled):hover
+      .ant-pagination-item-link
+  ),
+.admin-panel
+  .admin-content
+  :global(
+    .ant-table-wrapper
+      .ant-pagination
+      .ant-pagination-next:not(.ant-pagination-disabled):hover
+      .ant-pagination-item-link
+  ) {
+  color: var(--admin-gold) !important;
+  border-color: var(--admin-gold-border) !important;
+  background: var(--admin-gold-light) !important;
+}
+
+.admin-panel
+  .admin-content
+  :global(
+    .ant-table-wrapper
+      .ant-pagination
+      .ant-pagination-prev:not(.ant-pagination-disabled):hover
+      .ant-pagination-item-link
+      .anticon
+  ),
+.admin-panel
+  .admin-content
+  :global(
+    .ant-table-wrapper
+      .ant-pagination
+      .ant-pagination-next:not(.ant-pagination-disabled):hover
+      .ant-pagination-item-link
+      .anticon
+  ),
+.admin-panel
+  .admin-content
+  :global(
+    .ant-table-wrapper
+      .ant-pagination
+      .ant-pagination-prev:not(.ant-pagination-disabled):hover
+      .ant-pagination-item-link
+      svg
+  ),
+.admin-panel
+  .admin-content
+  :global(
+    .ant-table-wrapper
+      .ant-pagination
+      .ant-pagination-next:not(.ant-pagination-disabled):hover
+      .ant-pagination-item-link
+      svg
+  ) {
+  color: var(--admin-gold) !important;
+  fill: currentColor !important;
+}
+
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-disabled .ant-pagination-item-link),
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-disabled .ant-pagination-item-link .anticon),
+.admin-panel
+  .admin-content
+  :global(.ant-table-wrapper .ant-pagination .ant-pagination-disabled .ant-pagination-item-link svg) {
+  color: rgba(255, 255, 255, 0.28) !important;
+  fill: currentColor !important;
+  cursor: not-allowed;
+}
+
+.admin-panel .admin-content .ant-table .ant-tag {
+  margin-inline-end: 0;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border: none !important;
+  border-radius: 6px !important;
+}
+.admin-panel .admin-content .ant-table .ant-tag-success {
+  background: #15803d !important;
+  color: #ecfdf5 !important;
+}
+.admin-panel .admin-content .ant-table .ant-tag-warning {
+  background: #b45309 !important;
+  color: #fffbeb !important;
+}
+.admin-panel .admin-content .ant-table .ant-tag-error {
+  background: #b91c1c !important;
+  color: #fef2f2 !important;
+}
+.admin-panel .admin-content .ant-table .ant-tag-blue,
+.admin-panel .admin-content .ant-table .ant-tag-processing {
+  background: #1d4ed8 !important;
+  color: #eff6ff !important;
+}
+.admin-panel .admin-content .ant-table .ant-tag-purple {
+  background: #7e22ce !important;
+  color: #faf5ff !important;
+}
+.admin-panel .admin-content .ant-table .ant-tag-gold,
+.admin-panel .admin-content .ant-table .ant-tag[class*="gold"] {
+  background: #ffd27a !important;
+  color: #141416 !important;
+}
+.admin-panel .admin-content .ant-table .ant-tag-default,
+.admin-panel .admin-content .ant-table .ant-tag-red,
+.admin-panel .admin-content .ant-table .ant-tag-green,
+.admin-panel .admin-content .ant-table .ant-tag-orange,
+.admin-panel .admin-content .ant-table .ant-tag-cyan,
+.admin-panel .admin-content .ant-table .ant-tag-magenta,
+.admin-panel .admin-content .ant-table .ant-tag-volcano,
+.admin-panel .admin-content .ant-table .ant-tag-lime,
+.admin-panel .admin-content .ant-table .ant-tag-geekblue {
+  background: #374151 !important;
+  color: #ffffff !important;
+}
+
+.admin-panel .admin-content .ant-table .ant-switch {
+  background: rgba(255, 255, 255, 0.22) !important;
+}
+.admin-panel .admin-content .ant-table .ant-switch-checked {
+  background: var(--admin-gold) !important;
+}
+.admin-panel .admin-content .admin-table-row-clickable {
+  cursor: pointer;
+}
+.admin-panel .admin-content :global(.admin-table-wrap-cell) {
+  white-space: normal !important;
+  word-break: break-word;
+  vertical-align: top;
+}
+
+/* Inputs & controls */
 .admin-panel .admin-content :global(.ant-form-item-label > label),
-.admin-panel .admin-content :global(.ant-form-item-label > label.ant-form-item-required::before) {
+.admin-panel .admin-content h4 {
   color: var(--admin-text) !important;
 }
 
@@ -295,23 +624,20 @@ html:has(.admin-panel) #root {
 .admin-panel .admin-content :global(.ant-input-affix-wrapper),
 .admin-panel .admin-content :global(.ant-select-selector),
 .admin-panel .admin-content :global(.ant-picker) {
-  background-color: var(--admin-input-bg) !important;
+  background: var(--admin-input-bg) !important;
   border-color: var(--admin-border) !important;
   color: var(--admin-text) !important;
 }
 
-.admin-panel .admin-content :global(.ant-input::placeholder) {
-  color: var(--admin-text-muted) !important;
-}
-
-.admin-panel .admin-content :global(.ant-select-selection-item),
-.admin-panel .admin-content :global(.ant-select-selection-placeholder) {
-  color: var(--admin-text) !important;
-}
-
+.admin-panel .admin-content :global(.ant-input::placeholder),
 .admin-panel .admin-content :global(.ant-select-arrow),
-.admin-panel .admin-content :global(.ant-select-clear) {
+.admin-panel .admin-content :global(.ant-select-clear),
+.admin-panel .admin-content :global(.ant-select-selection-placeholder) {
   color: var(--admin-text-muted) !important;
+}
+
+.admin-panel .admin-content :global(.ant-select-selection-item) {
+  color: var(--admin-text) !important;
 }
 
 .admin-panel .admin-content :global(.ant-input:hover),
@@ -321,217 +647,365 @@ html:has(.admin-panel) #root {
   border-color: var(--admin-gold-border) !important;
 }
 
-.admin-panel .admin-content :global(.ant-input:focus),
 .admin-panel .admin-content :global(.ant-input-affix-wrapper-focused),
 .admin-panel .admin-content :global(.ant-select-focused .ant-select-selector) {
   border-color: var(--admin-gold) !important;
   box-shadow: 0 0 0 2px var(--admin-gold-light) !important;
 }
 
-/* ── Admin content: buttons (not in top header) ── */
-.admin-panel .admin-content .ant-btn-primary:not(.admin-btn-edit) {
-  background: var(--admin-button-primary-bg) !important;
-  border-color: var(--admin-button-primary-border) !important;
-  color: var(--admin-button-primary-text) !important;
-  transition: all 0.3s !important;
-}
-
-.admin-panel .admin-content .ant-btn-primary:not(.admin-btn-edit):hover,
-.admin-panel .admin-content .ant-btn-primary:not(.admin-btn-edit):focus {
-  background: var(--admin-button-primary-hover-bg) !important;
-  border-color: var(--admin-button-primary-hover-border) !important;
-  color: var(--admin-button-primary-text) !important;
-}
-
-.admin-panel .admin-content .ant-btn-default {
+/* Disabled inputs — legible on dark backgrounds (Safari needs -webkit-text-fill-color) */
+.admin-panel .admin-content :global(.ant-input[disabled]),
+.admin-panel .admin-content :global(.ant-input-disabled),
+.admin-panel .admin-content :global(.ant-input-affix-wrapper-disabled),
+.admin-panel .admin-content :global(.ant-input-affix-wrapper-disabled .ant-input),
+.admin-panel .admin-content :global(.ant-input-number-disabled),
+.admin-panel .admin-content :global(.ant-input-number-disabled .ant-input-number-input),
+.admin-panel .admin-content :global(.ant-select-disabled .ant-select-selector),
+.admin-panel .admin-content :global(.ant-select-disabled .ant-select-selection-item),
+.admin-panel .admin-content :global(.ant-picker-disabled),
+.admin-panel .admin-content :global(.ant-picker-disabled input),
+:global(.admin-detail-modal) :global(.ant-input[disabled]),
+:global(.admin-detail-modal) :global(.ant-input-disabled),
+:global(.admin-detail-modal) :global(.ant-input-affix-wrapper-disabled),
+:global(.admin-detail-modal) :global(.ant-input-affix-wrapper-disabled .ant-input),
+:global(.admin-detail-modal) :global(.ant-input-number-disabled),
+:global(.admin-detail-modal) :global(.ant-input-number-disabled .ant-input-number-input),
+:global(.admin-detail-modal) :global(.ant-select-disabled .ant-select-selector),
+:global(.admin-detail-modal) :global(.ant-select-disabled .ant-select-selection-item),
+:global(.admin-detail-modal) :global(.ant-picker-disabled),
+:global(.admin-detail-modal) :global(.ant-picker-disabled input) {
+  color: rgba(255, 255, 255, 0.45) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.45) !important;
   background: var(--admin-input-bg) !important;
-  color: var(--admin-text) !important;
-  border-color: var(--admin-border) !important;
-  transition: all 0.3s !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
 }
 
-.admin-panel .admin-content .ant-btn-default:hover,
-.admin-panel .admin-content .ant-btn-default:focus {
-  background: var(--admin-surface-hover) !important;
-  color: var(--admin-gold-strong) !important;
-  border-color: var(--admin-gold-border) !important;
+/* Select & DatePicker suffix icons — visible on dark inputs */
+.admin-panel .admin-content :global(.ant-select-arrow),
+.admin-panel .admin-content :global(.ant-select-suffix),
+.admin-panel .admin-content :global(.ant-picker-suffix),
+:global(.admin-detail-modal) :global(.ant-select-arrow),
+:global(.admin-detail-modal) :global(.ant-select-suffix),
+:global(.admin-detail-modal) :global(.ant-picker-suffix) {
+  color: rgba(255, 255, 255, 0.65) !important;
 }
 
-.admin-panel .admin-content .ant-btn-dangerous:not(.admin-btn-delete) {
-  background: transparent !important;
+.admin-panel .admin-content :global(.ant-select-arrow .anticon),
+.admin-panel .admin-content :global(.ant-select-suffix .anticon),
+.admin-panel .admin-content :global(.ant-picker-suffix .anticon),
+.admin-panel .admin-content :global(.ant-select-arrow svg),
+.admin-panel .admin-content :global(.ant-picker-suffix svg),
+:global(.admin-detail-modal) :global(.ant-select-arrow .anticon),
+:global(.admin-detail-modal) :global(.ant-select-suffix .anticon),
+:global(.admin-detail-modal) :global(.ant-picker-suffix .anticon),
+:global(.admin-detail-modal) :global(.ant-select-arrow svg),
+:global(.admin-detail-modal) :global(.ant-picker-suffix svg) {
+  color: rgba(255, 255, 255, 0.65) !important;
+  fill: rgba(255, 255, 255, 0.65) !important;
+}
+
+.admin-panel .admin-content :global(.ant-select-disabled .ant-select-arrow),
+.admin-panel .admin-content :global(.ant-select-disabled .ant-select-arrow .anticon),
+:global(.admin-detail-modal) :global(.ant-select-disabled .ant-select-arrow),
+:global(.admin-detail-modal) :global(.ant-select-disabled .ant-select-arrow .anticon) {
+  color: rgba(255, 255, 255, 0.28) !important;
+  fill: rgba(255, 255, 255, 0.28) !important;
 }
 
 .admin-panel .admin-content .ant-switch {
   background: rgba(255, 255, 255, 0.22) !important;
 }
-
 .admin-panel .admin-content .ant-switch-checked {
   background: var(--admin-gold) !important;
 }
 
-/* Section headings inside admin pages */
-.admin-panel .admin-content h4 {
-  color: var(--admin-text);
+:global(.admin-select-dropdown),
+.admin-panel .admin-content :global(.ant-select-dropdown),
+:global(.admin-dropdown-menu) :global(.ant-dropdown-menu),
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu) {
+  background: var(--admin-input-bg) !important;
+  background-color: var(--admin-input-bg) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
+  padding: 4px !important;
+  box-shadow: var(--admin-shadow) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
-/* ── Action buttons ── */
-.admin-panel .admin-content .admin-btn-add {
+:global(.admin-select-dropdown) :global(.ant-select-item),
+:global(.admin-dropdown-menu) :global(.ant-dropdown-menu-item),
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item) {
+  color: #ffffff !important;
+  border-radius: 6px !important;
+}
+
+:global(.admin-select-dropdown) :global(.ant-select-item-option-active),
+:global(.admin-select-dropdown) :global(.ant-select-item-option-selected),
+:global(.admin-dropdown-menu) :global(.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item-active),
+:global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item-active) {
+  background: rgba(217, 163, 74, 0.15) !important;
+  background-color: rgba(217, 163, 74, 0.15) !important;
+  color: #ffffff !important;
+}
+
+:global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active),
+:global(.admin-user-dropdown.ant-dropdown)
+  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active) {
+  background: rgba(239, 68, 68, 0.15) !important;
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  color: #fff1f2 !important;
+}
+
+/* Action buttons — static dark styling, never follows site theme */
+.admin-panel .admin-content .ant-btn {
+  box-shadow: none !important;
+}
+
+.admin-panel .admin-content .ant-btn::after {
+  display: none !important;
+}
+
+.admin-panel
+  .admin-content
+  .ant-btn-default:not(.admin-btn-delete):not(.admin-btn-add):not(.admin-btn-edit) {
+  background: var(--admin-input-bg) !important;
+  color: var(--admin-text) !important;
+  border-color: var(--admin-border) !important;
+}
+
+.admin-panel
+  .admin-content
+  .ant-btn-default:not(.admin-btn-delete):not(.admin-btn-add):not(.admin-btn-edit):hover,
+.admin-panel
+  .admin-content
+  .ant-btn-default:not(.admin-btn-delete):not(.admin-btn-add):not(.admin-btn-edit):focus-visible {
+  background: var(--admin-surface-hover) !important;
+  color: var(--admin-gold-strong) !important;
+  border-color: var(--admin-gold-border) !important;
+}
+
+.admin-panel .admin-content .ant-btn-primary:not(.admin-btn-edit):not(.admin-btn-add) {
+  background: var(--admin-button-primary-bg) !important;
+  border-color: var(--admin-button-primary-border) !important;
+  color: var(--admin-button-primary-text) !important;
+}
+
+.admin-panel .admin-content .ant-btn-primary:not(.admin-btn-edit):not(.admin-btn-add):hover,
+.admin-panel
+  .admin-content
+  .ant-btn-primary:not(.admin-btn-edit):not(.admin-btn-add):focus-visible {
+  background: var(--admin-button-primary-hover-bg) !important;
+  border-color: var(--admin-button-primary-hover-border) !important;
+  color: var(--admin-button-primary-text) !important;
+}
+
+.admin-panel .admin-content .admin-btn-add,
+.admin-panel .admin-content .ant-btn-primary.admin-btn-add {
   height: 40px !important;
   padding-inline: 22px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.01em;
-  border-radius: 10px !important;
-  background: linear-gradient(135deg, #f7d060 0%, #e8a828 45%, #c4841a 100%) !important;
   border: none !important;
-  color: #1a1206 !important;
-  box-shadow: none !important;
-  transition: all 0.3s !important;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, #ffd84d, #f2c200 52%, #c89412) !important;
+  color: #141006 !important;
 }
 
 .admin-panel .admin-content .admin-btn-add:hover,
-.admin-panel .admin-content .admin-btn-add:focus {
-  background: linear-gradient(135deg, #ffe082 0%, #f0b840 45%, #d4922a 100%) !important;
-  color: #1a1206 !important;
-  border: none !important;
-  box-shadow: none !important;
-  transform: translateY(-1px);
-}
-
-[data-theme="light"] .admin-panel .admin-content .admin-btn-add {
-  background: linear-gradient(135deg, #ffd84d 0%, #f2c200 52%, #c89412 100%) !important;
-  border: none !important;
+.admin-panel .admin-content .admin-btn-add:focus-visible,
+.admin-panel .admin-content .ant-btn-primary.admin-btn-add:hover,
+.admin-panel .admin-content .ant-btn-primary.admin-btn-add:focus-visible {
+  background: linear-gradient(135deg, #f5c900, #e6b800 52%, #b9850f) !important;
   color: #141006 !important;
-  box-shadow: none !important;
-}
-
-[data-theme="light"] .admin-panel .admin-content .admin-btn-add:hover,
-[data-theme="light"] .admin-panel .admin-content .admin-btn-add:focus {
-  background: linear-gradient(135deg, #f5c900 0%, #e6b800 52%, #b9850f 100%) !important;
-  border: none !important;
-  color: #141006 !important;
-  box-shadow: none !important;
-}
-
-[data-theme="dark"] .admin-panel .admin-content .admin-btn-add:hover,
-[data-theme="dark"] .admin-panel .admin-content .admin-btn-add:focus {
-  background: linear-gradient(135deg, #ffe082 0%, #f0b840 45%, #d4922a 100%) !important;
 }
 
 .admin-panel .admin-content .admin-btn-edit,
-.admin-panel .admin-content .admin-btn-edit.ant-btn-primary {
+.admin-panel .admin-content .ant-btn-primary.admin-btn-edit {
   height: 32px !important;
   padding-inline: 14px !important;
   font-weight: 600 !important;
-  border-radius: 8px !important;
-  background: rgba(217, 163, 74, 0.14) !important;
   border: none !important;
-  color: var(--admin-gold-strong) !important;
-  box-shadow: none !important;
-  transition: all 0.3s !important;
+  border-radius: 8px !important;
+  background: var(--admin-btn-edit-bg) !important;
+  color: var(--admin-btn-edit-text) !important;
 }
 
 .admin-panel .admin-content .admin-btn-edit:hover,
-.admin-panel .admin-content .admin-btn-edit:focus,
-.admin-panel .admin-content .admin-btn-edit.ant-btn-primary:hover,
-.admin-panel .admin-content .admin-btn-edit.ant-btn-primary:focus {
-  background: rgba(217, 163, 74, 0.28) !important;
-  border: none !important;
-  color: #fff4d6 !important;
-  box-shadow: none !important;
+.admin-panel .admin-content .admin-btn-edit:focus-visible,
+.admin-panel .admin-content .ant-btn-primary.admin-btn-edit:hover,
+.admin-panel .admin-content .ant-btn-primary.admin-btn-edit:focus-visible {
+  background: var(--admin-btn-edit-hover-bg) !important;
+  color: var(--admin-btn-edit-hover-text) !important;
 }
 
 .admin-panel .admin-content .admin-btn-delete,
-.admin-panel .admin-content .admin-btn-delete.ant-btn-dangerous {
+.admin-panel .admin-content .ant-btn-dangerous {
   height: 32px !important;
   padding-inline: 14px !important;
   font-weight: 600 !important;
+  border: 1px solid var(--admin-btn-delete-border) !important;
   border-radius: 8px !important;
-  background: rgba(239, 68, 68, 0.12) !important;
-  border: none !important;
-  color: #fca5a5 !important;
-  box-shadow: none !important;
-  transition: all 0.3s !important;
+  background: var(--admin-btn-delete-bg) !important;
+  color: var(--admin-btn-delete-text) !important;
 }
 
 .admin-panel .admin-content .admin-btn-delete:hover,
-.admin-panel .admin-content .admin-btn-delete:focus,
-.admin-panel .admin-content .admin-btn-delete.ant-btn-dangerous:hover,
-.admin-panel .admin-content .admin-btn-delete.ant-btn-dangerous:focus {
-  background: rgba(239, 68, 68, 0.22) !important;
-  border: none !important;
-  color: #fff1f2 !important;
-  box-shadow: none !important;
+.admin-panel .admin-content .admin-btn-delete:focus-visible,
+.admin-panel .admin-content .ant-btn-dangerous:hover,
+.admin-panel .admin-content .ant-btn-dangerous:focus-visible {
+  background: var(--admin-btn-delete-hover-bg) !important;
+  color: var(--admin-btn-delete-hover-text) !important;
+  border-color: var(--admin-btn-delete-border) !important;
 }
 
-/* Light theme: dropdowns match input field shade */
-[data-theme="light"] :global(.admin-select-dropdown.ant-select-dropdown),
-[data-theme="light"] .admin-panel .admin-content :global(.ant-select-dropdown) {
-  background: var(--admin-input-bg) !important;
-  border: 1px solid var(--admin-border) !important;
-  border-radius: 10px !important;
-  padding: 4px !important;
-  box-shadow: var(--admin-shadow) !important;
+/* Modals — solid dark, theme-independent */
+:global(.admin-detail-modal) {
+  --ant-modal-content-bg: #22242a;
+  --ant-modal-header-bg: #22242a;
+  --ant-color-bg-elevated: #22242a;
+  --ant-color-bg-container: #22242a;
+  --admin-input-bg: #22242a;
+  --admin-table-header-bg: #1c1e24;
+  --admin-table-row-bg: #22242a;
+  --admin-table-row-hover: #2a2c34;
+  --admin-table-border: rgba(255, 255, 255, 0.25);
+  --admin-button-primary-bg: #f2c200;
+  --admin-button-primary-hover-bg: #e6b800;
+  --admin-button-primary-border: #9f7600;
+  --admin-button-primary-hover-border: #8a6400;
+  --admin-button-primary-text: #14161c;
+  --admin-btn-edit-bg: rgba(217, 163, 74, 0.14);
+  --admin-btn-edit-hover-bg: rgba(217, 163, 74, 0.28);
+  --admin-btn-edit-text: #ffd27a;
+  --admin-btn-edit-hover-text: #fff4d6;
+  --admin-btn-delete-bg: rgba(239, 68, 68, 0.12);
+  --admin-btn-delete-hover-bg: rgba(239, 68, 68, 0.22);
+  --admin-btn-delete-text: #fca5a5;
+  --admin-btn-delete-hover-text: #fff1f2;
+  --admin-btn-delete-border: rgba(239, 68, 68, 0.45);
+  max-height: 85vh;
 }
 
-[data-theme="light"] :global(.admin-select-dropdown) :global(.ant-select-item),
-[data-theme="light"] .admin-panel .admin-content :global(.ant-select-dropdown .ant-select-item) {
-  color: var(--admin-text) !important;
-  border-radius: 6px !important;
+:global(.ant-modal-root:has(.admin-detail-modal)) {
+  --ant-color-primary: #f2c200;
+  --ant-color-primary-hover: #e6b800;
+  --ant-color-primary-active: #e6b800;
+  --ant-color-error: #ef4444;
+  --ant-color-error-hover: #fca5a5;
+  --ant-color-error-active: #fca5a5;
+  --ant-color-error-border: rgba(239, 68, 68, 0.45);
+  --ant-color-error-bg: rgba(239, 68, 68, 0.12);
+  --ant-color-error-bg-hover: rgba(239, 68, 68, 0.22);
+  --ant-button-default-bg: #1c1e24;
+  --ant-button-default-color: #ffffff;
+  --ant-button-default-border-color: rgba(255, 255, 255, 0.25);
+  --ant-button-default-hover-bg: #2a2c34;
+  --ant-button-default-hover-color: #ffd27a;
+  --ant-button-default-hover-border-color: rgba(255, 210, 122, 0.52);
+  --ant-button-default-active-bg: #2a2c34;
+  --ant-button-default-active-color: #ffd27a;
+  --ant-button-default-active-border-color: rgba(255, 210, 122, 0.52);
+  --ant-button-primary-color: #14161c;
+  --ant-button-danger-color: #fca5a5;
+  --ant-button-danger-bg: rgba(239, 68, 68, 0.12);
+  --ant-button-danger-border-color: rgba(239, 68, 68, 0.45);
+  --ant-button-danger-hover-bg: rgba(239, 68, 68, 0.22);
+  --ant-button-danger-hover-color: #fff1f2;
+  --ant-button-danger-hover-border-color: rgba(239, 68, 68, 0.45);
+  --ant-button-danger-active-bg: rgba(239, 68, 68, 0.22);
+  --ant-button-danger-active-color: #fff1f2;
+  --ant-button-danger-active-border-color: rgba(239, 68, 68, 0.45);
 }
 
-[data-theme="light"] :global(.admin-select-dropdown) :global(.ant-select-item-option-active),
-[data-theme="light"]
-  .admin-panel
-  .admin-content
-  :global(.ant-select-dropdown .ant-select-item-option-active) {
-  background: var(--admin-gold-light) !important;
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-modal-mask) {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: none !important;
 }
 
-[data-theme="light"] :global(.admin-select-dropdown) :global(.ant-select-item-option-selected),
-[data-theme="light"]
-  .admin-panel
-  .admin-content
-  :global(.ant-select-dropdown .ant-select-item-option-selected) {
-  background: var(--admin-gold-light) !important;
-  color: var(--admin-gold) !important;
-  font-weight: 600;
+:global(.admin-detail-modal) :global(.ant-modal-content),
+:global(.admin-detail-modal) :global(.ant-modal-container),
+:global(.admin-detail-modal) :global(.ant-modal-header),
+:global(.admin-detail-modal) :global(.ant-modal-body),
+:global(.admin-detail-modal) :global(.ant-modal-footer),
+:global(.admin-detail-modal) footer {
+  background: var(--admin-table-row-bg) !important;
+  background-color: var(--admin-table-row-bg) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
-[data-theme="light"] :global(.admin-dropdown-menu.ant-dropdown) :global(.ant-dropdown-menu) {
-  background: var(--admin-input-bg) !important;
-  border: 1px solid var(--admin-border) !important;
-  border-radius: 10px !important;
-  padding: 4px !important;
-  box-shadow: var(--admin-shadow) !important;
+:global(.admin-detail-modal) :global(.ant-modal-content) {
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 1px solid var(--admin-table-border) !important;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.45) !important;
 }
 
-[data-theme="light"] :global(.admin-dropdown-menu.ant-dropdown) :global(.ant-dropdown-menu-item) {
-  color: var(--admin-text) !important;
-  border-radius: 6px !important;
+:global(.admin-detail-modal) :global(.ant-modal-header) {
+  margin: 0 !important;
+  padding: 20px 24px !important;
+  border-bottom: 1px solid var(--admin-table-border) !important;
 }
 
-[data-theme="light"]
-  :global(.admin-dropdown-menu.ant-dropdown)
-  :global(.ant-dropdown-menu-item:hover) {
-  background: var(--admin-gold-light) !important;
-  color: var(--admin-gold) !important;
+:global(.admin-detail-modal) :global(.ant-modal-body) {
+  padding: 20px 44px 24px 24px !important;
+  color: #e0e0e0 !important;
+  overflow: hidden;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
-[data-theme="light"]
-  :global(.admin-dropdown-menu.ant-dropdown)
-  :global(.ant-dropdown-menu-item-danger) {
-  color: #fca5a5 !important;
+:global(.admin-detail-modal) :global(.ant-modal-footer),
+:global(.admin-detail-modal) footer {
+  margin: 0 !important;
+  padding: 16px 24px !important;
+  border-top: 1px solid var(--admin-table-border) !important;
 }
 
-[data-theme="light"]
-  :global(.admin-dropdown-menu.ant-dropdown)
-  :global(.ant-dropdown-menu-item-danger:hover) {
-  background: rgba(239, 68, 68, 0.2) !important;
-  color: #fecaca !important;
+:global(.admin-detail-modal) :global(.ant-modal-title),
+:global(.admin-detail-modal) h2,
+:global(.admin-detail-modal) h3,
+:global(.admin-detail-modal) [class*="title"],
+:global(.admin-detail-modal) [class*="organizerName"],
+:global(.admin-detail-modal) [class*="optionTitle"] {
+  color: #fff !important;
 }
 
-/* ── Table status / role tags (valid global selectors — no :global() in plain CSS) ── */
-.admin-panel .admin-content .ant-table .ant-tag {
+:global(.admin-detail-modal) [class*="sectionTitle"],
+:global(.admin-detail-modal) dt,
+:global(.admin-detail-modal) [class*="imageLabel"] {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+:global(.admin-detail-modal) p,
+:global(.admin-detail-modal) label,
+:global(.admin-detail-modal) dd,
+:global(.admin-detail-modal) [class*="description"],
+:global(.admin-detail-modal) [class*="lead"],
+:global(.admin-detail-modal) :global(.ant-form-item-label > label),
+:global(.admin-detail-modal) :global(.ant-radio-wrapper) {
+  color: #e0e0e0 !important;
+}
+
+/* Modal tags — vibrant, static, theme-independent */
+:global(.admin-detail-modal) :global(.ant-tag) {
   margin-inline-end: 0;
   padding: 2px 10px;
   font-size: 12px;
@@ -539,453 +1013,387 @@ html:has(.admin-panel) #root {
   line-height: 1.4;
   border: none !important;
   border-radius: 6px !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
 }
 
-.admin-panel .admin-content .ant-table .ant-tag-success,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-success,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-success,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-success {
+:global(.admin-detail-modal) :global(.ant-tag-success) {
+  background: #15803d !important;
   background-color: #15803d !important;
-  border-color: transparent !important;
   color: #ecfdf5 !important;
 }
 
-.admin-panel .admin-content .ant-table .ant-tag-warning,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-warning,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-warning,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-warning {
-  background-color: #b45309 !important;
-  border-color: transparent !important;
-  color: #fffbeb !important;
+:global(.admin-detail-modal) :global(.ant-tag-gold),
+:global(.admin-detail-modal) :global(.ant-tag[class*="gold"]) {
+  background: #ffd27a !important;
+  background-color: #ffd27a !important;
+  color: #141416 !important;
 }
 
-.admin-panel .admin-content .ant-table .ant-tag-error,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-error,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-error,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-error {
-  background-color: #b91c1c !important;
-  border-color: transparent !important;
-  color: #fef2f2 !important;
-}
-
-.admin-panel .admin-content .ant-table .ant-tag-processing,
-.admin-panel .admin-content .ant-table .ant-tag-blue,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-blue,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-processing,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-blue,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-blue {
+:global(.admin-detail-modal) :global(.ant-tag-blue),
+:global(.admin-detail-modal) :global(.ant-tag-processing) {
+  background: #1d4ed8 !important;
   background-color: #1d4ed8 !important;
-  border-color: transparent !important;
-  color: #eff6ff !important;
-}
-
-.admin-panel .admin-content .ant-table .ant-tag-purple,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-purple,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-purple,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-purple {
-  background-color: #7e22ce !important;
-  border-color: transparent !important;
-  color: #faf5ff !important;
-}
-
-.admin-panel .admin-content .ant-table .ant-tag-gold,
-.admin-panel .admin-content .ant-table .ant-tag[class*="gold"],
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-gold,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-gold,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-gold {
-  background-color: #a16207 !important;
-  border-color: transparent !important;
-  color: #fefce8 !important;
-}
-
-.admin-panel .admin-content .ant-table .ant-tag-default,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-filled.ant-tag-default,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-outlined.ant-tag-default,
-.admin-panel .admin-content .ant-table .ant-tag.ant-tag-solid.ant-tag-default {
-  background-color: #374151 !important;
-  border-color: transparent !important;
-  color: #f3f4f6 !important;
-}
-
-/* ── Table controls: edit, delete, switch, pagination (same in both themes) ── */
-.admin-panel .admin-content .ant-table .admin-btn-edit,
-.admin-panel .admin-content .ant-table .admin-btn-edit.ant-btn-primary {
-  height: 32px !important;
-  padding-inline: 14px !important;
-  font-weight: 600 !important;
-  border-radius: 8px !important;
-  background: rgba(217, 163, 74, 0.14) !important;
-  border: none !important;
-  color: var(--admin-table-control-gold-strong) !important;
-  box-shadow: none !important;
-  transition: all 0.3s !important;
-}
-
-.admin-panel .admin-content .ant-table .admin-btn-edit:hover,
-.admin-panel .admin-content .ant-table .admin-btn-edit:focus,
-.admin-panel .admin-content .ant-table .admin-btn-edit.ant-btn-primary:hover,
-.admin-panel .admin-content .ant-table .admin-btn-edit.ant-btn-primary:focus {
-  background: rgba(217, 163, 74, 0.28) !important;
-  border: none !important;
-  color: #fff4d6 !important;
-  box-shadow: none !important;
-}
-
-.admin-panel .admin-content .ant-table .admin-btn-delete,
-.admin-panel .admin-content .ant-table .admin-btn-delete.ant-btn-dangerous,
-.admin-panel .admin-content .ant-table .ant-btn-dangerous.admin-btn-delete {
-  height: 32px !important;
-  padding-inline: 14px !important;
-  font-weight: 600 !important;
-  border-radius: 8px !important;
-  background: rgba(239, 68, 68, 0.12) !important;
-  border: none !important;
-  color: #fca5a5 !important;
-  box-shadow: none !important;
-  transition: all 0.3s !important;
-}
-
-.admin-panel .admin-content .ant-table .admin-btn-delete:hover,
-.admin-panel .admin-content .ant-table .admin-btn-delete:focus,
-.admin-panel .admin-content .ant-table .admin-btn-delete.ant-btn-dangerous:hover,
-.admin-panel .admin-content .ant-table .admin-btn-delete.ant-btn-dangerous:focus,
-.admin-panel .admin-content .ant-table .ant-btn-dangerous.admin-btn-delete:hover,
-.admin-panel .admin-content .ant-table .ant-btn-dangerous.admin-btn-delete:focus {
-  background: rgba(239, 68, 68, 0.22) !important;
-  border: none !important;
-  color: #fff1f2 !important;
-  box-shadow: none !important;
-}
-
-.admin-panel .admin-content .ant-table .ant-switch {
-  background: rgba(255, 255, 255, 0.22) !important;
-  background-color: rgba(255, 255, 255, 0.22) !important;
-}
-
-.admin-panel .admin-content .ant-table .ant-switch:hover:not(.ant-switch-disabled) {
-  background: rgba(255, 255, 255, 0.32) !important;
-  background-color: rgba(255, 255, 255, 0.32) !important;
-}
-
-.admin-panel .admin-content .ant-table .ant-switch.ant-switch-checked {
-  background: var(--admin-table-control-gold) !important;
-  background-color: var(--admin-table-control-gold) !important;
-}
-
-.admin-panel
-  .admin-content
-  .ant-table
-  .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
-  background: var(--admin-table-control-gold-strong) !important;
-  background-color: var(--admin-table-control-gold-strong) !important;
-}
-
-.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item a,
-.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item a {
-  color: var(--admin-table-control-text-muted) !important;
-}
-
-.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item-link,
-.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item-link {
-  color: var(--admin-table-control-text-muted) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  background: transparent !important;
-}
-
-.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item,
-.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item {
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  background: transparent !important;
-}
-
-.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item-active,
-.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item-active {
-  border-color: var(--admin-table-control-gold) !important;
-  background: var(--admin-table-control-gold-bg) !important;
-}
-
-.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item-active a,
-.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item-active a {
-  color: var(--admin-table-control-gold) !important;
-  font-weight: 600;
-}
-
-.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item:hover,
-.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item:hover {
-  border-color: var(--admin-table-control-gold-border) !important;
-}
-
-.admin-panel .admin-content .ant-table-wrapper .ant-table-pagination .ant-pagination-item:hover a,
-.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item:hover a {
-  color: var(--admin-table-control-gold) !important;
-}
-
-.admin-panel
-  .admin-content
-  .ant-table-wrapper
-  .ant-table-pagination
-  .ant-pagination-item-link:hover,
-.admin-panel .admin-content .ant-table-wrapper .ant-pagination .ant-pagination-item-link:hover {
-  border-color: var(--admin-table-control-gold-border) !important;
-  color: var(--admin-table-control-gold) !important;
-}
-
-/* ── Clickable table rows ── */
-.admin-panel .admin-content .admin-table-row-clickable {
-  cursor: pointer;
-}
-
-/* Shared admin table cell wrapping */
-.admin-panel .admin-content :global(.admin-table-wrap-cell) {
-  white-space: normal !important;
-  word-break: break-word;
-  vertical-align: top;
-}
-
-/* ── Detail / edit modals ── */
-.admin-panel :global(.ant-modal-mask) {
-  background: rgba(0, 0, 0, 0.85) !important;
-}
-
-:global(.admin-detail-modal) {
-  max-height: 85vh;
-  padding-bottom: 0;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-content) {
-  background: #161618 !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  opacity: 1 !important;
-  border: 1px solid #2a2a2e !important;
-  box-shadow: var(--admin-shadow);
-  max-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-container),
-:global(.admin-detail-modal) :global(.ant-modal-header),
-:global(.admin-detail-modal) :global(.ant-modal-body),
-:global(.admin-detail-modal) :global(.ant-modal-footer),
-:global(.admin-detail-modal) :global(.ant-modal-confirm-body-wrapper) {
-  background-color: #161618 !important;
-  background: #161618 !important;
-  opacity: 1 !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-header) {
-  margin-bottom: 0 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-title),
-:global(.admin-detail-modal) :global(.ant-modal-close) {
   color: #ffffff !important;
 }
 
-:global(.admin-detail-modal) :global(.ant-modal-close) {
-  position: absolute;
-  top: 10px;
-  inset-inline-end: 36px;
-  z-index: 30;
-  margin: 0;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  background: transparent !important;
+:global(.admin-detail-modal) :global(.ant-tag-purple) {
+  background: #7e22ce !important;
+  background-color: #7e22ce !important;
+  color: #ffffff !important;
 }
 
+:global(.admin-detail-modal) :global(.ant-tag-warning) {
+  background: #b45309 !important;
+  background-color: #b45309 !important;
+  color: #fffbeb !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-tag-error) {
+  background: #b91c1c !important;
+  background-color: #b91c1c !important;
+  color: #fef2f2 !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-tag-default),
+:global(.admin-detail-modal) :global(.ant-tag-red),
+:global(.admin-detail-modal) :global(.ant-tag-green),
+:global(.admin-detail-modal) :global(.ant-tag-orange),
+:global(.admin-detail-modal) :global(.ant-tag-cyan),
+:global(.admin-detail-modal) :global(.ant-tag-magenta),
+:global(.admin-detail-modal) :global(.ant-tag-volcano),
+:global(.admin-detail-modal) :global(.ant-tag-lime),
+:global(.admin-detail-modal) :global(.ant-tag-geekblue) {
+  background: #374151 !important;
+  background-color: #374151 !important;
+  color: #ffffff !important;
+}
+
+:global(.admin-detail-modal) section[class*="section" i],
+:global(.admin-detail-modal) [class*="detailSection"] {
+  background: #1e1e22 !important;
+  background-color: #1e1e22 !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 12px;
+}
+
+:global(.admin-detail-modal) [class*="optionCard"] {
+  background: #1e1e22 !important;
+  background-color: #1e1e22 !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 12px;
+}
+
+:global(.admin-detail-modal) [class*="imagePreviewFallback"] {
+  background: var(--admin-table-header-bg) !important;
+  background-color: var(--admin-table-header-bg) !important;
+  border: 1px dashed var(--admin-table-border) !important;
+  border-radius: 12px;
+}
+
+:global(.admin-detail-modal) [class*="imageUpload"] :global(.ant-upload-drag) {
+  background: var(--admin-table-header-bg) !important;
+  background-color: var(--admin-table-header-bg) !important;
+  border: 2px dashed var(--admin-table-border) !important;
+  border-radius: 10px !important;
+}
+
+:global(.admin-detail-modal) [class*="optionCard"]:hover {
+  background: var(--admin-table-row-hover) !important;
+  background-color: var(--admin-table-row-hover) !important;
+  border-color: rgba(255, 210, 122, 0.52) !important;
+}
+
+:global(.admin-detail-modal) [class*="linkRow"] :global(.ant-btn),
+:global(.admin-detail-modal) [class*="linkRow"] :global(.ant-btn-default) {
+  background: rgba(255, 255, 255, 0.08) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+:global(.admin-detail-modal) [class*="linkRow"] :global(.ant-btn):hover,
+:global(.admin-detail-modal) [class*="linkRow"] :global(.ant-btn):focus-visible,
+:global(.admin-detail-modal) [class*="linkRow"] :global(.ant-btn-default):hover,
+:global(.admin-detail-modal) [class*="linkRow"] :global(.ant-btn-default):focus-visible {
+  background: rgba(255, 255, 255, 0.14) !important;
+  background-color: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  color: #ffffff !important;
+}
+
+:global(.admin-detail-modal) footer[class*="footer" i] {
+  border-top-color: var(--admin-table-border) !important;
+}
+
+:global(.admin-detail-modal) :global(.ant-modal-close) {
+  top: 16px;
+  inset-inline-end: 18px;
+  z-index: 20;
+  width: 36px;
+  height: 36px;
+  border: none !important;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.75) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
 :global(.admin-detail-modal) :global(.ant-modal-close):hover {
   background: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
 }
 
-:global(.admin-detail-modal) :global(.ant-modal-body) {
-  color: var(--admin-text);
-  overflow: hidden;
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 44px 36px 24px 24px;
-  overscroll-behavior: contain;
-}
-
-:global(.admin-detail-modal) :global(.ant-modal-footer) {
-  background: #161618 !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-
-:global(.admin-detail-modal) .ant-btn-primary,
-:global(.admin-detail-modal) .ant-btn-default,
-:global(.admin-detail-modal) .ant-btn-dangerous,
-:global(.admin-detail-modal) .admin-btn-edit,
-:global(.admin-detail-modal) .admin-btn-delete,
-:global(.admin-detail-modal) .admin-btn-add {
+/* Modal buttons — static dark styling, identical in both site themes */
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn),
+:global(.admin-detail-modal) :global(.ant-btn) {
   box-shadow: none !important;
   outline: none !important;
 }
 
-:global(.admin-detail-modal) .ant-btn-default:not(.ant-btn-dangerous) {
-  background: #1e1e22 !important;
-  color: #e0e0e0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease !important;
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn)::after,
+:global(.admin-detail-modal) :global(.ant-btn)::after {
+  display: none !important;
 }
 
-:global(.admin-detail-modal) .ant-btn-default:not(.ant-btn-dangerous):hover,
-:global(.admin-detail-modal) .ant-btn-default:not(.ant-btn-dangerous):focus-visible {
-  background: rgba(255, 255, 255, 0.08) !important;
-  color: var(--admin-gold-strong, #ffd27a) !important;
-  border-color: rgba(255, 255, 255, 0.14) !important;
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn:focus),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn:focus-visible),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn:active),
+:global(.admin-detail-modal) :global(.ant-btn:focus),
+:global(.admin-detail-modal) :global(.ant-btn:focus-visible),
+:global(.admin-detail-modal) :global(.ant-btn:active) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal))
+  :global(.ant-btn-primary):not(.admin-btn-edit):not(.admin-btn-add),
+:global(.admin-detail-modal) :global(.ant-btn-primary):not(.admin-btn-edit):not(.admin-btn-add) {
+  background: var(--admin-button-primary-bg) !important;
+  background-color: var(--admin-button-primary-bg) !important;
+  border: 1px solid var(--admin-button-primary-border) !important;
+  border-color: var(--admin-button-primary-border) !important;
+  color: var(--admin-button-primary-text) !important;
+  font-weight: 600;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal))
+  :global(.ant-btn-primary):not(.admin-btn-edit):not(.admin-btn-add):hover,
+:global(.ant-modal-root:has(.admin-detail-modal))
+  :global(.ant-btn-primary):not(.admin-btn-edit):not(.admin-btn-add):focus-visible,
+:global(.admin-detail-modal)
+  :global(.ant-btn-primary):not(.admin-btn-edit):not(.admin-btn-add):hover,
+:global(.admin-detail-modal)
+  :global(.ant-btn-primary):not(.admin-btn-edit):not(.admin-btn-add):focus-visible {
+  background: var(--admin-button-primary-hover-bg) !important;
+  background-color: var(--admin-button-primary-hover-bg) !important;
+  border-color: var(--admin-button-primary-hover-border) !important;
+  color: var(--admin-button-primary-text) !important;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal)) .admin-btn-edit,
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn-primary.admin-btn-edit),
+:global(.admin-detail-modal) .admin-btn-edit,
+:global(.admin-detail-modal) :global(.ant-btn-primary.admin-btn-edit) {
+  background: var(--admin-btn-edit-bg) !important;
+  background-color: var(--admin-btn-edit-bg) !important;
+  color: var(--admin-btn-edit-text) !important;
+  border: none !important;
+  border-color: transparent !important;
+  font-weight: 600;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal)) .admin-btn-edit:hover,
+:global(.ant-modal-root:has(.admin-detail-modal)) .admin-btn-edit:focus-visible,
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn-primary.admin-btn-edit):hover,
+:global(.ant-modal-root:has(.admin-detail-modal))
+  :global(.ant-btn-primary.admin-btn-edit):focus-visible,
+:global(.admin-detail-modal) .admin-btn-edit:hover,
+:global(.admin-detail-modal) .admin-btn-edit:focus-visible,
+:global(.admin-detail-modal) :global(.ant-btn-primary.admin-btn-edit):hover,
+:global(.admin-detail-modal) :global(.ant-btn-primary.admin-btn-edit):focus-visible {
+  background: var(--admin-btn-edit-hover-bg) !important;
+  background-color: var(--admin-btn-edit-hover-bg) !important;
+  color: var(--admin-btn-edit-hover-text) !important;
+  border: none !important;
+  border-color: transparent !important;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal))
+  :global(.ant-btn-default:not(.ant-btn-dangerous)):not(.admin-btn-delete),
+:global(.admin-detail-modal)
+  :global(.ant-btn-default:not(.ant-btn-dangerous)):not(.admin-btn-delete) {
+  background: var(--admin-table-header-bg) !important;
+  background-color: var(--admin-table-header-bg) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--admin-table-border) !important;
+  border-color: var(--admin-table-border) !important;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal))
+  :global(.ant-btn-default:not(.ant-btn-dangerous)):not(.admin-btn-delete):hover,
+:global(.ant-modal-root:has(.admin-detail-modal))
+  :global(.ant-btn-default:not(.ant-btn-dangerous)):not(.admin-btn-delete):focus-visible,
+:global(.admin-detail-modal)
+  :global(.ant-btn-default:not(.ant-btn-dangerous)):not(.admin-btn-delete):hover,
+:global(.admin-detail-modal)
+  :global(.ant-btn-default:not(.ant-btn-dangerous)):not(.admin-btn-delete):focus-visible {
+  background: var(--admin-table-row-hover) !important;
+  background-color: var(--admin-table-row-hover) !important;
+  color: #ffd27a !important;
+  border: 1px solid rgba(255, 210, 122, 0.52) !important;
+  border-color: rgba(255, 210, 122, 0.52) !important;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn-dangerous),
+:global(.ant-modal-root:has(.admin-detail-modal)) .admin-btn-delete,
+:global(.admin-detail-modal) :global(.ant-btn-dangerous),
+:global(.admin-detail-modal) .admin-btn-delete {
+  background: var(--admin-btn-delete-bg) !important;
+  background-color: var(--admin-btn-delete-bg) !important;
+  color: var(--admin-btn-delete-text) !important;
+  border: 1px solid var(--admin-btn-delete-border) !important;
+  border-color: var(--admin-btn-delete-border) !important;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn-dangerous):hover,
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn-dangerous):focus-visible,
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn-dangerous):active,
+:global(.ant-modal-root:has(.admin-detail-modal)) .admin-btn-delete:hover,
+:global(.ant-modal-root:has(.admin-detail-modal)) .admin-btn-delete:focus-visible,
+:global(.ant-modal-root:has(.admin-detail-modal)) .admin-btn-delete:active,
+:global(.admin-detail-modal) :global(.ant-btn-dangerous):hover,
+:global(.admin-detail-modal) :global(.ant-btn-dangerous):focus-visible,
+:global(.admin-detail-modal) :global(.ant-btn-dangerous):active,
+:global(.admin-detail-modal) .admin-btn-delete:hover,
+:global(.admin-detail-modal) .admin-btn-delete:focus-visible,
+:global(.admin-detail-modal) .admin-btn-delete:active {
+  background: var(--admin-btn-delete-hover-bg) !important;
+  background-color: var(--admin-btn-delete-hover-bg) !important;
+  color: var(--admin-btn-delete-hover-text) !important;
+  border: 1px solid var(--admin-btn-delete-border) !important;
+  border-color: var(--admin-btn-delete-border) !important;
+}
+
+/* DatePicker / TimePicker dropdowns — solid panel + readable selected values */
+:global(.ant-picker-dropdown.event-form-picker-dropdown),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel-container),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-date-panel),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel-column),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-header),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-body),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-content) {
+  background: #22242a !important;
+  background-color: #22242a !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-cell-selected .ant-picker-cell-inner),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner),
+:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner) {
+  color: #000000 !important;
 }
 
 @media (max-width: 499px) {
   :global(.admin-detail-modal) {
     max-width: calc(100vw - 32px) !important;
     width: calc(100vw - 32px) !important;
-    padding-bottom: 0;
   }
-
-  :global(.admin-detail-modal) :global(.ant-modal-content) {
-    max-width: 100%;
+  :global(.admin-detail-modal) :global(.ant-modal-header) {
+    padding: 16px 20px !important;
+  }
+  :global(.admin-detail-modal) :global(.ant-modal-body) {
+    padding: 16px 40px 20px 20px !important;
+  }
+  :global(.admin-detail-modal) :global(.ant-modal-footer) {
+    padding: 14px 20px !important;
+  }
+  :global(.admin-detail-modal) :global(.ant-modal-close) {
+    inset-inline-end: 14px;
   }
 }
 
-/* Analytics report print layout */
+/* ===== System-wide admin responsive adjustments ===== */
+@media (max-width: 1024px) {
+  .admin-panel .admin-content :global(.ant-table-thead > tr > th),
+  .admin-panel .admin-content :global(.ant-table-tbody > tr > td) {
+    padding: 10px 12px !important;
+    font-size: 13px;
+  }
+
+  .admin-panel .admin-content :global(.ant-form-item) {
+    margin-bottom: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  :global(.admin-detail-modal) {
+    max-width: min(640px, calc(100vw - 32px)) !important;
+    width: min(640px, calc(100vw - 32px)) !important;
+  }
+
+  :global(.admin-detail-modal) :global(.ant-modal-header) {
+    padding: 16px 20px !important;
+  }
+
+  :global(.admin-detail-modal) :global(.ant-modal-body) {
+    padding: 16px 36px 20px 20px !important;
+  }
+
+  :global(.admin-detail-modal) :global(.ant-modal-footer),
+  :global(.admin-detail-modal) footer {
+    padding: 14px 20px !important;
+  }
+
+  .admin-panel .admin-content :global(.ant-table-thead > tr > th),
+  .admin-panel .admin-content :global(.ant-table-tbody > tr > td) {
+    padding: 8px 10px !important;
+    font-size: 12px;
+  }
+
+  .admin-panel .admin-content :global(.ant-pagination) {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+}
+
+@media (max-height: 800px) {
+  :global(.admin-detail-modal) {
+    max-height: 90vh;
+  }
+
+  :global(.admin-detail-modal) :global(.ant-modal-content) {
+    max-height: 90vh;
+  }
+
+  .admin-panel .admin-content :global(.ant-table-thead > tr > th),
+  .admin-panel .admin-content :global(.ant-table-tbody > tr > td) {
+    padding-block: 8px !important;
+  }
+}
+
 .admin-print-only {
   display: none;
 }
 
-/* Event form DatePicker / TimePicker dropdowns (portaled to body) */
-.ant-picker-dropdown.event-form-picker-dropdown,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel-container,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-date-panel,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel-column,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ranges,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-header,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-body,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-content {
-  background: #141416 !important;
-  background-color: #141416 !important;
-}
-
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-cell-selected .ant-picker-cell-inner,
-.ant-picker-dropdown.event-form-picker-dropdown
-  .ant-picker-cell-selected:hover
-  .ant-picker-cell-inner,
-.ant-picker-dropdown.event-form-picker-dropdown
-  .ant-picker-cell-in-view.ant-picker-cell-selected
-  .ant-picker-cell-inner {
-  color: #000000 !important;
-}
-
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer .ant-btn-primary,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok button,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok .ant-btn-primary {
-  background: #ffd27a !important;
-  border-color: #ffd27a !important;
-  color: #141416 !important;
-  box-shadow: none !important;
-}
-
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer .ant-btn-primary:hover,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer .ant-btn-primary:focus,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok button:hover,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok button:focus,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok .ant-btn-primary:hover,
-.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ok .ant-btn-primary:focus {
-  background: #ffdb8f !important;
-  border-color: #ffdb8f !important;
-  color: #141416 !important;
-}
-
 @media print {
-  @page {
-    size: A4 portrait;
-    margin: 14mm;
-  }
-
   body {
     background: #fff !important;
     color: #111 !important;
-    -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-
-  .admin-no-print,
-  .admin-panel .admin-no-print {
+  .admin-no-print {
     display: none !important;
   }
-
   .admin-print-only {
     display: block !important;
-    margin: 0 0 8px;
-    color: #111 !important;
   }
-
-  .admin-analytics-report > .admin-print-only:first-of-type {
-    margin-bottom: 20px;
-    font-size: 22px;
-    font-weight: 700;
-  }
-
-  .admin-analytics-report > p.admin-print-only {
-    margin-bottom: 24px;
-    font-size: 13px;
-    color: #444 !important;
-  }
-
-  .admin-panel .layout::before {
-    display: none !important;
-  }
-
-  .admin-panel .main,
-  .admin-panel .mainCollapsed {
-    margin-left: 0 !important;
-  }
-
   .admin-panel .admin-content {
-    padding: 0 !important;
     overflow: visible !important;
-  }
-
-  .admin-analytics-report {
-    display: block !important;
-  }
-
-  .admin-analytics-report :global(.ant-spin-nested-loading > .ant-spin) {
-    display: none !important;
-  }
-
-  .admin-analytics-report :global(.ant-spin-container) {
-    transform: none !important;
-  }
-
-  .admin-analytics-report section,
-  .admin-analytics-report article {
-    break-inside: avoid;
-    page-break-inside: avoid;
-    box-shadow: none !important;
-    background: #fff !important;
-    border: 1px solid #d9d9d9 !important;
-    color: #111 !important;
-  }
-
-  .admin-analytics-report a {
-    color: inherit !important;
-    text-decoration: none !important;
-    pointer-events: none;
   }
 }

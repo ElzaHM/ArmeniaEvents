@@ -348,14 +348,13 @@ export default function AdminUsersPage() {
     {
       title: 'Actions',
       key: 'actions',
-      responsive: ['md'],
       render: (_, record) => (
         <Space size="small" onClick={(event) => event.stopPropagation()}>
           <Button
             type="primary"
             size="small"
             icon={<EditOutlined />}
-            className={`admin-btn-edit ${styles.editButton}`}
+            className="admin-btn-edit"
             onClick={() => openEditModal(record)}>
             Edit
           </Button>
