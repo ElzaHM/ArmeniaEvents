@@ -96,18 +96,21 @@ export const SignUpForm: React.FC = () => {
     try {
       const session = await authService.loginWithGoogle(credential);
       establishSession(session);
-      messageApi.success('Sign in successful');
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Google sign in failed. Please try again.';
-      messageApi.error(errorMessage);
+      queueMicrotask(() => {
+        messageApi.error(errorMessage);
+      });
     } finally {
       setGoogleLoading(false);
     }
   };
 
   const handleGoogleError = React.useCallback(() => {
-    messageApi.error('Google sign in failed. Please try again.');
+    queueMicrotask(() => {
+      messageApi.error('Google sign in failed. Please try again.');
+    });
   }, [messageApi]);
 
   return (

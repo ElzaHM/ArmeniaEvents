@@ -28,8 +28,10 @@ export const SignInForm: React.FC = () => {
         email: values.email,
         password: values.password,
       });
-      messageApi.success('Sign in successful');
-      navigate(redirectTo);
+      queueMicrotask(() => {
+        messageApi.success('Sign in successful');
+        navigate(redirectTo);
+      });
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Sign in failed. Please try again.';
@@ -44,18 +46,23 @@ export const SignInForm: React.FC = () => {
     try {
       const session = await authService.loginWithGoogle(credential);
       establishSession(session);
-      messageApi.success('Sign in successful');
-      navigate(redirectTo);
+      queueMicrotask(() => {
+        navigate(redirectTo);
+      });
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Google sign in failed. Please try again.';
-      messageApi.error(errorMessage);
+      queueMicrotask(() => {
+        messageApi.error(errorMessage);
+      });
     } finally {
       setGoogleLoading(false);
     }
   };
   const handleGoogleError = React.useCallback(() => {
-    messageApi.error('Google sign in failed. Please try again.');
+    queueMicrotask(() => {
+      messageApi.error('Google sign in failed. Please try again.');
+    });
   }, [messageApi]);
 
   return (
