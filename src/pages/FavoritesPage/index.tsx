@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from 'antd';
 
@@ -11,16 +11,45 @@ import { useUserFavoriteEvents } from '../../hooks/queries/useFavorite';
 import styles from './FavoritesPage.module.css';
 
 const { Title, Paragraph } = Typography;
-const INITIAL_VISIBLE_COUNT = 10;
+const VISIBLE_ROWS = 2;
+
+function getColumnsPerRow(containerWidth: number): number {
+  const isMobile = containerWidth < 768;
+  const minCardWidth = isMobile ? 160 : 180;
+  const gap = isMobile ? 16 : 20;
+
+  return Math.max(1, Math.floor((containerWidth + gap) / (minCardWidth + gap)));
+}
 
 export default function FavoritesPage() {
+  const gridRef = useRef<HTMLDivElement>(null);
   const [showAll, setShowAll] = useState(false);
+  const [columnsPerRow, setColumnsPerRow] = useState(4);
   const favoriteEventsQuery = useUserFavoriteEvents();
   const favoriteEvents = favoriteEventsQuery.data ?? [];
-  const hasMore = favoriteEvents.length > INITIAL_VISIBLE_COUNT;
+  const initialVisibleCount = columnsPerRow * VISIBLE_ROWS;
+  const hasMore = favoriteEvents.length > initialVisibleCount;
   const visibleEvents = showAll
     ? favoriteEvents
-    : favoriteEvents.slice(0, INITIAL_VISIBLE_COUNT);
+    : favoriteEvents.slice(0, initialVisibleCount);
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) {
+      return;
+    }
+
+    const updateColumns = () => {
+      setColumnsPerRow(getColumnsPerRow(grid.clientWidth));
+    };
+
+    updateColumns();
+
+    const resizeObserver = new ResizeObserver(updateColumns);
+    resizeObserver.observe(grid);
+
+    return () => resizeObserver.disconnect();
+  }, [favoriteEvents.length]);
 
   return (
     <div className={`${styles.pageWrapper} favorites-page`}>
@@ -48,7 +77,7 @@ export default function FavoritesPage() {
             </Typography.Paragraph>
           ) : (
             <>
-              <div className={styles.grid}>
+              <div ref={gridRef} className={styles.grid}>
                 {visibleEvents.map((event) => (
                   <div key={event.id} className={styles.cardWrap}>
                     <Link to={`/events/${event.id}`} className={styles.cardLink}>

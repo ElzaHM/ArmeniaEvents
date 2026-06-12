@@ -27,10 +27,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: nowrap;
     max-width: 1400px;
     margin: 0 auto;
     position: relative;
     gap: 16px;
+    min-width: 0;
 }
 
 .header-logo {
@@ -56,7 +58,11 @@
 
 .header-nav {
     display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
     gap: 35px;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .nav-item {
@@ -66,6 +72,8 @@
     position: relative;
     transition: all 0.3s ease;
     display: inline-block;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .signin-button {
@@ -210,7 +218,68 @@
     font-weight: 700;
 }
 
-@media (max-width: 992px) {
+@media (min-width: 990px) and (max-width: 1140px) {
+    .custom-header {
+        padding: 0 2%;
+    }
+
+    .header-content {
+        gap: 8px;
+    }
+
+    .logo-icon {
+        font-size: 20px;
+        margin-right: 6px;
+    }
+
+    .logo-text {
+        font-size: 17px;
+    }
+
+    .header-nav {
+        gap: 12px;
+    }
+
+    .nav-item {
+        font-size: 13px;
+    }
+
+    .nav-item::after {
+        bottom: 18px;
+    }
+
+    .header-actions {
+        gap: 0;
+    }
+
+    .signin-button {
+        height: 36px !important;
+        padding: 0 12px !important;
+        font-size: 12px !important;
+        margin-left: 0;
+    }
+
+    .header-user {
+        gap: 6px;
+        margin-left: 0;
+    }
+
+    .header-user-info {
+        display: none;
+    }
+
+    .header-user-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .header-user-signout {
+        padding: 0 10px !important;
+    }
+}
+
+@media (max-width: 989px) {
     .custom-header {
         padding: 0 16px;
         height: 72px;
@@ -275,28 +344,99 @@
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 660px) {
     .custom-header {
-        padding: 0 12px;
+        padding: 0 10px;
+    }
+
+    .header-content {
+        gap: 4px;
+    }
+
+    .header-logo {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .logo-icon {
+        font-size: 20px;
+        margin-right: 6px;
+        flex-shrink: 0;
     }
 
     .logo-text {
-        font-size: 17px;
+        font-size: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .header-actions {
+        gap: 0;
+        flex-shrink: 0;
+    }
+
+    .header-actions :global(.ant-btn) {
+        min-width: unset !important;
+    }
+
+    .header-actions .theme-toggle,
+    .header-actions .menu-toggle {
+        width: 34px !important;
+        min-width: 34px !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
     .header-user-info {
         display: none;
     }
 
-    .signin-button {
-        height: 36px !important;
-        padding: 0 14px !important;
-        font-size: 13px !important;
+    .header-user {
+        gap: 4px;
         margin-left: 0;
+        flex-shrink: 0;
     }
 
+    .header-user-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 11px;
+    }
+
+    .signin-button,
     .header-user-signout {
+        height: 34px !important;
         padding: 0 10px !important;
+        font-size: 12px !important;
+        margin-left: 0;
+        flex-shrink: 0;
+    }
+
+    .header-signin-link {
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-header {
+        padding: 0 8px;
+    }
+
+    .logo-text {
+        font-size: 14px;
+    }
+
+    .signin-button,
+    .header-user-signout {
+        padding: 0 8px !important;
+        font-size: 11px !important;
+    }
+
+    .header-actions .theme-toggle,
+    .header-actions .menu-toggle {
+        width: 32px !important;
+        min-width: 32px !important;
     }
 }
 
