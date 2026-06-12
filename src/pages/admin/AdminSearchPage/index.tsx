@@ -1,24 +1,45 @@
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {Button, Empty, Spin, Table, Tag} from "antd";
+import {useQueryClient} from "@tanstack/react-query";
+import {Button, Empty, Modal, Spin, Table, Tag, message} from "antd";
 import type {TableColumnsType} from "antd";
 import {ArrowLeftOutlined} from "@ant-design/icons";
 
 import AdminCard from "../../../components/admin/AdminCard";
+import AdminEventDetailModal from "../../../components/admin/AdminEventDetailModal";
+import {adminPendingNotificationsKey} from "../../../components/admin/AdminHeader";
 import AdminPageHeader from "../../../components/admin/AdminPageHeader";
 import AdminEventImage from "../../../components/admin/AdminEventImage";
 import type {AdminEvent, AdminUser, AdminUserRole, AdminUserStatus} from "../../../components/admin/types";
 import {
+  adminDashboardKeys,
   useAdminEventSearchCount,
   useAdminEventsList,
 } from "../../../hooks/queries/useAdminDashboard";
+import {useDeleteEvent} from "../../../hooks/queries/useEvents";
 import {useAdminUsers} from "../../../hooks/queries/useAdminUsers";
+import AdminUserModal from "../AdminUserModal";
 
 import styles from "./AdminSearchPage.module.css";
 
 const WRAP_CELL_PROPS = {
   className: "admin-table-wrap-cell",
   style: {whiteSpace: "normal" as const, wordBreak: "break-word" as const},
+};
+
+const TABLE_SCROLL_STYLES = {
+  content: {
+    overflowY: "visible" as const,
+    maxHeight: "none" as const,
+    height: "auto" as const,
+  },
+  body: {
+    wrapper: {
+      overflowY: "visible" as const,
+      maxHeight: "none" as const,
+      height: "auto" as const,
+    },
+  },
 };
 
 const ROLE_COLORS: Record<AdminUserRole, string> = {
@@ -39,7 +60,11 @@ const emptyDescription = (query: string) =>
 
 export default function AdminSearchPage() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [messageApi, contextHolder] = message.useMessage();
   const [searchParams] = useSearchParams();
+  const [viewingEvent, setViewingEvent] = useState<AdminEvent | null>(null);
+  const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
   const searchQuery = searchParams.get("q")?.trim() ?? "";
   const normalizedQuery = searchQuery.toLowerCase();
   const {data: events = [], isLoading: isEventsLoading} = useAdminEventsList(
@@ -50,6 +75,7 @@ export default function AdminSearchPage() {
     searchQuery,
     Boolean(searchQuery),
   );
+  const deleteEvent = useDeleteEvent();
 
   const filteredUsers = useMemo(() => {
     if (!normalizedQuery) {
@@ -62,6 +88,57 @@ export default function AdminSearchPage() {
       return name.includes(normalizedQuery) || email.includes(normalizedQuery);
     });
   }, [normalizedQuery, users]);
+
+  const refreshSearchEvents = async () => {
+    await queryClient.invalidateQueries({queryKey: adminDashboardKeys.events(searchQuery)});
+    await queryClient.invalidateQueries({queryKey: adminDashboardKeys.searchCount(searchQuery)});
+  };
+
+  const openEventModal = (event: AdminEvent) => {
+    setViewingEvent(event);
+  };
+
+  const closeEventModal = () => {
+    setViewingEvent(null);
+  };
+
+  const openUserModal = (user: AdminUser) => {
+    setSelectedUser(user);
+  };
+
+  const closeUserModal = () => {
+    setSelectedUser(null);
+  };
+
+  const handleEditEvent = () => {
+    if (!viewingEvent) {
+      return;
+    }
+
+    const eventId = viewingEvent.id;
+    closeEventModal();
+    navigate(`/admin/events?edit=${encodeURIComponent(eventId)}`);
+  };
+
+  const handleDeleteEvent = (event: AdminEvent) => {
+    Modal.confirm({
+      title: "Delete event?",
+      content: `This will delete "${event.title}".`,
+      okText: "Delete",
+      okButtonProps: {danger: true},
+      onOk: async () => {
+        try {
+          await deleteEvent.mutateAsync(event.id);
+          messageApi.success("Event deleted");
+          await refreshSearchEvents();
+          await queryClient.invalidateQueries({queryKey: adminPendingNotificationsKey});
+          closeEventModal();
+        } catch (error) {
+          messageApi.error(error instanceof Error ? error.message : "Delete failed");
+        }
+      },
+    });
+  };
 
   const eventColumns: TableColumnsType<AdminEvent> = [
     {
@@ -153,6 +230,7 @@ export default function AdminSearchPage() {
 
   return (
     <>
+      {contextHolder}
       <div className={styles.topActions}>
         <Button icon={<ArrowLeftOutlined />} onClick={() => navigate("/admin")}>
           Back to Dashboard
@@ -176,11 +254,18 @@ export default function AdminSearchPage() {
             ) : (
               <div className={styles.tableWrap}>
                 <Table
+                  size="middle"
                   columns={eventColumns}
                   dataSource={events}
                   rowKey="id"
+                  loading={deleteEvent.isPending}
                   pagination={{pageSize: 8}}
                   scroll={{x: "max-content"}}
+                  styles={TABLE_SCROLL_STYLES}
+                  onRow={(record) => ({
+                    onClick: () => openEventModal(record),
+                    className: "admin-table-row-clickable",
+                  })}
                 />
               </div>
             )}
@@ -199,11 +284,17 @@ export default function AdminSearchPage() {
             ) : (
               <div className={styles.tableWrap}>
                 <Table
+                  size="middle"
                   columns={userColumns}
                   dataSource={filteredUsers}
                   rowKey="id"
                   pagination={{pageSize: 8}}
-                  scroll={{x: "max-content" }}
+                  scroll={{x: "max-content"}}
+                  styles={TABLE_SCROLL_STYLES}
+                  onRow={(record) => ({
+                    onClick: () => openUserModal(record),
+                    className: "admin-table-row-clickable",
+                  })}
                 />
               </div>
             )}
@@ -216,6 +307,18 @@ export default function AdminSearchPage() {
           </div>
         </AdminCard>
       )}
+      <AdminEventDetailModal
+        event={viewingEvent}
+        open={Boolean(viewingEvent)}
+        onClose={closeEventModal}
+        onEdit={handleEditEvent}
+        onDelete={() => viewingEvent && handleDeleteEvent(viewingEvent)}
+      />
+      <AdminUserModal
+        user={selectedUser}
+        open={Boolean(selectedUser)}
+        onClose={closeUserModal}
+      />
     </>
   );
 }

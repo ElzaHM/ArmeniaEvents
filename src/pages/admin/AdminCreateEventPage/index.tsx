@@ -44,7 +44,6 @@ type RawCreateEventValues = {
   venue?: string;
   address?: string;
   organizer?: string;
-  ticket_url?: string;
   language?: string;
   ageRange?: string;
   startDate?: Dayjs;
@@ -78,7 +77,6 @@ function toFormValues(values: RawCreateEventValues): AdminCreateEventFormValues 
     venue: values.venue,
     address: values.address,
     organizer: values.organizer,
-    ticket_url: values.ticket_url,
     language: values.language,
     ageRange: values.ageRange,
     isFree,
@@ -200,27 +198,6 @@ export default function AdminCreateEventPage() {
                       </Form.Item>
                     </Col>
                   </Row>
-                  <Form.Item
-                    name="ticket_url"
-                    label="Registration / Ticket URL"
-                    rules={[
-                      {
-                        validator: async (_, value?: string) => {
-                          const trimmed = value?.trim();
-                          if (!trimmed) {
-                            return;
-                          }
-
-                          try {
-                            new URL(trimmed);
-                          } catch {
-                            throw new Error('Enter a valid URL');
-                          }
-                        },
-                      },
-                    ]}>
-                    <Input placeholder="https://..." />
-                  </Form.Item>
                 </div>
               </Col>
               <Col xs={24} lg={9}>

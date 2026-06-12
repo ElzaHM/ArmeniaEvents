@@ -423,7 +423,7 @@ export default function AdminEventsPage() {
             type="info"
             showIcon
             title={aiFetchStatus}
-            className={styles.syncAlert}
+            className={`admin-status-alert ${styles.syncAlert}`}
           />
         ) : null}
         <div className={styles.toolbar}>

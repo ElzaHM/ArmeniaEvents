@@ -1,3 +1,4 @@
+import {useEffect, useState} from "react";
 import {Select} from "antd";
 import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 
@@ -11,8 +12,25 @@ interface AnalyticsChartProps {
   summary: AnalyticsSummary;
 }
 
+function useCompactChartLayout(): boolean {
+  const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const update = () => setCompact(mediaQuery.matches);
+    update();
+    mediaQuery.addEventListener("change", update);
+    return () => mediaQuery.removeEventListener("change", update);
+  }, []);
+
+  return compact;
+}
+
 export default function AnalyticsChart({data, summary}: AnalyticsChartProps) {
   const summaryItems = [summary.views, summary.registrations, summary.engagementRate];
+  const compactLayout = useCompactChartLayout();
+  const chartBottomMargin = compactLayout ? 28 : 20;
+  const xAxisTickSize = compactLayout ? 10 : 12;
 
   return (
     <AdminCard
@@ -30,8 +48,10 @@ export default function AnalyticsChart({data, summary}: AnalyticsChartProps) {
         />
       }>
       <div className={styles.chartWrap}>
-        <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={220} debounce={50}>
-          <AreaChart data={data} margin={{top: 8, right: 8, left: -16, bottom: 0}}>
+        <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={150} debounce={50}>
+          <AreaChart
+            data={data}
+            margin={{top: 8, right: 8, left: -16, bottom: chartBottomMargin}}>
             <defs>
               <linearGradient id="viewsGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="var(--admin-gold)" stopOpacity={0.4} />
@@ -41,14 +61,16 @@ export default function AnalyticsChart({data, summary}: AnalyticsChartProps) {
             <CartesianGrid strokeDasharray="3 3" stroke="var(--admin-chart-grid)" />
             <XAxis
               dataKey="date"
-              tick={{fill: "var(--admin-text-muted)", fontSize: 12}}
+              interval={compactLayout ? "preserveStartEnd" : undefined}
+              tick={{fill: "var(--admin-text-muted)", fontSize: xAxisTickSize}}
               axisLine={false}
               tickLine={false}
             />
             <YAxis
-              tick={{fill: "var(--admin-text-muted)", fontSize: 12}}
+              tick={{fill: "var(--admin-text-muted)", fontSize: compactLayout ? 10 : 12}}
               axisLine={false}
               tickLine={false}
+              width={compactLayout ? 28 : 32}
             />
             <Tooltip
               contentStyle={{

@@ -152,11 +152,26 @@
 
 .syncAlert {
   margin-bottom: 16px;
+  background: #1e1e22 !important;
+  background-color: #1e1e22 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px;
+  opacity: 1 !important;
+  --ant-color-info-bg: #1e1e22;
+  --ant-color-info-border: rgba(255, 255, 255, 0.08);
+}
+
+.syncAlert :global(.ant-alert-icon),
+.syncAlert :global(.ant-alert-icon .anticon),
+.syncAlert :global(.ant-alert-icon svg) {
+  color: #ffd27a !important;
+  fill: #ffd27a !important;
 }
 
 .syncAlert :global(.ant-alert-message),
-.syncAlert :global(.ant-alert-title) {
-  color: var(--admin-text);
+.syncAlert :global(.ant-alert-title),
+.syncAlert :global(.ant-alert-content) {
+  color: rgba(255, 255, 255, 0.85) !important;
 }
 
 .tableEyebrow {
