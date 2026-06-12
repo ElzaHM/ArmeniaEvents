@@ -57,8 +57,6 @@
 
 .footer {
   background: var(--auth-footer-bg);
-  backdrop-filter: var(--auth-footer-backdrop, blur(16px)) !important;
-  -webkit-backdrop-filter: var(--auth-footer-backdrop, blur(16px)) !important;
   padding: 60px 5% 20px;
   border-top: 1px solid var(--auth-footer-border);
 }

@@ -5,8 +5,6 @@
   padding: 6px;
   background: var(--details-glass-bg);
   background-color: var(--details-glass-bg);
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid var(--details-glass-border);
   border-radius: 14px;
   box-shadow: var(--home-card-shadow);

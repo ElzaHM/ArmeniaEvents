@@ -49,7 +49,7 @@ export default function SearchBar({ className }: SearchBarProps) {
   }, []);
 
   return (
-    <div className={[styles.searchBar, className].filter(Boolean).join(' ')}>
+    <div className={[styles.searchBar, 'glassBlur', className].filter(Boolean).join(' ')}>
       <div className={styles.searchGroup}>
         <SearchOutlined className={styles.icon} />
         <Input

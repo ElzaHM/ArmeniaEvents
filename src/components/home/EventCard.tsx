@@ -40,7 +40,7 @@ export default function EventCard({ event }: EventCardProps) {
   };
 
   return (
-    <article className={styles.card}>
+    <article className={`${styles.card} glassBlur`}>
       <div className={styles.imageWrapper}>
         <img
           src={event.imageUrl}
@@ -55,7 +55,7 @@ export default function EventCard({ event }: EventCardProps) {
 
         <button
           type="button"
-          className={`${styles.wishlistBtn} ${isSaved ? styles.wishlistBtnActive : ''}`}
+          className={`${styles.wishlistBtn} glassBlur ${isSaved ? styles.wishlistBtnActive : ''}`}
           aria-label={isSaved ? 'Remove from favorites' : 'Add to favorites'}
           onClick={handleSave}
           disabled={toggleFavorite.isPending}

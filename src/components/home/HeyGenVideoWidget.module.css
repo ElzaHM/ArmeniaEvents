@@ -211,8 +211,6 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   transition:
     background 0.45s ease,
     border-color 0.45s ease,

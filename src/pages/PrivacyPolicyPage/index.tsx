@@ -60,7 +60,7 @@ export default function PrivacyPolicyPage() {
   return (
     <div className={`publicPageShell ${styles.page} privacy-page`}>
       <div className="homeSection">
-        <div className={styles.container}>
+        <div className={`${styles.container} glassBlur`}>
         <h1 className={styles.title}>Privacy Policy</h1>
         <p className={styles.updated}>Last updated: June 2, 2026</p>
         <p className={styles.intro}>

@@ -13,7 +13,7 @@ const ResetPasswordPage: React.FC = () => {
       <div className={styles.arcDecoration} />
 
       <main className={`${styles.mainContent} sign-in-main`}>
-        <div className={styles.simplePanel}>
+        <div className={`${styles.simplePanel} glassBlur`}>
           <ResetPasswordForm />
         </div>
       </main>

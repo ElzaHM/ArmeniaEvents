@@ -119,6 +119,4 @@
 
 .glassSurface {
   background-color: var(--glass-surface-bg) !important;
-  backdrop-filter: var(--glass-surface-backdrop) !important;
-  -webkit-backdrop-filter: var(--glass-surface-backdrop) !important;
 }

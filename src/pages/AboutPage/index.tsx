@@ -60,7 +60,7 @@ export default function AboutPage() {
           className={styles.storyVisionRow}
         >
           <Col xs={24} lg={15}>
-            <div className={styles.storyCard}>
+            <div className={`${styles.storyCard} glassBlur`}>
               <div className={styles.cardContent}>
                 <Space align="start" size={16}>
                   <div className={styles.iconBox}>
@@ -87,7 +87,7 @@ export default function AboutPage() {
           </Col>
 
           <Col xs={24} lg={9}>
-            <div className={styles.visionCard}>
+            <div className={`${styles.visionCard} glassBlur`}>
               <Space align="start" size={16}>
                 <div className={styles.iconBox}>
                   <VisionIcon />
@@ -125,7 +125,7 @@ export default function AboutPage() {
         <Row gutter={[{ xs: 16, sm: 16, lg: 20 }, { xs: 16, sm: 16, lg: 20 }]} align="stretch" className={styles.teamRow}>
           {TEAM_MEMBERS.map((member) => (
             <Col key={member.id} xs={24} sm={12} lg={6}>
-              <div className={styles.teamCard}>
+              <div className={`${styles.teamCard} glassBlur`}>
                 <img src={member.image} className={styles.avatar} alt={member.imageAlt} />
                 <Title level={4} className={styles.memberName}>
                   {member.name}
@@ -177,7 +177,7 @@ export default function AboutPage() {
           ))}
         </Row>
 
-        <div className={styles.techSection}>
+        <div className={`${styles.techSection} glassBlur`}>
           <div className={styles.techHeader}>
             <div className={styles.iconBox}>
               <TechSectionIcon />
@@ -193,7 +193,7 @@ export default function AboutPage() {
           <div className={styles.techStackRow}>
             {TECH_STACK.map((item) => (
               <div key={item.name} className={styles.techItem}>
-                <div className={styles.techLogoBox}>{renderTechLogo(item.logo)}</div>
+                <div className={`${styles.techLogoBox} glassBlur`}>{renderTechLogo(item.logo)}</div>
                 <Text className={styles.techName}>{item.name}</Text>
               </div>
             ))}

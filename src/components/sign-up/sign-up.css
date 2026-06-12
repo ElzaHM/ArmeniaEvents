@@ -23,8 +23,6 @@
   box-shadow:
     0 0 0 0.3px rgba(255, 255, 255, 0.55),
     0 2px 15px rgba(0, 0, 0, 0.06) !important;
-  backdrop-filter: blur(20px) saturate(1.5) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
 }
 
 [data-theme='light'] .sign-up-page .sign-up-panel .leftSection {
@@ -36,8 +34,6 @@
   background-color: rgba(14, 14, 14, 0.3) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow: none !important;
-  backdrop-filter: blur(16px) saturate(1.8) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 .sign-up-page .auth-illustration {

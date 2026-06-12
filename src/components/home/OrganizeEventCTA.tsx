@@ -12,9 +12,9 @@ export default function OrganizeEventCTA() {
   };
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} glassBlur`}>
       <div className="homeSection">
-        <div className={styles.banner}>
+        <div className={`${styles.banner} glassBlur`}>
           <div className={styles.leftSide}>
             <div className={styles.iconContainer}>
               <CalendarOutlined className={styles.icon} />

@@ -2,8 +2,6 @@
   background: var(--home-glass-bg);
   background-color: var(--glass-surface-bg, var(--home-glass-bg));
   border: 1px solid var(--home-glass-border);
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border-radius: 20px;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -17,14 +15,12 @@
 
 [data-theme='light'] .card {
   background: rgba(255, 255, 255, 0.92) !important;
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(8px);
 }
 
 .card:hover {
   background: var(--home-glass-hover-bg);
   border-color: var(--home-accent);
-  transform: translateY(-6px);
+  transform: translateY(-6px) translateZ(0);
   box-shadow: var(--home-card-shadow);
 }
 
@@ -83,7 +79,6 @@
   height: 32px;
   border-radius: 50%;
   cursor: pointer;
-  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;

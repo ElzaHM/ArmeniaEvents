@@ -92,7 +92,7 @@ export default function EventTabs({ event }: EventTabsProps) {
   return (
     <QueryState isLoading={isLoading} isError={isError} error={error} minHeight={48}>
       {eventTabs && (
-        <nav className={styles.tabs} aria-label="Event sections">
+        <nav className={`${styles.tabs} glassBlur`} aria-label="Event sections">
           {eventTabs
             .filter((tab) => tab !== GALLERY_TAB)
             .map((tab, index) => (

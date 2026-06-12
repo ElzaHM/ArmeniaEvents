@@ -9,8 +9,6 @@
   border-radius: 12px;
   box-shadow: var(--home-card-shadow);
   transition: border-color 0.2s ease;
-  backdrop-filter: blur(16px) saturate(1.8) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
   background-color: var(--events-card-bg);
   border-color: var(--events-card-border) !important;
   box-shadow: var(--events-card-shadow);
@@ -22,7 +20,7 @@
   background: var(--home-glass-hover-bg) !important;
   background-color: var(--home-glass-hover-bg) !important;
   border-color: var(--home-accent) !important;
-  transform: translateY(-1px);
+  transform: translateY(-1px) translateZ(0);
   box-shadow: var(--home-card-shadow);
 }
 
@@ -152,8 +150,6 @@
   min-width: 32px !important;
   background: rgba(0, 0, 0, 0.35) !important;
   color: #fff !important;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   transition: background 0.3s ease, color 0.3s ease;
 }
 

@@ -76,7 +76,7 @@ export default function EventCheckoutPage() {
               </Paragraph>
 
               <div className={styles.cardsStack}>
-                <div className={styles.glassCard}>
+                <div className={`${styles.glassCard} glassBlur`}>
                   <div className={styles.eventSummary}>
                     <div className={styles.eventImageWrap}>
                       <img
@@ -117,7 +117,7 @@ export default function EventCheckoutPage() {
                   </div>
                 </div>
 
-                <div className={`${styles.glassCard} ${styles.buyTicketCard}`}>
+                <div className={`${styles.glassCard} ${styles.buyTicketCard} glassBlur`}>
                     {reservation ? (
                       <div className={styles.successBlock}>
                         <Text className={styles.successTitle}>

@@ -26,15 +26,15 @@ export default function EventLivePreview({
   const { month, day } = formatDateBadge(data.startDate);
 
   return (
-    <div className={styles.previewSticky}>
+    <div className={`${styles.previewSticky} glassBlur`}>
       <Title level={5} className={styles.previewSectionTitle}>Live Preview</Title>
       
-      <div className={styles.eventCardPreview}>
+      <div className={`${styles.eventCardPreview} glassBlur`}>
         <div 
           className={styles.previewImageArea} 
           style={{ backgroundImage: `url(${image})` }}
         >
-          <div className={styles.dateBadge}>
+          <div className={`${styles.dateBadge} glassBlur`}>
             <span className={styles.badgeMonth}>{month}</span>
             <span className={styles.badgeDay}>{day}</span>
           </div>

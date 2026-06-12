@@ -42,7 +42,7 @@ export default function EventListItem({ event, variant = 'list' }: EventListItem
   };
 
   return (
-    <article className={`${styles.card} ${variant === 'grid' ? styles.cardGrid : ''}`}>
+    <article className={`${styles.card} glassBlur ${variant === 'grid' ? styles.cardGrid : ''}`}>
       <div className={styles.imageWrap}>
         <img src={event.imageUrl} alt={event.title} className={styles.image} loading="lazy" />
         <div className={styles.dateBadge}>
@@ -54,7 +54,7 @@ export default function EventListItem({ event, variant = 'list' }: EventListItem
           shape="circle"
           aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           icon={isFavorite ? <HeartFilled className={styles.favoriteActive} /> : <HeartOutlined />}
-          className={styles.favoriteBtn}
+          className={`${styles.favoriteBtn} glassBlur`}
           onClick={handleFavoriteClick}
           loading={toggleFavorite.isPending}
         />

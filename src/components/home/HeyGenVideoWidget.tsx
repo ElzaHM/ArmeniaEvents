@@ -139,7 +139,7 @@ export default function HeyGenVideoWidget() {
       {!isOpen && (
         <button
           type="button"
-          className={styles.showBtn}
+          className={`${styles.showBtn} glassBlur`}
           aria-label="Show video"
           onClick={handleShowVideo}
         >
