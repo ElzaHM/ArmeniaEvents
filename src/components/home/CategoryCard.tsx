@@ -16,7 +16,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
   return (
     <Link
       to={`/events?category=${encodeURIComponent(category.name)}`}
-      className={styles.card}
+      className={`${styles.card} glassBlur`}
       aria-label={`Browse ${category.name} events (${formatEventCount(category.eventCount)})`}
     >
       <span className={styles.name}>{category.name}</span>

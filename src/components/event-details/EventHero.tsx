@@ -51,7 +51,7 @@ export default function EventHero({ event }: EventHeroProps) {
       <div className="detailsSection">
         <div className={styles.layout}>
           <div className={styles.info}>
-            <div className={styles.dateCard}>
+            <div className={`${styles.dateCard} glassBlur`}>
               <span className={styles.dateMonth}>{month}</span>
               <span className={styles.dateDay}>{day}</span>
               <span className={styles.dateWeekday}>{event.weekday ?? ''}</span>

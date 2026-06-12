@@ -497,8 +497,6 @@
   background-color: var(--events-list-panel-bg) !important;
   border-color: var(--events-list-panel-border) !important;
   box-shadow: none !important;
-  backdrop-filter: blur(16px) saturate(1.3) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.3) !important;
 }
 
 [data-theme='dark'] .eventsPage .eventsFilters,
@@ -507,8 +505,6 @@
   background-color: var(--events-list-panel-bg, var(--events-panel-bg)) !important;
   border-color: var(--events-list-panel-border, var(--events-panel-border)) !important;
   box-shadow: var(--events-panel-shadow) !important;
-  backdrop-filter: blur(16px) saturate(1.8) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 @media (max-width: 768px) {

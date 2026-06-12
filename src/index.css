@@ -100,18 +100,33 @@ body {
   --glass-surface-blur: var(--glass-blur);
 }
 
-.glassBlur,
-.glassSurface {
+/* Global glass blur — public site only (admin keeps its own styles) */
+#root:not(:has(.admin-panel)) .glassBlur,
+#root:not(:has(.admin-panel)) .glassSurface,
+#root:not(:has(.admin-panel)) .detailsGlassCard,
+#root:not(:has(.admin-panel)) .eventsFilters,
+#root:not(:has(.admin-panel)) .eventsListPanel,
+#root:not(:has(.admin-panel)) .sign-in-panel,
+#root:not(:has(.admin-panel)) .sign-up-panel,
+#root:not(:has(.admin-panel)) .custom-header.scrolled {
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
-  isolation: isolate;
-  background-color: var(--glass-surface-bg) !important;
-  background: var(--glass-surface-bg) !important;
-  -webkit-backdrop-filter: var(--glass-surface-blur, blur(16px) saturate(1.8)) !important;
-  backdrop-filter: var(--glass-surface-blur, blur(16px) saturate(1.8)) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
+}
+
+@media (max-width: 989px) {
+  #root:not(:has(.admin-panel)) .header-nav {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
+    backdrop-filter: blur(16px) saturate(1.8) !important;
+  }
 }
 
 .contact-page .glassBlur {
+  background-color: var(--glass-surface-bg) !important;
+  background: var(--glass-surface-bg) !important;
   border: 1px solid var(--glass-border-dark);
 }
 

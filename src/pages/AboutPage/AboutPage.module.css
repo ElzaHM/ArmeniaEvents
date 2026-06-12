@@ -71,8 +71,6 @@
 .storyCard, .visionCard {
   background: rgba(14, 14, 14, 0.3);
   background-color: rgba(14, 14, 14, 0.3);
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid var(--home-glass-border);
   border-radius: 28px;
   min-height: 530px;
@@ -92,8 +90,6 @@
 [data-theme='dark'] .pageWrapper .techLogoBox {
   background: rgba(14, 14, 14, 0.3) !important;
   background-color: rgba(14, 14, 14, 0.3) !important;
-  backdrop-filter: blur(16px) saturate(1.8) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 [data-theme='light'] .pageWrapper .storyCard,
@@ -107,10 +103,7 @@
   box-shadow:
     0 0 0 0.3px rgba(255, 255, 255, 0.55),
     0 2px 15px rgba(0, 0, 0, 0.06) !important;
-  backdrop-filter: blur(20px) saturate(1.5) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
 }
-
 
 [data-theme='light'] .pageWrapper .teamCard:hover,
 [data-theme='light'] .pageWrapper .techSection:hover {
@@ -120,8 +113,6 @@
   box-shadow:
     0 0 0 0.3px rgba(255, 255, 255, 0.65),
     0 4px 16px rgba(0, 0, 0, 0.06) !important;
-  backdrop-filter: blur(20px) saturate(1.5) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
 }
 
 [data-theme='light'] .pageWrapper .techItem:hover .techLogoBox {
@@ -131,8 +122,6 @@
   box-shadow:
     0 0 0 0.3px rgba(255, 255, 255, 0.65),
     0 2px 12px rgba(0, 0, 0, 0.06) !important;
-  backdrop-filter: blur(20px) saturate(1.5) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
 }
 
 .storyCard { 
@@ -386,8 +375,6 @@
 .teamCard {
   background: rgba(14, 14, 14, 0.3);
   background-color: rgba(14, 14, 14, 0.3);
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid var(--home-glass-border);
   border-radius: 24px;
   padding: 12px 18px 16px;
@@ -405,7 +392,7 @@
 .teamCard:hover {
   background: var(--home-glass-hover-bg);
   border-color: var(--home-accent);
-  transform: translateY(-6px);
+  transform: translateY(-6px) translateZ(0);
   box-shadow: 0 0 0 1px var(--home-accent), var(--home-card-shadow);
 }
 
@@ -503,8 +490,6 @@
   padding: 50px;
   background: rgba(14, 14, 14, 0.3);
   background-color: rgba(14, 14, 14, 0.3);
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid var(--home-glass-border);
   border-radius: 28px;
   display: flex;
@@ -533,8 +518,6 @@
   background: rgba(14, 14, 14, 0.3);
   background-color: rgba(14, 14, 14, 0.3);
   border: 1px solid var(--home-glass-border);
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border-radius: 18px;
   display: flex;
   align-items: center;

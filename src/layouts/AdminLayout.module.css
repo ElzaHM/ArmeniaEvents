@@ -52,12 +52,14 @@
 .content :global([class*="pageHeader"]) {
   padding: 20px 24px !important;
   border-radius: 16px;
-  backdrop-filter: blur(32px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
   transition:
     background 0.35s ease,
     box-shadow 0.35s ease,
     border-color 0.35s ease;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 :global([data-theme="dark"]) .content :global([class*="pageHeader"]) {

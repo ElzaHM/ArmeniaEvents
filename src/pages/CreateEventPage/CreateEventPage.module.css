@@ -53,8 +53,6 @@
 .formCard, .previewCard {
   background: rgba(14, 14, 14, 0.3) !important;
   background-color: rgba(14, 14, 14, 0.3) !important;
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   padding: 16px 20px;
@@ -190,8 +188,6 @@
   height: fit-content;
   background: rgba(14, 14, 14, 0.3) !important;
   background-color: rgba(14, 14, 14, 0.3) !important;
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   padding: 20px 25px;
@@ -206,8 +202,6 @@
 .eventCardPreview {
   background: rgba(14, 14, 14, 0.3);
   background-color: rgba(14, 14, 14, 0.3);
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1.5px solid #c08b46; /* Live effect border */
   border-radius: 24px;
   overflow: hidden;
@@ -255,7 +249,6 @@
   bottom: 12px;
   right: 12px;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
   color: white;
   padding: 4px 12px;
   border-radius: 20px;
@@ -372,8 +365,6 @@
   box-shadow:
     0 0 0 0.3px rgba(255, 255, 255, 0.55),
     0 2px 15px rgba(0, 0, 0, 0.06) !important;
-  backdrop-filter: blur(20px) saturate(1.5) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
 }
 
 [data-theme='light'] .pageWrapper .cardHeader,

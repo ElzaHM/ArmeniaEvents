@@ -5,8 +5,6 @@
   overflow: hidden;
   background: var(--home-search-bg);
   background-color: var(--glass-surface-bg, var(--home-search-bg));
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid var(--home-search-border);
   padding: 6px 6px 6px 15px;
   border-radius: 16px;
@@ -33,8 +31,6 @@
   background: var(--home-search-bg) !important;
   border: 0.1px solid rgba(255, 255, 255, 0.5) !important;
   box-shadow: 0 0 0 0.3px rgba(255, 255, 255, 0.4) !important;
-  backdrop-filter: blur(16px) saturate(1.3);
-  -webkit-backdrop-filter: blur(16px) saturate(1.3);
 }
 
 [data-theme='light'] .searchBar:hover,

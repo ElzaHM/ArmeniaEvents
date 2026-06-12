@@ -68,7 +68,7 @@ export default function CreateEventForm({
   return (
     <Space orientation="vertical" size={12} style={{width: "100%"}}>
       {/* Information Section */}
-      <div className={styles.formCard}>
+      <div className={`${styles.formCard} glassBlur`}>
         <Title level={5} className={styles.cardHeader}>
           <InfoCircleOutlined className={styles.headerIcon} /> Information
         </Title>
@@ -103,7 +103,7 @@ export default function CreateEventForm({
       </div>
 
       {/* Date & Location Section */}
-      <div className={styles.formCard}>
+      <div className={`${styles.formCard} glassBlur`}>
         <Title level={5} className={styles.cardHeader}>
           <CalendarOutlined className={styles.headerIcon} /> Date & Location
         </Title>
@@ -173,7 +173,7 @@ export default function CreateEventForm({
       </div>
 
       {/* Organizer Section */}
-      <div className={styles.formCard}>
+      <div className={`${styles.formCard} glassBlur`}>
         <Title level={5} className={styles.cardHeader}>
           <UserOutlined className={styles.headerIcon} /> Organizer
         </Title>
@@ -183,7 +183,7 @@ export default function CreateEventForm({
       </div>
 
       {/* Pricing Section */}
-      <div className={styles.formCard}>
+      <div className={`${styles.formCard} glassBlur`}>
         <Title level={5} className={styles.cardHeader}>
           <DollarOutlined className={styles.headerIcon} /> Pricing
         </Title>
@@ -223,7 +223,7 @@ export default function CreateEventForm({
       </div>
 
       {/* Single Image Upload Section */}
-      <div className={styles.formCard}>
+      <div className={`${styles.formCard} glassBlur`}>
         <Title level={5} className={styles.cardHeader}>
           <InboxOutlined className={styles.headerIcon} /> Event Image
         </Title>

@@ -40,15 +40,19 @@
 }
 
 [data-theme="dark"] .headerScrolled {
-  backdrop-filter: blur(25px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
   background: rgba(15, 15, 18, 0.45);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 [data-theme="light"] .headerScrolled {
-  backdrop-filter: blur(40px) saturate(200%) !important;
-  -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
   background: rgba(42, 39, 43, 0.5);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 .sidebarToggle {
@@ -86,13 +90,15 @@
 :global(.ant-input-affix-wrapper).searchInput,
 .actionBox,
 .userSnippet {
-  backdrop-filter: blur(15px) !important;
-  -webkit-backdrop-filter: blur(15px) !important;
   border-radius: 10px !important;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease !important;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 [data-theme="dark"] :global(.ant-input-affix-wrapper).searchInput,
@@ -395,9 +401,11 @@
   height: 42px !important;
   padding: 0 !important;
   border-radius: 10px !important;
-  backdrop-filter: blur(15px) !important;
-  -webkit-backdrop-filter: blur(15px) !important;
   transition: all 0.3s ease !important;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 [data-theme="dark"] .notificationBellButton {
