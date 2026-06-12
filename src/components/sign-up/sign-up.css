@@ -32,11 +32,12 @@
 }
 
 [data-theme='dark'] .sign-up-page .sign-up-panel {
-  background: rgba(14, 14, 14, 0.6) !important;
+  background: rgba(14, 14, 14, 0.3) !important;
+  background-color: rgba(14, 14, 14, 0.3) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow: none !important;
-  backdrop-filter: blur(25px) !important;
-  -webkit-backdrop-filter: blur(25px) !important;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 .sign-up-page .auth-illustration {

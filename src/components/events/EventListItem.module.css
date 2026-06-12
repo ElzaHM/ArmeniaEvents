@@ -10,6 +10,7 @@
   box-shadow: var(--home-card-shadow);
   transition: border-color 0.2s ease;
   backdrop-filter: blur(16px) saturate(1.8) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
   background-color: var(--events-card-bg);
   border-color: var(--events-card-border) !important;
   box-shadow: var(--events-card-shadow);

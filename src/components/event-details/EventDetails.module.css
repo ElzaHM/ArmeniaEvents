@@ -28,20 +28,6 @@
   padding-bottom: 0 !important;
 }
 
-.detailsPage::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 0;
-  pointer-events: none;
-}
-
-.detailsPage > * {
-  position: relative;
-  z-index: 1;
-}
-
 .backBar {
   padding-top: 96px;
   padding-bottom: 20px;
