@@ -8,6 +8,7 @@
 .card {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   padding: 24px;
   background: var(--admin-card-bg);
   border: 1px solid var(--admin-border);
@@ -94,47 +95,90 @@
   color: #ef4444;
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 1024px) and (max-width: 1279px) {
   .grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
     margin-bottom: 24px;
   }
 
   .card {
-    padding: 20px;
+    padding: 16px 14px;
+  }
+
+  .topRow {
+    margin-bottom: 14px;
+    gap: 10px;
+  }
+
+  .iconWrap {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 10px;
+  }
+
+  .label {
+    font-size: 12px;
   }
 
   .value {
     font-size: 24px;
   }
+
+  .trend {
+    padding-top: 12px;
+    font-size: 11px;
+  }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
   .grid {
-    margin-bottom: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .card {
+    padding: 14px 16px;
   }
 
   .topRow {
-    margin-bottom: 16px;
-    gap: 12px;
+    margin-bottom: 12px;
+    gap: 10px;
   }
 
   .iconWrap {
-    width: 44px;
-    height: 44px;
-    font-size: 20px;
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+    border-radius: 10px;
+  }
+
+  .label {
+    font-size: 11px;
+    white-space: normal;
+    line-height: 1.25;
+  }
+
+  .value {
+    font-size: 22px;
+  }
+
+  .trend {
+    padding-top: 10px;
+    font-size: 10px;
   }
 }
 
 @media (max-height: 800px) {
   .grid {
-    gap: 14px;
-    margin-bottom: 18px;
+    gap: 12px;
+    margin-bottom: 16px;
   }
 
   .card {
-    padding: 18px;
+    padding: 14px 16px;
   }
 
   .value {
@@ -144,26 +188,77 @@
 
 @media (max-width: 640px) {
   .grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-bottom: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
   }
 
   .card {
-    padding: 16px;
+    padding: 12px 14px;
+    border-radius: 12px;
+  }
+
+  .topRow {
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+
+  .iconWrap {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+    border-radius: 8px;
   }
 
   .label {
+    font-size: 10px;
     white-space: normal;
-    font-size: 12px;
+    line-height: 1.2;
   }
 
   .value {
-    font-size: 22px;
+    font-size: 20px;
+    line-height: 1.05;
   }
 
   .trend {
-    padding-top: 12px;
-    font-size: 11px;
+    padding-top: 8px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .card {
+    padding: 10px 12px;
+  }
+
+  .topRow {
+    margin-bottom: 8px;
+    gap: 6px;
+  }
+
+  .iconWrap {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .label {
+    font-size: 9px;
+  }
+
+  .value {
+    font-size: 20px;
+  }
+
+  .trend {
+    padding-top: 6px;
+    font-size: 9px;
   }
 }

@@ -16,6 +16,11 @@ import {useAdminUsers} from "../../../hooks/queries/useAdminUsers";
 
 import styles from "./AdminSearchPage.module.css";
 
+const WRAP_CELL_PROPS = {
+  className: "admin-table-wrap-cell",
+  style: {whiteSpace: "normal" as const, wordBreak: "break-word" as const},
+};
+
 const ROLE_COLORS: Record<AdminUserRole, string> = {
   super_admin: "gold",
   admin: "blue",
@@ -62,6 +67,8 @@ export default function AdminSearchPage() {
     {
       title: "Event",
       key: "title",
+      width: 260,
+      onCell: () => WRAP_CELL_PROPS,
       render: (_, record) => (
         <div className={styles.eventCell}>
           <AdminEventImage
@@ -69,27 +76,66 @@ export default function AdminSearchPage() {
             alt=""
             className={styles.thumbnail}
           />
-          <span>{record.title}</span>
+          <span className={styles.clampTwoLines}>{record.title}</span>
         </div>
       ),
     },
-    {title: "Date", dataIndex: "date", key: "date", responsive: ["md"]},
-    {title: "Category", dataIndex: "category", key: "category", responsive: ["md"]},
-    {title: "Location", dataIndex: "location", key: "location", responsive: ["md"]},
+    {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+      width: 120,
+      responsive: ["md"],
+      onCell: () => WRAP_CELL_PROPS,
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      width: 140,
+      responsive: ["md"],
+      onCell: () => WRAP_CELL_PROPS,
+      render: (category: string) => (
+        <span className={styles.clampTwoLines}>{category}</span>
+      ),
+    },
+    {
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+      width: 250,
+      responsive: ["md"],
+      onCell: () => WRAP_CELL_PROPS,
+      render: (location: string) => (
+        <span className={styles.locationText}>{location}</span>
+      ),
+    },
   ];
 
   const userColumns: TableColumnsType<AdminUser> = [
     {
       title: "Name",
       key: "name",
+      width: 200,
+      onCell: () => WRAP_CELL_PROPS,
       render: (_, record) => (
         <div className={styles.userCell}>
           <img src={record.avatarUrl} alt="" className={styles.avatar} />
-          <span>{record.name}</span>
+          <span className={styles.clampTwoLines}>{record.name}</span>
         </div>
       ),
     },
-    {title: "Email", dataIndex: "email", key: "email", responsive: ["md"]},
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      width: 250,
+      responsive: ["md"],
+      onCell: () => WRAP_CELL_PROPS,
+      render: (email: string) => (
+        <span className={styles.clampTwoLines}>{email}</span>
+      ),
+    },
     {
       title: "Role",
       dataIndex: "role",

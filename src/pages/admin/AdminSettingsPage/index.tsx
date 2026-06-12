@@ -32,7 +32,7 @@ export default function AdminSettingsPage() {
           </Form.Item>
           <Form.Item label="Default Language" name="defaultLanguage">
             <Select
-              popupClassName="admin-select-dropdown"
+              classNames={{ popup: { root: 'admin-select-dropdown' } }}
               options={[
                 { value: 'en', label: 'English' },
                 { value: 'hy', label: 'Armenian' },
@@ -42,7 +42,7 @@ export default function AdminSettingsPage() {
           </Form.Item>
           <Form.Item label="Timezone" name="timezone">
             <Select
-              popupClassName="admin-select-dropdown"
+              classNames={{ popup: { root: 'admin-select-dropdown' } }}
               options={[
                 { value: 'Asia/Yerevan', label: 'Asia/Yerevan (GMT+4)' },
                 { value: 'UTC', label: 'UTC' },

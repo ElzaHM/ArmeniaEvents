@@ -41,7 +41,7 @@
 .content {
   flex: 1 1 auto;
   min-height: 0;
-  padding: 24px;
+  padding: 24px !important;
   overflow-x: hidden;
   overflow-y: auto;
   width: 100%;
@@ -50,7 +50,11 @@
 }
 
 .content :global([class*="pageHeader"]) {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
   padding: 20px 24px !important;
+  margin-bottom: 24px !important;
   border-radius: 16px;
   backdrop-filter: blur(32px) saturate(180%);
   -webkit-backdrop-filter: blur(32px) saturate(180%);
@@ -98,36 +102,38 @@
   }
 
   .content {
-    padding: 16px;
+    padding: 16px !important;
   }
 
   .content :global([class*="pageHeader"]) {
     padding: 16px 20px !important;
-    margin-bottom: 0 !important;
+    margin-bottom: 24px !important;
   }
 }
 
 @media (max-width: 768px) {
   .content {
-    padding: 14px;
+    padding: 16px !important;
   }
 
   .content :global([class*="pageHeader"]) {
     padding: 14px 16px !important;
+    margin-bottom: 20px !important;
     border-radius: 14px;
   }
 }
 
 @media (max-height: 800px) {
   .content {
-    padding-top: 14px;
-    padding-bottom: 14px;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
   }
 }
 
 @media (max-width: 640px) {
   .content :global([class*="pageHeader"]) {
-    padding: 16px 20px !important;
+    padding: 14px 16px !important;
+    margin-bottom: 20px !important;
   }
 
   :global([data-theme="light"]) .content :global([class*="pageHeader"]) {
@@ -143,6 +149,6 @@
 
 @media (max-width: 480px) {
   .content {
-    padding: 12px;
+    padding: 16px !important;
   }
 }

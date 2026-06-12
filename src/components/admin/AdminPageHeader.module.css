@@ -1,7 +1,8 @@
 .pageHeader {
-  margin-bottom: 32px;
+  display: block;
   width: fit-content;
   max-width: 100%;
+  margin-bottom: 24px;
   border-radius: 16px;
   transition:
     background 0.35s ease,
@@ -38,6 +39,7 @@
   color: var(--admin-text);
   letter-spacing: -0.02em;
   line-height: 1.2;
+  white-space: normal;
 }
 
 .pageTitle {
@@ -53,12 +55,13 @@
   font-size: 16px;
   font-weight: 600;
   color: var(--admin-text-secondary);
+  line-height: 1.45;
+  max-width: 52ch;
 }
 
 @media (max-width: 1024px) {
   .pageHeader {
     margin-bottom: 24px;
-    width: 100%;
   }
 
   .greeting {

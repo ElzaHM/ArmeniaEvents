@@ -15,6 +15,10 @@
   flex-wrap: wrap;
 }
 
+.headerRow :global([class*="pageHeader"]) {
+  margin-bottom: 0 !important;
+}
+
 .headerRow > :first-child {
   flex: 0 1 auto;
   min-width: 0;

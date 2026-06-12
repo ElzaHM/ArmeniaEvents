@@ -5,17 +5,19 @@
   min-height: 0;
 }
 
+:global(.admin-event-detail-modal) :global(.ant-modal-body) {
+  padding: 24px !important;
+}
+
 .scrollContent {
   display: flex;
   flex-direction: column;
   gap: 20px;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-gutter: stable;
   flex: 1 1 auto;
   min-height: 0;
-  padding-right: 2px;
-  margin-top: 8px;
+  margin-top: 0;
 }
 
 .header {
@@ -24,6 +26,7 @@
   gap: 10px;
   margin: 0;
   padding: 0;
+  flex-shrink: 0;
 }
 
 .title {
@@ -33,6 +36,7 @@
   line-height: 1.35;
   white-space: normal;
   word-break: break-word;
+  color: var(--admin-gold) !important;
 }
 
 .metaTags {
@@ -44,17 +48,72 @@
 .heroImage {
   display: block;
   width: 100%;
-  max-height: 240px;
+  aspect-ratio: 4 / 3;
+  max-height: 200px;
+  height: auto;
   margin: 0;
   border-radius: 14px;
   object-fit: cover;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.grid {
+.mainLayout {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+  gap: 16px 20px;
+  align-items: stretch;
+}
+
+.leftStack,
+.rightStack {
+  display: flex;
+  flex-direction: column;
   gap: 16px;
+  min-width: 0;
+  height: 100%;
+  align-self: stretch;
+}
+
+@media (min-width: 600px) {
+  .scrollContent {
+    overflow: hidden;
+  }
+
+  .mainLayout {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .leftStack,
+  .rightStack {
+    min-height: 100%;
+  }
+
+  .blockDescription {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blockDescription .description {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .blockOrganizer,
+  .blockEventInfo {
+    margin-top: auto;
+    flex-shrink: 0;
+  }
+
+  .blockTags,
+  .blockSourceLabel,
+  .blockSchedule,
+  .blockLocation {
+    flex-shrink: 0;
+  }
 }
 
 .section {
@@ -157,34 +216,13 @@
   margin: 0;
   line-height: 1.6;
   white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .tagList {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.linkRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: flex-start;
-}
-
-.linkRow :global(.ant-btn) {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  color: #ffffff !important;
-  font-weight: 600;
-  box-shadow: none !important;
-}
-
-.linkRow :global(.ant-btn):hover,
-.linkRow :global(.ant-btn):focus-visible {
-  background: rgba(255, 255, 255, 0.14) !important;
-  border-color: rgba(255, 255, 255, 0.28) !important;
-  color: #ffffff !important;
 }
 
 .sourceLabel {
@@ -194,37 +232,815 @@
 
 .footer {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
   flex-shrink: 0;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--admin-table-border);
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 20px !important;
+  padding: 16px 0 0 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.footerStart {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 12px;
+}
+
+.footerStart :global(.ant-btn) {
+  margin: 0 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  box-shadow: none !important;
+  transition:
+    background-color 0.22s ease,
+    border-color 0.22s ease,
+    color 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+:global(.admin-event-detail-modal) .footerStart :global(.ant-btn):hover,
+:global(.admin-event-detail-modal) .footerStart :global(.ant-btn):focus-visible,
+.footerStart :global(.ant-btn):hover,
+.footerStart :global(.ant-btn):focus-visible {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  color: #ffffff !important;
+}
+
+.footerActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-left: auto;
+}
+
+.footerActionGroup {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footerActionGroup :global(.ant-btn) {
+  margin: 0 !important;
+  transition:
+    background-color 0.22s ease,
+    border-color 0.22s ease,
+    color 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .footer :global(.ant-btn) {
   min-width: 120px;
+  margin: 0 !important;
 }
 
-@media (max-width: 640px) {
-  .modalShell {
-    max-height: calc(85vh - 56px);
+:global(.admin-event-detail-modal) .footerActionGroup :global(.ant-btn-dangerous):hover,
+:global(.admin-event-detail-modal) .footerActionGroup :global(.ant-btn-dangerous):focus-visible,
+:global(.admin-event-detail-modal) .footerActionGroup :global(.ant-btn-dangerous):active {
+  background: #ef4444 !important;
+  background-color: #ef4444 !important;
+  border-color: #ef4444 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35) !important;
+}
+
+:global(.admin-event-detail-modal) .footerActionGroup :global(.admin-btn-edit):hover,
+:global(.admin-event-detail-modal) .footerActionGroup :global(.admin-btn-edit):focus-visible,
+:global(.admin-event-detail-modal) .footerActionGroup :global(.ant-btn-primary.admin-btn-edit):hover,
+:global(.admin-event-detail-modal) .footerActionGroup :global(.ant-btn-primary.admin-btn-edit):focus-visible {
+  background: #ffd27a !important;
+  background-color: #ffd27a !important;
+  border-color: #ffd27a !important;
+  color: #14161c !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(255, 210, 122, 0.32) !important;
+}
+
+:global(.admin-event-detail-modal) .footerActionGroup :global(.admin-btn-edit):active,
+:global(.admin-event-detail-modal) .footerActionGroup :global(.ant-btn-primary.admin-btn-edit):active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 210, 122, 0.24) !important;
+}
+
+@media (max-width: 599px) {
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-content) {
+    padding: 14px !important;
   }
 
-  .grid {
-    grid-template-columns: 1fr;
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-header) {
+    padding: 0 0 8px !important;
+    margin: 0 !important;
+  }
+
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-body) {
+    padding: 0 !important;
+  }
+
+  :global(.admin-event-detail-modal) :global(.ant-modal-footer) {
+    padding: 8px 0 0 !important;
+  }
+
+  .modalShell {
+    max-height: calc(85vh - 48px);
+  }
+
+  .scrollContent {
+    gap: 10px;
+    overflow-y: auto;
+    scrollbar-gutter: stable both-edges;
+  }
+
+  .header {
+    gap: 6px;
+  }
+
+  .title {
+    font-size: 20px;
+    line-height: 1.25;
+  }
+
+  .metaTags {
+    gap: 6px;
+  }
+
+  .mainLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .leftStack,
+  .rightStack {
+    display: contents;
+  }
+
+  .blockImage {
+    order: 1;
+  }
+
+  .blockSchedule {
+    order: 2;
+  }
+
+  .blockLocation {
+    order: 3;
+  }
+
+  .blockEventInfo {
+    order: 4;
+  }
+
+  .blockDescription {
+    order: 5;
+    flex: none;
+  }
+
+  .blockTags {
+    order: 6;
+  }
+
+  .blockSourceLabel {
+    order: 7;
+  }
+
+  .blockOrganizer {
+    order: 8;
+    margin-top: 0;
+  }
+
+  .blockEventInfo {
+    margin-top: 0;
+  }
+
+  .heroImage {
+    height: 120px;
+    max-height: 120px;
+    aspect-ratio: auto;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .section {
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .sectionTitle {
+    margin: 0 0 6px;
+    font-size: 11px;
+  }
+
+  .detailList {
+    gap: 6px;
   }
 
   .detailRow {
     grid-template-columns: 1fr;
-    gap: 4px;
+    gap: 3px;
+  }
+
+  .infoBadges {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .descriptionSection,
+  .tagsSection {
+    gap: 6px;
+    padding: 10px;
+    border-radius: 10px;
   }
 
   .footer {
+    margin-top: 12px !important;
+    padding: 10px 0 0 !important;
+    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .footerStart {
+    width: 100%;
+  }
+
+  .footerActions {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .footerActionGroup {
+    width: 100%;
     flex-direction: column-reverse;
+    gap: 8px;
   }
 
   .footer :global(.ant-btn) {
     width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 599px) and (max-height: 840px) {
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-content) {
+    padding: 12px !important;
+  }
+
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-header) {
+    padding: 0 0 6px !important;
+  }
+
+  :global(.admin-event-detail-modal) :global(.ant-modal-footer) {
+    padding: 6px 0 0 !important;
+  }
+
+  .modalShell {
+    max-height: calc(93vh - 32px);
+  }
+
+  .scrollContent {
+    gap: 8px;
+  }
+
+  .header {
+    gap: 4px;
+  }
+
+  .heroImage {
+    height: 115px;
+    max-height: 115px;
+  }
+
+  .title {
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .metaTags {
+    gap: 4px;
+  }
+
+  .mainLayout {
+    gap: 8px;
+  }
+
+  .section {
+    padding: 10px;
+  }
+
+  .sectionTitle {
+    margin: 0 0 5px;
+    font-size: 10px;
+  }
+
+  .detailList {
+    gap: 5px;
+  }
+
+  .infoBadges {
+    gap: 5px;
+    margin-bottom: 6px;
+  }
+
+  .descriptionSection,
+  .tagsSection {
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .description {
+    font-size: 12px;
+    line-height: 1.45;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+
+  .footer {
+    margin-top: 10px !important;
+    padding: 8px 0 0 !important;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 599px) and (max-height: 730px) {
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-content) {
+    padding: 12px !important;
+  }
+
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-header) {
+    padding: 0 0 4px !important;
+  }
+
+  :global(.admin-event-detail-modal) :global(.ant-modal-footer) {
+    padding: 4px 0 0 !important;
+  }
+
+  .modalShell {
+    max-height: calc(95vh - 28px);
+  }
+
+  .scrollContent {
+    gap: 8px;
+  }
+
+  .header {
+    gap: 3px;
+  }
+
+  .heroImage {
+    height: 100px;
+    max-height: 100px;
+    border-radius: 8px;
+  }
+
+  .title {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  .metaTags {
+    gap: 4px;
+  }
+
+  .mainLayout {
+    gap: 8px;
+  }
+
+  .section {
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .sectionTitle {
+    margin: 0 0 4px;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+
+  .detailList {
+    gap: 4px;
+  }
+
+  .detailRow {
+    gap: 2px;
+  }
+
+  .detailRow dt {
+    font-size: 10px;
+  }
+
+  .detailRow dd {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .infoBadges {
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  .organizerBlock {
+    gap: 5px;
+  }
+
+  .organizerAvatar,
+  .organizerAvatarFallback {
+    width: 26px;
+    height: 26px;
+    font-size: 10px;
+  }
+
+  .organizerName {
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .descriptionSection,
+  .tagsSection {
+    gap: 4px;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .description {
+    font-size: 11px;
+    line-height: 1.4;
+    max-height: 96px;
+    overflow-y: auto;
+  }
+
+  .footer {
+    margin-top: 8px !important;
+    padding: 6px 0 0 !important;
+    gap: 8px;
+  }
+
+  .footerStart :global(.ant-btn) {
+    height: 30px;
+    padding-inline: 10px;
+    font-size: 11px;
+  }
+
+  .footer :global(.ant-btn) {
+    height: 32px;
+    padding-inline: 10px;
+    font-size: 12px;
+  }
+}
+
+/* ===== Vertical height responsiveness (short laptop / compact viewports) ===== */
+
+@media (max-height: 840px) {
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-content) {
+    max-height: 93vh;
+    padding: 12px !important;
+  }
+
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-header) {
+    padding: 0 0 6px !important;
+    margin: 0 !important;
+  }
+
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-body) {
+    padding: 0 !important;
+  }
+
+  :global(.admin-event-detail-modal) :global(.ant-modal-footer) {
+    padding: 6px 0 0 !important;
+  }
+
+  :global(.admin-event-detail-modal) footer {
+    margin-top: 10px !important;
+    padding: 8px 0 0 !important;
+  }
+
+  .footer {
+    margin-top: 10px !important;
+    padding: 8px 0 0 !important;
+    gap: 8px;
+  }
+
+  :global(.admin-event-detail-modal) :global(.ant-modal-close) {
+    top: 10px;
+    inset-inline-end: 12px;
+    width: 32px;
+    height: 32px;
+  }
+
+  :global(.admin-event-detail-modal) :global(.ant-tag) {
+    padding: 0 7px;
+    font-size: 10px;
+    line-height: 1.3;
+  }
+
+  .modalShell {
+    max-height: calc(93vh - 32px);
+  }
+
+  .scrollContent {
+    gap: 8px;
+    margin-top: 0;
+  }
+
+  .header {
+    gap: 4px;
+  }
+
+  .heroImage {
+    height: 115px;
+    max-height: 115px;
+    aspect-ratio: auto;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .title {
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .metaTags {
+    gap: 4px;
+  }
+
+  .mainLayout {
+    gap: 8px;
+  }
+
+  .leftStack,
+  .rightStack {
+    gap: 8px;
+  }
+
+  .section {
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .sectionTitle {
+    margin: 0 0 5px;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  .detailList {
+    gap: 5px;
+  }
+
+  .detailRow {
+    grid-template-columns: 80px 1fr;
+    gap: 5px;
+  }
+
+  .detailRow dt {
+    font-size: 10px;
+  }
+
+  .detailRow dd {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .infoBadges {
+    gap: 5px;
+    margin-bottom: 6px;
+  }
+
+  .organizerBlock {
+    gap: 6px;
+  }
+
+  .organizerAvatar,
+  .organizerAvatarFallback {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+
+  .organizerName {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+
+  .descriptionSection,
+  .tagsSection {
+    gap: 5px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .description {
+    font-size: 12px;
+    line-height: 1.45;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+
+  .tagList {
+    gap: 5px;
+  }
+
+  .footerActionGroup {
+    gap: 8px;
+  }
+
+  .footerStart :global(.ant-btn) {
+    height: 32px;
+    padding-inline: 12px;
+    font-size: 12px;
+  }
+
+  .sourceLabel {
+    font-size: 12px;
+  }
+
+  .footer :global(.ant-btn) {
+    min-width: 100px;
+    height: 34px;
+    padding-inline: 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-height: 730px) {
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-content) {
+    max-height: 95vh;
+    padding: 12px !important;
+  }
+
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-header) {
+    padding: 0 0 4px !important;
+    margin: 0 !important;
+  }
+
+  :global(.ant-modal-root:has(.admin-event-detail-modal)) :global(.ant-modal-body) {
+    padding: 0 !important;
+  }
+
+  :global(.admin-event-detail-modal) :global(.ant-modal-footer) {
+    padding: 4px 0 0 !important;
+  }
+
+  :global(.admin-event-detail-modal) footer {
+    margin-top: 8px !important;
+    padding: 6px 0 0 !important;
+  }
+
+  .footer {
+    margin-top: 8px !important;
+    padding: 6px 0 0 !important;
+    gap: 8px;
+  }
+
+  :global(.admin-event-detail-modal) :global(.ant-modal-close) {
+    top: 8px;
+    inset-inline-end: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  :global(.admin-event-detail-modal) :global(.ant-tag) {
+    padding: 0 6px;
+    font-size: 9px;
+    line-height: 1.25;
+  }
+
+  .modalShell {
+    max-height: calc(95vh - 28px);
+  }
+
+  .scrollContent {
+    gap: 8px;
+    margin-top: 0;
+  }
+
+  .header {
+    gap: 3px;
+  }
+
+  .heroImage {
+    height: 100px;
+    max-height: 100px;
+    aspect-ratio: auto;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .title {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  .metaTags {
+    gap: 4px;
+  }
+
+  .mainLayout {
+    gap: 8px;
+  }
+
+  .leftStack,
+  .rightStack {
+    gap: 8px;
+  }
+
+  .section {
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .sectionTitle {
+    margin: 0 0 4px;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+
+  .detailList {
+    gap: 4px;
+  }
+
+  .detailRow {
+    grid-template-columns: 72px 1fr;
+    gap: 4px;
+  }
+
+  .detailRow dt {
+    font-size: 9px;
+  }
+
+  .detailRow dd {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .infoBadges {
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  .organizerBlock {
+    gap: 5px;
+  }
+
+  .organizerAvatar,
+  .organizerAvatarFallback {
+    width: 26px;
+    height: 26px;
+    font-size: 10px;
+  }
+
+  .organizerName {
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .descriptionSection,
+  .tagsSection {
+    gap: 4px;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .description {
+    font-size: 11px;
+    line-height: 1.4;
+    max-height: 96px;
+    overflow-y: auto;
+  }
+
+  .tagList {
+    gap: 4px;
+  }
+
+  .footerActionGroup {
+    gap: 8px;
+  }
+
+  .footerStart :global(.ant-btn) {
+    height: 30px;
+    padding-inline: 10px;
+    font-size: 11px;
+  }
+
+  .sourceLabel {
+    font-size: 11px;
+  }
+
+  .footer :global(.ant-btn) {
+    min-width: 88px;
+    height: 32px;
+    padding-inline: 10px;
+    font-size: 12px;
   }
 }

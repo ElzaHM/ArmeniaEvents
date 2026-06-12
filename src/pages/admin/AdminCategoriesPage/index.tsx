@@ -355,144 +355,59 @@ export default function AdminCategoriesPage() {
         footer={null}
         onCancel={closeDetailModal}
         className="admin-detail-modal"
-        width={560}
+        rootClassName={styles.categoryDetailModal}
+        width={420}
         centered
         destroyOnHidden>
         {viewingCategory ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <header style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                {(() => {
-                  const Icon = getCategoryIcon(viewingCategory.name);
-                  return (
-                    <Icon
-                      aria-hidden
-                      style={{ color: 'var(--admin-gold)', fontSize: 22, flexShrink: 0 }}
-                    />
-                  );
-                })()}
-                <h2
-                  style={{
-                    margin: 0,
-                    fontSize: 24,
-                    fontWeight: 700,
-                    lineHeight: 1.35,
-                    color: 'var(--admin-text)',
-                    wordBreak: 'break-word',
-                  }}>
-                  {viewingCategory.name}
-                </h2>
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                <Tag color={viewingCategory.isActive ? 'success' : 'default'}>
-                  {viewingCategory.isActive ? 'Active' : 'Disabled'}
-                </Tag>
-                <Tag color="gold">{viewingCategory.eventCount.toLocaleString()} events</Tag>
-              </div>
-            </header>
+          <div className={styles.modalShell}>
+            <div className={styles.scrollContent}>
+              <header className={styles.detailHeader}>
+                <div className={styles.detailTitleRow}>
+                  {(() => {
+                    const Icon = getCategoryIcon(viewingCategory.name);
+                    return (
+                      <Icon aria-hidden className={styles.detailIcon} />
+                    );
+                  })()}
+                  <h2 className={styles.detailTitle}>{viewingCategory.name}</h2>
+                </div>
+                <div className={styles.metaTags}>
+                  <Tag color={viewingCategory.isActive ? 'success' : 'default'}>
+                    {viewingCategory.isActive ? 'Active' : 'Disabled'}
+                  </Tag>
+                  <Tag color="gold">{viewingCategory.eventCount.toLocaleString()} events</Tag>
+                </div>
+              </header>
 
-            <section className={styles.detailSection}>
-              <dl style={{ display: 'flex', flexDirection: 'column', gap: 12, margin: 0 }}>
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '92px 1fr',
-                    gap: 10,
-                    alignItems: 'start',
-                  }}>
-                  <dt
-                    style={{
-                      margin: 0,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color: 'var(--admin-text-muted)',
-                    }}>
-                    Slug
-                  </dt>
-                  <dd style={{ margin: 0, color: 'var(--admin-text)', wordBreak: 'break-word' }}>
-                    {viewingCategory.slug}
-                  </dd>
-                </div>
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '92px 1fr',
-                    gap: 10,
-                    alignItems: 'start',
-                  }}>
-                  <dt
-                    style={{
-                      margin: 0,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color: 'var(--admin-text-muted)',
-                    }}>
-                    Status
-                  </dt>
-                  <dd style={{ margin: 0, color: 'var(--admin-text)' }}>
-                    {viewingCategory.isActive ? 'Enabled' : 'Disabled'}
-                  </dd>
-                </div>
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '92px 1fr',
-                    gap: 10,
-                    alignItems: 'start',
-                  }}>
-                  <dt
-                    style={{
-                      margin: 0,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color: 'var(--admin-text-muted)',
-                    }}>
-                    Events
-                  </dt>
-                  <dd style={{ margin: 0, color: 'var(--admin-text)' }}>
-                    {viewingCategory.eventCount.toLocaleString()}
-                  </dd>
-                </div>
-              </dl>
-            </section>
-
-            {viewingCategory.description ? (
-              <section>
-                <h3
-                  style={{
-                    margin: '0 0 8px',
-                    fontSize: 12,
-                    fontWeight: 700,
-                    letterSpacing: '0.04em',
-                    textTransform: 'uppercase',
-                    color: 'var(--admin-text-muted)',
-                  }}>
-                  Description
-                </h3>
-                <p
-                  style={{
-                    margin: 0,
-                    color: 'var(--admin-text-secondary)',
-                    lineHeight: 1.5,
-                    whiteSpace: 'pre-wrap',
-                    wordBreak: 'break-word',
-                  }}>
-                  {viewingCategory.description}
-                </p>
+              <section className={styles.infoCard}>
+                <h3 className={styles.cardTitle}>Category Details</h3>
+                <dl className={styles.detailList}>
+                  <div className={styles.detailRow}>
+                    <dt>Slug</dt>
+                    <dd>{viewingCategory.slug}</dd>
+                  </div>
+                  <div className={styles.detailRow}>
+                    <dt>Status</dt>
+                    <dd>{viewingCategory.isActive ? 'Enabled' : 'Disabled'}</dd>
+                  </div>
+                  <div className={styles.detailRow}>
+                    <dt>Events</dt>
+                    <dd>{viewingCategory.eventCount.toLocaleString()}</dd>
+                  </div>
+                </dl>
               </section>
-            ) : null}
 
-            <footer
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                gap: 12,
-                marginTop: 4,
-                paddingTop: 16,
-                borderTop: '1px solid var(--admin-border)',
-              }}>
+              {viewingCategory.description ? (
+                <section className={styles.infoCard}>
+                  <h3 className={styles.cardTitle}>Description</h3>
+                  <p className={styles.descriptionText}>{viewingCategory.description}</p>
+                </section>
+              ) : null}
+            </div>
+
+            <footer className={styles.modalFooter}>
               <Button
-                danger
                 className="admin-btn-delete"
                 icon={<DeleteOutlined />}
                 onClick={() => handleDeleteCategory(viewingCategory)}>

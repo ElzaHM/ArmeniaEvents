@@ -33,7 +33,7 @@ const WRAP_CELL_PROPS = {
   style: {whiteSpace: "normal" as const, wordBreak: "break-word" as const},
 };
 
-type EventSectionKey = "all" | "needsReview" | "liveToday" | "upcoming" | "past";
+type EventSectionKey = "all" | "needsReview" | "liveToday" | "upcoming" | "past" | "archived";
 
 type EventSection = {
   key: EventSectionKey;
@@ -48,6 +48,35 @@ function startOfLocalDay(date: Date): Date {
 
 function getEventDate(event: AdminEvent): Date {
   return new Date(event.startDate || event.date);
+}
+
+function filterEventsBySection(events: AdminEvent[], sectionKey: EventSectionKey): AdminEvent[] {
+  if (sectionKey === "all") {
+    return events;
+  }
+
+  const now = new Date();
+  const today = startOfLocalDay(now);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  switch (sectionKey) {
+    case "needsReview":
+      return events.filter((event) => eventNeedsReview(event));
+    case "liveToday":
+      return events.filter((event) => {
+        const eventDate = getEventDate(event);
+        return eventDate >= today && eventDate < tomorrow && event.status === "published";
+      });
+    case "upcoming":
+      return events.filter((event) => getEventDate(event) >= tomorrow);
+    case "past":
+      return events.filter((event) => getEventDate(event) < today);
+    case "archived":
+      return events.filter((event) => event.status === "archived");
+    default:
+      return events;
+  }
 }
 
 export default function AdminEventsPage() {
@@ -127,53 +156,46 @@ export default function AdminEventsPage() {
     setSearchParams(nextParams, { replace: true });
   }, [allEvents, editEventId, isAllLoading, searchParams, setSearchParams]);
 
-  const sections: EventSection[] = useMemo(() => {
-    const now = new Date();
-    const today = startOfLocalDay(now);
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-
-    const needsReview = allEvents.filter((event) => eventNeedsReview(event));
-    const liveToday = allEvents.filter((event) => {
-      const eventDate = getEventDate(event);
-      return eventDate >= today && eventDate < tomorrow && event.status === "published";
-    });
-    const upcoming = allEvents.filter((event) => getEventDate(event) >= tomorrow);
-    const past = allEvents.filter((event) => getEventDate(event) < today);
-
-    return [
+  const sections: EventSection[] = useMemo(
+    () => [
       {
         key: "needsReview",
         title: "Needs Review",
         description: "Drafts and events needing category review",
-        events: needsReview,
+        events: filterEventsBySection(allEvents, "needsReview"),
       },
       {
         key: "liveToday",
         title: "Live Today",
         description: "Events currently happening",
-        events: liveToday,
+        events: filterEventsBySection(allEvents, "liveToday"),
       },
       {
         key: "upcoming",
         title: "Upcoming",
         description: "Approved events ahead",
-        events: upcoming,
+        events: filterEventsBySection(allEvents, "upcoming"),
       },
       {
         key: "past",
         title: "Past",
         description: "Events already finished",
-        events: past,
+        events: filterEventsBySection(allEvents, "past"),
       },
-    ];
-  }, [allEvents]);
+      {
+        key: "archived",
+        title: "Archived",
+        description: "Events removed from active listings",
+        events: filterEventsBySection(allEvents, "archived"),
+      },
+    ],
+    [allEvents],
+  );
 
-  const tableEvents = searchQuery
-    ? searchResults
-    : activeSection === "all"
-      ? allEvents
-      : (sections.find((section) => section.key === activeSection)?.events ?? allEvents);
+  const tableEvents = useMemo(() => {
+    const baseEvents = searchQuery ? searchResults : allEvents;
+    return filterEventsBySection(baseEvents, activeSection);
+  }, [activeSection, allEvents, searchQuery, searchResults]);
 
   const activeSectionTitle =
     activeSection === "all"

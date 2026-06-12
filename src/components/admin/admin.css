@@ -9,8 +9,7 @@
 /* Dark theme — profile dropdown (portaled outside .admin-panel; use literal colors) */
 [data-theme="dark"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu),
 [data-theme="dark"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu) {
-  background: #141416 !important;
-  background-color: #141416 !important;
+  background: var(--ant-modal-content-bg);
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 12px !important;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
@@ -19,12 +18,8 @@
   -webkit-backdrop-filter: none !important;
 }
 
-[data-theme="dark"]
-  :global(.admin-user-dropdown)
-  :global(.ant-dropdown-menu-item),
-[data-theme="dark"]
-  :global(.admin-user-dropdown.ant-dropdown)
-  :global(.ant-dropdown-menu-item),
+[data-theme="dark"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu-item),
+[data-theme="dark"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item),
 [data-theme="dark"]
   :global(.admin-user-dropdown)
   :global(.ant-dropdown-menu-item)
@@ -33,24 +28,18 @@
   :global(.admin-user-dropdown.ant-dropdown)
   :global(.ant-dropdown-menu-item)
   :global(.anticon),
-[data-theme="dark"]
-  :global(.admin-user-dropdown)
-  :global(.ant-dropdown-menu-title-content),
+[data-theme="dark"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu-title-content),
 [data-theme="dark"]
   :global(.admin-user-dropdown.ant-dropdown)
   :global(.ant-dropdown-menu-title-content) {
   color: #ffffff !important;
 }
 
-[data-theme="dark"]
-  :global(.admin-user-dropdown)
-  :global(.ant-dropdown-menu-item:hover),
+[data-theme="dark"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu-item:hover),
 [data-theme="dark"]
   :global(.admin-user-dropdown.ant-dropdown)
   :global(.ant-dropdown-menu-item:hover),
-[data-theme="dark"]
-  :global(.admin-user-dropdown)
-  :global(.ant-dropdown-menu-item-active),
+[data-theme="dark"] :global(.admin-user-dropdown) :global(.ant-dropdown-menu-item-active),
 [data-theme="dark"]
   :global(.admin-user-dropdown.ant-dropdown)
   :global(.ant-dropdown-menu-item-active),
@@ -183,9 +172,7 @@
   box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12) !important;
 }
 
-[data-theme="light"]
-  :global(.admin-user-dropdown.ant-dropdown)
-  :global(.ant-dropdown-menu-item),
+[data-theme="light"] :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu-item),
 [data-theme="light"]
   :global(.admin-user-dropdown.ant-dropdown)
   :global(.ant-dropdown-menu-item)
@@ -461,10 +448,14 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
 
 .admin-panel
   .admin-content
-  :global(.ant-table-wrapper .ant-pagination .ant-pagination-prev .ant-pagination-item-link .anticon),
+  :global(
+    .ant-table-wrapper .ant-pagination .ant-pagination-prev .ant-pagination-item-link .anticon
+  ),
 .admin-panel
   .admin-content
-  :global(.ant-table-wrapper .ant-pagination .ant-pagination-next .ant-pagination-item-link .anticon),
+  :global(
+    .ant-table-wrapper .ant-pagination .ant-pagination-next .ant-pagination-item-link .anticon
+  ),
 .admin-panel
   .admin-content
   :global(.ant-table-wrapper .ant-pagination .ant-pagination-prev .ant-pagination-item-link svg),
@@ -473,7 +464,9 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
   :global(.ant-table-wrapper .ant-pagination .ant-pagination-next .ant-pagination-item-link svg) {
   color: var(--admin-text-muted) !important;
   fill: currentColor !important;
-  transition: color 0.2s ease, fill 0.2s ease;
+  transition:
+    color 0.2s ease,
+    fill 0.2s ease;
 }
 
 .admin-panel
@@ -542,10 +535,14 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
   :global(.ant-table-wrapper .ant-pagination .ant-pagination-disabled .ant-pagination-item-link),
 .admin-panel
   .admin-content
-  :global(.ant-table-wrapper .ant-pagination .ant-pagination-disabled .ant-pagination-item-link .anticon),
+  :global(
+    .ant-table-wrapper .ant-pagination .ant-pagination-disabled .ant-pagination-item-link .anticon
+  ),
 .admin-panel
   .admin-content
-  :global(.ant-table-wrapper .ant-pagination .ant-pagination-disabled .ant-pagination-item-link svg) {
+  :global(
+    .ant-table-wrapper .ant-pagination .ant-pagination-disabled .ant-pagination-item-link svg
+  ) {
   color: rgba(255, 255, 255, 0.28) !important;
   fill: currentColor !important;
   cursor: not-allowed;
@@ -664,16 +661,16 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
 .admin-panel .admin-content :global(.ant-select-disabled .ant-select-selection-item),
 .admin-panel .admin-content :global(.ant-picker-disabled),
 .admin-panel .admin-content :global(.ant-picker-disabled input),
-:global(.admin-detail-modal) :global(.ant-input[disabled]),
-:global(.admin-detail-modal) :global(.ant-input-disabled),
-:global(.admin-detail-modal) :global(.ant-input-affix-wrapper-disabled),
-:global(.admin-detail-modal) :global(.ant-input-affix-wrapper-disabled .ant-input),
-:global(.admin-detail-modal) :global(.ant-input-number-disabled),
-:global(.admin-detail-modal) :global(.ant-input-number-disabled .ant-input-number-input),
-:global(.admin-detail-modal) :global(.ant-select-disabled .ant-select-selector),
-:global(.admin-detail-modal) :global(.ant-select-disabled .ant-select-selection-item),
-:global(.admin-detail-modal) :global(.ant-picker-disabled),
-:global(.admin-detail-modal) :global(.ant-picker-disabled input) {
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input[disabled]),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input-disabled),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input-affix-wrapper-disabled),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input-affix-wrapper-disabled .ant-input),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input-number-disabled),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input-number-disabled .ant-input-number-input),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-disabled .ant-select-selector),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-disabled .ant-select-selection-item),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-picker-disabled),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-picker-disabled input) {
   color: rgba(255, 255, 255, 0.45) !important;
   -webkit-text-fill-color: rgba(255, 255, 255, 0.45) !important;
   background: var(--admin-input-bg) !important;
@@ -686,9 +683,9 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
 .admin-panel .admin-content :global(.ant-select-arrow),
 .admin-panel .admin-content :global(.ant-select-suffix),
 .admin-panel .admin-content :global(.ant-picker-suffix),
-:global(.admin-detail-modal) :global(.ant-select-arrow),
-:global(.admin-detail-modal) :global(.ant-select-suffix),
-:global(.admin-detail-modal) :global(.ant-picker-suffix) {
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-arrow),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-suffix),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-picker-suffix) {
   color: rgba(255, 255, 255, 0.65) !important;
 }
 
@@ -697,19 +694,20 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
 .admin-panel .admin-content :global(.ant-picker-suffix .anticon),
 .admin-panel .admin-content :global(.ant-select-arrow svg),
 .admin-panel .admin-content :global(.ant-picker-suffix svg),
-:global(.admin-detail-modal) :global(.ant-select-arrow .anticon),
-:global(.admin-detail-modal) :global(.ant-select-suffix .anticon),
-:global(.admin-detail-modal) :global(.ant-picker-suffix .anticon),
-:global(.admin-detail-modal) :global(.ant-select-arrow svg),
-:global(.admin-detail-modal) :global(.ant-picker-suffix svg) {
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-arrow .anticon),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-suffix .anticon),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-picker-suffix .anticon),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-arrow svg),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-picker-suffix svg) {
   color: rgba(255, 255, 255, 0.65) !important;
   fill: rgba(255, 255, 255, 0.65) !important;
 }
 
 .admin-panel .admin-content :global(.ant-select-disabled .ant-select-arrow),
 .admin-panel .admin-content :global(.ant-select-disabled .ant-select-arrow .anticon),
-:global(.admin-detail-modal) :global(.ant-select-disabled .ant-select-arrow),
-:global(.admin-detail-modal) :global(.ant-select-disabled .ant-select-arrow .anticon) {
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-disabled .ant-select-arrow),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-disabled .ant-select-arrow .anticon),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-disabled .ant-select-arrow svg) {
   color: rgba(255, 255, 255, 0.28) !important;
   fill: rgba(255, 255, 255, 0.28) !important;
 }
@@ -726,8 +724,7 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
 :global(.admin-dropdown-menu) :global(.ant-dropdown-menu),
 :global(.admin-user-dropdown) :global(.ant-dropdown-menu),
 :global(.admin-user-dropdown.ant-dropdown) :global(.ant-dropdown-menu) {
-  background: var(--admin-input-bg) !important;
-  background-color: var(--admin-input-bg) !important;
+  background: var(--ant-modal-content-bg);
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 10px !important;
   padding: 4px !important;
@@ -757,12 +754,10 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
   color: #ffffff !important;
 }
 
-:global(.admin-user-dropdown)
-  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
 :global(.admin-user-dropdown.ant-dropdown)
   :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item:hover),
-:global(.admin-user-dropdown)
-  :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active),
+:global(.admin-user-dropdown) :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active),
 :global(.admin-user-dropdown.ant-dropdown)
   :global(.ant-dropdown-menu-item-danger.ant-dropdown-menu-item-active) {
   background: rgba(239, 68, 68, 0.15) !important;
@@ -877,10 +872,10 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
   --ant-modal-header-bg: #22242a;
   --ant-color-bg-elevated: #22242a;
   --ant-color-bg-container: #22242a;
-  --admin-input-bg: #22242a;
-  --admin-table-header-bg: #1c1e24;
+  --admin-input-bg: #1e1e22;
+  --admin-table-header-bg: #16161a;
   --admin-table-row-bg: #22242a;
-  --admin-table-row-hover: #2a2c34;
+  --admin-table-row-hover: #1e1e22;
   --admin-table-border: rgba(255, 255, 255, 0.25);
   --admin-button-primary-bg: #f2c200;
   --admin-button-primary-hover-bg: #e6b800;
@@ -909,7 +904,7 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
   --ant-color-error-border: rgba(239, 68, 68, 0.45);
   --ant-color-error-bg: rgba(239, 68, 68, 0.12);
   --ant-color-error-bg-hover: rgba(239, 68, 68, 0.22);
-  --ant-button-default-bg: #1c1e24;
+  --ant-button-default-bg: #1e1e22;
   --ant-button-default-color: #ffffff;
   --ant-button-default-border-color: rgba(255, 255, 255, 0.25);
   --ant-button-default-hover-bg: #2a2c34;
@@ -941,8 +936,8 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
 :global(.admin-detail-modal) :global(.ant-modal-body),
 :global(.admin-detail-modal) :global(.ant-modal-footer),
 :global(.admin-detail-modal) footer {
-  background: var(--admin-table-row-bg) !important;
-  background-color: var(--admin-table-row-bg) !important;
+  background: #22242a !important;
+  background-color: #22242a !important;
   opacity: 1 !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
@@ -975,8 +970,30 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
 :global(.admin-detail-modal) :global(.ant-modal-footer),
 :global(.admin-detail-modal) footer {
   margin: 0 !important;
-  padding: 16px 24px !important;
   border-top: 1px solid var(--admin-table-border) !important;
+}
+
+:global(.admin-detail-modal:not(.admin-event-edit-modal)) :global(.ant-modal-footer),
+:global(.admin-detail-modal:not(.admin-event-edit-modal)) footer {
+  padding: 16px 24px !important;
+}
+
+:global(.admin-event-edit-modal) footer,
+:global(.admin-event-edit-modal) :global(.ant-modal-footer) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px;
+  min-height: 60px !important;
+  height: 60px !important;
+  padding: 16px 24px !important;
+  margin: 0 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #22242a !important;
+  background-color: #22242a !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 :global(.admin-detail-modal) :global(.ant-modal-title),
@@ -1002,6 +1019,65 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
 :global(.admin-detail-modal) :global(.ant-form-item-label > label),
 :global(.admin-detail-modal) :global(.ant-radio-wrapper) {
   color: #e0e0e0 !important;
+}
+
+/* Modal form controls — theme-independent (beats site light theme) */
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input-number),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input-number-input),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input-affix-wrapper),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-selector),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-picker),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-picker input),
+:global(.admin-detail-modal) :global(.ant-input),
+:global(.admin-detail-modal) :global(.ant-input-number),
+:global(.admin-detail-modal) :global(.ant-input-number-input),
+:global(.admin-detail-modal) :global(.ant-input-affix-wrapper),
+:global(.admin-detail-modal) :global(.ant-select-selector),
+:global(.admin-detail-modal) :global(.ant-picker),
+:global(.admin-detail-modal) :global(.ant-picker input) {
+  color: rgba(255, 255, 255, 0.85) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.85) !important;
+  background: var(--admin-input-bg) !important;
+  background-color: var(--admin-input-bg) !important;
+  border-color: var(--admin-border) !important;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input::placeholder),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-picker-input input::placeholder),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-selection-placeholder),
+:global(.admin-detail-modal) :global(.ant-input::placeholder),
+:global(.admin-detail-modal) :global(.ant-picker-input input::placeholder),
+:global(.admin-detail-modal) :global(.ant-select-selection-placeholder) {
+  color: rgba(255, 255, 255, 0.38) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.38) !important;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-selection-item),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-selection-search-input),
+:global(.admin-detail-modal) :global(.ant-select-selection-item),
+:global(.admin-detail-modal) :global(.ant-select-selection-search-input) {
+  color: rgba(255, 255, 255, 0.85) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input:hover),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input-affix-wrapper:hover),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-selector:hover),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-picker:hover),
+:global(.admin-detail-modal) :global(.ant-input:hover),
+:global(.admin-detail-modal) :global(.ant-input-affix-wrapper:hover),
+:global(.admin-detail-modal) :global(.ant-select-selector:hover),
+:global(.admin-detail-modal) :global(.ant-picker:hover) {
+  border-color: var(--admin-gold-border) !important;
+}
+
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-input-affix-wrapper-focused),
+:global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-select-focused .ant-select-selector),
+:global(.admin-detail-modal) :global(.ant-input-affix-wrapper-focused),
+:global(.admin-detail-modal) :global(.ant-select-focused .ant-select-selector) {
+  border-color: var(--admin-gold) !important;
+  box-shadow: 0 0 0 2px var(--admin-gold-light) !important;
 }
 
 /* Modal tags — vibrant, static, theme-independent */
@@ -1144,6 +1220,11 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
   color: #fff !important;
 }
 
+:global(.admin-detail-modal) :global(.ant-modal-close-x),
+:global(.admin-detail-modal) :global(.ant-modal-close-x) :global(.anticon) {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
 /* Modal buttons — static dark styling, identical in both site themes */
 :global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn),
 :global(.admin-detail-modal) :global(.ant-btn) {
@@ -1256,6 +1337,53 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
   border-color: var(--admin-btn-delete-border) !important;
 }
 
+:global(.admin-event-detail-modal) footer :global(.ant-btn-dangerous):hover,
+:global(.admin-event-detail-modal) footer :global(.ant-btn-dangerous):focus-visible,
+:global(.admin-event-detail-modal) footer :global(.ant-btn-dangerous):active,
+:global(.admin-event-detail-modal) footer .admin-btn-delete:hover,
+:global(.admin-event-detail-modal) footer .admin-btn-delete:focus-visible,
+:global(.admin-event-detail-modal) footer .admin-btn-delete:active {
+  background: #ef4444 !important;
+  background-color: #ef4444 !important;
+  border-color: #ef4444 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35) !important;
+}
+
+:global(.admin-event-detail-modal) footer :global(.admin-btn-edit):hover,
+:global(.admin-event-detail-modal) footer :global(.admin-btn-edit):focus-visible,
+:global(.admin-event-detail-modal) footer :global(.ant-btn-primary.admin-btn-edit):hover,
+:global(.admin-event-detail-modal) footer :global(.ant-btn-primary.admin-btn-edit):focus-visible {
+  background: #ffd27a !important;
+  background-color: #ffd27a !important;
+  border-color: #ffd27a !important;
+  color: #14161c !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(255, 210, 122, 0.32) !important;
+}
+
+:global(.admin-event-detail-modal) footer :global(.admin-btn-edit):active,
+:global(.admin-event-detail-modal) footer :global(.ant-btn-primary.admin-btn-edit):active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 210, 122, 0.24) !important;
+}
+
+:global(.admin-event-detail-modal) footer [class*="footerStart"] :global(.ant-btn):hover,
+:global(.admin-event-detail-modal) footer [class*="footerStart"] :global(.ant-btn):focus-visible {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  color: #ffffff !important;
+}
+
+:global(.admin-event-detail-modal) footer :global(.ant-btn) {
+  transition:
+    background-color 0.22s ease,
+    border-color 0.22s ease,
+    color 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
 :global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn-dangerous):hover,
 :global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn-dangerous):focus-visible,
 :global(.ant-modal-root:has(.admin-detail-modal)) :global(.ant-btn-dangerous):active,
@@ -1275,51 +1403,168 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
   border-color: var(--admin-btn-delete-border) !important;
 }
 
-/* DatePicker / TimePicker dropdowns — solid panel + readable selected values */
-:global(.ant-picker-dropdown.event-form-picker-dropdown),
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel-container),
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel),
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-date-panel),
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel),
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel-column),
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer),
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-header),
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-body),
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-content) {
-  background: #22242a !important;
-  background-color: #22242a !important;
+/* DatePicker / TimePicker dropdown — always dark, theme-independent */
+.ant-picker-dropdown {
+  --ant-control-item-bg-active: #ffd27a !important;
+  --ant-color-text-light-solid: #141416 !important;
+  --ant-color-primary-active: #ffd27a !important;
+  --ant-color-primary: #ffd27a !important;
+}
+
+.ant-picker-dropdown.event-form-picker-dropdown,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel-container,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-panel,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-date-panel,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel-column,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-footer,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-header,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-body,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-content,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-ranges {
+  background: var(--ant-modal-content-bg);
   opacity: 1 !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-cell-selected .ant-picker-cell-inner),
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner),
-:global(.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner) {
-  color: #000000 !important;
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-content th,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-header-view,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-header-view button,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-header button,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-cell-in-view .ant-picker-cell-inner,
+.ant-picker-dropdown.event-form-picker-dropdown
+  .ant-picker-time-panel-cell:not(.ant-picker-time-panel-cell-selected)
+  .ant-picker-time-panel-cell-inner,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-now-btn,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-today-btn,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-year-btn,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-month-btn,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-decade-btn {
+  color: rgba(255, 255, 255, 0.85) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.85) !important;
 }
 
-@media (max-width: 499px) {
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-cell-disabled .ant-picker-cell-inner,
+.ant-picker-dropdown.event-form-picker-dropdown
+  .ant-picker-cell:not(.ant-picker-cell-in-view)
+  .ant-picker-cell-inner {
+  color: rgba(255, 255, 255, 0.25) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-header button .anticon,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-header button svg,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-super-prev-icon,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-super-next-icon,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-prev-icon,
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-next-icon {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+.ant-picker-dropdown.event-form-picker-dropdown .ant-picker-cell-selected .ant-picker-cell-inner,
+.ant-picker-dropdown.event-form-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-selected
+  .ant-picker-cell-inner,
+.ant-picker-dropdown.event-form-picker-dropdown
+  .ant-picker-time-panel-cell-selected
+  .ant-picker-time-panel-cell-inner {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* Match Ant Design v5 column > li selected inner selector — beats :where() hash wrapper */
+.ant-picker-dropdown .ant-picker-time-panel-column > li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+  background: #ffd27a !important;
+  background-color: #ffd27a !important;
+  color: #141416 !important;
+  -webkit-text-fill-color: #141416 !important;
+}
+
+@media (max-width: 768px) {
+  :global(.admin-event-edit-modal) footer,
+  :global(.admin-event-edit-modal) :global(.ant-modal-footer) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    min-height: 60px !important;
+    height: 60px !important;
+    padding: 16px 24px !important;
+    background: #22242a !important;
+    background-color: #22242a !important;
+    opacity: 1 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
   :global(.admin-detail-modal) {
     max-width: calc(100vw - 32px) !important;
     width: calc(100vw - 32px) !important;
   }
-  :global(.admin-detail-modal) :global(.ant-modal-header) {
-    padding: 16px 20px !important;
+
+  :global(.ant-modal-root:has(.admin-detail-modal:not(.admin-event-detail-modal))) :global(.ant-modal-content) {
+    padding: 16px !important;
   }
-  :global(.admin-detail-modal) :global(.ant-modal-body) {
-    padding: 16px 40px 20px 20px !important;
+
+  :global(.ant-modal-root:has(.admin-detail-modal:not(.admin-event-detail-modal))) :global(.ant-modal-header) {
+    padding: 0 0 12px !important;
+    margin: 0 !important;
   }
-  :global(.admin-detail-modal) :global(.ant-modal-footer) {
-    padding: 14px 20px !important;
+
+  :global(.ant-modal-root:has(.admin-detail-modal:not(.admin-event-detail-modal))) :global(.ant-modal-body) {
+    padding: 0 !important;
   }
+
+  :global(.ant-modal-root:has(.admin-detail-modal:not(.admin-event-detail-modal))) :global(.ant-modal-footer),
+  :global(.admin-detail-modal:not(.admin-event-edit-modal):not(.admin-event-detail-modal)) footer {
+    padding: 12px 0 0 !important;
+    margin: 0 !important;
+  }
+
   :global(.admin-detail-modal) :global(.ant-modal-close) {
-    inset-inline-end: 14px;
+    inset-inline-end: 12px;
+  }
+
+  :global(.admin-event-edit-modal) [class*="imagePreview"] {
+    height: 140px !important;
+    max-height: 140px !important;
+    aspect-ratio: auto !important;
+  }
+
+  :global(.admin-event-edit-modal) [class*="imageUploadWrapper"] {
+    height: 140px !important;
+  }
+
+  :global(.admin-detail-modal:not(.admin-event-detail-modal)) section[class*="section" i],
+  :global(.admin-detail-modal:not(.admin-event-detail-modal)) [class*="detailSection"],
+  :global(.admin-detail-modal:not(.admin-event-detail-modal)) [class*="optionCard"] {
+    padding: 12px !important;
   }
 }
 
 /* ===== System-wide admin responsive adjustments ===== */
+.admin-panel .admin-content {
+  padding: 24px !important;
+  box-sizing: border-box;
+}
+
+.admin-panel .admin-content :global([class*="pageHeader"]) {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 24px !important;
+}
+
 @media (max-width: 1024px) {
+  .admin-panel .admin-content {
+    padding: 16px !important;
+  }
+
+  .admin-panel .admin-content :global([class*="pageHeader"]) {
+    margin-bottom: 24px !important;
+  }
+
   .admin-panel .admin-content :global(.ant-table-thead > tr > th),
   .admin-panel .admin-content :global(.ant-table-tbody > tr > td) {
     padding: 10px 12px !important;
@@ -1332,22 +1577,12 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
 }
 
 @media (max-width: 768px) {
-  :global(.admin-detail-modal) {
-    max-width: min(640px, calc(100vw - 32px)) !important;
-    width: min(640px, calc(100vw - 32px)) !important;
+  .admin-panel .admin-content {
+    padding: 16px !important;
   }
 
-  :global(.admin-detail-modal) :global(.ant-modal-header) {
-    padding: 16px 20px !important;
-  }
-
-  :global(.admin-detail-modal) :global(.ant-modal-body) {
-    padding: 16px 36px 20px 20px !important;
-  }
-
-  :global(.admin-detail-modal) :global(.ant-modal-footer),
-  :global(.admin-detail-modal) footer {
-    padding: 14px 20px !important;
+  .admin-panel .admin-content :global([class*="pageHeader"]) {
+    margin-bottom: 20px !important;
   }
 
   .admin-panel .admin-content :global(.ant-table-thead > tr > th),
@@ -1374,6 +1609,35 @@ body.ant-modal-open:has(.admin-panel) :global(.admin-content) {
   .admin-panel .admin-content :global(.ant-table-thead > tr > th),
   .admin-panel .admin-content :global(.ant-table-tbody > tr > td) {
     padding-block: 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-panel .admin-content {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  :global(.admin-notifications-popover) {
+    position: fixed !important;
+    top: 70px !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translateX(-50%) !important;
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    margin: 0 !important;
+  }
+
+  :global(.admin-notifications-popover) :global(.ant-popover-arrow) {
+    display: none !important;
+  }
+
+  :global(.admin-notifications-popover) :global(.ant-popover-inner) {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }
 

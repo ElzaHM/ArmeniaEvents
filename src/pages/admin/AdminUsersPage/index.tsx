@@ -449,109 +449,150 @@ export default function AdminUsersPage() {
       </AdminCard>
       <Modal
         open={Boolean(selectedUser)}
-        title={modalMode === 'edit' ? 'Edit User' : 'User Details'}
+        title={null}
         footer={null}
-        width={420}
+        width={modalMode === 'edit' ? 360 : 400}
         centered
+        destroyOnHidden
         onCancel={closeUserModal}
         className="admin-detail-modal"
         rootClassName={styles.userModal}>
         {selectedUser && modalMode === 'details' ? (
-          <div className={styles.modalContent}>
-            <img src={selectedUser.avatarUrl} alt="" className={styles.modalAvatar} />
-            <dl className={styles.detailList}>
-              <div className={styles.detailRow}>
-                <dt>Name</dt>
-                <dd>{selectedUser.name}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Email</dt>
-                <dd>{selectedUser.email}</dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Role</dt>
-                <dd>
+          <div className={styles.modalShell}>
+            <div className={styles.scrollContent}>
+              <header className={styles.detailHeader}>
+                <img src={selectedUser.avatarUrl} alt="" className={styles.modalAvatar} />
+                <h2 className={styles.detailTitle}>{selectedUser.name}</h2>
+                <div className={styles.metaTags}>
                   <Tag color={ROLE_COLORS[selectedUser.role]}>
                     {formatRoleLabel(selectedUser.role)}
                   </Tag>
-                </dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Status</dt>
-                <dd>
                   <Tag color={STATUS_COLORS[selectedUser.status]}>{selectedUser.status}</Tag>
-                </dd>
-              </div>
-              <div className={styles.detailRow}>
-                <dt>Joined</dt>
-                <dd>{formatAdminEventDate(selectedUser.joinedAt)}</dd>
-              </div>
-            </dl>
-            <div className={styles.modalActions}>
+                </div>
+              </header>
+
+              <section className={styles.infoCard}>
+                <h3 className={styles.cardTitle}>User Info</h3>
+                <dl className={styles.detailList}>
+                  <div className={styles.detailRow}>
+                    <dt>Email</dt>
+                    <dd>{selectedUser.email}</dd>
+                  </div>
+                  <div className={styles.detailRow}>
+                    <dt>Joined</dt>
+                    <dd>{formatAdminEventDate(selectedUser.joinedAt)}</dd>
+                  </div>
+                </dl>
+              </section>
+
+              <section className={styles.infoCard}>
+                <h3 className={styles.cardTitle}>Access</h3>
+                <dl className={styles.detailList}>
+                  <div className={styles.detailRow}>
+                    <dt>Role</dt>
+                    <dd>
+                      <Tag color={ROLE_COLORS[selectedUser.role]}>
+                        {formatRoleLabel(selectedUser.role)}
+                      </Tag>
+                    </dd>
+                  </div>
+                  <div className={styles.detailRow}>
+                    <dt>Status</dt>
+                    <dd>
+                      <Tag color={STATUS_COLORS[selectedUser.status]}>{selectedUser.status}</Tag>
+                    </dd>
+                  </div>
+                </dl>
+              </section>
+            </div>
+
+            <footer className={styles.modalFooter}>
               <Button
-                danger
-                className={styles.modalDeleteButton}
+                className="admin-btn-delete"
                 onClick={() => handleDeleteUser(selectedUser)}>
                 Delete
               </Button>
               <Button type="primary" className="admin-btn-edit" onClick={openEditMode}>
                 Edit
               </Button>
-            </div>
+            </footer>
           </div>
         ) : null}
         {selectedUser && modalMode === 'edit' ? (
-          <div className={styles.modalContent}>
-            <div className={styles.avatarPanel}>
-              <img src={avatarPreviewUrl} alt="" className={styles.modalAvatar} />
-              <Upload
-                accept="image/*"
-                showUploadList={false}
-                beforeUpload={() => false}
-                onChange={handleAvatarUpload}>
-                <Button icon={<CameraOutlined />} size="small">
-                  Change Photo
-                </Button>
-              </Upload>
-              {pendingAvatar ? (
-                <div className={styles.pendingAvatarBar}>
-                  <span className={styles.pendingAvatarName}>{pendingAvatar.name}</span>
-                  <Button type="link" size="small" onClick={clearPendingAvatar}>
-                    Remove
-                  </Button>
+          <div className={styles.modalShell}>
+            <div className={styles.scrollContent}>
+              <section className={styles.formSection}>
+                <h3 className={styles.sectionTitle}>Profile</h3>
+                <div className={styles.avatarPanel}>
+                  <img src={avatarPreviewUrl} alt="" className={styles.modalAvatar} />
+                  <Upload
+                    accept="image/*"
+                    showUploadList={false}
+                    beforeUpload={() => false}
+                    onChange={handleAvatarUpload}>
+                    <Button icon={<CameraOutlined />} size="small">
+                      Change Photo
+                    </Button>
+                  </Upload>
+                  {pendingAvatar ? (
+                    <div className={styles.pendingAvatarBar}>
+                      <span className={styles.pendingAvatarName}>{pendingAvatar.name}</span>
+                      <Button type="link" size="small" onClick={clearPendingAvatar}>
+                        Remove
+                      </Button>
+                    </div>
+                  ) : (
+                    <p className={styles.avatarHint}>Upload a square image for the best crop.</p>
+                  )}
                 </div>
-              ) : (
-                <p className={styles.avatarHint}>Upload a square image for the best crop.</p>
-              )}
+              </section>
+
+              <Form form={form} layout="vertical" className={styles.editForm} requiredMark="optional">
+                <section className={styles.formSection}>
+                  <h3 className={styles.sectionTitle}>General</h3>
+                  <Form.Item
+                    name="name"
+                    label="Name"
+                    rules={[{ required: true, message: 'Name is required' }]}>
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    name="email"
+                    label="Email"
+                    rules={[
+                      { required: true, message: 'Email is required' },
+                      { type: 'email', message: 'Enter a valid email' },
+                    ]}>
+                    <Input />
+                  </Form.Item>
+                </section>
+
+                <section className={styles.formSection}>
+                  <h3 className={styles.sectionTitle}>Access</h3>
+                  <Form.Item
+                    name="role"
+                    label="Role"
+                    rules={[{ required: true, message: 'Role is required' }]}>
+                    <Select options={ROLE_OPTIONS} />
+                  </Form.Item>
+                  <Form.Item
+                    name="status"
+                    label="Status"
+                    rules={[{ required: true, message: 'Status is required' }]}>
+                    <Select options={STATUS_OPTIONS} />
+                  </Form.Item>
+                </section>
+              </Form>
             </div>
-            <Form form={form} layout="vertical" className={styles.editForm}>
-              <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Name is required' }]}>
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="email"
-                label="Email"
-                rules={[
-                  { required: true, message: 'Email is required' },
-                  { type: 'email', message: 'Enter a valid email' },
-                ]}>
-                <Input />
-              </Form.Item>
-              <Form.Item name="role" label="Role" rules={[{ required: true, message: 'Role is required' }]}>
-                <Select options={ROLE_OPTIONS} />
-              </Form.Item>
-              <Form.Item name="status" label="Status" rules={[{ required: true, message: 'Status is required' }]}>
-                <Select options={STATUS_OPTIONS} />
-              </Form.Item>
-            </Form>
-            <div className={styles.modalActions}>
+
+            <footer className={styles.modalFooter}>
               <Button onClick={() => setModalMode('details')} disabled={isSaving}>
                 Cancel
               </Button>
               <Button type="primary" className="admin-btn-edit" loading={isSaving} onClick={handleSaveUser}>
                 Save Changes
               </Button>
-            </div>
+            </footer>
           </div>
         ) : null}
       </Modal>

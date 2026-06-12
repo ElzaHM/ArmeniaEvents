@@ -61,7 +61,9 @@ export default function DashboardContent() {
         <p className="admin-print-only">
           Generated {new Date().toLocaleDateString('en-US', { dateStyle: 'long' })}
         </p>
-        <StatCards stats={stats} />
+        <div className={styles.statsSection}>
+          <StatCards stats={stats} />
+        </div>
 
         {!isDashboardLoading ? (
           <>

@@ -264,7 +264,7 @@ export default function AdminHeader({
             title="Administrative Alerts"
             trigger="click"
             placement="bottomRight"
-            classNames={{root: styles.notificationPopover}}>
+            overlayClassName="admin-notifications-popover">
             <Badge count={notificationCount} offset={[-2, 2]} size="small">
               <Button
                 type="text"

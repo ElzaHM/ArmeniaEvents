@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {Dropdown, Modal, Progress, Table, Tag} from "antd";
+import {Dropdown, Modal, Progress, Table, Tag, message} from "antd";
 import type {MenuProps, TableColumnsType} from "antd";
 import {MoreOutlined} from "@ant-design/icons";
 
@@ -10,6 +10,7 @@ import AdminEventImage from "./AdminEventImage";
 import AdminEventTableDateCell from "./AdminEventTableDateCell";
 import {getSourceTagColor} from "./sourceTagUtils";
 import type {AdminEvent, AdminEventStatus} from "./types";
+import {useDeleteEvent} from "../../hooks/queries/useEvents";
 
 import styles from "./UpcomingEventsTable.module.css";
 
@@ -39,6 +40,7 @@ interface UpcomingEventsTableProps {
 
 export default function UpcomingEventsTable({events: initialEvents}: UpcomingEventsTableProps) {
   const navigate = useNavigate();
+  const deleteEvent = useDeleteEvent();
   const [events, setEvents] = useState(initialEvents);
   const [viewingEvent, setViewingEvent] = useState<AdminEvent | null>(null);
 
@@ -54,15 +56,26 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
     setViewingEvent(null);
   };
 
+  const openEditPage = (event: AdminEvent) => {
+    navigate(`/admin/events?edit=${encodeURIComponent(event.id)}`);
+  };
+
   const handleDeleteEvent = (event: AdminEvent) => {
     Modal.confirm({
       title: "Delete event?",
-      content: `This will remove "${event.title}" from the upcoming events list.`,
+      content: `This will delete "${event.title}".`,
       okText: "Delete",
       okButtonProps: {danger: true},
-      onOk: () => {
-        setEvents((currentEvents) => currentEvents.filter((item) => item.id !== event.id));
-        closeViewModal();
+      onOk: async () => {
+        try {
+          await deleteEvent.mutateAsync(event.id);
+          message.success("Event deleted");
+          if (viewingEvent?.id === event.id) {
+            closeViewModal();
+          }
+        } catch (error) {
+          message.error(error instanceof Error ? error.message : "Delete failed");
+        }
       },
     });
   };
@@ -183,8 +196,11 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
             items: ACTION_ITEMS,
             onClick: ({key, domEvent}) => {
               domEvent.stopPropagation();
-              if (key === "view" || key === "edit") {
+              if (key === "view") {
                 openViewModal(record);
+              }
+              if (key === "edit") {
+                openEditPage(record);
               }
               if (key === "delete") {
                 handleDeleteEvent(record);
@@ -226,9 +242,9 @@ export default function UpcomingEventsTable({events: initialEvents}: UpcomingEve
         event={viewingEvent}
         open={Boolean(viewingEvent)}
         onClose={closeViewModal}
-        onEdit={() => navigate("/admin/events")}
+        onEdit={() => viewingEvent && openEditPage(viewingEvent)}
         onDelete={() => viewingEvent && handleDeleteEvent(viewingEvent)}
-        editLabel="Open Events"
+        editLabel="Edit"
       />
     </>
   );

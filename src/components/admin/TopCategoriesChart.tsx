@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
+import {useState} from "react";
+import {Cell, Pie, PieChart, ResponsiveContainer} from "recharts";
 
-import AdminCard from './AdminCard';
-import type { CategoryDistribution } from './types';
+import AdminCard from "./AdminCard";
+import type {CategoryDistribution} from "./types";
 
-import styles from './TopCategoriesChart.module.css';
+import styles from "./TopCategoriesChart.module.css";
 
 interface TopCategoriesChartProps {
   categories: CategoryDistribution[];
 }
 
-export default function TopCategoriesChart({ categories }: TopCategoriesChartProps) {
+export default function TopCategoriesChart({categories}: TopCategoriesChartProps) {
   const total = categories.reduce((sum, item) => sum + item.count, 0);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -24,7 +24,7 @@ export default function TopCategoriesChart({ categories }: TopCategoriesChartPro
     <AdminCard title="Top Categories">
       <div className={styles.wrap}>
         <div className={styles.chartArea}>
-          <ResponsiveContainer width="100%" height={180} minHeight={180}>
+          <ResponsiveContainer width="100%" height={180} minWidth={0} minHeight={180} debounce={50}>
             <PieChart>
               <Pie
                 data={categories}
@@ -38,8 +38,7 @@ export default function TopCategoriesChart({ categories }: TopCategoriesChartPro
                 stroke="none"
                 onMouseEnter={(_, index) => setActiveIndex(index)}
                 onMouseLeave={() => setActiveIndex(null)}
-                onClick={(_, index) => handleActivate(index)}
-              >
+                onClick={(_, index) => handleActivate(index)}>
                 {categories.map((entry, index) => (
                   <Cell
                     key={entry.id}
@@ -68,23 +67,19 @@ export default function TopCategoriesChart({ categories }: TopCategoriesChartPro
           {categories.map((category, index) => (
             <li
               key={category.id}
-              className={`${styles.legendItem} ${activeIndex === index ? styles.legendItemActive : ''}`}
+              className={`${styles.legendItem} ${activeIndex === index ? styles.legendItemActive : ""}`}
               onMouseEnter={() => setActiveIndex(index)}
               onMouseLeave={() => setActiveIndex(null)}
               onClick={() => handleActivate(index)}
               onKeyDown={(event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
+                if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault();
                   handleActivate(index);
                 }
               }}
               role="button"
-              tabIndex={0}
-            >
-              <span
-                className={styles.dot}
-                style={{ backgroundColor: category.color }}
-              />
+              tabIndex={0}>
+              <span className={styles.dot} style={{backgroundColor: category.color}} />
               <span className={styles.legendName}>{category.name}</span>
               <span className={styles.legendStats}>
                 {category.percentage}% · {category.count}

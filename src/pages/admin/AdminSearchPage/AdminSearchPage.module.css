@@ -35,9 +35,39 @@
 .eventCell,
 .userCell {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   min-width: 0;
+}
+
+.clampTwoLines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+  min-width: 0;
+}
+
+.locationText {
+  display: block;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+  min-width: 0;
+  max-width: 250px;
+}
+
+.tableWrap :global(.admin-table-wrap-cell) {
+  white-space: normal !important;
+  word-break: break-word;
+  vertical-align: top !important;
+}
+
+.tableWrap :global(.ant-table-tbody > tr > td) {
+  vertical-align: top !important;
 }
 
 .thumbnail {
