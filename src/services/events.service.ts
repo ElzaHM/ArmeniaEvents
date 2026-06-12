@@ -177,7 +177,10 @@ type FetchEventListOptions = {
 async function fetchEventListRows(
   options: FetchEventListOptions = {}
 ): Promise<EventListRow[]> {
-  let query = supabase.from('events').select(EVENT_LIST_SELECT);
+  let query = supabase
+    .from('events')
+    .select(EVENT_LIST_SELECT)
+    .eq('status', 'published');
 
   if (options.upcomingOnly) {
     query = query
