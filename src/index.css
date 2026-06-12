@@ -10,6 +10,13 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
+  --glass-blur: blur(16px) saturate(1.8);
+  --glass-blur-light: blur(16px) saturate(1.3);
+  --glass-bg-dark: rgba(14, 14, 14, 0.3);
+  --glass-bg-light: rgba(255, 255, 255, 0.55);
+  --glass-border-dark: rgba(255, 255, 255, 0.12);
+  --glass-border-light: rgba(255, 255, 255, 0.65);
+
   --sans: system-ui, "Segoe UI", Roboto, sans-serif;
   --heading: system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
@@ -79,7 +86,40 @@ body {
 }
 
 #root > main {
-  background: transparent;
+  background: transparent !important;
+}
+
+/* Global glass / blur surfaces (Contact page + reusable) */
+[data-theme='dark'] {
+  --glass-surface-bg: var(--glass-bg-dark);
+  --glass-surface-blur: var(--glass-blur);
+}
+
+[data-theme='light'] {
+  --glass-surface-bg: rgba(255, 255, 255, 0.5);
+  --glass-surface-blur: var(--glass-blur);
+}
+
+.glassBlur,
+.glassSurface {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  isolation: isolate;
+  background-color: var(--glass-surface-bg) !important;
+  background: var(--glass-surface-bg) !important;
+  -webkit-backdrop-filter: var(--glass-surface-blur, blur(16px) saturate(1.8)) !important;
+  backdrop-filter: var(--glass-surface-blur, blur(16px) saturate(1.8)) !important;
+}
+
+.contact-page .glassBlur {
+  border: 1px solid var(--glass-border-dark);
+}
+
+[data-theme='light'] .contact-page .glassBlur {
+  border: 0.1px solid var(--glass-border-light) !important;
+  box-shadow:
+    0 0 0 0.3px rgba(255, 255, 255, 0.55),
+    0 2px 15px rgba(0, 0, 0, 0.06) !important;
 }
 
 h1,
