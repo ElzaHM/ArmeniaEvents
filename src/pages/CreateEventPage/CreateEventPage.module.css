@@ -51,14 +51,14 @@
 
    /* 2. MAIN GLASS CONTAINERS (CARDS) */
 .formCard, .previewCard {
-  /* background: rgba(14, 14, 14, 0.75) !important;  */
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(25px);
+  background: rgba(14, 14, 14, 0.3) !important;
+  background-color: rgba(14, 14, 14, 0.3) !important;
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   padding: 16px 20px;
   margin-bottom: 0;
-  background: rgba(14, 14, 14, 0.3) !important;
 }
 
 .cardHeader {
@@ -189,17 +189,12 @@
   align-items: center;
   height: fit-content;
   background: rgba(14, 14, 14, 0.3) !important;
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
+  background-color: rgba(14, 14, 14, 0.3) !important;
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   padding: 20px 25px;
-}
-
-:global([data-theme='dark']) .previewSticky {
-  /* background: rgba(255, 255, 255, 0.02) !important; */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .previewSectionTitle {
@@ -209,8 +204,10 @@
 }
 
 .eventCardPreview {
-  background: rgba(255, 255, 255, 0);
-  backdrop-filter: blur(20px);
+  background: rgba(14, 14, 14, 0.3);
+  background-color: rgba(14, 14, 14, 0.3);
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1.5px solid #c08b46; /* Live effect border */
   border-radius: 24px;
   overflow: hidden;

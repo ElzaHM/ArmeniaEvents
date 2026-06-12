@@ -295,24 +295,8 @@
 }
 
 @media (max-width: 768px) {
-  .widget {
-    width: 50%;
-    max-width: calc(100vw - 100px);
-    border-radius: 10px 0 0 0;
-  }
-
-  .playIcon {
-    font-size: 44px;
-  }
-}
-
-@media (max-width: 480px) {
-  .widget {
-    width: 50%;
-    max-width: calc(100vw - 100px);
-  }
-
-  .playIcon {
-    font-size: 38px;
+  .widget,
+  .showBtn {
+    display: none !important;
   }
 }

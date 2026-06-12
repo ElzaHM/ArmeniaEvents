@@ -78,6 +78,10 @@ body {
   margin: 0;
 }
 
+#root > main {
+  background: transparent;
+}
+
 h1,
 h2 {
   font-family: var(--heading);

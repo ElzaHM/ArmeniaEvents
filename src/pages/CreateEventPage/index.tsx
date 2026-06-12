@@ -23,6 +23,7 @@ const initialPreviewData = {
   eventType: 'Offline',
   venue: 'Meridian Expo Center',
   address: 'Yerevan, Armenia',
+  startDate: '2026-07-15',
   date: 'Jul 15, 2026',
   startTime: '10:00 AM',
   endTime: '06:00 PM',
@@ -174,6 +175,9 @@ export default function CreateEventPage() {
         : allValues.price != null && allValues.price !== ''
           ? String(allValues.price)
           : initialPreviewData.price,
+      startDate: allValues.startDate
+        ? dayjs(allValues.startDate as string).format('YYYY-MM-DD')
+        : initialPreviewData.startDate,
       date: allValues.startDate
         ? dayjs(allValues.startDate as string).format('MMM DD, YYYY')
         : initialPreviewData.date,

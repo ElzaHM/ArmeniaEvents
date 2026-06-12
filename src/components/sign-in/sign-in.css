@@ -186,11 +186,12 @@
 }
 
 [data-theme='dark'] .sign-in-page .sign-in-panel {
-  background: rgba(14, 14, 14, 0.6) !important;
+  background: rgba(14, 14, 14, 0.3) !important;
+  background-color: rgba(14, 14, 14, 0.3) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow: none !important;
-  backdrop-filter: blur(25px) !important;
-  -webkit-backdrop-filter: blur(25px) !important;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 .sign-in-page .ant-form-item {
@@ -218,9 +219,9 @@
 
 .sign-in-page .custom-header.scrolled,
 .sign-up-page .custom-header.scrolled {
-  background: rgba(14, 14, 14, 0.45) !important;
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  background: rgba(14, 14, 14, 0.3) !important;
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }

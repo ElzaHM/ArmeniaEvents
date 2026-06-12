@@ -27,9 +27,7 @@
 }
 
 [data-theme='dark'] .sectionOverlay {
-  background: var(--home-section-dark-overlay) !important;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  background: transparent !important;
 }
 
 .headerRow {

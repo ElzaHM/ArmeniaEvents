@@ -117,7 +117,7 @@ export default function EventCheckoutPage() {
                   </div>
                 </div>
 
-                <div className={styles.glassCard}>
+                <div className={`${styles.glassCard} ${styles.buyTicketCard}`}>
                     {reservation ? (
                       <div className={styles.successBlock}>
                         <Text className={styles.successTitle}>

@@ -48,13 +48,15 @@
   --events-dropdown-bg: rgba(58, 58, 62, 0.98);
   --events-sort-border: rgba(255, 255, 255, 0.12);
   --events-date-placeholder: rgba(255, 255, 255, 0.78);
-  --events-panel-bg: rgba(255, 255, 255, 0.08);
+  --events-panel-bg: rgba(14, 14, 14, 0.3);
   --events-panel-border: rgba(255, 255, 255, 0.12);
   --events-panel-shadow: rgba(0, 0, 0, 0.4) 0 8px 32px 0;
-  --events-card-bg: rgba(255, 255, 255, 10%);
+  --events-list-panel-bg: rgba(14, 14, 14, 0.3);
+  --events-filters-panel-bg: rgba(14, 14, 14, 0.3);
+  --events-card-bg: rgba(14, 14, 14, 0.3);
   --events-card-border: rgba(255, 255, 255, 0.12);
   --events-card-shadow: rgba(0, 0, 0, 0.4) 0 8px 32px 0;
-  --events-section-tint: color-mix(in srgb, var(--home-hero-overlay), transparent 30%);
+  --events-section-tint: transparent;
 }
 
 /* Date pickers, selects, inputs on events page (sort field styled separately) */

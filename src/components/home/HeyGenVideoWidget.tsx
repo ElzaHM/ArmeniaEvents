@@ -12,6 +12,7 @@ import aiAssistantVideo from '../../assets/AiAssistantVideo/Ai Assistant.webm';
 import styles from './HeyGenVideoWidget.module.css';
 
 const HOME_VIDEO_RETURN_CLOSED_KEY = 'armeniaEvents.homeVideoReturnClosed';
+const MOBILE_MAX_WIDTH = 768;
 
 function getInitialIsOpen() {
   if (typeof window === 'undefined') {
@@ -27,6 +28,29 @@ export default function HeyGenVideoWidget() {
   const [isOpen, setIsOpen] = useState(getInitialIsOpen);
   const [isMuted, setIsMuted] = useState(false);
   const [controlsVisible, setControlsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`).matches,
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`);
+    const handleChange = (event: MediaQueryListEvent) => {
+      setIsMobile(event.matches);
+    };
+
+    setIsMobile(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      videoRef.current?.pause();
+    }
+  }, [isMobile]);
 
   useEffect(() => {
     return () => {
@@ -37,7 +61,7 @@ export default function HeyGenVideoWidget() {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !isOpen) {
+    if (!video || !isOpen || isMobile) {
       return;
     }
 
@@ -55,7 +79,7 @@ export default function HeyGenVideoWidget() {
       video.removeEventListener('pause', handlePause);
       video.pause();
     };
-  }, [isOpen]);
+  }, [isOpen, isMobile]);
 
   useEffect(() => {
     if (!controlsVisible) {
@@ -68,6 +92,10 @@ export default function HeyGenVideoWidget() {
 
     return () => window.clearTimeout(timer);
   }, [controlsVisible]);
+
+  if (isMobile) {
+    return null;
+  }
 
   const togglePlayback = () => {
     const video = videoRef.current;

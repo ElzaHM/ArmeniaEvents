@@ -1,11 +1,12 @@
 import { Typography, Button } from 'antd';
-import { 
-  HeartOutlined, 
-  EnvironmentOutlined, 
-  CalendarOutlined, 
+import {
+  HeartOutlined,
+  EnvironmentOutlined,
+  CalendarOutlined,
   PlusCircleOutlined,
-  HomeOutlined // Վայրի համար
+  HomeOutlined,
 } from '@ant-design/icons';
+import { formatDateBadge } from '../../components/events/eventDateUtils';
 import styles from './CreateEventPage.module.css';
 
 const { Title, Text } = Typography;
@@ -22,6 +23,7 @@ export default function EventLivePreview({
   submitLoading?: boolean;
 }) {
   const isFree = !data.price || data.price === 'Free' || data.price === '0';
+  const { month, day } = formatDateBadge(data.startDate);
 
   return (
     <div className={styles.previewSticky}>
@@ -33,8 +35,8 @@ export default function EventLivePreview({
           style={{ backgroundImage: `url(${image})` }}
         >
           <div className={styles.dateBadge}>
-            <span className={styles.badgeMonth}>MAY</span>
-            <span className={styles.badgeDay}>24</span>
+            <span className={styles.badgeMonth}>{month}</span>
+            <span className={styles.badgeDay}>{day}</span>
           </div>
           <div className={styles.heartCircle}><HeartOutlined /></div>
         </div>

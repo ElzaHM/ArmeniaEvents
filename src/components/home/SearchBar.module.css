@@ -4,8 +4,9 @@
   min-width: 0;
   overflow: hidden;
   background: var(--home-search-bg);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  background-color: var(--glass-surface-bg, var(--home-search-bg));
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid var(--home-search-border);
   padding: 6px 6px 6px 15px;
   border-radius: 16px;

@@ -70,21 +70,34 @@
 .cardsStack {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 32px;
+}
+
+.buyTicketCard {
+  width: 100%;
+  max-width: 320px;
+  align-self: flex-start;
 }
 
 .glassCard {
   background: rgba(14, 14, 14, 0.3) !important;
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
+  background-color: rgba(14, 14, 14, 0.3) !important;
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   padding: 28px;
   height: 100%;
   width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+}
+
+.cardsStack > .glassCard:first-child {
+  width: 100%;
 }
 
 .cardHeaderTitle {
@@ -186,12 +199,12 @@
   color: #1a1a1a !important;
 }
 
-.successBlock {
+.buyTicketCard .successBlock {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
-  text-align: center;
+  text-align: left;
   padding: 12px 0;
 }
 
@@ -206,11 +219,12 @@
   font-size: 14px;
 }
 
-.ticketCodeRow {
+.buyTicketCard .ticketCodeRow {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 10px;
+  width: 100%;
 }
 
 .ticketCode {
@@ -306,6 +320,10 @@
 
   .glassCard {
     padding: 20px;
+  }
+
+  .buyTicketCard {
+    max-width: 100%;
   }
 
   .eventSummary {

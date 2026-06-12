@@ -69,9 +69,10 @@
 }
 
 .storyCard, .visionCard {
-  background: var(--home-glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(14, 14, 14, 0.3);
+  background-color: rgba(14, 14, 14, 0.3);
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid var(--home-glass-border);
   border-radius: 28px;
   min-height: 530px;
@@ -82,6 +83,17 @@
   display: flex;
   transition: all 0.3s ease;
   box-sizing: border-box;
+}
+
+[data-theme='dark'] .pageWrapper .storyCard,
+[data-theme='dark'] .pageWrapper .visionCard,
+[data-theme='dark'] .pageWrapper .teamCard,
+[data-theme='dark'] .pageWrapper .techSection,
+[data-theme='dark'] .pageWrapper .techLogoBox {
+  background: rgba(14, 14, 14, 0.3) !important;
+  background-color: rgba(14, 14, 14, 0.3) !important;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 [data-theme='light'] .pageWrapper .storyCard,
@@ -211,6 +223,26 @@
 
 .teamHeader .cardTitle {
   color: #ffffff !important;
+}
+
+[data-theme='light'] .teamHeader .cardLabel {
+  color: #141414;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
+}
+
+[data-theme='light'] .teamHeader .cardTitle {
+  color: #141414 !important;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+[data-theme='light'] .teamHeader .goldText,
+[data-theme='light'] .teamHeader :global(.anticon) {
+  color: #8b5a1e !important;
+  font-size: 26px;
+  filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.95));
 }
 
 .teamHeader :global(.anticon) {
@@ -352,9 +384,10 @@
 }
 
 .teamCard {
-  background: var(--home-glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(14, 14, 14, 0.3);
+  background-color: rgba(14, 14, 14, 0.3);
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid var(--home-glass-border);
   border-radius: 24px;
   padding: 12px 18px 16px;
@@ -468,9 +501,10 @@
 .techSection {
   margin-top: 80px;
   padding: 50px;
-  background: var(--home-glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(14, 14, 14, 0.3);
+  background-color: rgba(14, 14, 14, 0.3);
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border: 1px solid var(--home-glass-border);
   border-radius: 28px;
   display: flex;
@@ -496,10 +530,11 @@
 .techLogoBox {
   width: 70px;
   height: 70px;
-  background: var(--home-glass-bg);
+  background: rgba(14, 14, 14, 0.3);
+  background-color: rgba(14, 14, 14, 0.3);
   border: 1px solid var(--home-glass-border);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
   border-radius: 18px;
   display: flex;
   align-items: center;

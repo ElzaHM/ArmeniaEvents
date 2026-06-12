@@ -7,23 +7,7 @@
   flex-direction: column;
 }
 
-.pageWrapper::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.1) 50%,
-    rgba(0, 0, 0, 0.9) 100%
-  );
-  z-index: 0;
-  pointer-events: none;
-}
-
 .pageWrapper :global(.mainContent) {
-  position: relative;
-  z-index: 1;
   flex: 1;
 }
 

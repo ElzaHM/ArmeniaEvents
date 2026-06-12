@@ -130,7 +130,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
       { Icon: LayoutOutlined, label: 'Full project design system' },
       { Icon: AppstoreOutlined, label: 'Create Event UI' },
       { Icon: BgColorsOutlined, label: 'About page design' },
-      { Icon: DashboardOutlined, label: 'Event page design' },
+      { Icon: DashboardOutlined, label: 'Contact page' },
     ],
     socials: {
       linkedin: 'https://www.linkedin.com/in/lilit-hovhannisyan-729508211',
@@ -149,6 +149,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
       { Icon: BgColorsOutlined, label: 'Glassmorphism theme' },
     ],
     socials: {
+      linkedin: 'https://www.linkedin.com/in/mh-marta-hayrapetyan/',
       github: 'https://github.com/Marta109',
     },
   },
