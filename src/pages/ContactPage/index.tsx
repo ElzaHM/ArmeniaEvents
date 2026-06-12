@@ -61,7 +61,7 @@ export default function ContactPage() {
             
             {/* Left Side: Form */}
             <Col xs={24} lg={13}>
-              <div className={styles.glassCard}>
+              <div className={`${styles.glassCard} glassBlur`}>
                 <Title level={4} className={styles.cardHeaderTitle}>
                   <SendOutlined className={styles.goldIcon} rotate={-45} /> Send us a message
                 </Title>
@@ -96,7 +96,7 @@ export default function ContactPage() {
 
             {/* Right Side: Contact Info */}
             <Col xs={24} lg={11}>
-              <div className={styles.glassCard}>
+              <div className={`${styles.glassCard} glassBlur`}>
                 <Title level={4} className={styles.cardHeaderTitle}>
                   <MailOutlined className={styles.goldIcon} /> Contact Information
                 </Title>

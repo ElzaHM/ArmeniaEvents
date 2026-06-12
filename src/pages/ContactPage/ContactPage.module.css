@@ -56,11 +56,6 @@
 }
 
 .glassCard {
-  background: rgba(14, 14, 14, 0.6) !important;
-  background-color: rgba(14, 14, 14, 0.6) !important;
-  backdrop-filter: blur(16px) saturate(1.8) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   padding: 28px;
   height: 100%;
@@ -68,7 +63,6 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  isolation: isolate;
 }
 
 .cardHeaderTitle {
@@ -163,26 +157,8 @@
 .socialIcons span:hover { color: white; }
 
 /* Light mode — match Create Event page */
-[data-theme='dark'] .pageWrapper .glassCard {
-  background: rgba(14, 14, 14, 0.6) !important;
-  background-color: rgba(14, 14, 14, 0.6) !important;
-  backdrop-filter: blur(16px) saturate(1.8) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
-}
-
 [data-theme='light'] .pageWrapper {
   color: var(--home-text-secondary);
-}
-
-[data-theme='light'] .pageWrapper .glassCard {
-  background: rgba(255, 255, 255, 0.6) !important;
-  background-color: rgba(255, 255, 255, 0.6) !important;
-  border: 0.1px solid rgba(255, 255, 255, 0.65) !important;
-  box-shadow:
-    0 0 0 0.3px rgba(255, 255, 255, 0.55),
-    0 2px 15px rgba(0, 0, 0, 0.06) !important;
-  backdrop-filter: blur(16px) saturate(1.8) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
 }
 
 [data-theme='light'] .pageWrapper .cardHeaderTitle {
